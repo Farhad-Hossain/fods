@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,22 +16,28 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+
     return redirect()->route('dashboard');
     return view('welcome');
 });
+
+
+
 
 Route::get('dashboard', [
     'uses' => 'Backend\DashboardController@showDashboard',
     'as' => 'dashboard',
 ]);
 
-// Begin::backend route
-// Admin
-Route::group(['prefix'=>'admin', 'namespace'=>'Backend', 'as'=>'back.'], function(){
-	// Auth route
-	
-});
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['prefix'=>'admin', 'namespace'=>'Backend', 'as'=>'backend.', 'middleware'=>'auth'], function(){
+	Route::get('/', 'DashboardController@showDashboard')->name('dashboard');
+
+	// Users and role management
+	Route::group(['prefix'=>'users', 'as'=>'users.'], function(){
+		Route::get('roles', 'UserController@viewRoleList')->name('roles');
+	});
+});
