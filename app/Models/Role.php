@@ -12,7 +12,7 @@ class Role extends Model
 
     public function users()
     {
-    	$this->belongsTo('App\users::class', 'id', 'role');
+    	return $this->belongsTo(\App\User::class, 'id', 'role');
     }
 }
 

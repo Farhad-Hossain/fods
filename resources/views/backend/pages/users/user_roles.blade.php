@@ -74,9 +74,9 @@
                     @foreach($userRoles as $role)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $role->role }}</td>
+                        <td>{{ $role['role'] }}</td>
                         <td>{{ $role->users()->count() }}</td>
-                        <td>{{ $role->status == 1 ? 'Active' : 'Inactive' }}</td>
+                        <td>{{ $role['status'] == 1 ? 'Active' : 'Inactive' }}</td>
                     </tr>
                     @endforeach
                     
