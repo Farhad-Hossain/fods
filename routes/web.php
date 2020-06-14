@@ -20,12 +20,16 @@ Route::get('/', function () {
 
 Route::get('dashboard', [
     'uses' => 'Backend\DashboardController@showDashboard',
-    'as' => 'dashboard'
+    'as' => 'dashboard',
 ]);
 
 // Begin::backend route
 // Admin
 Route::group(['prefix'=>'admin', 'namespace'=>'Backend', 'as'=>'back.'], function(){
 	// Auth route
-	Route::get('/login', 'Auth\AuthController@loginFrom')->name('login');
+	
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
