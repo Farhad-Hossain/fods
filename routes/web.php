@@ -17,19 +17,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
-    return redirect()->route('dashboard');
+    return redirect()->route('login');
     return view('welcome');
 });
 
 
 
+Auth::routes();
+
 
 Route::get('dashboard', [
     'uses' => 'Backend\DashboardController@showDashboard',
     'as' => 'dashboard',
-]);
-
-Auth::routes();
+])->middleware('auth');
 
 Route::get('/home', 'HomeController@index')->name('home');
 

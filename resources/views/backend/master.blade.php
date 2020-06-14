@@ -106,7 +106,9 @@ License: You must have a valid license purchased only from themeforest(the above
 			</span>
 </div>
 <!--end::Scrolltop-->
-
+<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    @csrf
+</form>
 <!--end::Sticky Toolbar-->
 @include('backend.partials._scripts')
 </body>

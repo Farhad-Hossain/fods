@@ -18,9 +18,9 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
         	'name'=>Str::random(5),
         	'role'=>0,
-        	'email'=>Str::random(4).'@gmail.com',
-        	'password'=>Hash::make('11223344'),
-        	'password_salt'=>'11223344',
+        	'email'=>'admin@demo.com',
+        	'password'=>Hash::make('123456'),
+        	'password_salt'=>'123456',
         	'last_login_ip'=>'127.0.0.1',
         ]);
     }
