@@ -33,7 +33,7 @@ Route::get('dashboard', [
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['prefix'=>'admin', 'namespace'=>'Backend', 'as'=>'backend.', 'middleware'=>'auth'], function(){
+Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.', 'middleware'=>'auth'], function(){
 	Route::get('/', 'DashboardController@showDashboard')->name('dashboard');
 
 	// Users and role management
