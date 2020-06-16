@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class GlobarSetting extends Model
+class GlobalSetting extends Model
 {
-    
+
 }
