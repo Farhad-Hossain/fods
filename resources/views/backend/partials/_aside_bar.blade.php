@@ -54,7 +54,7 @@
                             <!--end::Svg Icon-->
                         </span>
                         <span class="menu-text">
-                            {!! __('menus.dashboard') !!}
+                            {!! __('backend_menus.dashboard') !!}
                         </span>
                     </a>
                 </li>
@@ -77,7 +77,7 @@
                             <!--end::Svg Icon-->
                         </span>
                         <span class="menu-text">
-                            {!! __('menus.user_management') !!}
+                            {!! __('backend_menus.user_management') !!}
                         </span>
                         <i class="menu-arrow"></i>
                     </a>
@@ -86,7 +86,7 @@
                         <ul class="menu-subnav">
                             <li class="menu-item menu-item-parent" aria-haspopup="true">
 								<span class="menu-link">
-									<span class="menu-text">{!! __('menus.user_management') !!}</span>
+									<span class="menu-text">{!! __('backend_menus.user_management') !!}</span>
 								</span>
                             </li>
                             <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
@@ -95,7 +95,7 @@
                                         <i class="menu-bullet menu-bullet-line">
                                             <span></span>
                                         </i>
-                                        <span class="menu-text">{!! __('menus.users') !!}</span>
+                                        <span class="menu-text">{!! __('backend_menus.users') !!}</span>
                                         <span class="menu-label">
 										<span class="label label-rounded label-primary">6</span>
 									</span>
@@ -111,7 +111,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text">{!! __('menus.users') !!}</span>
+                                                <span class="menu-text">{!! __('backend_menus.users') !!}</span>
                                             </a>
                                         </li>
                                         <li class="menu-item" aria-haspopup="true">
@@ -119,7 +119,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text">{!! __('menus.add_user') !!}</span>
+                                                <span class="menu-text">{!! __('backend_menus.add_user') !!}</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -130,7 +130,7 @@
                                     <i class="menu-bullet menu-bullet-line">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.role_and_permissions') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.role_and_permissions') !!}</span>
                                     <i class="menu-arrow"></i>
                                 </a>
                                 <div class="menu-submenu">
@@ -142,7 +142,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text">{!! __('menus.roles') !!}</span>
+                                                <span class="menu-text">{!! __('backend_menus.roles') !!}</span>
                                                 <i class="menu-arrow"></i>
                                             </a>
                                         </li>
@@ -172,7 +172,7 @@
                             </svg>
                             <!--end::Svg Icon-->
                         </span>
-                        <span class="menu-text">{!! __('menus.restaurant_management') !!}</span>
+                        <span class="menu-text">{!! __('backend_menus.restaurant_management') !!}</span>
                         <i class="menu-arrow"></i>
                     </a>
                     <div class="menu-submenu">
@@ -180,7 +180,7 @@
                         <ul class="menu-subnav">
                             <li class="menu-item menu-item-parent" aria-haspopup="true">
                                 <span class="menu-link">
-                                    <span class="menu-text">{!! __('menus.restaurant_management') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.restaurant_management') !!}</span>
                                 </span>
                             </li>
                             <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
@@ -188,7 +188,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.restaurant') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.restaurant') !!}</span>
                                     <i class="menu-arrow"></i>
                                 </a>
                             </li>
@@ -199,7 +199,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.promotion') !!} ({!! __('menus.coupon') !!})</span>
+                                    <span class="menu-text">{!! __('backend_menus.promotion') !!} ({!! __('backend_menus.coupon') !!})</span>
                                 </a>
                             </li>
 
@@ -209,7 +209,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.payment_transaction') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.payment_transaction') !!}</span>
                                 </a>
                             </li>
 
@@ -218,7 +218,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.cash_on_delivery') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.cash_on_delivery') !!}</span>
                                 </a>
                             </li>
 
@@ -227,7 +227,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.payout') !!} </span>
+                                    <span class="menu-text">{!! __('backend_menus.payout') !!} </span>
                                 </a>
                             </li>
 
@@ -236,7 +236,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.ledger') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.ledger') !!}</span>
                                 </a>
                             </li>
 
@@ -245,7 +245,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.rating_and_reviews') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.rating_and_reviews') !!}</span>
                                 </a>
                             </li>
                         </ul>
@@ -271,7 +271,7 @@
                             </svg>
                             <!--end::Svg Icon-->
                         </span>
-                        <span class="menu-text">{!! __('menus.food_management') !!}</span>
+                        <span class="menu-text">{!! __('backend_menus.food_management') !!}</span>
                         <i class="menu-arrow"></i>
                     </a>
                     <div class="menu-submenu">
@@ -279,7 +279,7 @@
                         <ul class="menu-subnav">
                             <li class="menu-item menu-item-parent" aria-haspopup="true">
                                 <span class="menu-link">
-                                    <span class="menu-text">{!! __('menus.food_category') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.food_category') !!}</span>
                                 </span>
                             </li>
                             <li class="menu-item" aria-haspopup="true">
@@ -287,7 +287,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.food') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.food') !!}</span>
                                 </a>
                             </li>
                             <li class="menu-item" aria-haspopup="true">
@@ -295,16 +295,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.cuisines_management') !!}</span>
-                                </a>
-                            </li>
-
-                            <li class="menu-item" aria-haspopup="true">
-                                <a href="layout/themes/header-dark.html" class="menu-link">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">{!! __('menus.groups_extra_foods') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.cuisines_management') !!}</span>
                                 </a>
                             </li>
 
@@ -313,7 +304,16 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.extra_foods') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.groups_extra_foods') !!}</span>
+                                </a>
+                            </li>
+
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="layout/themes/header-dark.html" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text">{!! __('backend_menus.extra_foods') !!}</span>
                                 </a>
                             </li>
                         </ul>
@@ -338,7 +338,7 @@
                             </svg>
                             <!--end::Svg Icon-->
                         </span>
-                        <span class="menu-text">{!! __('menus.order_management') !!}</span>
+                        <span class="menu-text">{!! __('backend_menus.order_management') !!}</span>
                         <i class="menu-arrow"></i>
                     </a>
                     <div class="menu-submenu">
@@ -346,7 +346,7 @@
                         <ul class="menu-subnav">
                             <li class="menu-item menu-item-parent" aria-haspopup="true">
                                 <span class="menu-link">
-                                    <span class="menu-text">{!! __('menus.order_management') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.order_management') !!}</span>
                                 </span>
                             </li>
                             <li class="menu-item" aria-haspopup="true">
@@ -354,7 +354,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.order') !!} </span>
+                                    <span class="menu-text">{!! __('backend_menus.order') !!} </span>
                                 </a>
                             </li>
 
@@ -363,7 +363,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.delivery_address') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.delivery_address') !!}</span>
                                 </a>
                             </li>
 
@@ -372,7 +372,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.order_status') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.order_status') !!}</span>
                                 </a>
                             </li>
 
@@ -381,7 +381,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.rating_and_reviews') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.rating_and_reviews') !!}</span>
                                 </a>
                             </li>
 
@@ -408,7 +408,7 @@
                             </svg>
                             <!--end::Svg Icon-->
                         </span>
-                        <span class="menu-text">{!! __('menus.delivery_management') !!}</span>
+                        <span class="menu-text">{!! __('backend_menus.delivery_management') !!}</span>
                         <i class="menu-arrow"></i>
                     </a>
                     <div class="menu-submenu">
@@ -416,7 +416,7 @@
                         <ul class="menu-subnav">
                             <li class="menu-item menu-item-parent" aria-haspopup="true">
                                 <span class="menu-link">
-                                    <span class="menu-text">{!! __('menus.delivery_management') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.delivery_management') !!}</span>
                                 </span>
                             </li>
                             <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
@@ -424,7 +424,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.delivery_boy_registration') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.delivery_boy_registration') !!}</span>
                                 </a>
                             </li>
                             <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
@@ -432,7 +432,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.cash_on_delivery') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.cash_on_delivery') !!}</span>
                                 </a>
                             </li>
                             <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
@@ -440,7 +440,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.payment_transaction') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.payment_transaction') !!}</span>
                                 </a>
                             </li>
                             <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
@@ -448,7 +448,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.payout') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.payout') !!}</span>
                                 </a>
                             </li>
                             <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
@@ -456,7 +456,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.driver_boy_ledger') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.driver_boy_ledger') !!}</span>
                                 </a>
                             </li>
 
@@ -465,7 +465,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.rating_and_reviews') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.rating_and_reviews') !!}</span>
                                 </a>
                             </li>
                         </ul>
@@ -490,7 +490,7 @@
                             </svg>
                             <!--end::Svg Icon-->
                         </span>
-                        <span class="menu-text">{!! __('menus.payment_gateway') !!}</span>
+                        <span class="menu-text">{!! __('backend_menus.payment_gateway') !!}</span>
                         <i class="menu-arrow"></i>
                     </a>
                     <div class="menu-submenu">
@@ -498,7 +498,7 @@
                         <ul class="menu-subnav">
                             <li class="menu-item menu-item-parent" aria-haspopup="true">
 								<span class="menu-link">
-									<span class="menu-text">{!! __('menus.payment_gateway') !!}</span>
+									<span class="menu-text">{!! __('backend_menus.payment_gateway') !!}</span>
 								</span>
                             </li>
                         </ul>
@@ -522,7 +522,7 @@
                             </svg>
                             <!--end::Svg Icon-->
                         </span>
-                        <span class="menu-text">{!! __('menus.wallet') !!}</span>
+                        <span class="menu-text">{!! __('backend_menus.wallet') !!}</span>
                         <i class="menu-arrow"></i>
                     </a>
                     <div class="menu-submenu">
@@ -530,7 +530,7 @@
                         <ul class="menu-subnav">
                             <li class="menu-item menu-item-parent" aria-haspopup="true">
 								<span class="menu-link">
-									<span class="menu-text">{!! __('menus.wallet') !!}</span>
+									<span class="menu-text">{!! __('backend_menus.wallet') !!}</span>
 								</span>
                             </li>
                         </ul>
@@ -557,7 +557,7 @@
                             </svg>
                             <!--end::Svg Icon-->
                         </span>
-                        <span class="menu-text">{!! __('menus.language_management') !!}</span>
+                        <span class="menu-text">{!! __('backend_menus.language_management') !!}</span>
                         <i class="menu-arrow"></i>
                     </a>
                     <div class="menu-submenu">
@@ -568,7 +568,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.language') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.language') !!}</span>
                                 </a>
                             </li>
                         </ul>
@@ -593,7 +593,7 @@
                             </svg>
                             <!--end::Svg Icon-->
                         </span>
-                        <span class="menu-text">{!! __('menus.content_management') !!}</span>
+                        <span class="menu-text">{!! __('backend_menus.content_management') !!}</span>
                         <i class="menu-arrow"></i>
                     </a>
                     <div class="menu-submenu">
@@ -601,7 +601,7 @@
                         <ul class="menu-subnav">
                             <li class="menu-item menu-item-parent" aria-haspopup="true">
                                 <span class="menu-link">
-                                    <span class="menu-text">{!! __('menus.content_management') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.content_management') !!}</span>
                                 </span>
                             </li>
                             <li class="menu-item" aria-haspopup="true">
@@ -609,7 +609,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.category') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.category') !!}</span>
                                 </a>
                             </li>
                             <li class="menu-item" aria-haspopup="true">
@@ -617,7 +617,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.content') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.content') !!}</span>
                                 </a>
                             </li>
                         </ul>
@@ -644,7 +644,7 @@
                             </svg>
                             <!--end::Svg Icon-->
                         </span>
-                        <span class="menu-text">{!! __('menus.menu_management') !!}</span>
+                        <span class="menu-text">{!! __('backend_menus.menu_management') !!}</span>
                         <i class="menu-arrow"></i>
                     </a>
 
@@ -653,7 +653,7 @@
                         <ul class="menu-subnav">
                             <li class="menu-item menu-item-parent" aria-haspopup="true">
                                 <span class="menu-link">
-                                    <span class="menu-text">{!! __('menus.category') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.category') !!}</span>
                                 </span>
                             </li>
                             <li class="menu-item" aria-haspopup="true">
@@ -661,7 +661,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.menu') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.menu') !!}</span>
                                 </a>
                             </li>
                         </ul>
@@ -686,7 +686,7 @@
                             </svg>
                             <!--end::Svg Icon-->
                         </span>
-                        <span class="menu-text">{!! __('menus.coupon') !!} ({!! __('menus.discount') !!}, {!! __('menus.gift_card') !!})</span>
+                        <span class="menu-text">{!! __('backend_menus.coupon') !!} ({!! __('backend_menus.discount') !!}, {!! __('backend_menus.gift_card') !!})</span>
                     </a>
                 </li>
                 <!-- End::coupon -->
@@ -708,7 +708,7 @@
                             </svg>
                             <!--end::Svg Icon-->
                         </span>
-                        <span class="menu-text">{!! __('menus.favourite') !!}</span>
+                        <span class="menu-text">{!! __('backend_menus.favourite') !!}</span>
                     </a>
                 </li>
                 <!-- End::Favourite -->
@@ -730,7 +730,7 @@
                             </svg>
                             <!--end::Svg Icon-->
                         </span>
-                        <span class="menu-text">{!! __('menus.reporting') !!}</span>
+                        <span class="menu-text">{!! __('backend_menus.reporting') !!}</span>
                         <i class="menu-arrow"></i>
                     </a>
                     <div class="menu-submenu">
@@ -738,7 +738,7 @@
                         <ul class="menu-subnav">
                             <li class="menu-item menu-item-parent" aria-haspopup="true">
 								<span class="menu-link">
-									<span class="menu-text">{!! __('menus.sales_report') !!}</span>
+									<span class="menu-text">{!! __('backend_menus.sales_report') !!}</span>
 								</span>
                             </li>
                             <li class="menu-item" aria-haspopup="true">
@@ -746,7 +746,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.expenses_report') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.expenses_report') !!}</span>
                                 </a>
                             </li>
 
@@ -755,7 +755,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.profit') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.profit') !!}</span>
                                 </a>
                             </li>
 
@@ -764,7 +764,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.dues') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.dues') !!}</span>
                                 </a>
                             </li>
 
@@ -773,7 +773,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.admin_ledger') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.admin_ledger') !!}</span>
                                 </a>
                             </li>
 
@@ -782,7 +782,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.restaurant') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.restaurant') !!}</span>
                                 </a>
                             </li>
 
@@ -791,7 +791,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.driver') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.driver') !!}</span>
                                 </a>
                             </li>
 
@@ -800,7 +800,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.report') !!} {!! __('menus.date_to_date') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.report') !!} {!! __('backend_menus.date_to_date') !!}</span>
                                 </a>
                             </li>
                         </ul>
@@ -825,7 +825,7 @@
                             </svg>
                             <!--end::Svg Icon-->
                         </span>
-                        <span class="menu-text">{!! __('menus.setting') !!}</span>
+                        <span class="menu-text">{!! __('backend_menus.setting') !!}</span>
                         <i class="menu-arrow"></i>
                     </a>
                     <div class="menu-submenu">
@@ -833,7 +833,7 @@
                         <ul class="menu-subnav">
                             <li class="menu-item menu-item-parent" aria-haspopup="true">
                                 <span class="menu-link">
-                                    <span class="menu-text">{!! __('menus.global_setting') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.global_setting') !!}</span>
                                 </span>
                             </li>
 
@@ -842,7 +842,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.global_settings') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.global_settings') !!}</span>
                                 </a>
                             </li>
         
@@ -851,7 +851,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.localization') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.localization') !!}</span>
                                 </a>
                             </li>
 
@@ -860,7 +860,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.country') !!}, {!! __('menus.area') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.country') !!}, {!! __('backend_menus.area') !!}</span>
                                 </a>
                             </li>
 
@@ -869,7 +869,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.currency') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.currency') !!}</span>
                                 </a>
                             </li>
 
@@ -878,7 +878,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.mobile_apps_setting') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.mobile_apps_setting') !!}</span>
                                 </a>
                             </li>
 
@@ -887,7 +887,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.theme') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.theme') !!}</span>
                                 </a>
                             </li>
 
@@ -896,7 +896,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.website_setting') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.website_setting') !!}</span>
                                 </a>
                             </li>
 
@@ -905,7 +905,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.social_authentication') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.social_authentication') !!}</span>
                                 </a>
                             </li>
 
@@ -914,7 +914,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.push_notification') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.push_notification') !!}</span>
                                 </a>
                             </li>
 
@@ -923,7 +923,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('menus.mail_setting') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.mail_setting') !!}</span>
                                 </a>
                             </li>
                         </ul>

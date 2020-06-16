@@ -18,56 +18,56 @@
 					@csrf
 					<div class="card-body">
 						<div class="form-group">
-							<label>{!! __('gs_form.app_name') !!}</label>
+							<label>{!! __('backend_gs_form.app_name') !!}</label>
 							<input type="text" class="form-control" placeholder="Application Name" name="app_name" />
 							@error('app_name')
 								<span class="form-text text-warning">{{ $message }}</span>
 							@enderror
 						</div>
 						<div class="form-group">
-							<label>{!! __('gs_form.contact_email') !!}</label>
+							<label>{!! __('backend_gs_form.contact_email') !!}</label>
 							<input type="text" class="form-control" placeholder="Contact Email" name="app_email" />
 							@error('app_email')
 								<span class="form-text text-warning">{{ $message }}</span>
 							@enderror
 						</div>
 						<div class="form-group">
-							<label>{!! __('gs_form.theme_color') !!}</label>
+							<label>{!! __('backend_gs_form.theme_color') !!}</label>
 							<input type="text" class="form-control" placeholder="Theme Color" name="theme_color" />
 							@error('theme_color')
 								<span class="form-text text-warning">{{ $message }}</span>
 							@enderror
 						</div>
 						<div class="form-group">
-							<label>{!! __('gs_form.navbar_color') !!}</label>
+							<label>{!! __('backend_gs_form.navbar_color') !!}</label>
 							<input type="text" class="form-control" placeholder="Navbar Color" name="navbar_color" />
 							@error('navbar_color')
 								<span class="form-text text-warning">{{ $message }}</span>
 							@enderror
 						</div>
 						<div class="form-group">
-							<label>{!! __('gs_form.delivery_charge') !!}</label>
+							<label>{!! __('backend_gs_form.delivery_charge') !!}</label>
 							<input type="text" class="form-control" placeholder="Delivery Charge" name="delivery_charge" />
 							@error('delivery_charge')
 								<span class="form-text text-warning">{{ $message }}</span>
 							@enderror
 						</div>
 						<div class="form-group">
-							<label>{!! __('gs_form.selling_charge') !!}</label>
+							<label>{!! __('backend_gs_form.selling_charge') !!}</label>
 							<input type="text" class="form-control" placeholder="Delivery Charge" name="selling_charge" />
 							@error('selling_charge')
 								<span class="form-text text-warning">{{ $message }}</span>
 							@enderror
 						</div>
 						<div class="form-group">
-							<label>{!! __('gs_form.contact_address') !!}</label>
+							<label>{!! __('backend_gs_form.contact_address') !!}</label>
 							<textarea class="form-control" name="contact_address"></textarea>
 							@error('contact_address')
 								<span class="form-text text-warning">{{ $message }}</span>
 							@enderror
 						</div>
 						<div class="form-group">
-							<label>{!! __('gs_form.app_status') !!}</label>
+							<label>{!! __('backend_gs_form.app_status') !!}</label>
 							<div class="radio-inline">
 								<label class="radio">
 								<input type="radio" name="app_status" value="1" />Active
@@ -106,7 +106,7 @@
 				
 					<div class="card-body">
 						<div class="form-group">
-							<label>{!! __('gs_form.app_logo') !!}</label>
+							<label>{!! __('backend_gs_form.app_logo') !!}</label>
 							<div></div>
 							<div class="custom-file">
 								<input type="file" class="custom-file-input" name="app_logo" />
@@ -118,7 +118,7 @@
 						</div>
 
 						<div class="form-group">
-							<label>{!! __('gs_form.app_description') !!}</label>
+							<label>{!! __('backend_gs_form.app_description') !!}</label>
 							<textarea class="form-control" name="app_description"></textarea>
 							@error('app_description')
 								<span class="form-text text-warning">{{ $message }}</span>
