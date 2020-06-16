@@ -59,7 +59,7 @@ return [
     'report' => 'Report',
     'date_to_date' => 'date to date',
     'setting' => 'Setting',
-    'global_setting' => 'Global Setting',
+    'global_settings' => 'Global Settings',
     'localization' => 'Localization',
     'country' => 'Country',
     'area' => 'Area',
