@@ -14,12 +14,26 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-
-    return redirect()->route('login');
-    return view('welcome');
+Route::group(['namespace'=>'Frontend', 'as'=>'frontend.'], function() {
+    Route::get('/', [
+        'uses' => 'HomeController@showIndexPage',
+        'as' => 'home'
+    ]);
+    Route::get('become-a-partner', [
+        'uses' => 'PageController@showBecomeAPartnerPage',
+        'as' => 'become-a-partner'
+    ]);
+    Route::get('add-restaurant', [
+        'uses' => 'UserRegisterController@showAddRestaurantPage',
+        'as' => 'add-restaurant'
+    ]);
+    Route::post('add-restaurant', [
+        'uses' => 'UserRegisterController@storeNewRestaurant',
+        'as' => 'add-restaurant'
+    ]);
 });
+
+
 
 
 
