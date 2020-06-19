@@ -1,5 +1,12 @@
 @extends('frontend.master')
 
+@section('custom_style')
+    <style type="text/css">
+        #time_table tr td{
+            vertical-align: middle;
+        }
+    </style>
+@endsection
 
 @section('main_content')
 
@@ -9,6 +16,17 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="left-title-text">
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
+
                         <h3>Add Restaurant</h3>
                     </div>
                 </div>
@@ -75,35 +93,35 @@
                             <h4>Contact Info</h4>
                             <div class="form-group">
                                 <label for="emailAddress">Name*</label>
-                                <input type="text" class="video-form" placeholder="Full name" name="user_name" value="{!! old('user_name') !!}">
+                                <input type="text" class="video-form" placeholder="Full name" name="user_name" value="{!! old('user_name') !!}" required>
                                 @error('user_name')
                                     <p class="text-info">{!! $message !!}</p>
                                 @enderror
                             </div>
                             <div class="form-group">
                                 <label>Email Address*</label>
-                                <input type="email" class="video-form" placeholder="Email Address" name="user_email" value="{!! old('user_email') !!}">
+                                <input type="email" class="video-form" placeholder="Email Address" name="user_email" value="{!! old('user_email') !!}" required>
                                 @error('')
                                     <p class="text-info">{!! $message !!}</p>
                                 @enderror
                             </div>
                             <div class="form-group">
                                 <label for="telNumber1">Phone Number*</label>
-                                <input type="tel" class="video-form" id="telNumber1" placeholder="Owner / Manager Phone Number" name="contact_phone" value="{!! old('contact_phone') !!}">
+                                <input type="tel" class="video-form" id="telNumber1" placeholder="Owner / Manager Phone Number" name="contact_phone" value="{!! old('contact_phone') !!}" required>
                                 @error('contact_phone')
                                     <p class="text-info">{!! $message !!}</p>
                                 @enderror
                             </div>
                             <div class="form-group">
                                 <label>Password*</label>
-                                <input type="password" class="video-form" placeholder="password" name="user_password" value="{!! old('user_password') !!}">
+                                <input type="password" class="video-form" placeholder="password" name="user_password" value="{!! old('user_password') !!}" required>
                                 @error('user_password')
                                     <p class="text-info">{!! $message !!}</p>
                                 @enderror
                             </div>
                             <div class="form-group">
                                 <label for="telNumber2">Restaurant Phone Number*</label>
-                                <input type="tel" class="video-form" id="telNumber2" placeholder="Restaurant Phone Number" name="restaurant_phone" value="{!! old('restaurant_phone') !!}">
+                                <input type="tel" class="video-form" id="telNumber2" placeholder="Restaurant Phone Number" name="restaurant_phone" value="{!! old('restaurant_phone') !!}" required>
                                 @error('restaurant_phone')
                                     <p class="text-info">{!! $message !!}</p>
                                 @enderror
@@ -140,98 +158,65 @@
                                 <div class="checkbox-title">Add Time*</div>
                                 <div class="filter-checkboxs">
                                     <ul>
-                                        <li>
-                                            <input type="checkbox" id="c21" value="1" name="active_days">
-                                            <label for="c21" title="Monday">Mon</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" id="c22" value="2" name="active_days">
-                                            <label for="c22" title="Tuesday">Tue</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" id="c23" value="3" name="active_days">
-                                            <label for="c23" title="Wednesday">Wed</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" id="c24" value="4" name="active_days">
-                                            <label for="c24" title="Thursday"> Thu</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" id="c25" value="5" name="active_days">
-                                            <label for="c25" title="Friday">Fri</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" id="c26" value="6" name="active_days">
-                                            <label for="c26" title="Saturday">Sat</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" id="c27" value="7" name="active_days">
-                                            <label for="c27" title="Sunday">Sun</label>
-                                        </li>
+                                        <table class="table table-sm table-collapsed" id="time_table">
+
+                                            <!-- Monday -->
+                                            <?php 
+                                                $days = ['Mon','Tue','Wed','Thu','Fri','Sut','Sun'];
+                                                for($i = 1; $i <= 7; $i++){ ?>
+
+                                                    <tr>
+                                                        <td>
+                                                            <input type="checkbox" id="d<?=$i?>" value="1" name="{{$days[$i-1]}}_day">
+                                                            <label for="d<?=$i?>" title="Monday"><?=$days[$i-1]?></label>
+                                                        </td>   
+                                                        <td>
+                                                            <select class="selectpicker" tabindex="-98" name="{{$days[$i-1]}}_time_from">
+                                                                <option value="12">12.00 AM</option>
+                                                                <option value="1">01.00 AM</option>
+                                                                <option value="2">02.00 AM</option>
+                                                                <option value="3">03.00 AM</option>
+                                                                <option value="4">04.00 AM</option>
+                                                                <option value="5">05.00 AM</option>
+                                                                <option value="6">06.00 AM</option>
+                                                                <option value="7">07.00 AM</option>
+                                                                <option value="8">08.00 AM</option>
+                                                                <option value="9">09.00 AM</option>
+                                                                <option value="9">10.00 AM</option>
+                                                                <option value="9">11.00 AM</option>
+                                                            </select>        
+                                                        </td>
+                                                        <td>to</td>
+                                                        <td>
+                                                            <select class="selectpicker" tabindex="-98" name="{{$days[$i-1]}}_time_to">
+                                                                <option value="12">12.00 PM</option>
+                                                                <option value="1">01.00 PM</option>
+                                                                <option value="2">02.00 PM</option>
+                                                                <option value="3">03.00 PM</option>
+                                                                <option value="4">04.00 PM</option>
+                                                                <option value="5">05.00 PM</option>
+                                                                <option value="6">06.00 PM</option>
+                                                                <option value="7">07.00 PM</option>
+                                                                <option value="8">08.00 PM</option>
+                                                                <option value="9">09.00 PM</option>
+                                                                <option value="9">10.00 PM</option>
+                                                                <option value="9">11.00 PM</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+
+
+                                            <?php 
+                                                }
+                                            ?>
+                                        </table>
                                     </ul>
                                     @error('active_days')
                                         <p class="text-info">{!! $message !!}</p>
                                     @enderror
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-3 col-12">
-                                    <div class="form-group">
-                                        <div class="checkbox-title">From*</div>
-                                        <select class="selectpicker" tabindex="-98" name="time_from" required>
-                                            <option value="0">12.00 AM</option>
-                                            <option value="1">01.00 AM</option>
-                                            <option value="2">02.00 AM</option>
-                                            <option value="3">03.00 AM</option>
-                                            <option value="4">04.00 AM</option>
-                                            <option value="5">05.00 AM</option>
-                                            <option value="6">06.00 AM</option>
-                                            <option value="7">07.00 AM</option>
-                                            <option value="8">08.00 AM</option>
-                                            <option value="9">09.00 AM</option>
-                                            <option value="9">10.00 AM</option>
-                                            <option value="9">11.00 AM</option>
-                                        </select>
-                                        @error('time_from')
-                                            <p class="text-info">{!! $message !!}</p>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-3 col-12">
-                                    <div class="form-group">
-                                        <div class="checkbox-title">To*</div>
-                                        <select class="selectpicker" tabindex="-98" name="time_to" required>
-                                            <option value="0">12.00 PM</option>
-                                            <option value="1">01.00 PM</option>
-                                            <option value="2">02.00 PM</option>
-                                            <option value="3">03.00 PM</option>
-                                            <option value="4">04.00 PM</option>
-                                            <option value="5">05.00 PM</option>
-                                            <option value="6">06.00 PM</option>
-                                            <option value="7">07.00 PM</option>
-                                            <option value="8">08.00 PM</option>
-                                            <option value="9">09.00 PM</option>
-                                            <option value="9">10.00 PM</option>
-                                            <option value="9">11.00 PM</option>
-                                        </select>
-                                        @error('time_to')
-                                            <p class="text-info">{!! $message !!}</p>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-3 col-12">
-                                    <button class="add-time-btn">Add Time</button>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="selected-time">
-                                        <ul>
-                                            <li>Monday</li>
-                                            <li>9.00AM to 11.00PM</li>
-                                            <li><a href="#"><i class="far fa-window-close"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                         <div class="basic-info c-top">
                             <h4>Location</h4>
@@ -257,23 +242,23 @@
                                 <div class="filter-checkboxs">
                                     <ul>
                                         <li>
-                                            <input type="checkbox" id="c28" name="characteristices" value="Breakfast">
+                                            <input type="checkbox" id="c28" name="characteristices[]" value="Breakfast">
                                             <label for="c28" title="Monday">Breakfast</label>
                                         </li>
                                         <li>
-                                            <input type="checkbox" id="c29" name="characteristices" value="Lunch">
+                                            <input type="checkbox" id="c29" name="characteristices[]" value="Lunch">
                                             <label for="c29" title="Tuesday">Lunch</label>
                                         </li>
                                         <li>
-                                            <input type="checkbox" id="c30" name="characteristices" value="Dinner">
+                                            <input type="checkbox" id="c30" name="characteristices[]" value="Dinner">
                                             <label for="c30" title="Wednesday">Dinner</label>
                                         </li>
                                         <li>
-                                            <input type="checkbox" id="c31" name="characteristices" value="Cafe">
+                                            <input type="checkbox" id="c31" name="characteristices[]" value="Cafe">
                                             <label for="c31" title="Thursday">Cafe's</label>
                                         </li>
                                         <li>
-                                            <input type="checkbox" id="c32" name="characteristices" value="NightLife">
+                                            <input type="checkbox" id="c32" name="characteristices[]" value="NightLife">
                                             <label for="c32" title="Friday">Nightlife</label>
                                         </li>
                                     </ul>

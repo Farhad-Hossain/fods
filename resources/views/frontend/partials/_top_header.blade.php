@@ -4,10 +4,10 @@
             <div class="col-md-4">
                 <div class="topbar-left text-center text-md-left">
                     <ul class="list-inline">
-                        <li> <a href="contact.html"> Contact </a></li>
-                        <li> <a href="about.html"> About Us </a></li>
-                        <li> <a href="our_blog.html"> Blog </a></li>
-                        <li> <a href="partner_with_us.html"> Become a Partner </a></li>
+                        <li> <a href="{{ route('frontend.contact-us') }}"> Contact </a></li>
+                        <li> <a href="{{ route('frontend.about-us') }}"> About Us </a></li>
+                        <li> <a href="{{ route('frontend.blog.our-blogs') }}"> Blog </a></li>
+                        <li> <a href="{{ route('frontend.become-a-partner') }}"> Become a Partner </a></li>
                     </ul>
                 </div>
             </div>
