@@ -32,6 +32,7 @@ Route::group(['namespace'=>'Frontend', 'as'=>'frontend.'], function() {
     Route::group(['prefix'=>'blog', 'as'=>'blog.'], function(){
         Route::get('our-blogs', 'BlogController@showOurBlogsPage')->name('our-blogs');
     });
+    
 });
 // END:frontend Routes
 
