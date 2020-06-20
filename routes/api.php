@@ -27,8 +27,8 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function () {
      * Admin Route Start
      * */
     Route::group(['prefix' => 'admin', 'namespace' => 'Backend\Admin', 'middleware' => 'api_auth'], function () {
-        Route::get('abc', [
-            'uses' => 'GlobalSettingController@abcd'
+        Route::post('settings/global-settings', [
+            'uses' => 'GlobalSettingController@storeGlobalSettings'
         ]);
     });
     /*
