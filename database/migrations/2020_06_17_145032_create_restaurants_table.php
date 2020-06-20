@@ -29,6 +29,8 @@ class CreateRestaurantsTable extends Migration
             $table->tinyInteger('cusiness');
             $table->tinyInteger('tags');
             $table->tinyInteger('payment_method')->comment('1.Cash Only, 2.Card Only, 3.Both');
+            $table->integer('delivery_charge');
+            $table->integer('selling_percentage');
             $table->timestamps();
         });
     }

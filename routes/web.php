@@ -1,19 +1,6 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
-
-
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+// DEGIN::Frontend routes
 Route::group(['namespace'=>'Frontend', 'as'=>'frontend.'], function() {
     Route::get('/', [
         'uses' => 'HomeController@showIndexPage',
@@ -31,15 +18,27 @@ Route::group(['namespace'=>'Frontend', 'as'=>'frontend.'], function() {
         'uses' => 'UserRegisterController@storeNewRestaurant',
         'as' => 'add-restaurant'
     ]);
+    // Contact
+    Route::get('contact-us', [
+        'uses' => 'ContactUsController@showContactUsForm',
+        'as' => 'contact-us',
+    ]);
+    // About
+    Route::get('about-us', [
+        'uses' => 'AboutUsController@showAboutUsPage',
+        'as' => 'about-us',
+    ]);
+    // Blog
+    Route::group(['prefix'=>'blog', 'as'=>'blog.'], function(){
+        Route::get('our-blogs', 'BlogController@showOurBlogsPage')->name('our-blogs');
+    });
+    
 });
-
-
-
-
+// END:frontend Routes
 
 Auth::routes();
 
-
+// DEGIN::Backend Routes
 Route::get('dashboard', [
     'uses' => 'Backend\DashboardController@showDashboard',
     'as' => 'dashboard',
@@ -55,9 +54,14 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
 		Route::get('roles', 'UserController@viewRoleList')->name('roles');
 	});
 
-
+    // Settings
 	Route::group(['prefix'=>'settings', 'as'=>'settings.', 'namespace'=>'Settings'], function(){
 		Route::get('global-settings', 'GlobalController@global_settings_form')->name('global_settings');
 		Route::post('global-settings', 'GlobalController@global_settings_submit');
 	});
+    // Restaurant 
+    Route::group(['prefix'=>'restaurant', 'as'=>'restaurant.' ], function(){
+        Route::get('list', 'RestaurantController@view_restaurant_list')->name('list');
+    });
 });
+// END::Backend routes

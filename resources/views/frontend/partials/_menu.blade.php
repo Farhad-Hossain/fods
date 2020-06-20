@@ -18,10 +18,10 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav mr-auto nav-text">
                                 <li class="nav-item active">
-                                    <a class="nav-link" href="index.html">Home </a>
+                                    <a class="nav-link" href="{{ URL::to('/') }}">Home </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="how_to_orders.html">How To Orders?</a>
+                                    <a class="nav-link" href="">How To Orders?</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="recipes.html">Recipes</a>
