@@ -10,13 +10,16 @@ use App\Models\Restaurant;
 use App\Models\RestaurantTiming;
 use App\Models\GlobalSetting;
 use App\Http\Requests\Frontend\RestaurantCreateRequest;
+use App\Models\RestaurantService;
+use App\Models\RestaurantCharacteristic;
 use DB;
 
 class UserRegisterController extends Controller
 {
     public function showAddRestaurantPage()
     {
-        return view('frontend.pages.add-restaurant');
+        $restaurant_services = RestaurantService::all();
+        return view('frontend.pages.add-restaurant', compact('restaurant_services'));
     }
 
 // Create a restaurant from user end
@@ -25,6 +28,8 @@ class UserRegisterController extends Controller
     {       
         
         $globals_info = GlobalSetting::first();
+
+
 
         try{
 
@@ -60,9 +65,7 @@ class UserRegisterController extends Controller
             $res->selling_percentage  = $globals_info->default_product_selling_percentage;
         	$res_id = $res->save();
 
-
             $days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sut', 'Sun'];
-
             for($i = 0; $i < sizeof($days); $i++){
                 $time = new RestaurantTiming();
                 $time->restaurant_id = $res_id;
@@ -76,6 +79,15 @@ class UserRegisterController extends Controller
                 $time->time_from     = $request->$from;
                 $time->time_to       = $request->$to;
                 $time->save();
+            }
+
+            
+
+            foreach ($request->characteristices as $characteristic) {
+                $char = new RestaurantCharacteristic();
+                $char->restaurant_id = $res_id;
+                $char->restaurant_service_id = $characteristic;
+                $char->save();
             }
 
             DB::commit();

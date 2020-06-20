@@ -241,26 +241,12 @@
                                 <div class="checkbox-title">Services*</div>
                                 <div class="filter-checkboxs">
                                     <ul>
-                                        <li>
-                                            <input type="checkbox" id="c28" name="characteristices[]" value="Breakfast">
-                                            <label for="c28" title="Monday">Breakfast</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" id="c29" name="characteristices[]" value="Lunch">
-                                            <label for="c29" title="Tuesday">Lunch</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" id="c30" name="characteristices[]" value="Dinner">
-                                            <label for="c30" title="Wednesday">Dinner</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" id="c31" name="characteristices[]" value="Cafe">
-                                            <label for="c31" title="Thursday">Cafe's</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" id="c32" name="characteristices[]" value="NightLife">
-                                            <label for="c32" title="Friday">Nightlife</label>
-                                        </li>
+                                        @foreach($restaurant_services as $service)
+                                            <li>
+                                                <input type="checkbox" id="cs{{ $loop->iteration }}" name="characteristices[]" value="{{ $service->id }}">
+                                                <label for="cs{{ $loop->iteration }}" title="Monday">{{ $service->name }}</label>
+                                            </li>
+                                        @endforeach
                                     </ul>
                                     @error('characteristices')
                                         <p class="text-info">{!! $message !!}</p>
