@@ -56,7 +56,7 @@
                             <img src="{!! asset('frontend/images/') !!}/partner-with-us/icon-2.svg" alt="">
                             <h4>For Driver</h4>
                             <p>Praesent rhoncus urna nec justo suscipit, id congue justo dictum.</p>
-                            <a href="add_driver.html" class="partner-btn1 btn-link">Add Vehicle</a>
+                            <a href="{{ route('frontend.add-driver') }}" class="partner-btn1 btn-link">Add Vehicle</a>
                         </div>
                     </div>
                 </div>

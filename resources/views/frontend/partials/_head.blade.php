@@ -8,7 +8,7 @@
     <!-- Favicon -->
     <link href="{!! asset('frontend/images/fav.png') !!}" rel="shortcut icon" type="image/x-icon"/>
 
-    <title>Natto | Home </title>
+    <title>Natto | {{ $title ?? '' }} </title>
 
     <!-- Bootstrap core CSS-->
     <link href="{!! asset('frontend/vendor/bootstrap/css/bootstrap.min.css') !!}" rel="stylesheet">

@@ -10,10 +10,14 @@ use App\Models\Restaurant;
 use App\Models\RestaurantTiming;
 use App\Models\GlobalSetting;
 use App\Http\Requests\Frontend\RestaurantCreateRequest;
+use App\Http\Requests\Frontend\DriverCreateRequest;
 use App\Models\RestaurantService;
 use App\Models\RestaurantCharacteristic;
 use App\Models\Cuisine;
 use App\Models\RestaurantTag;
+use App\Models\Driver;
+use App\Models\DriverTiming;
+
 
 use DB;
 
@@ -102,5 +106,62 @@ class UserRegisterController extends Controller
             dd('Something went wrong'.$e);
         }
 
+    }
+    // Driver 
+    public function showAddDriverPage()
+    {
+        $title = 'Driver Registration';
+        return view('frontend.pages.add-driver', compact('title'));
+    }
+    public function storeNewDriver(DriverCreateRequest $request){
+        
+        try{
+            DB::beginTransaction();
+
+            $user = new User();
+            $user->name     = $request->name;
+            $user->email    = $request->email;
+            $user->role     = 2;
+            $user->password = Hash::make( $request->password );
+            $user->password_salt = $request->password;
+            $user->last_login_ip = request()->ip();
+            $user->status   = 1;
+            $user_id = $user->save();
+
+            $driver = new Driver();
+            $driver->user_id = $user_id;
+            $driver->city = $request->city;
+            $driver->phone =$request->phone;
+            $driver->have_bike = $request->have_bike;
+            $driver->max_delivery_distance = $request->working_under;
+            $driver->earning_style = $request->earning_style;
+            $driver->registered_by = $request->registered_by;
+            $driver->status = 1;
+            $driver_id = $driver->save();
+    
+            $days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sut', 'Sun'];
+            for($i = 0; $i < sizeof($days); $i++){
+                $time = new DriverTiming();
+                $time->driver_id = $driver_id;
+                $time->day           = $days[$i];
+
+                $d = $days[$i].'_day';
+                $from = $days[$i].'_time_from';
+                $to = $days[$i].'_time_to';
+
+                $time->open_status   = $request->$d ? 1 : 2;
+                $time->time_from     = $request->$from;
+                $time->time_to       = $request->$to;
+                $time->save();
+            }
+            DB::commit();
+            session('type', 'danger');
+            session('message', 'Congratulations ! Driver Registerd Successfully');
+            echo "User created successfully and Driver created successfully. Route should go to next action";
+        }catch(Exception $e){
+            session('type', 'danger');
+            session('message', 'Something went wrong');
+        }
+        // return redirect()->back();
     }
 }
