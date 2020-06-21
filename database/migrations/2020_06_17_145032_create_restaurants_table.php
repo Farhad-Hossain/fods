@@ -26,11 +26,12 @@ class CreateRestaurantsTable extends Migration
             $table->tinyInteger('open_status')->comment('1.Open 2.Not open now');
             $table->tinyInteger('alcohol_status')->comment('1.available, 2.Unavailable');
             $table->tinyInteger('seating_status')->comment('1.Available 2.Unavailable');
-            $table->tinyInteger('cusiness');
-            $table->tinyInteger('tags');
+            $table->integer('cuisine');
+            $table->integer('tags');
             $table->tinyInteger('payment_method')->comment('1.Cash Only, 2.Card Only, 3.Both');
             $table->integer('delivery_charge');
             $table->integer('selling_percentage');
+            $table->tinyInteger('status')->default(1)->comment('1.Okey, 2.Deleted');
             $table->timestamps();
         });
     }

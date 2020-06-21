@@ -12,6 +12,9 @@ use App\Models\GlobalSetting;
 use App\Http\Requests\Frontend\RestaurantCreateRequest;
 use App\Models\RestaurantService;
 use App\Models\RestaurantCharacteristic;
+use App\Models\Cuisine;
+use App\Models\RestaurantTag;
+
 use DB;
 
 class UserRegisterController extends Controller
@@ -19,7 +22,9 @@ class UserRegisterController extends Controller
     public function showAddRestaurantPage()
     {
         $restaurant_services = RestaurantService::all();
-        return view('frontend.pages.add-restaurant', compact('restaurant_services'));
+        $cuisines = Cuisine::where('status', 1)->get();
+        $tags = RestaurantTag::where('status',1)->get();
+        return view('frontend.pages.add-restaurant', compact('restaurant_services', 'cuisines', 'tags'));
     }
 
 // Create a restaurant from user end
@@ -58,7 +63,7 @@ class UserRegisterController extends Controller
         	$res->characteristics = implode(',',$request->characteristices);
         	$res->alcohol_status = $request->alcohol_status;
         	$res->seating_status = $request->seating_status;
-        	$res->cusiness = $request->cuisines;
+        	$res->cuisine = $request->cuisines;
         	$res->tags 		= $request->tags;
         	$res->payment_method = $request->payment_method;
             $res->delivery_charge  = $globals_info->default_delivery_charge;

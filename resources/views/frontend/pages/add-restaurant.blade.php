@@ -293,17 +293,9 @@
                                 <div class="checkbox-title">Cuisines*</div>
                                 <select class="selectpicker" tabindex="-98" name="cuisines" required>
                                     <option value="">Select Cuisines</option>
-                                    <option value="1">Pizza</option>
-                                    <option value="2">Cakes & Desserts</option>
-                                    <option value="3">Sushi</option>
-                                    <option value="4">Fast Food</option>
-                                    <option value="5">Fish</option>
-                                    <option value="6">Lunch</option>
-                                    <option value="7">Coffee Cafe’s</option>
-                                    <option value="8">Cheese Tika</option>
-                                    <option value="9">Samosa and Pakodas</option>
-                                    <option value="10">Chinese</option>
-                                    <option value="11">Drinks & Beer</option>
+                                    @foreach($cuisines as $cuisine)
+                                        <option value="{{ $cuisine->id }}">{{ $cuisine->name }}</option>
+                                    @endforeach
                                 </select>
                                 @error('cuiseines')
                                     <p class="text-info">{!! $message !!}</p>
@@ -313,15 +305,10 @@
                                 <div class="checkbox-title">Tags*</div>
                                 <select class="selectpicker" tabindex="-98" name="tags" required>
                                     <option value="">Select Tags</option>
-                                    <option value="1">Lunch</option>
-                                    <option value="2">Dinner</option>
-                                    <option value="3">Breakfast</option>
-                                    <option value="4">Fast Food</option>
-                                    <option value="5">Non Veg</option>
-                                    <option value="6">Veg</option>
-                                    <option value="7">Pakodas & Samosas</option>
-                                    <option value="8">Beer bar</option>
-                                    <option value="9">Samosa and Pakodas</option>
+                                    @foreach($tags as $tag)
+                                        <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                    @endforeach
+           
                                 </select>
                             </div>
                         </div>

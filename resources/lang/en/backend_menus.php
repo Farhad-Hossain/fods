@@ -71,7 +71,9 @@ return [
     'push_notification' => 'Push Notification',
     'mail_setting' => 'Mail setting',
     'backup_and_restore' => 'Backup & Restore',
-    'help' => 'Help'
+    'help' => 'Help',
+    'cuisines' => 'Cuisines',
+    'tags' => 'Tags'
 
 
 ];
