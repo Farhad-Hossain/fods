@@ -5,20 +5,45 @@ namespace App\Http\Controllers\Api\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\GlobalSetting;
 use App\Models\Restaurant;
+use App\Models\RestaurantCharacteristic;
+use App\Models\RestaurantTiming;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserRegisterController extends Controller
 {
     public function storeNewRestaurant(Request $request)
     {
-        $globals_info = GlobalSetting::first();
+        $validator = Validator::make($request->all(), [
+            'restaurant_name'=>'required',
+            'city'=>'required',
+//            'creator_designation'=>'required',
+            'user_name'=>'required',
+            'user_email'=>'required',
+            'contact_phone'=>'required',
+            'user_password'=>'required',
+            'restaurant_phone'=>'required',
+            'open_status'=>'required|numeric',
+            'restaurant_address'=>'required',
+            'characteristices'=>'required',
+            'alcohol_status'=>'required',
+            'seating_status'=>'required',
+            'cuisines'=>'required',
+            'tags'=>'required',
+            'payment_method'=>'required'
+        ]);
 
+        if ($validator->fails()) {
+            $error = $validator->messages();
+            return response()->json($error, 400);
+        }
 
 
         try{
+            $globals_info = GlobalSetting::first();
 
             DB::beginTransaction();
 
@@ -78,10 +103,12 @@ class UserRegisterController extends Controller
             }
 
             DB::commit();
-            echo "User created successfully and Restaurant created successfully. Route should go to next action";
+
         }catch(\Exception $e){
             DB::rollBack();
-            dd('Something went wrong'.$e);
+            return response()->json(['message' => $e->getMessage()], 500);
         }
+
+        return response()->json($res, 200);
     }
 }

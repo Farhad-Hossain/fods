@@ -23,6 +23,10 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function () {
     Route::post('login', [
         'uses' => 'Auth\LoginController@postLogin'
     ]);
+
+    Route::post('add-restaurant', [
+        'uses' => 'Frontend\UserRegisterController@storeNewRestaurant'
+    ]);
     /*
      * Admin Route Start
      * */
