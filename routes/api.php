@@ -23,13 +23,53 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function () {
     Route::post('login', [
         'uses' => 'Auth\LoginController@postLogin'
     ]);
+
+    Route::post('add-restaurant', [
+        'uses' => 'Frontend\UserRegisterController@storeNewRestaurant'
+    ]);
     /*
      * Admin Route Start
      * */
     Route::group(['prefix' => 'admin', 'namespace' => 'Backend\Admin', 'middleware' => 'api_auth'], function () {
-        Route::get('abc', [
-            'uses' => 'GlobalSettingController@abcd'
+        Route::post('settings/global-settings', [
+            'uses' => 'GlobalSettingController@storeGlobalSettings'
         ]);
+
+        /*Cuisines route start*/
+        Route::post('cuisines', [
+            'uses' => 'CuisinesController@storeNewCuisines'
+        ]);
+        Route::get('cuisines', [
+            'uses' => 'CuisinesController@getAllCuisines'
+        ]);
+        Route::get('cuisines/{id}', [
+            'uses' => 'CuisinesController@getSingleCuisine'
+        ]);
+        Route::patch('cuisines/{id}', [
+            'uses' => 'CuisinesController@updateCuisine'
+        ]);
+        Route::delete('cuisines/{id}', [
+            'uses' => 'CuisinesController@deleteCuisine'
+        ]);
+        /*Cuisines route end*/
+
+        /*Restaurant Tag route start*/
+        Route::post('restaurant-tag', [
+            'uses' => 'RestaurantTagController@storeNewTag'
+        ]);
+        Route::get('restaurant-tag', [
+            'uses' => 'RestaurantTagController@getAllTags'
+        ]);
+        Route::get('restaurant-tag/{id}', [
+            'uses' => 'RestaurantTagController@getSingleTag'
+        ]);
+        Route::patch('restaurant-tag/{id}', [
+            'uses' => 'RestaurantTagController@updateTag'
+        ]);
+        Route::delete('restaurant-tag/{id}', [
+            'uses' => 'RestaurantTagController@deleteTag'
+        ]);
+        /*Restaurant Tag route end*/
     });
     /*
      * Admin Route End
