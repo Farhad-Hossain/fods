@@ -2,6 +2,7 @@
 @section('custom_style')
     <link href="{{asset('backend')}}/assets/plugins/custom/datatables/datatables.bundle.css?v=7.0.3" rel="stylesheet" type="text/css" />
 @endsection
+
 @section('main_content')
     <div class="container-fluid">
         @include('backend.message.flash_message')
@@ -12,7 +13,7 @@
                     <span class="card-icon">
                         <i class="flaticon2-heart-rate-monitor text-primary"></i>
                     </span>
-                    <h3 class="card-label">Restaurants</h3>
+                    <h3 class="card-label">{{ __('tags.tags') }}</h3>
                 </div>
                 <div class="card-toolbar">
                     <!--begin::Dropdown-->
@@ -59,7 +60,7 @@
                     </div>
                     <!--end::Dropdown-->
                     <!--begin::Button-->
-                    <a href="#" class="btn btn-primary font-weight-bolder">
+                    <a href="#" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#tagsModal">
                     <i class="la la-plus"></i>New Record</a>
                     <!--end::Button-->
                 </div>
@@ -70,41 +71,21 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>{!! __('rest_list.name') !!}</th>
-                            <th>{!! __('rest_list.owner') !!}</th>
-                            <th>{!! __('rest_list.city') !!}</th>
-                            <th>{!! __('rest_list.phone') !!}</th>
-                            <th>{!! __('rest_list.address') !!}</th>
-                            <th>{!! __('rest_list.open_status') !!}</th>
-                            <th>{!! __('rest_list.delivery_charge') !!}</th>
-                            <th>{!! __('rest_list.systmem_commision') !!}</th>
-                            <th>{!! __('rest_list.payment_method') !!}</th>
-                            <th>{!! __('rest_list.characteristics') !!}</th>
-                            <th>{!! __('rest_list.action') !!}</th>
-
+                            <th>{{ __('tags.name') }}</th>
+                            <th>{{ __('tags.status') }}</th>
+                            <th>{{ __('tags.action') }}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($rs as $r)
+                        @foreach($tags as $tag)
                         <tr>
-                            <td>{!! $loop->iteration !!}</td>
-
-                            <td>{!! $r->name !!}</td>
-                            <td>{!! $r->owner['name'] !!}</td>
-                            <td>{!! $r->city !!}</td>
-                            <td>{!! $r->phone !!}</td>
-                            <td>{!! $r->address !!}</td>
-                            <td>{!! ($r->open_staus==1) ? 'Open now' : 'Closed Now' !!}</td>
-                            <td>{!! $r->delivery_charge !!}</td>
-                            <td>{!! $r->selling_percentage !!}</td>
-                            <td>{!! ($r->payment_method==1) ? 'Cash Only' : 'Card Only'  !!}</td>
+                            <th>{{ $loop->iteration }}</th>
+                            <td>{{ $tag->name }}</td>
+                            <td>{{ $tag->status == 1 ? 'Active' : 'Inactive' }}</td>
                             <td>
-                                @foreach($r->all_characteristics as $c)
-                                    {{ $c->service_name->name }}, 
-                                @endforeach
+                                <a href="">Edit</a> | 
+                                <a href="{{ route('backend.restaurant.tags.delete', $tag->id) }}" onclick="return confirm('Are you sure want to delete ?')">Delete</a>
                             </td>
-                            <td nowrap="nowrap"></td>
-                            
                         </tr>
                         @endforeach
                     </tbody>
@@ -113,6 +94,42 @@
             </div>
         </div>
         <!--end::Card-->
+    </div>
+
+
+    <!-- Modal-->
+    <div class="modal fade" id="tagsModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('tags.modal_create_title') }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    
+
+                    <div class="card card-custom">
+                     <!--begin::Form-->
+                     <form class="form" action="{{ route('backend.restaurant.tags.add_submit') }}" method="post">
+                        @csrf
+                      <div class="card-body">
+                       <div class="form-group">
+                        <label>{{ __('tags.name') }}</label>
+                        <input type="text" class="form-control"  placeholder="Tag Name" name="name" required />
+                       </div>
+                      </div>
+                      <div class="card-footer">
+                       <button type="submit" class="btn btn-success mr-2">Submit</button>
+                       <button type="reset" class="btn btn-secondary">Cancel</button>
+                      </div>
+                     </form>
+                     <!--end::Form-->
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 

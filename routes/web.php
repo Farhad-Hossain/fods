@@ -62,6 +62,21 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
     // Restaurant 
     Route::group(['prefix'=>'restaurant', 'as'=>'restaurant.' ], function(){
         Route::get('list', 'RestaurantController@view_restaurant_list')->name('list');
+        Route::get('{restaurant}/delete', 'RestaurantController@delete_restaurant')->name('delete');
+        // cusines
+        Route::group(['prefix'=>'cuisines', 'as'=>'cuisines.'], function(){
+            Route::get('list', 'RestaurantController@view_cuisines_list')->name('list');
+            Route::post('add', 'RestaurantController@add_cuisines_submit')->name('add_submit');
+
+            Route::get('{cuisine}/delete', 'RestaurantController@delete_cuisine')->name('delete');
+        });
+
+        Route::group(['prefix'=>'tags', 'as'=>'tags.'], function(){
+            Route::get('list', 'RestaurantController@view_tags_list')->name('list');
+
+            Route::post('add-tags', 'RestaurantController@add_tag_submit')->name('add_submit');
+            Route::get('{tag}/delete', 'RestaurantController@delete_tag')->name('delete');
+        });
     });
 });
 // END::Backend routes
