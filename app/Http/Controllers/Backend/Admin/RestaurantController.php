@@ -64,9 +64,33 @@ class RestaurantController extends Controller
 		}	
 
 	}
+	public function edit_cuisines_submit(Request $request)
+	{
+		$request->validate([
+			'name' => 'required',
+			'id' => 'required',
+		]);
+		try{
+			$cuisine = Cuisine::findOrFail($request->id);
+			$cuisine->name = $request->name;
+			$cuisine->save();
+
+			session('type', 'success');
+			session('message', 'Cuisine Updated successfully.');
+			return redirect()->back();
+		}catch(Exception $e){
+			session('type', 'danger');
+			session('message', 'Something went wrong.');
+			return redirect()->back();
+		}
+
+
+		dd($request->all());
+	}
 	public function delete_cuisine($cuisine)
 	{
-		$cuisine = Cuisine::where('id', $cuisine);
+
+		$cuisine = Cuisine::where('id', $cuisine)->first();
 		$cuisine->status = 2;
 		$cuisine->save();
 
@@ -105,13 +129,43 @@ class RestaurantController extends Controller
 		}
 	}
 
-	public function edit_tag_submit()
+	public function edit_tag_submit(Request $request)
 	{
+		$request->validate([
+			'id' => 'required',
+			'name' => 'required',
+		]);
 
+		try{
+			$tag = RestaurantTag::findOrFail($request->id);
+			$tag->name = $request->name;
+			$tag->save();
+
+			session('type', 'success');
+			session('message', 'Tag updated successfully.');
+			return redirect()->back();
+		}catch(Exception $e){
+			session('type', 'danger');
+			session('message', 'Something went wrong.');
+			return redirect()->back();
+		}
 	}
 
 	public function delete_tag($tag)
 	{
+		try{
+			$tag = RestaurantTag::findOrFail($tag);
+			$tag->status = 2;
+			$tag->save();
+
+			session('type', 'success');
+			session('message', 'Tag Deleted successfully.');
+			return redirect()->back();
+		}catch(Exception $e){
+			session('type', 'danger');
+			session('message', 'Something went wrong.');
+			return redirect()->back();
+		}	
 
 	}
 	// End::Tags

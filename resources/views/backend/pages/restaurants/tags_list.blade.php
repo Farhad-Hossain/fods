@@ -83,8 +83,11 @@
                             <td>{{ $tag->name }}</td>
                             <td>{{ $tag->status == 1 ? 'Active' : 'Inactive' }}</td>
                             <td>
-                                <a href="">Edit</a> | 
-                                <a href="{{ route('backend.restaurant.tags.delete', $tag->id) }}" onclick="return confirm('Are you sure want to delete ?')">Delete</a>
+                                <a href="#" data-toggle="modal" data-target="#tagsModal" onclick="set_for_edit(
+                                                '{{ $tag->id }}',
+                                                '{{ $tag->name }}'
+                                )"><i class="far fa-edit text-primary"></i></a>  
+                                <a href="{{ route('backend.restaurant.tags.delete', $tag->id) }}" onclick="return confirm('Are you sure want to delete ?')"><i class="far fa-trash-alt ml-2 text-danger"></i></a>
                             </td>
                         </tr>
                         @endforeach
@@ -102,7 +105,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('tags.modal_create_title') }}</h5>
+                    <h5 class="modal-title" id="tag_modal_title">{{ __('tags.modal_create_title') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>
                     </button>
@@ -114,6 +117,7 @@
                      <!--begin::Form-->
                      <form class="form" action="{{ route('backend.restaurant.tags.add_submit') }}" method="post">
                         @csrf
+                        <input type="hidden" name="id">
                       <div class="card-body">
                        <div class="form-group">
                         <label>{{ __('tags.name') }}</label>
@@ -121,8 +125,8 @@
                        </div>
                       </div>
                       <div class="card-footer">
-                       <button type="submit" class="btn btn-success mr-2">Submit</button>
-                       <button type="reset" class="btn btn-secondary">Cancel</button>
+                       <button type="submit" class="btn btn-success mr-2">Save Changes</button>
+                       <button type="reset" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                       </div>
                      </form>
                      <!--end::Form-->
@@ -138,5 +142,23 @@
     <script src="{{asset('backend')}}/assets/js/pages/crud/datatables/advanced/column-visibility.js?v=7.0.3"></script>
     <script type="text/javascript">
         $("#restaurant_table").dataTable();
+
+
+        function set_for_edit(id, name)
+        {
+            $("#tag_modal_title").text("{{ __('tags.modal_edit_title') }}");
+            var action = "{{ route('backend.restaurant.tags.edit_submit') }}";
+            $("form").attr('action', action)
+            $("input[name='id']").val(id);
+            $("input[name='name']").val(name);
+        }
+        function set_for_create()
+        {
+            $("#tag_modal_title").text("{{ __('tags.modal_create_title') }}");
+            var action = "{{ route('backend.restaurant.tags.add_submit') }}";
+            $("form").attr('action', action)
+            $("input[name='id']").val("");
+            $("input[name='name']").val("");
+        }
     </script>
 @endsection

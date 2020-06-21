@@ -4,6 +4,7 @@
 		'name' => 'Name',
 		'status' => 'Status',
 		'action' => 'Action',
-		'modal_title' => 'Create Cuisine',
+		'modal_create_title' => 'Create Cuisine',
+		'modal_edit_title' => 'Edit Modal',
 	];
 ?>

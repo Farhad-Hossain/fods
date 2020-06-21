@@ -60,8 +60,9 @@
                     </div>
                     <!--end::Dropdown-->
                     <!--begin::Button-->
-                    <a href="#" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#exampleModalLong">
-                    <i class="la la-plus" data-toggle="modal" data-target="#exampleModalLong"></i>New Record</a>
+                    <a href="#" class="btn btn-primary font-weight-bolder" onclick="clear_value_and_rise_modal()" data-toggle="modal" data-target="#cuisines_modal">
+                        <i class="la la-plus"></i>New Record
+                    </a>
                     <!--end::Button-->
                 </div>
             </div>
@@ -83,8 +84,11 @@
                             <td>{{ $cuisine->name }}</td>
                             <td>{{ $cuisine->status == 1 ? 'Active' : 'Inactive' }}</td>
                             <td>
-                                <a href="">Edit</a> | 
-                                <a href="{{ route('backend.restaurant.cuisines.delete', $cuisine->id) }}" onclick="return confirm('Are you sure want to delete ?')">Delete</a>
+                                <a href="" data-toggle="modal" data-target="#cuisines_modal" onclick="set_value_and_rise_modal(
+                                                                             '{{ $cuisine->id }}',
+                                                                             '{{ $cuisine->name }}'
+                                )"><i class="far fa-edit text-primary"></i></a> | 
+                                <a href="{{ route('backend.restaurant.cuisines.delete', $cuisine->id) }}" onclick="return confirm('Are you sure want to delete ?')"><i class="far fa-trash-alt text-danger ml-2"></i></a>
                             </td>
                         </tr>
                         @endforeach
@@ -98,11 +102,11 @@
 
 
     <!-- Modal-->
-    <div class="modal fade" id="exampleModalLong" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal fade" id="cuisines_modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('cuisines.modal_title') }}</h5>
+                    <h5 class="modal-title" id="cuisine_modal_title">{{ __('cuisines.modal__create_title') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>
                     </button>
@@ -115,14 +119,15 @@
                      <form class="form" action="{{ route('backend.restaurant.cuisines.add_submit') }}" method="post">
                         @csrf
                       <div class="card-body">
+                        <input type="hidden" name="id">
                        <div class="form-group">
                         <label>{{ __('cuisines.name') }}</label>
                         <input type="text" class="form-control"  placeholder="Cuisines Name" name="name" required />
                        </div>
                       </div>
                       <div class="card-footer">
-                       <button type="submit" class="btn btn-success mr-2">Submit</button>
-                       <button type="reset" class="btn btn-secondary">Cancel</button>
+                       <button type="submit" class="btn btn-success mr-2">Save Changes</button>
+                       <button type="reset" data-dismiss="modal" class="btn btn-secondary">Cancel</button>
                       </div>
                      </form>
                      <!--end::Form-->
@@ -138,5 +143,21 @@
     <script src="{{asset('backend')}}/assets/js/pages/crud/datatables/advanced/column-visibility.js?v=7.0.3"></script>
     <script type="text/javascript">
         $("#restaurant_table").dataTable();
+
+        function set_value_and_rise_modal(id, name)
+        {
+            $("#cuisine_modal_title").text("{{ __('cuisines.modal_edit_title') }}");
+            var action = "{{ route('backend.restaurant.cuisines.edit_submit') }}";
+            $("form").attr('action', action)
+            $("input[name='id']").val(id);
+            $("input[name='name']").val(name);
+        }
+        function clear_value_and_rise_modal()
+        {
+            $("#cuisine_modal_title").text("{{ __('cuisines.modal_create_title') }}");
+            var action = "{{ route('backend.restaurant.cuisines.add_submit') }}";
+            $("form").attr('action', action)
+            $("input[name='name']").val("");   
+        }
     </script>
 @endsection

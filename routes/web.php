@@ -67,14 +67,16 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
         Route::group(['prefix'=>'cuisines', 'as'=>'cuisines.'], function(){
             Route::get('list', 'RestaurantController@view_cuisines_list')->name('list');
             Route::post('add', 'RestaurantController@add_cuisines_submit')->name('add_submit');
+            Route::post('edit', 'RestaurantController@edit_cuisines_submit')->name('edit_submit');
 
             Route::get('{cuisine}/delete', 'RestaurantController@delete_cuisine')->name('delete');
         });
-
+        // Begin::Tags
         Route::group(['prefix'=>'tags', 'as'=>'tags.'], function(){
             Route::get('list', 'RestaurantController@view_tags_list')->name('list');
 
             Route::post('add-tags', 'RestaurantController@add_tag_submit')->name('add_submit');
+            Route::post('edit-tag', 'RestaurantController@edit_tag_submit')->name('edit_submit');
             Route::get('{tag}/delete', 'RestaurantController@delete_tag')->name('delete');
         });
     });
