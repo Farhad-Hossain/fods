@@ -16,10 +16,10 @@ class ApiAuth
      */
     public function handle($request, Closure $next)
     {
-        if (empty($request->api_token)) {
+        if (empty($request->header('api-token'))) {
             return response()->json('Unauthorized.', 401);
         }
-        $user = User::where('api_token', $request->api_token)->first();
+        $user = User::where('api_token', $request->header('api-token'))->first();
         if (empty($user)) {
             return response()->json('Unauthorized.', 401);
         }

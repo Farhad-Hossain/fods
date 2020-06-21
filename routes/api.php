@@ -34,6 +34,26 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function () {
         Route::post('settings/global-settings', [
             'uses' => 'GlobalSettingController@storeGlobalSettings'
         ]);
+
+        /*Cuisines route start*/
+        Route::post('cuisines', [
+            'uses' => 'CuisinesController@storeNewCuisines'
+        ]);
+        Route::get('cuisines', [
+            'uses' => 'CuisinesController@getAllCuisines'
+        ]);
+        Route::get('cuisines/{id}', [
+            'uses' => 'CuisinesController@getSingleCuisine'
+        ]);
+        Route::patch('cuisines/{id}', [
+            'uses' => 'CuisinesController@updateCuisine'
+        ]);
+        Route::delete('cuisines/{id}', [
+            'uses' => 'CuisinesController@deleteCuisine'
+        ]);
+
+
+        /*Cuisines route end*/
     });
     /*
      * Admin Route End
