@@ -51,9 +51,25 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function () {
         Route::delete('cuisines/{id}', [
             'uses' => 'CuisinesController@deleteCuisine'
         ]);
-
-
         /*Cuisines route end*/
+
+        /*Restaurant Tag route start*/
+        Route::post('restaurant-tag', [
+            'uses' => 'RestaurantTagController@storeNewTag'
+        ]);
+        Route::get('restaurant-tag', [
+            'uses' => 'RestaurantTagController@getAllTags'
+        ]);
+        Route::get('restaurant-tag/{id}', [
+            'uses' => 'RestaurantTagController@getSingleTag'
+        ]);
+        Route::patch('restaurant-tag/{id}', [
+            'uses' => 'RestaurantTagController@updateTag'
+        ]);
+        Route::delete('restaurant-tag/{id}', [
+            'uses' => 'RestaurantTagController@deleteTag'
+        ]);
+        /*Restaurant Tag route end*/
     });
     /*
      * Admin Route End
