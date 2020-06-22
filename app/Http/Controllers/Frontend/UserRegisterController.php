@@ -15,7 +15,7 @@ use App\Models\RestaurantCharacteristic;
 use App\Models\Cuisine;
 use App\Models\RestaurantTag;
 
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class UserRegisterController extends Controller
 {
@@ -70,7 +70,7 @@ class UserRegisterController extends Controller
             $res->selling_percentage  = $globals_info->default_product_selling_percentage;
         	$res_id = $res->save();
 
-            $days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sut', 'Sun'];
+            $days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
             for($i = 0; $i < sizeof($days); $i++){
                 $time = new RestaurantTiming();
                 $time->restaurant_id = $res_id;
@@ -79,6 +79,9 @@ class UserRegisterController extends Controller
                 $d = $days[$i].'_day';
                 $from = $days[$i].'_time_from';
                 $to = $days[$i].'_time_to';
+
+                $request->$from = str_replace(" ", "", $request->$from);
+                $request->$to = str_replace(" ", "", $request->$to);
 
                 $time->open_status   = $request->$d ? 1 : 2;
                 $time->time_from     = $request->$from;

@@ -24,4 +24,5 @@
     <!-- Fontawesome styles for this template-->
     <link href="{!! asset('frontend/vendor/fontawesome-free/css/all.min.css') !!}" rel="stylesheet" type="text/css">
 
+    @yield('custom_style')
 </head>

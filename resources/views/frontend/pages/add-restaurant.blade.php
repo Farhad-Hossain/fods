@@ -1,9 +1,14 @@
 @extends('frontend.master')
 
 @section('custom_style')
+    <link rel="stylesheet" href="{!! asset('frontend/plugins/wickedpicker/dist/wickedpicker.min.css') !!}">
     <style type="text/css">
         #time_table tr td{
             vertical-align: middle;
+        }
+        .wickedpicker__controls {
+            padding: 0;
+            margin: 0;
         }
     </style>
 @endsection
@@ -162,7 +167,7 @@
 
                                             <!-- Monday -->
                                             <?php 
-                                                $days = ['Mon','Tue','Wed','Thu','Fri','Sut','Sun'];
+                                                $days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
                                                 for($i = 1; $i <= 7; $i++){ ?>
 
                                                     <tr>
@@ -171,7 +176,9 @@
                                                             <label for="d<?=$i?>" title="Monday"><?=$days[$i-1]?></label>
                                                         </td>   
                                                         <td>
-                                                            <select class="selectpicker" tabindex="-98" name="{{$days[$i-1]}}_time_from">
+                                                            <input type="text" name="{{$days[$i-1]}}_time_from" class="timepicker"/>
+
+                                                            {{--<select class="selectpicker" tabindex="-98" name="{{$days[$i-1]}}_time_from">
                                                                 <option value="12">12.00 AM</option>
                                                                 <option value="1">01.00 AM</option>
                                                                 <option value="2">02.00 AM</option>
@@ -184,11 +191,13 @@
                                                                 <option value="9">09.00 AM</option>
                                                                 <option value="9">10.00 AM</option>
                                                                 <option value="9">11.00 AM</option>
-                                                            </select>        
+                                                            </select>        --}}
                                                         </td>
                                                         <td>to</td>
                                                         <td>
-                                                            <select class="selectpicker" tabindex="-98" name="{{$days[$i-1]}}_time_to">
+                                                            <input type="text" name="{{$days[$i-1]}}_time_to" class="timepicker"/>
+
+                                                            {{--<select class="selectpicker" tabindex="-98" name="{{$days[$i-1]}}_time_to">
                                                                 <option value="12">12.00 PM</option>
                                                                 <option value="1">01.00 PM</option>
                                                                 <option value="2">02.00 PM</option>
@@ -201,7 +210,7 @@
                                                                 <option value="9">09.00 PM</option>
                                                                 <option value="9">10.00 PM</option>
                                                                 <option value="9">11.00 PM</option>
-                                                            </select>
+                                                            </select>--}}
                                                         </td>
                                                     </tr>
 
@@ -359,4 +368,14 @@
     <!--add-restaurant end-->
 
     
+@endsection
+
+@section('custom_script')
+    <script src="{!! asset('frontend/plugins/wickedpicker/dist/wickedpicker.min.js') !!}"></script>
+    <script>
+        var options = {
+            twentyFour: true,  //Display 24 hour format, defaults to false
+        };
+        $('.timepicker').wickedpicker(options);
+    </script>
 @endsection

@@ -30,6 +30,8 @@
 <script src="{!! asset('frontend/vendor/OwlCarousel/owl.carousel.js') !!}"></script>
 <script src="{!! asset('frontend/js/owlslider.js') !!}"></script>
 
+
+@yield('custom_script')
 </body>
 
 </html>
