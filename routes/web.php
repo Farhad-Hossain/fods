@@ -88,5 +88,14 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
             Route::get('{tag}/delete', 'RestaurantController@delete_tag')->name('delete');
         });
     });
+    // BEGIN::Delivery
+    Route::group(['prefix'=>'delivery', 'as'=>'delivery.'], function(){
+        ROute::get('driver-list', 'DeliveryController@show_driver_list')->name('driver-list');
+
+        Route::get('driver-regiser', 'DeliveryController@register_driver_form')->name('driver-register');
+        Route::post('driver-regiser', 'DeliveryController@register_driver_submit');
+
+
+    });
 });
 // END::Backend routes

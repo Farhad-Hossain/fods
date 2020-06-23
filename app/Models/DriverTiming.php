@@ -9,4 +9,5 @@ class DriverTiming extends Model
     protected $fillable = [
     	'driver_id', 'day', 'open_status', 'time_from', 'time_to'
     ];
+    
 }

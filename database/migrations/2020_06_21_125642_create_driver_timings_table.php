@@ -18,8 +18,8 @@ class CreateDriverTimingsTable extends Migration
             $table->integer('driver_id');
             $table->string('day');
             $table->string('open_status');
-            $table->string('time_from')->comment('AM Time');
-            $table->string('time_to')->comment('PM Time');
+            $table->time('time_from');
+            $table->time('time_to');
             $table->timestamps();
         });
     }
