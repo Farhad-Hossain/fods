@@ -26,6 +26,8 @@ return [
     'rating_and_reviews' => 'Rating & Reviews',
     'food_management' => 'Food Management',
     'food_category' => 'Food Category',
+    'add_food_category' => 'Add Food Category',
+    'food_category_list' => 'Food Category List',
     'food' => 'Food',
     'cuisines_management' => 'Cuisines Management',
     'groups_extra_foods' => 'Groups Extra Foods',

@@ -88,9 +88,62 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
             Route::get('{tag}/delete', 'RestaurantController@delete_tag')->name('delete');
         });
     });
+
+    /*
+     * BEGIN::Food Route
+     * */
+    Route::group(['prefix'=>'food', 'as'=>'food.'], function(){
+        Route::get('category/add', [
+            'as' => 'category.add',
+            'uses' => 'FoodCategoryController@addFoodCategoryPage'
+        ]);
+        Route::post('category/add', [
+            'as' => 'category.add',
+            'uses' => 'FoodCategoryController@storeFoodCategory'
+        ]);
+        Route::get('category', [
+            'as' => 'category.list',
+            'uses' => 'FoodCategoryController@showFoodCategoryList'
+        ]);
+        Route::get('category/edit/{id}', [
+            'as' => 'category.edit',
+            'uses' => 'FoodCategoryController@editFoodCategoryPage'
+        ]);
+        Route::post('category/edit/{id}', [
+            'as' => 'category.edit',
+            'uses' => 'FoodCategoryController@updateFoodCategory'
+        ]);
+
+
+        Route::get('add', [
+            'as' => 'add',
+            'uses' => 'FoodController@addFoodPage'
+        ]);
+        Route::post('add', [
+            'as' => 'add',
+            'uses' => 'FoodController@storeFood'
+        ]);
+        Route::post('list', [
+            'as' => 'list',
+            'uses' => 'FoodController@showFoodList'
+        ]);
+        Route::get('edit/{id}', [
+            'as' => 'edit',
+            'uses' => 'FoodController@editFoodPage'
+        ]);
+        Route::post('edit/{id}', [
+            'as' => 'edit',
+            'uses' => 'FoodController@updateFood'
+        ]);
+
+
+    });
+    /*
+     * END::Food Route
+     * */
     // BEGIN::Delivery
     Route::group(['prefix'=>'delivery', 'as'=>'delivery.'], function(){
-        ROute::get('driver-list', 'DeliveryController@show_driver_list')->name('driver-list');
+        Route::get('driver-list', 'DeliveryController@show_driver_list')->name('driver-list');
 
         Route::get('driver-regiser', 'DeliveryController@register_driver_form')->name('driver-register');
         Route::post('driver-regiser', 'DeliveryController@register_driver_submit');
