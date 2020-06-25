@@ -9,7 +9,7 @@ class FoodController extends Controller
 {
     public function addFoodPage()
     {
-        
+        return view('backend.pages.food.add_food');
     }
 
     public function storeFood()
