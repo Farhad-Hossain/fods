@@ -88,7 +88,7 @@
                                                                              '{{ $cuisine->id }}',
                                                                              '{{ $cuisine->name }}'
                                 )"><i class="far fa-edit text-primary"></i></a> | 
-                                <a href="{{ route('backend.restaurant.cuisines.delete', $cuisine->id) }}" onclick="return confirm('Are you sure want to delete ?')"><i class="far fa-trash-alt text-danger ml-2"></i></a>
+                                <a href="{{ route('backend.food.cuisines.delete', $cuisine->id) }}" onclick="return confirm('Are you sure want to delete ?')"><i class="far fa-trash-alt text-danger ml-2"></i></a>
                             </td>
                         </tr>
                         @endforeach
@@ -116,7 +116,7 @@
 
                     <div class="card card-custom">
                      <!--begin::Form-->
-                     <form class="form" action="{{ route('backend.restaurant.cuisines.add_submit') }}" method="post">
+                     <form class="form" action="{{ route('backend.food.cuisines.add_submit') }}" method="post">
                         @csrf
                       <div class="card-body">
                         <input type="hidden" name="id">
@@ -147,7 +147,7 @@
         function set_value_and_rise_modal(id, name)
         {
             $("#cuisine_modal_title").text("{{ __('cuisines.modal_edit_title') }}");
-            var action = "{{ route('backend.restaurant.cuisines.edit_submit') }}";
+            var action = "{{ route('backend.food.cuisines.edit_submit') }}";
             $("form").attr('action', action)
             $("input[name='id']").val(id);
             $("input[name='name']").val(name);
@@ -155,7 +155,7 @@
         function clear_value_and_rise_modal()
         {
             $("#cuisine_modal_title").text("{{ __('cuisines.modal_create_title') }}");
-            var action = "{{ route('backend.restaurant.cuisines.add_submit') }}";
+            var action = "{{ route('backend.food.cuisines.add_submit') }}";
             $("form").attr('action', action)
             $("input[name='name']").val("");   
         }

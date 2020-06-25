@@ -111,6 +111,7 @@ License: You must have a valid license purchased only from themeforest(the above
 </form>
 <!--end::Sticky Toolbar-->
 @include('backend.partials._scripts')
+@yield('modals')
 </body>
 <!--end::Body-->
 </html>

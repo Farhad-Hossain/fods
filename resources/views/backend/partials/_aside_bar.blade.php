@@ -248,16 +248,6 @@
                                     <span class="menu-text">{!! __('backend_menus.rating_and_reviews') !!}</span>
                                 </a>
                             </li>
-
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                <a href="{{ route('backend.restaurant.cuisines.list') }}" class="menu-link menu-toggle">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">{!! __('backend_menus.cuisines') !!}</span>
-                                </a>
-                            </li>
-
                             <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="{{ route('backend.restaurant.tags.list') }}" class="menu-link menu-toggle">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -319,17 +309,18 @@
                                     <span class="menu-text">{!! __('backend_menus.food') !!}</span>
                                 </a>
                             </li>
-                            <li class="menu-item" aria-haspopup="true">
-                                <a href="layout/themes/header-dark.html" class="menu-link">
+                            
+                            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                <a href="{{ route('backend.food.cuisines.list') }}" class="menu-link menu-toggle">
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('backend_menus.cuisines_management') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.cuisines') !!}</span>
                                 </a>
                             </li>
 
                             <li class="menu-item" aria-haspopup="true">
-                                <a href="layout/themes/header-dark.html" class="menu-link">
+                                <a href="{!! route('backend.food.extra_food.list') !!}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
@@ -338,7 +329,7 @@
                             </li>
 
                             <li class="menu-item" aria-haspopup="true">
-                                <a href="layout/themes/header-dark.html" class="menu-link">
+                                <a href="{!! route('backend.food.extra_food.list') !!}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>

@@ -84,13 +84,10 @@
                             <td>{{ $category->description }}</td>
                             <td><img style="width: 100px;" src="{{ asset('uploads/category/'. $category->image) }}" alt="{{ $category->name }}"></td>
                             <td>
-                                <a href="" class="mr-2">
-                                    <i class="far fa-user text-primary"></i>
-                                </a>
-                                <a href="" class="text-primary mr-2">
+                                <a href="{{ route('backend.food.category.edit', $category->id) }}" class="text-primary mr-2">
                                     <i class="far fa-edit text-primary"></i>
                                 </a>
-                                <a href="" class="text-danger">
+                                <a href="{!! route('backend.food.category.delete', $category->id) !!}" class="text-danger" onclick="return confirm('Are you sure want to delete ??')">
                                     <i class="far fa-trash-alt text-danger"></i>
                                 </a>
                             </td>

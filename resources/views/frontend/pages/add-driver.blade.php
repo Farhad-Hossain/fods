@@ -174,8 +174,8 @@
 									  <label for="c6">Working under 5 km</label>
 									</li>
 									<li>
-									  <input type="radio" value="8" id="c6" name="working_under">
-									  <label for="c6">Working under 8 km</label>
+									  <input type="radio" value="8" id="c7" name="working_under">
+									  <label for="c7">Working under 8 km</label>
 									</li>
 								</ul>
 							</div>
@@ -208,8 +208,8 @@
 									  <label for="c10">Ola Cab</label>
 									</li>
 									<li>
-									  <input type="radio" value="1" id="c10" name="registered_by">
-									  <label for="c10">None</label>
+									  <input type="radio" value="1" id="c11" name="registered_by">
+									  <label for="c11">None</label>
 									</li>
 								</ul>
 							</div>
