@@ -71,14 +71,6 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
     Route::group(['prefix'=>'restaurant', 'as'=>'restaurant.' ], function(){
         Route::get('list', 'RestaurantController@view_restaurant_list')->name('list');
         Route::get('{restaurant}/delete', 'RestaurantController@delete_restaurant')->name('delete');
-        // cusines
-        Route::group(['prefix'=>'cuisines', 'as'=>'cuisines.'], function(){
-            Route::get('list', 'RestaurantController@view_cuisines_list')->name('list');
-            Route::post('add', 'RestaurantController@add_cuisines_submit')->name('add_submit');
-            Route::post('edit', 'RestaurantController@edit_cuisines_submit')->name('edit_submit');
-
-            Route::get('{cuisine}/delete', 'RestaurantController@delete_cuisine')->name('delete');
-        });
         // Begin::Tags
         Route::group(['prefix'=>'tags', 'as'=>'tags.'], function(){
             Route::get('list', 'RestaurantController@view_tags_list')->name('list');
@@ -113,7 +105,10 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
             'as' => 'category.edit',
             'uses' => 'FoodCategoryController@updateFoodCategory'
         ]);
-
+        Route::get('category/delete/{id}', [
+            'as' => 'category.delete',
+            'uses' => 'FoodCategoryController@deleteFoodCategory'
+        ]);
 
         Route::get('add', [
             'as' => 'add',
@@ -134,6 +129,28 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
         Route::post('edit/{id}', [
             'as' => 'edit',
             'uses' => 'FoodController@updateFood'
+        ]);
+
+        // cusines
+        Route::group(['prefix'=>'cuisines', 'as'=>'cuisines.'], function(){
+            Route::get('list', 'CuisineController@view_cuisines_list')->name('list');
+            Route::post('add', 'CuisineController@add_cuisines_submit')->name('add_submit');
+            Route::post('edit', 'CuisineController@edit_cuisines_submit')->name('edit_submit');
+
+            Route::get('{cuisine}/delete', 'CuisineController@delete_cuisine')->name('delete');
+        });
+        // Extra Food
+        Route::get('extra-food/list', [
+            'as' => 'extra_food.list',
+            'uses' => 'ExtraFoodController@showExtraFoodListPage'
+        ]);
+        Route::post('extra-food/add',[
+            'as' => 'extra_food.add',
+            'uses' => 'ExtraFoodController@addExtraFoodSubmit'
+        ]);
+        Route::post('extra-food/edit',[
+            'as' => 'extra_food.edit',
+            'uses' => 'ExtraFoodController@editExtraFoodSubmit'
         ]);
 
 
