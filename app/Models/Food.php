@@ -22,4 +22,14 @@ class Food extends Model
         'deliverable_food',
         'status'
     ];
+
+    public function restaurant()
+    {
+        return $this->belongsTo('App\Models\Restaurant', 'restaurant_id', 'id');
+    }
+
+    public function foodCategory()
+    {
+        return $this->belongsTo('App\Models\FoodCategory', 'food_category_id', 'id');
+    }
 }

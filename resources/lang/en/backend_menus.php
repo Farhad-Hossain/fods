@@ -29,6 +29,8 @@ return [
     'add_food_category' => 'Add Food Category',
     'food_category_list' => 'Food Category List',
     'food' => 'Food',
+    'add_food' => 'Add Food',
+    'food_list' => 'Food List',
     'cuisines_management' => 'Cuisines Management',
     'groups_extra_foods' => 'Groups Extra Foods',
     'extra_foods' => 'Extra Foods',

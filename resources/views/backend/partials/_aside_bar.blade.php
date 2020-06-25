@@ -302,11 +302,19 @@
                                 </a>
                             </li>
                             <li class="menu-item" aria-haspopup="true">
-                                <a href="layout/themes/aside-light.html" class="menu-link">
+                                <a href="{!! route('backend.food.add') !!}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('backend_menus.food') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.add_food') !!}</span>
+                                </a>
+                            </li>
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="{!! route('backend.food.list') !!}" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text">{!! __('backend_menus.food_list') !!}</span>
                                 </a>
                             </li>
                             

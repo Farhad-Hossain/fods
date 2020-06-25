@@ -40,23 +40,43 @@
             </div>
 
             <!--begin::Form-->
-            <form class="form" action="{{ route('backend.food.category.add') }}" method="POST"
+            <form class="form" action="{{ route('backend.food.add') }}" method="POST"
                   enctype="multipart/form-data">
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
-                        <label>Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" placeholder="Food Category Name" name="name"
-                               value="{{ old('name') }}" required/>
-                        @error('name')
-                        <p class="text-danger">{{ $message }}</p>
+                        <label for="restaurant">Restaurant <span class="text-danger">*</span></label>
+                        <select name="restaurant" id="restaurant" class="form-control" required>
+                            <option value="">--Select Restaurant--</option>
+                            @if(!empty($restaurants))
+                                @foreach($restaurants as $restaurant)
+                                    <option value="{!! $restaurant->id !!}" {!! (old('restaurant') == $restaurant->id)?'selected':'' !!}>{!! $restaurant->name !!}</option>
+                                @endforeach
+                            @endif
+                        </select>
+                        @error('restaurant')
+                            <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label>Description</label>
-                        <textarea name="description" id="description" placeholder="Enter Description"
-                                  class="form-control">{!! old('description') !!}</textarea>
-                        @error('description')
+                        <label for="food_category">Food Category <span class="text-danger">*</span></label>
+                        <select name="food_category" id="food_category" class="form-control" required>
+                            <option value="">--Select Food Category--</option>
+                            @if(!empty($food_categories))
+                                @foreach($food_categories as $food_category)
+                                    <option value="{!! $food_category->id !!}" {!! (old('food_category') == $food_category->id)?'selected':'' !!}>{!! $food_category->name !!}</option>
+                                @endforeach
+                            @endif
+                        </select>
+                        @error('food_category')
+                            <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" placeholder="Food Category Name" name="name"
+                               value="{{ old('name') }}" required/>
+                        @error('name')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
@@ -67,6 +87,78 @@
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
+                    <div class="form-group">
+                        <label for="price">Price <span class="text-danger">*</span></label>
+                        <input type="number" step="0.01" class="form-control" placeholder="Enter Food Price" name="price"
+                               value="{{ old('price') }}" required/>
+                        @error('price')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="discount_price">Discount Price <span class="text-danger">*</span></label>
+                        <input type="number" step="0.01" class="form-control" placeholder="Enter Food Discount Price" name="discount_price"
+                               value="{{ old('discount_price') }}" required/>
+                        @error('discount_price')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea name="description" id="description" placeholder="Enter Description"
+                                  class="form-control">{!! old('description') !!}</textarea>
+                        @error('description')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="ingredients">Ingredients</label>
+                        <textarea name="ingredients" id="ingredients" placeholder="Enter Ingredients"
+                                  class="form-control">{!! old('ingredients') !!}</textarea>
+                        @error('ingredients')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="unit">Unit <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" placeholder="Enter Food Unit" name="unit"
+                               value="{{ old('unit') }}" required/>
+                        @error('unit')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="package_count">Package Count <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" placeholder="Enter Number Of Item Per Package" name="package_count"
+                               value="{{ old('package_count') }}" required/>
+                        @error('package_count')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="weight">Weight <span class="text-danger">*</span></label>
+                        <input type="number" step="0.01" class="form-control" placeholder="Enter Food Weight Per Unit" name="weight"
+                               value="{{ old('weight') }}" required/>
+                        @error('weight')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="featured">Featured Food</label>
+                        <input type="checkbox" name="featured" value="1">
+                        @error('featured')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="deliverable">Deliverable Food</label>
+                        <input type="checkbox" name="deliverable" value="1">
+                        @error('deliverable')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+
                     <!--  -->
                 </div>
                 <div class="card-footer">
