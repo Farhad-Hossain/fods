@@ -30,6 +30,8 @@ return [
     'food_category' => 'Food Category',
     'add_food_category_btn' => 'Add Category',
     'food' => 'Food',
+    'add_food' => 'Add Food',
+    'food_list' => 'Food List',
     'cuisines_management' => 'Cuisines Management',
     'groups_extra_foods' => 'Groups Extra Foods',
     'extra_foods' => 'Extra Foods',

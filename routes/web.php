@@ -118,7 +118,7 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
             'as' => 'add',
             'uses' => 'FoodController@storeFood'
         ]);
-        Route::post('list', [
+        Route::get('list', [
             'as' => 'list',
             'uses' => 'FoodController@showFoodList'
         ]);
@@ -129,6 +129,10 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
         Route::post('edit/{id}', [
             'as' => 'edit',
             'uses' => 'FoodController@updateFood'
+        ]);
+        Route::get('delete/{id}', [
+            'as' => 'delete',
+            'uses' => 'FoodController@deleteFood'
         ]);
 
         // cusines
