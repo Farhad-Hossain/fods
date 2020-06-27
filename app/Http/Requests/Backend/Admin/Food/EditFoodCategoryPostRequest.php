@@ -27,6 +27,7 @@ class EditFoodCategoryPostRequest extends FormRequest
             'id' => 'required|numeric',
             'name' => 'required',
             'description' => 'required',
+            'status' => 'required',
         ];
     }
 }

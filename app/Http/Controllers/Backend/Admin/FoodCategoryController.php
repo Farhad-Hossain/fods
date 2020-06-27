@@ -52,7 +52,7 @@ class FoodCategoryController extends Controller
 
     public function showFoodCategoryList()
     {
-        $food_categories = FoodCategory::where('status', 1)->get();
+        $food_categories = FoodCategory::where('status', '<>', 3)->get();
         return view('backend.pages.food.category.food_category_list', compact('food_categories'));
     }
 
@@ -64,6 +64,7 @@ class FoodCategoryController extends Controller
     
     public function updateFoodCategory(EditFoodCategoryPostRequest $request)
     {
+
         DB::beginTransaction();
 
         try{
@@ -81,6 +82,7 @@ class FoodCategoryController extends Controller
             $category->name = $request->name;
             $category->description = $request->description;
             $category->image = $fileNameToStore;
+            $category->status = $request->status;
             $category->save();
         }catch(Exception $e){
             DB::rollBack();

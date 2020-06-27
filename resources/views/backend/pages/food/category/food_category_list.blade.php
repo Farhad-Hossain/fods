@@ -12,7 +12,7 @@
                     <span class="card-icon">
                         <i class="flaticon2-heart-rate-monitor text-primary"></i>
                     </span>
-                    <h3 class="card-label">{!! __('backend_menus.food_category_list') !!}</h3>
+                    <h3 class="card-label">{!! __('backend_menus.food_category') !!}</h3>
                 </div>
                 <div class="card-toolbar">
                     <!--begin::Dropdown-->
@@ -59,32 +59,45 @@
                     </div>
                     <!--end::Dropdown-->
                     <!--begin::Button-->
-                    <a href="#" class="btn btn-primary font-weight-bolder">
-                    <i class="la la-plus"></i>New Record</a>
+                    <a href="javascript:;" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#add_food_category_modal" >
+                    <i class="la la-plus"></i>{!! __('backend_menus.add_food_category_btn') !!}</a>
                     <!--end::Button-->
                 </div>
             </div>
             <div class="card-body">
                 <!--begin: Datatable-->
-                <table class="table table-bordered table-hover table-checkable" id="restaurant_table" style="margin-top: 13px !important">
+                <table class="table table-bordered table-hover table-checkable" id="food_category_table" style="margin-top: 13px !important">
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>{{ __('backend_food_category_list.name') }}</th>
-                            <th>{{ __('backend_food_category_list.description') }}</th>
-                            <th>{{ __('backend_food_category_list.image') }}</th>
-                            <th>{{ __('driver_list.action') }}</th>
+                            <th>{{ __('common.name') }}</th>
+                            <th>{{ __('common.description') }}</th>
+                            <th>{{ __('common.status') }}</th>
+                            <th>{{ __('common.image') }}</th>
+                            <th>{{ __('common.action') }}</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($food_categories as $category)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $category->name }}</td>
-                            <td>{{ $category->description }}</td>
-                            <td><img style="width: 100px;" src="{{ asset('uploads/category/'. $category->image) }}" alt="{{ $category->name }}"></td>
+                            <td>{!! $loop->iteration !!}</td>
+                            <td>{!! $category->name !!}</td>
+                            <td>{!! $category->description !!}</td>
+                            @if( $category->status == 1 )
+                                <td><b class="text-success">Active</b></td>    
+                            @else
+                                <td><b class="text-danger">Disabled</b></td>    
+                            @endif
+                            
+                            <td><img style="width: 100px;" src="{!! asset('uploads/category/'. $category->image) !!}" alt="{!! $category->name !!}"></td>
                             <td>
-                                <a href="{{ route('backend.food.category.edit', $category->id) }}" class="text-primary mr-2">
+                                <a href="javascript:;" class="text-primary mr-2" data-toggle="modal" data-target="#edit_food_category_modal" onclick="set_value_and_rise_edit_modal(
+                                    '{!! route("backend.food.category.edit", $category->id) !!}',
+                                    '{!! $category->id !!}',
+                                    '{!! $category->name !!}',
+                                    '{!! $category->description !!}',
+                                    '{!! $category->status !!}',
+                                 )">
                                     <i class="far fa-edit text-primary"></i>
                                 </a>
                                 <a href="{!! route('backend.food.category.delete', $category->id) !!}" class="text-danger" onclick="return confirm('Are you sure want to delete ??')">
@@ -102,10 +115,111 @@
     </div>
 @endsection
 
+@section('modals')
+    <!-- Add Modal-->
+    <div class="modal fade" id="add_food_category_modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{!! __('backend_food_category_list.modal_add_title') !!}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <form action="{{ route('backend.food.category.add') }}" id="edit_category_form" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                           <label>{!! __('common.name') !!}</label>
+                           <input type="text" class="form-control" name="name" required />
+                        </div>
+
+                        <div class="form-group">
+                           <label>{!! __('common.description') !!}</label>
+                           <textarea name="description" class="form-control"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>{!! __('common.image') !!}</label>
+                            <div class="custom-file">
+                             <input type="file" class="custom-file-input" id="customFile" name="image" />
+                             <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                            @error('image')
+                            <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary font-weight-bold">Add category</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Edit Modal-->
+    <div class="modal fade" id="edit_food_category_modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{!! __('backend_food_category_list.modal_edit_title') !!}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <form action="" id="edit_category_form" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <input type="hidden" name="id">
+                        <div class="form-group">
+                           <label>{!! __('common.name') !!}</label>
+                           <input type="text" class="form-control" name="name" required />
+                        </div>
+
+                        <div class="form-group">
+                           <label>{!! __('common.description') !!}</label>
+                           <textarea name="description" class="form-control"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>{!! __('common.image') !!}</label>
+                            <div class="custom-file">
+                             <input type="file" class="custom-file-input" id="customFile" name="image" />
+                             <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                            @error('image')
+                            <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label>{!! __('common.status') !!}</label>
+                            <div class="radio-inline">
+                                <label class="radio radio-primary">
+                                    <input type="radio" checked="" id="radio_edit_active_status" value="1" name="status" /> Active
+                                    <span></span>
+                                </label>
+                                <label class="radio radio-success">
+                                    <input type="radio" checked="" id="radio_edit_inactive_status" value="2" name="status" /> Inactive
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary font-weight-bold">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+@endsection
+
 @section('custom_script')
     <script src="{{asset('backend')}}/assets/plugins/custom/datatables/datatables.bundle.js?v=7.0.3"></script>
     <script src="{{asset('backend')}}/assets/js/pages/crud/datatables/advanced/column-visibility.js?v=7.0.3"></script>
-    <script type="text/javascript">
-        $("#restaurant_table").dataTable();
-    </script>
+    <script src="{!! asset('backend/assets/js/customs/food_category_page.js') !!}"></script>
 @endsection

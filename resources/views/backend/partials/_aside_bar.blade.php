@@ -286,19 +286,11 @@
                         <i class="menu-arrow"></i>
                         <ul class="menu-subnav">
                             <li class="menu-item" aria-haspopup="true">
-                                <a href="{!! route('backend.food.category.add') !!}" class="menu-link">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">{!! __('backend_menus.add_food_category') !!}</span>
-                                </a>
-                            </li>
-                            <li class="menu-item" aria-haspopup="true">
                                 <a href="{!! route('backend.food.category.list') !!}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('backend_menus.food_category_list') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.food_category') !!}</span>
                                 </a>
                             </li>
                             <li class="menu-item" aria-haspopup="true">
