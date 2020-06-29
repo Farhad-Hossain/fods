@@ -80,31 +80,4 @@ return [
     'help' => 'Help',
     'cuisines' => 'Cuisines',
     'tags' => 'Tags'
-
-
 ];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

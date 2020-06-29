@@ -84,71 +84,13 @@
                     <div class="menu-submenu">
                         <i class="menu-arrow"></i>
                         <ul class="menu-subnav">
-                            <li class="menu-item menu-item-parent" aria-haspopup="true">
-								<span class="menu-link">
-									<span class="menu-text">{!! __('backend_menus.user_management') !!}</span>
-								</span>
-                            </li>
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                @if(Auth::user()->can('adminAccess', Auth::user()))
-                                    <a href="javascript:;" class="menu-link menu-toggle">
-                                        <i class="menu-bullet menu-bullet-line">
-                                            <span></span>
-                                        </i>
-                                        <span class="menu-text">{!! __('backend_menus.users') !!}</span>
-                                        <span class="menu-label">
-										<span class="label label-rounded label-primary">6</span>
-									</span>
-                                        <i class="menu-arrow"></i>
-                                    </a>
-                                @endif
-
-                                <div class="menu-submenu">
-                                    <i class="menu-arrow"></i>
-                                    <ul class="menu-subnav">
-                                        <li class="menu-item" aria-haspopup="true">
-                                            <a href="custom/apps/user/list-default.html" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">{!! __('backend_menus.users') !!}</span>
-                                            </a>
-                                        </li>
-                                        <li class="menu-item" aria-haspopup="true">
-                                            <a href="custom/apps/user/add-user.html" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">{!! __('backend_menus.add_user') !!}</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                <a href="javascript:;" class="menu-link menu-toggle">
-                                    <i class="menu-bullet menu-bullet-line">
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="{!! route('backend.users.list') !!}" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('backend_menus.role_and_permissions') !!}</span>
-                                    <i class="menu-arrow"></i>
+                                    <span class="menu-text">{!! __('backend_menus.users') !!}</span>
                                 </a>
-                                <div class="menu-submenu">
-                                    <i class="menu-arrow"></i>
-                                    <ul class="menu-subnav">
-                                        <li class="menu-item menu-item-submenu" aria-haspopup="true"
-                                            data-menu-toggle="hover">
-                                            <a href="{{ route('backend.users.roles') }}" class="menu-link menu-toggle">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">{!! __('backend_menus.roles') !!}</span>
-                                                <i class="menu-arrow"></i>
-                                            </a>
-                                        </li>
-
-                                    </ul>
-                                </div>
                             </li>
                         </ul>
                     </div>
@@ -293,20 +235,13 @@
                                     <span class="menu-text">{!! __('backend_menus.food_category') !!}</span>
                                 </a>
                             </li>
-                            <li class="menu-item" aria-haspopup="true">
-                                <a href="{!! route('backend.food.add') !!}" class="menu-link">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">{!! __('backend_menus.add_food') !!}</span>
-                                </a>
-                            </li>
+                            
                             <li class="menu-item" aria-haspopup="true">
                                 <a href="{!! route('backend.food.list') !!}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('backend_menus.food_list') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.food') !!}</span>
                                 </a>
                             </li>
                             

@@ -12,7 +12,7 @@
                     <span class="card-icon">
                         <i class="flaticon2-heart-rate-monitor text-primary"></i>
                     </span>
-                    <h3 class="card-label">{!! __('backend_menus.food_list') !!}</h3>
+                    <h3 class="card-label">{!! __('user_list.user_list') !!}</h3>
                 </div>
                 <div class="card-toolbar">
                     <!--begin::Dropdown-->
@@ -59,51 +59,49 @@
                     </div>
                     <!--end::Dropdown-->
                     <!--begin::Button-->
-                    <a href="{!! route('backend.food.add') !!}" class="btn btn-primary font-weight-bolder">
+                    <a href="javascript:;" class="btn btn-primary font-weight-bolder">
                     <i class="la la-plus"></i>New Record</a>
                     <!--end::Button-->
                 </div>
             </div>
             <div class="card-body">
                 <!--begin: Datatable-->
-                <table class="table table-bordered table-hover table-checkable" id="restaurant_table" style="margin-top: 13px !important">
+                <table class="table table-bordered table-hover table-checkable" id="user_table" style="margin-top: 13px !important">
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Name</th>
-                            <th>Restaurant</th>
-                            <th>Category</th>
-                            <th>Price</th>
-                            <th>Discount Price</th>
-                            <th>Featured</th>
-                            <th>{{ __('driver_list.action') }}</th>
+                            <th>{!! __('common.name') !!}</th>
+                            <th>{!! __('common.email') !!}</th>
+                            <th>{!! __('user_list.role') !!}</th>
+                            <th>{!! __('common.status') !!}</th>
+                            <th>{{ __('common.action') }}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($foods as $food)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $food->food_name }}</td>
-                            <td>{{ $food->restaurant->name }}</td>
-                            <td>{{ $food->foodCategory->name }}</td>
-                            <td>{{ $food->price }}</td>
-                            <td>{{ $food->discount_price }}</td>
-                            
-                            @if($food->featured == 1)
-                                <td><b class="text-success">Yes</b></td>
-                            @else
-                                <td><b class="text-danger">No</b></td>
-                            @endif
-                            
-                            <td>
-                                <a href="{{ route('backend.food.edit', $food->id) }}" class="text-primary mr-2">
-                                    <i class="far fa-edit text-primary"></i>
-                                </a>
-                                <a href="{!! route('backend.food.delete', $food->id) !!}" class="text-danger" onclick="return confirm('Are you sure want to delete ??')">
-                                    <i class="far fa-trash-alt text-danger"></i>
-                                </a>
-                            </td>
-                        </tr>
+                        @foreach($users as $user)
+                        	<tr>
+                        		<th>{!! $loop->iteration !!}</th>
+                        		<td>{!! $user->name !!}</td>
+                        		<td>{!! $user->email !!}</td>
+                        		@if( $user->role == 0 )
+                        			<td>System Admin</td>
+                        		@elseif( $user->role == 1 )
+                        			<td>Restaurant</td>
+                        		@elseif( $user->role == 2 )
+                        			<td>Driver</td>
+                        		@elseif( $user->role == 3 )
+                        			<td>Customer</td>
+                        		@endif
+                        		@if( $user->status == 1 )
+                        			<td><b class="text-success">Active</b></td>
+                        		@elseif( $user->status == 2 )
+                        			<td><b class="text-danger">Danger</b></td>
+                        		@endif
+                        		<td>
+                        			<i class="far fa-edit mr-2 text-success"></i>
+                        			<i class="far fa-trash-alt mr-2 text-danger"></i>
+                        		</td>
+                        	</tr>
                         @endforeach
                     </tbody>
                 </table>
@@ -112,12 +110,11 @@
         </div>
         <!--end::Card-->
     </div>
-@endsection
-
-@section('custom_script')
-    <script src="{{asset('backend')}}/assets/plugins/custom/datatables/datatables.bundle.js?v=7.0.3"></script>
-    <script src="{{asset('backend')}}/assets/js/pages/crud/datatables/advanced/column-visibility.js?v=7.0.3"></script>
-    <script type="text/javascript">
-        $("#restaurant_table").dataTable();
-    </script>
-@endsection
+ @endsection
+ @section('custom_script')
+     <script src="{{asset('backend')}}/assets/plugins/custom/datatables/datatables.bundle.js?v=7.0.3"></script>
+     <script src="{{asset('backend')}}/assets/js/pages/crud/datatables/advanced/column-visibility.js?v=7.0.3"></script>
+     <script type="text/javascript">
+         $("#user_table").dataTable();
+     </script>
+ @endsection

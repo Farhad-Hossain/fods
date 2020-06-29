@@ -66,13 +66,14 @@
             </div>
             <div class="card-body">
                 <!--begin: Datatable-->
-                <table class="table table-bordered table-hover table-checkable" id="restaurant_table" style="margin-top: 13px !important">
+                <table class="table table-bordered table-hover table-checkable" id="user_table" style="margin-top: 13px !important">
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>Name</th>
                             <th>Restaurant</th>
                             <th>Category</th>
+                            <th>Image</th>
                             <th>Price</th>
                             <th>Discount Price</th>
                             <th>Featured</th>
@@ -80,31 +81,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($foods as $food)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $food->food_name }}</td>
-                            <td>{{ $food->restaurant->name }}</td>
-                            <td>{{ $food->foodCategory->name }}</td>
-                            <td>{{ $food->price }}</td>
-                            <td>{{ $food->discount_price }}</td>
-                            
-                            @if($food->featured == 1)
-                                <td><b class="text-success">Yes</b></td>
-                            @else
-                                <td><b class="text-danger">No</b></td>
-                            @endif
-                            
-                            <td>
-                                <a href="{{ route('backend.food.edit', $food->id) }}" class="text-primary mr-2">
-                                    <i class="far fa-edit text-primary"></i>
-                                </a>
-                                <a href="{!! route('backend.food.delete', $food->id) !!}" class="text-danger" onclick="return confirm('Are you sure want to delete ??')">
-                                    <i class="far fa-trash-alt text-danger"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        @endforeach
+                        
                     </tbody>
                 </table>
                 <!--end: Datatable-->
@@ -112,12 +89,11 @@
         </div>
         <!--end::Card-->
     </div>
-@endsection
-
-@section('custom_script')
-    <script src="{{asset('backend')}}/assets/plugins/custom/datatables/datatables.bundle.js?v=7.0.3"></script>
-    <script src="{{asset('backend')}}/assets/js/pages/crud/datatables/advanced/column-visibility.js?v=7.0.3"></script>
-    <script type="text/javascript">
-        $("#restaurant_table").dataTable();
-    </script>
-@endsection
+ @endsection
+ @section('custom_script')
+     <script src="{{asset('backend')}}/assets/plugins/custom/datatables/datatables.bundle.js?v=7.0.3"></script>
+     <script src="{{asset('backend')}}/assets/js/pages/crud/datatables/advanced/column-visibility.js?v=7.0.3"></script>
+     <script type="text/javascript">
+         $("#user_table").dataTable();
+     </script>
+ @endsection

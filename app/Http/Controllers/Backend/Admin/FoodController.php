@@ -54,7 +54,6 @@ class FoodController extends Controller
             $food->status = 1;
             $food->save();
 
-
         } catch (\Exception $e) {
 
             session()->flash('type', 'danger');
@@ -70,20 +69,59 @@ class FoodController extends Controller
     public function showFoodList()
     {
 
-        $foods = Food::all();
+        $foods = Food::orderBy('id', 'desc')->get();
         return view('backend.pages.food.food_list', compact(
             'foods'
         ));
     }
 
-    public function editFoodPage()
+    public function editFoodPage(Food $food)
     {
-
+        $restaurants = Restaurant::where('status', 1)->get();
+        $food_categories = FoodCategory::where('status', 1)->get();
+        return view('backend.pages.food.edit_food', compact(
+            'food', 'restaurants', 'food_categories'
+        ));
     }
 
-    public function updateFood()
+    public function updateFood(Request $request, Food $food)
     {
 
+        try{
+
+        if($request->hasFile('image'))
+        {
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $fileNameToStore = '_'.time().'.'.$extension;
+            $category_image = $request->file('image')->storeAs('food', $fileNameToStore);
+        } else {
+            $fileNameToStore = $food->image;
+        }
+        
+        $food->restaurant_id = $request->restaurant ?? $food->restaurant_id;
+        $food->food_category_id = $request->food_category ?? $food->food_category_id;
+        $food->food_name = $request->name ?? $food->food_name;
+        $food->price = $request->price ?? $food->price;
+        $food->discount_price = $request->discount_price ?? $food->discount_price;
+        $food->description = $request->description ?? $food->description;
+        $food->ingredients = $request->ingredients ?? $food->ingredients;
+        $food->unit = $request->unit ?? $food->unit;
+        $food->image = $fileNameToStore;
+        $food->package_count = $request->package_count ?? $food->package_count;
+        $food->weight = $request->weight ?? $food->weight;
+        $food->featured = $request->featured ?? $food->featured;
+        $food->deliverable_food = $request->deliverable_food ?? $food->deliverable_food;
+
+        $food->save();
+
+        }catch(Exception $e){
+            session()->flash('type', 'danger');
+            session()->flash('message', 'Something went wrong');
+            return redirect()->back();
+        }
+
+        $foods = Food::orderBy('id', 'desc')->get();
+        return redirect()->route('backend.food.list', compact('foods'));
     }
 
 

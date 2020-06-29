@@ -59,6 +59,7 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
 
 	// Users and role management
 	Route::group(['prefix'=>'users', 'as'=>'users.'], function(){
+        Route::get('list', 'UserController@viewUsersList')->name('list');
 		Route::get('roles', 'UserController@viewRoleList')->name('roles');
 	});
 
@@ -122,11 +123,11 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
             'as' => 'list',
             'uses' => 'FoodController@showFoodList'
         ]);
-        Route::get('edit/{id}', [
+        Route::get('edit/{food}', [
             'as' => 'edit',
             'uses' => 'FoodController@editFoodPage'
         ]);
-        Route::post('edit/{id}', [
+        Route::post('edit/{food}', [
             'as' => 'edit',
             'uses' => 'FoodController@updateFood'
         ]);

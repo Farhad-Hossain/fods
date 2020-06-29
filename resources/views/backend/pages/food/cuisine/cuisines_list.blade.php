@@ -82,7 +82,13 @@
                         <tr>
                             <th>{{ $loop->iteration }}</th>
                             <td>{{ $cuisine->name }}</td>
-                            <td>{{ $cuisine->status == 1 ? 'Active' : 'Inactive' }}</td>
+                            
+                            @if( $cuisine->status == 1 )
+                               <td><b class="text-success">Active</b></td>
+                            @else
+                                <td><b class="text-danger">Disabled</b></td>
+                            @endif
+
                             <td>
                                 <a href="" data-toggle="modal" data-target="#cuisines_modal" onclick="set_value_and_rise_modal(
                                                                              '{{ $cuisine->id }}',
@@ -106,7 +112,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="cuisine_modal_title">{{ __('cuisines.modal__create_title') }}</h5>
+                    <h5 class="modal-title" id="cuisine_modal_title">{{ __('cuisines.modal_create_title') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>
                     </button>
@@ -141,23 +147,5 @@
 @section('custom_script')
     <script src="{{asset('backend')}}/assets/plugins/custom/datatables/datatables.bundle.js?v=7.0.3"></script>
     <script src="{{asset('backend')}}/assets/js/pages/crud/datatables/advanced/column-visibility.js?v=7.0.3"></script>
-    <script type="text/javascript">
-        $("#restaurant_table").dataTable();
-
-        function set_value_and_rise_modal(id, name)
-        {
-            $("#cuisine_modal_title").text("{{ __('cuisines.modal_edit_title') }}");
-            var action = "{{ route('backend.food.cuisines.edit_submit') }}";
-            $("form").attr('action', action)
-            $("input[name='id']").val(id);
-            $("input[name='name']").val(name);
-        }
-        function clear_value_and_rise_modal()
-        {
-            $("#cuisine_modal_title").text("{{ __('cuisines.modal_create_title') }}");
-            var action = "{{ route('backend.food.cuisines.add_submit') }}";
-            $("form").attr('action', action)
-            $("input[name='name']").val("");   
-        }
-    </script>
+    <script type="text/javascript" src="{{asset('backend')}}/assets/js/customs/cuisine_list_page.js"></script>
 @endsection

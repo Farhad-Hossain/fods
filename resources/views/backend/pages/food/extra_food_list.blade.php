@@ -79,9 +79,13 @@
                     <tbody>
                         @foreach($extra_foods as $extra_food)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
+                            <th>{{ $loop->iteration }}</th>
                             <td>{{ $extra_food->name }}</td>
-                            <td>{{ $extra_food->category == 1 ? 'Active' : 'Inactive' }}</td>
+                            @if( $extra_food->status == 1 )
+                                <td><b class="text-success">Active</b></td>
+                            @else
+                                <td><b class="text-danger">Disabled</b></td>
+                            @endif
                             <td>{{ $extra_food->price }}</td>
                             <td>
                                 <a href="javascript:;" class="text-primary mr-2" onclick="arise_modal_for_edit(
