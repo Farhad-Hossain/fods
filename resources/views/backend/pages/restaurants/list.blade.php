@@ -103,7 +103,14 @@
                                     {{ $c->service_name->name }}, 
                                 @endforeach
                             </td>
-                            <td nowrap="nowrap"></td>
+                            <td>
+                                <a href="{{ route('backend.restaurant.edit', $r->id) }}" class="text-primary mr-2">
+                                    <i class="far fa-edit text-primary"></i>
+                                </a>
+                                <a href="{!! route('backend.restaurant.delete', $r->id) !!}" class="text-danger" onclick="return confirm('Are you sure want to delete ??')">
+                                    <i class="far fa-trash-alt text-danger"></i>
+                                </a>
+                            </td>
                             
                         </tr>
                         @endforeach
