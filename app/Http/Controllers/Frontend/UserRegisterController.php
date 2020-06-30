@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Frontend\CustomerCreatePostRequest;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\User;
@@ -38,10 +40,7 @@ class UserRegisterController extends Controller
         
         $globals_info = GlobalSetting::first();
 
-
-
         try{
-
             DB::beginTransaction();
 
         	$user = new User();
@@ -93,8 +92,6 @@ class UserRegisterController extends Controller
                 $time->save();
             }
 
-            
-
             foreach ($request->characteristices as $characteristic) {
                 $char = new RestaurantCharacteristic();
                 $char->restaurant_id = $res_id;
@@ -110,6 +107,8 @@ class UserRegisterController extends Controller
         }
 
     }
+
+
     // Driver 
     public function showAddDriverPage()
     {
@@ -161,10 +160,51 @@ class UserRegisterController extends Controller
             session('type', 'danger');
             session('message', 'Congratulations ! Driver Registerd Successfully');
             echo "User created successfully and Driver created successfully. Route should go to next action";
-        }catch(Exception $e){
+        }catch(\Exception $e){
             session('type', 'danger');
             session('message', 'Something went wrong');
         }
         // return redirect()->back();
+    }
+
+
+    //Customer Register Page Show
+    public function showCustomerRegisterPage()
+    {
+        return view('frontend.pages.customer-register');
+    }
+
+    //Store New Customer
+    public function storeNewCustomer(CustomerCreatePostRequest $request)
+    {
+        try{
+            DB::beginTransaction();
+
+            $user = new User();
+            $user->name 	= $request->full_name;
+            $user->email 	= $request->email;
+            $user->role 	= 3; //3=customer
+            $user->password = Hash::make( $request->password );
+            $user->password_salt = $request->password;
+            $user->last_login_ip = request()->ip();
+            $user->status 	= 1;
+            $user_id = $user->save();
+
+            $customer = new Customer();
+            $customer->user_id 	= $user_id;
+            $customer->phone_number = $request->phone_number;
+            $customer->status = 1;
+            $customer->save();
+
+        }catch(\Exception $e){
+            DB::rollBack();
+            session()->flash('type', 'danger');
+            session()->flash('message', 'Something went wrong. '.$e->getMessage());
+            return redirect()->back()->withInput();
+        }
+        DB::commit();
+        session()->flash('type', 'success');
+        session()->flash('message', 'Registered Successfully');
+        return redirect()->back();
     }
 }

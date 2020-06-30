@@ -26,6 +26,14 @@ Route::group(['namespace'=>'Frontend', 'as'=>'frontend.'], function() {
         'uses' => 'UserRegisterController@storeNewDriver',
         'as' => 'add-driver',
     ]);
+    Route::get('customer-register',[
+        'uses' => 'UserRegisterController@showCustomerRegisterPage',
+        'as' => 'customer-register',
+    ]);
+    Route::post('customer-register',[
+        'uses' => 'UserRegisterController@storeNewCustomer',
+        'as' => 'customer-register',
+    ]);
     // Contact
     Route::get('contact-us', [
         'uses' => 'ContactUsController@showContactUsForm',
