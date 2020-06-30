@@ -65,6 +65,7 @@
             <form class="form" action="{!! route('backend.restaurant.edit', $r->id) !!}" method="POST">
             @csrf
             <div class="card-body">
+                        <input type="hidden" name="id" value="{!! $r->id !!}" required>
                         <div class="form-group row">
                             <div class="col-lg-6">
                                 <label>{!! __('rest.name') !!}</label>
@@ -74,9 +75,27 @@
                                 @enderror
                             </div>
                             <div class="col-lg-6">
-                                <label>{!! __('rest.phone') !!}</label>
-                                <input type="text" class="form-control" name="" value="{!! $r->phone !!}" />
+                                <label>{!! __('rest.city') !!}</label>
+                                <input type="text" class="form-control" name="city" value="{!! $r->city !!}" />
+                                @error('city')
+                                    <p class="text-danger">{!! $message !!}</p>
+                                @enderror
                             </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-lg-6">
+                                <label>{!! __('rest.email') !!}</label>
+                                <input type="email" class="form-control" name="email" value="{!! $r->email !!}" />
+                                @error('email')
+                                    <p class="text-danger">{!! $message !!}</p>
+                                @enderror
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <label>{!! __('rest.phone') !!}</label>
+                                <input type="text" class="form-control" name="phone" value="{!! $r->phone !!}" />
+                            </div>
+                            
                         </div>
                         <div class="form-group row">
                             <div class="col-lg-6">
@@ -95,7 +114,34 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
+                                <label>{!! __('rest.payment_method') !!}</label>
+                                <select class="form-control" name="payment_method" required>
+                                    <option value="1" {!! $r->payment_method == 1 ? 'selected' : '' !!}>Cash Only</option>
+                                    <option value="2" {!! $r->payment_method == 2 ? 'selected' : '' !!}>Card Only</option>
+                                    <option value="3" {!! $r->payment_method == 3 ? 'selected' : '' !!}>Both</option>
+                                </select>
+                                @error('selling_percentage')
+                                    <p class="text-danger">{!! $message !!}</p>
+                                @enderror
+                            </div>
+                            <div class="col-lg-4">
+                                <label>{!! __('rest.website') !!}</label>
+                                <input type="text" name="website" class="form-control" value="{!! $r->website !!}" required>
+                                @error('website')
+                                    <p class="text-danger">{!! $message !!}</p>
+                                @enderror
+                            </div>
+                            <div class="col-lg-4">
+                                <label>{!! __('rest.address') !!}</label>
+                                <textarea class="form-control" name="address" required>{!! $r->address !!}</textarea>
+                                @error('address')
+                                    <p class="text-danger">{!! $message !!}</p>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-lg-4">
                                 <label>{!! __('rest.status') !!}</label>
                                 <div class="radio-inline">
                                     <label class="radio radio-solid">
@@ -106,7 +152,7 @@
                                     <span></span></label>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <label>{!! __('rest.alcohol_status') !!}</label>
                                 <div class="radio-inline">
                                     <label class="radio radio-solid">
@@ -118,19 +164,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <div class="col-lg-6">
-                                <label>{!! __('rest.payment_method') !!}</label>
-                                <select class="form-control" name="payment_method" required>
-                                    <option value="1" {!! $r->payment_method == 1 ? 'selected' : '' !!}>Cash Only</option>
-                                    <option value="2" {!! $r->payment_method == 2 ? 'selected' : '' !!}>Card Only</option>
-                                    <option value="3" {!! $r->payment_method == 3 ? 'selected' : '' !!}>Both</option>
-                                </select>
-                                @error('selling_percentage')
-                                    <p class="text-danger">{!! $message !!}</p>
-                                @enderror
-                            </div>
-                        </div>
+                        
             </div>
             <div class="card-footer">
                 <div class="row">

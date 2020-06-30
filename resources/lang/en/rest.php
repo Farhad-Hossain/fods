@@ -12,4 +12,7 @@ return [
 	'delivery_charge' => 'Delivery Charge',
 	'selling_percentage' => 'Selling percentage',
 	'payment_method' => 'Payment Method',
+	'email' => 'Email',
+	'website' => 'Website',
+	'address' => 'Address',
 ];

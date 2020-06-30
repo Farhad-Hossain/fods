@@ -25,8 +25,28 @@ class RestaurantController extends Controller
 	}
 	public function submit_restaurant_edit_form(Request $request, Restaurant $restaurant)
 	{
-		dd($restaurant);
-		dd($request->all());
+		try{
+			$rs = Restaurant::findOrFail($request->id);
+			$rs->name = $request->name;
+			$rs->city = $request->city;
+			$rs->email = $request->email;
+			$rs->phone = $request->phone;
+			$rs->website = $request->website;
+			$rs->address = $request->address;
+			$rs->open_status = $request->open_status;
+			$rs->delivery_charge = $request->delivery_charge;
+			$rs->selling_percentage = $request->selling_percentage;
+			$rs->payment_method = $request->payment_method;
+			$rs->alcohol_status = $request->alcohol_status;
+			$rs->save();
+		}catch(\Exception $e){
+			session(['type'=>'danger', 'message'=>'Something went wrong'.$e]);
+			return redirect()->back();
+		}
+		session(['type'=>'success', 'message'=>'Restaurant Info Updated successfully']);
+		$rs = Restaurant::where('status',1)->get();
+		return redirect()->route('backend.restaurant.list', compact('rs'));
+ 
 	}
 	// Delete a restaurant
 	public function delete_restaurant($retaurant_id)

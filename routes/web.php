@@ -1,5 +1,10 @@
 <?php
 use Illuminate\Support\Facades\Route;
+
+Route::get('/command-execute/{command}', function($command){
+    \Artisan::call($command);
+    dd('Done');
+});
 // DEGIN::Frontend routes
 Route::group(['namespace'=>'Frontend', 'as'=>'frontend.'], function() {
     Route::get('/', [

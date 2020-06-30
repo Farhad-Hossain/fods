@@ -1,6 +1,7 @@
 @if(session()->has('message'))
-    <div class="alert alert-{{ session()->get('type') }}" id="report-alert">
+    <div class="alert alert-{{ session()->pull('type') }}" id="report-alert">
         <button type="button" class="close" data-dismiss="alert">x</button>
-        {{ session()->get('message') }}
+        {{ session()->pull('message') }}
     </div>
 @endif
+
