@@ -18,6 +18,11 @@ class RestaurantController extends Controller
 		
 		return view('backend.pages.restaurants.list', compact('rs'));
 	}
+	public function view_restaurant_edit_form($r)
+	{
+		$r = Restaurant::findOrFail($r);
+		return view('backend.pages.restaurants.edit_form', compact('r') );
+	}
 	// Delete a restaurant
 	public function delete_restaurant($retaurant_id)
 	{

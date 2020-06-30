@@ -13,4 +13,6 @@ return [
 	'unit' => 'Unit',
 	'weight' => 'Weight',
 	'height' => 'Height',
+	'yes' => 'Yes',
+	'no' => 'No',
 ];
