@@ -33,6 +33,8 @@ class GlobalSettingsPostRequest extends FormRequest
             'contact_address' => 'required',
             'app_status' => 'required',
             'app_description' => 'required'
+            'country' => 'required',
+            'city' => 'required',
         ];
     }
 }

@@ -25,6 +25,8 @@ class GlobalController extends Controller
             $setting->contact_address = '';
             $setting->app_status = '';
             $setting->short_description = '';
+            $setting->country = '';
+            $sttring->city = '';
         }
     	return view('backend.pages.settings.global_settings_form', compact('setting'));
     }
@@ -49,6 +51,8 @@ class GlobalController extends Controller
             $global_setting->contact_address = $request->contact_address;
             $global_setting->app_status = $request->app_status;
             $global_setting->short_description = $request->app_description;
+            $global_setting->country = $request->country ?? '';
+            $global_setting->city = $request->city ?? '';
 
             if($request->hasFile('app_logo'))
             {

@@ -70,11 +70,11 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>{{ __('common.name') }}</th>
-                            <th>{{ __('common.description') }}</th>
-                            <th>{{ __('common.status') }}</th>
-                            <th>{{ __('common.image') }}</th>
-                            <th>{{ __('common.action') }}</th>
+                            <th>{!! __('common.name') !!}</th>
+                            <th>{!! __('common.description') !!}</th>
+                            <th>{!! __('common.status') !!}</th>
+                            <!-- <th>{!! __('common.image') !!}</th> -->
+                            <th>{!! __('common.action') !!}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -89,7 +89,7 @@
                                 <td><b class="text-danger">Disabled</b></td>    
                             @endif
                             
-                            <td><img style="width: 100px;" src="{!! asset('uploads/category/'. $category->image) !!}" alt="{!! $category->name !!}"></td>
+                            <!-- <td><img style="width: 100px;" src="{!! asset('uploads/category/'. $category->image) !!}" alt="{!! $category->name !!}"></td> -->
                             <td>
                                 <a href="javascript:;" class="text-primary mr-2" data-toggle="modal" data-target="#edit_food_category_modal" onclick="set_value_and_rise_edit_modal(
                                     '{!! route("backend.food.category.edit", $category->id) !!}',

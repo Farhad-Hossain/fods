@@ -80,6 +80,7 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
     Route::group(['prefix'=>'restaurant', 'as'=>'restaurant.' ], function(){
         Route::get('list', 'RestaurantController@view_restaurant_list')->name('list');
         Route::get('{Restaurant}/edit', 'RestaurantController@view_restaurant_edit_form')->name('edit');
+        Route::post('{Restaurant}/edit', 'RestaurantController@submit_restaurant_edit_form');
         Route::get('{restaurant}/delete', 'RestaurantController@delete_restaurant')->name('delete');
         // Begin::Tags
         Route::group(['prefix'=>'tags', 'as'=>'tags.'], function(){

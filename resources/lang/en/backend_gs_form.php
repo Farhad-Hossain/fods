@@ -19,5 +19,7 @@ return [
     'app_status'        => 'Application Status',
     'app_logo'          => 'Application Logo',
     'app_description'   => 'Short Description',
+    'country'           => 'Country',
+    'city'              => 'City',
 
 ];

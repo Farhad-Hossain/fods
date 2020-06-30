@@ -1,4 +1,4 @@
-@extends('backend.master')
+@extends('backend.master', ['title'=>'Global Settings'])
 @section('main_content')
     <div class="container-fluid">
         @include('backend.message.flash_message')
@@ -101,7 +101,7 @@
                 <div class="col-sm-12 col-md-6">
                     <div class="card card-custom gutter-b example example-compact">
                         <div class="card-header">
-                            <h3 class="card-title">Base Controls</h3>
+                            <h3 class="card-title">More Info</h3>
                             <div class="card-toolbar">
                                 <div class="example-tools justify-content-center">
 
@@ -128,6 +128,22 @@
                                 <label>{!! __('backend_gs_form.app_description') !!}</label>
                                 <textarea class="form-control" name="app_description" required>{!! $setting->short_description !!}</textarea>
                                 @error('app_description')
+                                <span class="form-text text-warning">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
+                                <label>{!! __('backend_gs_form.country') !!}</label>
+                                <input type="text" name="country" class="form-control" value="{!! $setting->country !!}" required>
+                                @error('country')
+                                <span class="form-text text-warning">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
+                                <label>{!! __('backend_gs_form.city') !!}</label>
+                                <input type="text" name="city" class="form-control" value="{!! $setting->city !!}" required>
+                                @error('city')
                                 <span class="form-text text-warning">{{ $message }}</span>
                                 @enderror
                             </div>

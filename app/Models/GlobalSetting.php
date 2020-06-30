@@ -19,6 +19,8 @@ class GlobalSetting extends Model
         'contact_address',
         'default_delivery_charge',
         'default_product_selling_percentage',
-        'app_status'
+        'app_status',
+        'country',
+        'city',
     ];
 }

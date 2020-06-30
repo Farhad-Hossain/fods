@@ -23,6 +23,11 @@ class RestaurantController extends Controller
 		$r = Restaurant::findOrFail($r);
 		return view('backend.pages.restaurants.edit_form', compact('r') );
 	}
+	public function submit_restaurant_edit_form(Request $request, Restaurant $restaurant)
+	{
+		dd($restaurant);
+		dd($request->all());
+	}
 	// Delete a restaurant
 	public function delete_restaurant($retaurant_id)
 	{

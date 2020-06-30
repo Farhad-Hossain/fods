@@ -61,9 +61,10 @@
                     <!--end::Button-->
                 </div>
             </div>
+            <!--begin::Form-->
+            <form class="form" action="{!! route('backend.restaurant.edit', $r->id) !!}" method="POST">
+            @csrf
             <div class="card-body">
-                <!--begin::Form-->
-                <form class="form">
                         <div class="form-group row">
                             <div class="col-lg-6">
                                 <label>{!! __('rest.name') !!}</label>
@@ -130,19 +131,16 @@
                                 @enderror
                             </div>
                         </div>
-                    </form>
             </div>
             <div class="card-footer">
                 <div class="row">
                     <div class="col-lg-6">
-                        <button type="submit" class="btn btn-primary mr-2">Save</button>
+                        <button type="submit" class="btn btn-primary mr-2">Save Changes</button>
                         <a href="{!! route('backend.restaurant.list') !!}" class="btn btn-secondary">Cancel</a>
-                    </div>
-                    <div class="col-lg-6 text-right">
-                        <button type="reset" class="btn btn-danger">Delete</button>
                     </div>
                 </div>
             </div>
+            </form>
         </div>
         <!--end::Card-->
     </div>
