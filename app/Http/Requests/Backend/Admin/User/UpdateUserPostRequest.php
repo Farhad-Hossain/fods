@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Backend\Admin\Food;
+namespace App\Http\Requests\Backend\Admin\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateFoodCategoryPostRequest extends FormRequest
+class UpdateUserPostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,9 @@ class CreateFoodCategoryPostRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:food_categories,name',
-            'description' => 'nullable',
-            'image' => 'nullable|image'
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,'.request()->segment(4),
+            'password' => 'nullable'
         ];
     }
 }
