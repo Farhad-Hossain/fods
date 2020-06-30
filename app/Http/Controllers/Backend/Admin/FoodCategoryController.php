@@ -22,10 +22,9 @@ class FoodCategoryController extends Controller
         DB::beginTransaction();
         try {
 
-            if($request->hasFile('image'))
-            {
+            if ($request->hasFile('image')) {
                 $extension = $request->file('image')->getClientOriginalExtension();
-                $fileNameToStore = '_'.time().'.'.$extension;
+                $fileNameToStore = '_' . time() . '.' . $extension;
                 $category_image = $request->file('image')->storeAs('category', $fileNameToStore);
             } else {
                 $fileNameToStore = "";
@@ -41,7 +40,7 @@ class FoodCategoryController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             session()->flash('type', 'danger');
-            session()->flash('message', 'Something went wrong to add food category. '.$e->getMessage());
+            session()->flash('message', 'Something went wrong to add food category. ' . $e->getMessage());
             return redirect()->back()->withInput();
         }
         DB::commit();
@@ -61,19 +60,18 @@ class FoodCategoryController extends Controller
         $category = FoodCategory::findOrFail($id);
         return view('backend.pages.food.category.edit_food_category', compact('category'));
     }
-    
+
     public function updateFoodCategory(EditFoodCategoryPostRequest $request)
     {
 
         DB::beginTransaction();
 
-        try{
+        try {
             $category = FoodCategory::findOrFail($request->id);
 
-            if($request->hasFile('image'))
-            {
+            if ($request->hasFile('image')) {
                 $extension = $request->file('image')->getClientOriginalExtension();
-                $fileNameToStore = '_'.time().'.'.$extension;
+                $fileNameToStore = '_' . time() . '.' . $extension;
                 $category_image = $request->file('image')->storeAs('category', $fileNameToStore);
             } else {
                 $fileNameToStore = $category->image ?? '';
@@ -84,33 +82,33 @@ class FoodCategoryController extends Controller
             $category->image = $fileNameToStore;
             $category->status = $request->status;
             $category->save();
-        }catch(Exception $e){
+        } catch (Exception $e) {
             DB::rollBack();
             session()->flash('type', 'danger');
-            session()->flash('message', 'Something went wrong to add food category. '.$e->getMessage());
+            session()->flash('message', 'Something went wrong to add food category. ' . $e->getMessage());
             return redirect()->back();
         }
         DB::commit();
         session()->flash('type', 'success');
         session()->flash('message', 'Food Category Updated Successfully');
-        return redirect()->route('backend.food.category.list');   
+        return redirect()->route('backend.food.category.list');
 
     }
 
     public function deleteFoodCategory($id)
     {
-        try{
+        try {
             $category = FoodCategory::findOrFail($id);
             $category->status = 0;
             $category->save();
 
             session()->flash('type', 'success');
             session()->flash('message', 'Food Category Deleted Successfully');
-            return redirect()->route('backend.food.category.list');               
-        }catch(Exception $e){
+            return redirect()->route('backend.food.category.list');
+        } catch (\Exception $e) {
             session()->flash('type', 'danger');
             session()->flash('message', 'Something Went Wrong');
-            return redirect()->route('backend.food.category.list');               
+            return redirect()->route('backend.food.category.list');
         }
 
     }

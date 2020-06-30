@@ -68,6 +68,8 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
 	// Users and role management
 	Route::group(['prefix'=>'users', 'as'=>'users.'], function(){
         Route::get('list', 'UserController@viewUsersList')->name('list');
+        Route::post('edit/{id}', 'UserController@updateUser')->name('edit');
+        Route::get('delete/{id}', 'UserController@deleteUser')->name('delete');
 		Route::get('roles', 'UserController@viewRoleList')->name('roles');
 	});
 

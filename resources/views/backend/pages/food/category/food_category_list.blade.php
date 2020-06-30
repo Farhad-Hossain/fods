@@ -5,6 +5,7 @@
 @section('main_content')
     <div class="container-fluid">
         @include('backend.message.flash_message')
+        @include('backend.message.emergency_form_validation')
         <!--begin::Card-->
         <div class="card card-custom">
             <div class="card-header">
