@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use App\Models\GlobalSetting;
 use App\Models\Restaurant;
 use App\Models\RestaurantCharacteristic;
@@ -55,10 +56,10 @@ class UserRegisterController extends Controller
             $user->password_salt = $request->user_password;
             $user->last_login_ip = request()->ip();
             $user->status 	= 1;
-            $user_id = $user->save();
+            $user->save();
 
             $res = new Restaurant();
-            $res->user_id 	= $user_id;
+            $res->user_id 	= $user->id;
             $res->name 		= $request->restaurant_name;
             $res->city 		= $request->city;
             $res->phone 	= $request->restaurant_phone;
@@ -112,5 +113,49 @@ class UserRegisterController extends Controller
         }
 
         return response()->json($res, 200);
+    }
+
+
+    //Store New Customer
+    public function storeNewCustomer(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'full_name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'phone_number' => 'nullable',
+            'password' => 'required|min:3'
+        ]);
+
+        if ($validator->fails()) {
+            $error = $validator->messages();
+            return response()->json($error, 400);
+        }
+
+        try{
+            DB::beginTransaction();
+
+            $user = new User();
+            $user->name 	= $request->full_name;
+            $user->email 	= $request->email;
+            $user->role 	= 3; //3=customer
+            $user->password = Hash::make( $request->password );
+            $user->password_salt = $request->password;
+            $user->last_login_ip = request()->ip();
+            $user->status 	= 1;
+            $user->save();
+
+            $customer = new Customer();
+            $customer->user_id 	= $user->id;
+            $customer->phone_number = $request->phone_number;
+            $customer->status = 1;
+            $customer->save();
+
+        }catch(\Exception $e){
+            DB::rollBack();
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+        DB::commit();
+        $ret_customer = Customer::with('user')->where('id', $customer->id)->first();
+        return response()->json($ret_customer, 200);
     }
 }

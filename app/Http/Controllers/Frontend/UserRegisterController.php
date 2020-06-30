@@ -51,10 +51,10 @@ class UserRegisterController extends Controller
         	$user->password_salt = $request->user_password;
         	$user->last_login_ip = request()->ip();
         	$user->status 	= 1;
-        	$user_id = $user->save();
+        	$user->save();
 
         	$res = new Restaurant();
-        	$res->user_id 	= $user_id;
+        	$res->user_id 	= $user->id;
         	$res->name 		= $request->restaurant_name;
         	$res->city 		= $request->city;
         	$res->phone 	= $request->restaurant_phone;
@@ -128,10 +128,10 @@ class UserRegisterController extends Controller
             $user->password_salt = $request->password;
             $user->last_login_ip = request()->ip();
             $user->status   = 1;
-            $user_id = $user->save();
+            $user->save();
 
             $driver = new Driver();
-            $driver->user_id = $user_id;
+            $driver->user_id = $user->id;
             $driver->city = $request->city;
             $driver->phone =$request->phone;
             $driver->have_bike = $request->have_bike;
@@ -188,10 +188,10 @@ class UserRegisterController extends Controller
             $user->password_salt = $request->password;
             $user->last_login_ip = request()->ip();
             $user->status 	= 1;
-            $user_id = $user->save();
+            $user->save();
 
             $customer = new Customer();
-            $customer->user_id 	= $user_id;
+            $customer->user_id 	= $user->id;
             $customer->phone_number = $request->phone_number;
             $customer->status = 1;
             $customer->save();
