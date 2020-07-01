@@ -14,8 +14,8 @@ class AddCountryToGlobalSettingsTable extends Migration
     public function up()
     {
         Schema::table('global_settings', function (Blueprint $table) {
-            $table->string('country')->nallable();
-            $table->string('city')->nallable();
+            $table->integer('country')->nallable();
+            $table->integer('city')->nallable();
             $table->integer('currency')->nullable()->comment('Currency ID');
         });
     }

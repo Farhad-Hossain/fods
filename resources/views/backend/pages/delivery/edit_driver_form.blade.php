@@ -20,7 +20,7 @@
             <div class="col-sm-12 col-md-12">
                 <div class="card card-custom gutter-b example example-compact">
                     <div class="card-header">
-                        <h3 class="card-title">{!! __('delivery.driver_registration') !!}</h3>
+                        <h3 class="card-title">{!! __('delivery.driver_edit') !!}</h3>
                         <div class="card-toolbar">
                             <div class="example-tools justify-content-center">
 
@@ -35,7 +35,7 @@
                          <div class="row">
                           <div class="form-group col-sm-12 col-md-6">
                            <label>Name</label>
-                           <input type="text" class="form-control"  placeholder="Driver Name" name="name" value="{{ old('name') }}" required />
+                           <input type="text" class="form-control"  placeholder="Driver Name" name="name" value="" required />
                            @error('name')
                              <p class="text-danger">{{ $message }}</p>
                            @enderror

@@ -59,7 +59,7 @@
                     </div>
                     <!--end::Dropdown-->
                     <!--begin::Button-->
-                    <a href="#" class="btn btn-primary font-weight-bolder">
+                    <a href="{{ route('backend.delivery.driver-register') }}" class="btn btn-primary font-weight-bolder">
                     <i class="la la-plus"></i>New Record</a>
                     <!--end::Button-->
                 </div>
@@ -73,7 +73,7 @@
                             <th>{{ __('driver_list.name') }}</th>
                             <th>{{ __('driver_list.contact') }}</th>
                             <th>{{ __('driver_list.email') }}</th>
-                            <th>{{ __('driver_list.max_delivery_distance') }}</th>
+                            <th>{{ __('delivery.max_delivery_distance') }}</th>
                             <th>{{ __('driver_list.current_status') }}</th>
                             <th>{{ __('driver_list.action') }}</th>
                         </tr>
@@ -91,7 +91,7 @@
                                 <a href="" class="mr-2">
                                     <i class="far fa-user text-primary"></i>
                                 </a>
-                                <a href="" class="text-primary mr-2">
+                                <a href="{!! route('backend.delivery.driver-edit', $driver->id) !!}" class="text-primary mr-2">
                                     <i class="far fa-edit text-primary"></i>
                                 </a>
                                 <a href="" class="text-danger">

@@ -84,6 +84,9 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
 		Route::post('global-settings', 'GlobalController@global_settings_submit');
 
         Route::get('country-area-currency', 'CountryCityCurrencyController@view_values')->name('ccc');
+        Route::post('add-country', 'CountryCityCurrencyController@add_country_submit')->name('add_country');
+        Route::post('add-city', 'CountryCityCurrencyController@add_city_submit')->name('add_city');
+        Route::post('add-currency', 'CountryCityCurrencyController@add_currency_submit')->name('add_currency');
 	});
     // Restaurant 
     Route::group(['prefix'=>'restaurant', 'as'=>'restaurant.' ], function(){
@@ -224,6 +227,8 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
 
         Route::get('driver-regiser', 'DeliveryController@register_driver_form')->name('driver-register');
         Route::post('driver-regiser', 'DeliveryController@register_driver_submit');
+
+        Route::get('{Driver}/driver-edit', 'DeliveryController@edit_driver_form')->name('driver-edit');
 
 
     });

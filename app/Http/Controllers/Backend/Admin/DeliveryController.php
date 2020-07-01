@@ -31,7 +31,7 @@ class DeliveryController extends Controller
     		// User
 	    	$user = new User();
 	    	$user->name = $request->name;
-	    	$user->role = 3;
+	    	$user->role = 2;
 	    	$user->email = $request->email;
 	    	$user->password = Hash::make($request->password);
 	    	$user->password_salt = $request->password;
@@ -48,7 +48,8 @@ class DeliveryController extends Controller
 	    	$driver->earning_style = $request->earning_style;
 	    	$driver->registered_by = $request->registered_company;
 	    	$driver->status = 1;
-	    	$driver_id = $driver->save();
+	    	$driver->save();
+	    	$driver_id = $driver->id;
 	    	// Driver timing
 	    	$days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 	    	for($i = 0; $i < sizeof($days); $i++){
@@ -69,18 +70,24 @@ class DeliveryController extends Controller
 	    	    $time->save();
 
 	    	    DB::commit();
-	    	    session('type','success');
-	    	    session('message','Driver registered successfully');
-	    	    return redirect()->back();
+	    	    
 	    	}
     	}catch(Exception $e){
     		DB::rollBack();
     		session('type','danger');
     		session('message','Something went wrong');
-    		return redirect()->back();
+    		return redirect()->back()->withInput();
     	}
 
-    	dd($request->all());
+    	session('type','success');
+    	session('message','Driver registered successfully');
+    	return redirect()->route('backend.delivery.driver-list');
+    }
+
+    public function edit_driver_form($driver_id)
+    {
+    	$driver = Driver::findOrFail($driver_id);
+    	return view('backend.pages.delivery.edit_driver_form', compact('driver'));
     }
     // END::Driver
 }

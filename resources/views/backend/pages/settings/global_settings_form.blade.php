@@ -6,7 +6,7 @@
         <form action="{{ route('backend.settings.global_settings') }}" method="post" enctype="multipart/form-data">
             <div class="row">
                 @csrf
-                <div class="col-sm-12 col-md-6">
+                <div class="col-sm-12 col-md-12">
                     <div class="card card-custom gutter-b example example-compact">
                         <div class="card-header">
                             <h3 class="card-title">Global Settings</h3>
@@ -18,7 +18,8 @@
                         </div>
 
                         <div class="card-body">
-                            <div class="form-group">
+                            <div class="row">
+                            <div class="form-group col-sm-12 col-md-6">
                                 <label>{!! __('backend_gs_form.app_name') !!}</label>
                                 <input type="text" class="form-control" placeholder="Application Name" name="app_name"
                                        required value="{!! $setting->app_name !!}"/>
@@ -26,7 +27,7 @@
                                 <span class="form-text text-warning">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="form-group col-sm-12 col-md-6">
                                 <label>{!! __('backend_gs_form.contact_email') !!}</label>
                                 <input type="text" class="form-control" placeholder="Contact Email" name="contact_email"
                                        required value="{!! $setting->contact_email !!}"/>
@@ -34,7 +35,7 @@
                                 <span class="form-text text-warning">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="form-group col-sm-12 col-md-6">
                                 <label for="theme_color">{!! __('backend_gs_form.theme_color') !!}</label>
                                 <select name="theme_color" id="theme_color" class="form-control" required >
                                     <option value="1" {!! ($setting->theme_color == 1)?'selected':'' !!}>Dark</option>
@@ -44,7 +45,7 @@
                                 <span class="form-text text-warning">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="form-group col-sm-12 col-md-6">
                                 <label>{!! __('backend_gs_form.navbar_color') !!}</label>
                                 <input type="text" class="form-control" placeholder="Navbar Color" name="navbar_color"
                                        required value="{!! $setting->navbar_color !!}"/>
@@ -52,7 +53,7 @@
                                 <span class="form-text text-warning">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="form-group col-sm-12 col-md-6">
                                 <label>{!! __('backend_gs_form.delivery_charge') !!}</label>
                                 <input type="number" class="form-control" placeholder="Delivery Charge"
                                        name="delivery_charge" required value="{!! $setting->default_delivery_charge !!}"/>
@@ -60,7 +61,7 @@
                                 <span class="form-text text-warning">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="form-group col-sm-12 col-md-6">
                                 <label>{!! __('backend_gs_form.selling_charge') !!}</label>
                                 <input type="number" step="0.01" class="form-control" placeholder="Selling Charge"
                                        name="selling_charge" required value="{!! $setting->default_product_selling_percentage !!}"/>
@@ -68,7 +69,7 @@
                                 <span class="form-text text-warning">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="form-group col-sm-12 col-md-6">
                                 <label for="contact_address">{!! __('backend_gs_form.contact_address') !!}</label>
                                 <textarea class="form-control" name="contact_address" id="contact_address"
                                           required>{!! $setting->contact_address !!}</textarea>
@@ -76,7 +77,7 @@
                                 <span class="form-text text-warning">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="form-group col-sm-12 col-md-6">
                                 <label>{!! __('backend_gs_form.app_status') !!}</label>
                                 <div class="radio-inline">
                                     <label class="radio">
@@ -87,32 +88,8 @@
                                         <span></span></label>
                                 </div>
                             </div>
-                        </div>
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-primary mr-2">Save Changes</button>
-                            <button type="reset" class="btn btn-secondary">Cancel</button>
-                        </div>
 
-                    </div>
-                    <!--end::Card-->
-                </div>
-
-
-                <div class="col-sm-12 col-md-6">
-                    <div class="card card-custom gutter-b example example-compact">
-                        <div class="card-header">
-                            <h3 class="card-title">More Info</h3>
-                            <div class="card-toolbar">
-                                <div class="example-tools justify-content-center">
-
-                                </div>
-                            </div>
-                        </div>
-                        <!--begin::Form-->
-
-
-                        <div class="card-body">
-                            <div class="form-group">
+                            <div class="form-group col-sm-12 col-md-6">
                                 <label>{!! __('backend_gs_form.app_logo') !!}</label>
                                 <div></div>
                                 <div class="custom-file">
@@ -124,7 +101,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group col-sm-12 col-md-6">
                                 <label>{!! __('backend_gs_form.app_description') !!}</label>
                                 <textarea class="form-control" name="app_description" required>{!! $setting->short_description !!}</textarea>
                                 @error('app_description')
@@ -132,24 +109,36 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group col-sm-12 col-md-6">
                                 <label>{!! __('backend_gs_form.country') !!}</label>
-                                <input type="text" name="country" class="form-control" value="{!! $setting->country !!}" required>
+                                <select class="form-control" name="country">
+                                    @foreach($countries as $country)
+                                        <option value="{!! $country->id !!}" {!! $country->id == $setting->country ? 'selected' : '' !!}>{!! $country->name !!}</option>
+                                    @endforeach
+                                </select>
                                 @error('country')
                                 <span class="form-text text-warning">{{ $message }}</span>
                                 @enderror
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group col-sm-12 col-md-6">
                                 <label>{!! __('backend_gs_form.city') !!}</label>
-                                <input type="text" name="city" class="form-control" value="{!! $setting->city !!}" required>
+                                <select class="form-control" name="city">
+                                    @foreach($cities as $city)
+                                        <option value="{!! $city->id !!}" {!! $city->id == $setting->city ? 'selected' : '' !!}>{!! $city->name !!}</option>
+                                    @endforeach
+                                </select>
                                 @error('city')
                                 <span class="form-text text-warning">{{ $message }}</span>
                                 @enderror
                             </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary mr-2">Save Changes</button>
+                            <button type="reset" class="btn btn-secondary">Cancel</button>
                         </div>
 
-                        <!--end::Form-->
                     </div>
                     <!--end::Card-->
                 </div>
