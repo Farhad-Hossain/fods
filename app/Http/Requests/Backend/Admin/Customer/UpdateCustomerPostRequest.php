@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Frontend;
+namespace App\Http\Requests\Backend\Admin\Customer;
 
+use App\Models\Customer;
+use App\User;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CustomerCreatePostRequest extends FormRequest
+class UpdateCustomerPostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,11 +25,12 @@ class CustomerCreatePostRequest extends FormRequest
      */
     public function rules()
     {
+        $customer = Customer::where('id', request()->segment(4))->first();
         return [
-            'full_name' => 'required',
-            'email' => 'required|email|unique:users,email',
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,'.$customer->user_id,
             'phone_number' => 'nullable',
-            'password' => 'required|min:3'
+            'password' => 'nullable|min:3'
         ];
     }
 }

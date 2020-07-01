@@ -27,7 +27,6 @@ return [
     'food_management' => 'Food Management',
     'food_category' => 'Food Category',
     'add_food_category' => 'Add Food Category',
-    'food_category' => 'Food Category',
     'add_food_category_btn' => 'Add Category',
     'food' => 'Food',
     'add_food' => 'Add Food',
@@ -79,5 +78,10 @@ return [
     'backup_and_restore' => 'Backup & Restore',
     'help' => 'Help',
     'cuisines' => 'Cuisines',
-    'tags' => 'Tags'
+    'tags' => 'Tags',
+    'customer' => 'Customer',
+    'add_customer' => 'Add Customer',
+    'customer_list' => 'Customer List',
+    'customer_register' => 'Customer Register',
+    'edit_customer' => 'Edit Customer'
 ];

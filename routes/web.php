@@ -182,6 +182,42 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
     /*
      * END::Food Route
      * */
+
+
+    /*
+     * BEGIN::Customer Route
+     * */
+    Route::group(['prefix'=>'customer', 'as'=>'customer.'], function() {
+
+        Route::get('add', [
+            'as' => 'add',
+            'uses' => 'CustomerController@customerRegisterPage'
+        ]);
+        Route::post('add', [
+            'as' => 'add',
+            'uses' => 'CustomerController@storeCustomer'
+        ]);
+        Route::get('list', [
+            'as' => 'list',
+            'uses' => 'CustomerController@showCustomerList'
+        ]);
+        Route::get('edit/{id}', [
+            'as' => 'edit',
+            'uses' => 'CustomerController@editCustomerPage'
+        ]);
+        Route::post('edit/{id}', [
+            'as' => 'edit',
+            'uses' => 'CustomerController@updateCustomer'
+        ]);
+        Route::get('delete/{id}', [
+            'as' => 'delete',
+            'uses' => 'CustomerController@deleteCustomer'
+        ]);
+    });
+    /*
+     * End::Customer Route
+     * */
+
     // BEGIN::Delivery
     Route::group(['prefix'=>'delivery', 'as'=>'delivery.'], function(){
         Route::get('driver-list', 'DeliveryController@show_driver_list')->name('driver-list');
