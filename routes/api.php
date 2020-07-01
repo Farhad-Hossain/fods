@@ -73,6 +73,27 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function () {
             'uses' => 'RestaurantTagController@deleteTag'
         ]);
         /*Restaurant Tag route end*/
+
+
+        /*Customer route start*/
+        Route::post('customer', [
+            'uses' => 'CustomerController@storeNewCustomer'
+        ]);
+        Route::get('customer', [
+            'uses' => 'CustomerController@getAllCustomer'
+        ]);
+        Route::get('customer/{id}', [
+            'uses' => 'CustomerController@getSingleCustomer'
+        ]);
+        Route::patch('customer/{id}', [
+            'uses' => 'CustomerController@updateCustomer'
+        ]);
+        Route::delete('customer/{id}', [
+            'uses' => 'CustomerController@deleteCustomer'
+        ]);
+        /*Customer route end*/
+
+
     });
     /*
      * Admin Route End
