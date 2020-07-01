@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Frontend;
+namespace App\Http\Requests\Backend\Admin\Customer;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CustomerCreatePostRequest extends FormRequest
+class CreateCustomerPostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class CustomerCreatePostRequest extends FormRequest
     public function rules()
     {
         return [
-            'full_name' => 'required',
+            'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'phone_number' => 'nullable',
             'password' => 'required|min:3'
