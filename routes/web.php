@@ -82,6 +82,8 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
 	Route::group(['prefix'=>'settings', 'as'=>'settings.', 'namespace'=>'Settings'], function(){
 		Route::get('global-settings', 'GlobalController@global_settings_form')->name('global_settings');
 		Route::post('global-settings', 'GlobalController@global_settings_submit');
+
+        Route::get('country-area-currency', 'CountryCityCurrencyController@view_values')->name('ccc');
 	});
     // Restaurant 
     Route::group(['prefix'=>'restaurant', 'as'=>'restaurant.' ], function(){

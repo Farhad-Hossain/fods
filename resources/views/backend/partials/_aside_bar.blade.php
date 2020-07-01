@@ -819,11 +819,11 @@
                             </li>
 
                             <li class="menu-item" aria-haspopup="true">
-                                <a href="features/miscellaneous/cropper.html" class="menu-link">
+                                <a href="{!! route('backend.settings.ccc') !!}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('backend_menus.country') !!}, {!! __('backend_menus.area') !!}</span>
+                                    <span class="menu-text">{!! __('backend_menus.country') !!}, {!! __('backend_menus.area') !!}, {!! __('backend_menus.currency') !!}</span>
                                 </a>
                             </li>
 
@@ -832,7 +832,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">{!! __('backend_menus.currency') !!}</span>
+                                    <span class="menu-text"></span>
                                 </a>
                             </li>
 
