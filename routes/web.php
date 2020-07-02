@@ -227,8 +227,11 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
 
         Route::get('driver-regiser', 'DeliveryController@register_driver_form')->name('driver-register');
         Route::post('driver-regiser', 'DeliveryController@register_driver_submit');
+        Route::post('edit-driver', 'DeliveryController@edit_driver_submit')->name('edit-driver');
+
 
         Route::get('{Driver}/driver-edit', 'DeliveryController@edit_driver_form')->name('driver-edit');
+        Route::get('{driver}/delete', 'DeliveryController@delete_driver_submit')->name('driver-delete');
 
 
     });

@@ -75,6 +75,7 @@
                             <th>{{ __('driver_list.email') }}</th>
                             <th>{{ __('delivery.max_delivery_distance') }}</th>
                             <th>{{ __('driver_list.current_status') }}</th>
+                            <th>{{ __('driver_list.bike_status') }}</th>
                             <th>{{ __('driver_list.action') }}</th>
                         </tr>
                     </thead>
@@ -86,15 +87,16 @@
                             <td>{{ $driver->phone }}</td>
                             <td>{{ $driver->user->email }}</td>
                             <td>{{ $driver->max_delivery_distance }} Km</td>
-                            <td>{{ 'Will do ' }}</td>
+                            @if( $driver->have_bike == 1 )
+                                <td class="text-success text-bold"><b>{{ 'Yes' }}</b></td>
+                            @else
+                                <td class="text-success text-bold"><b>{{ 'Buy Soon' }}</b></td>
+                            @endif
                             <td>
-                                <a href="" class="mr-2">
-                                    <i class="far fa-user text-primary"></i>
-                                </a>
                                 <a href="{!! route('backend.delivery.driver-edit', $driver->id) !!}" class="text-primary mr-2">
                                     <i class="far fa-edit text-primary"></i>
                                 </a>
-                                <a href="" class="text-danger">
+                                <a href="{!! route('backend.delivery.driver-delete', $driver->id) !!}" class="text-danger" onclick="return confirm('Are you sure want to delete this driver ?')">
                                     <i class="far fa-trash-alt text-danger"></i>
                                 </a>
                             </td>

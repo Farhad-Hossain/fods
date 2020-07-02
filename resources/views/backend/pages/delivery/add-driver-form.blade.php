@@ -56,7 +56,12 @@
                           </div>
                           <div class="form-group col-sm-12 col-md-6">
                            <label>Phone</label>
-                           <input type="text" class="form-control"  placeholder="Phone number" name="phone" value="{{ old('phone') }}" required />
+                           <div class="input-group">
+                             <div class="input-group-prepend">
+                                <span class="input-group-text" ><i class="flaticon2-phone"></i></span>
+                             </div>
+                             <input type="text" class="form-control"  placeholder="Phone number" name="phone" value="{{ old('phone') }}" required />
+                           </div>
                            @error('phone')
                              <p class="text-danger">{{ $message }}</p>
                            @enderror
@@ -106,13 +111,13 @@
                            <label>Working Details*</label>
                            <div class="radio-inline">
                              <label class="radio" for="km3">
-                             <input type="radio" id="km3" name="working_distance" value="1" />Working under 3 Km
+                             <input type="radio" id="km3" name="working_distance" value="3" />Working under 3 Km
                              <span></span></label>
                              <label class="radio" for="km5">
-                             <input type="radio" id="km5" name="working_distance" value="2" />Working under 5 Km
+                             <input type="radio" id="km5" name="working_distance" value="5" />Working under 5 Km
                              <span></span></label>
                              <label class="radio" for="km8">
-                             <input type="radio" id="km8" name="working_distance" value="3" />Working under 8 Km
+                             <input type="radio" id="km8" name="working_distance" value="8" />Working under 8 Km
                              <span></span></label>
                            </div>
                            @error('working_distance')
@@ -140,8 +145,6 @@
                                                        <input type="text" name="{{$days[$i-1]}}_time_to" class="timepicker"/>
                                                    </td>
                                                </tr>
-
-
                                        <?php 
                                            }
                                        ?>

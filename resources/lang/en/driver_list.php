@@ -6,4 +6,5 @@
 		'action' => 'Action',
 		'mmax_delivery_distance' => 'Delivery Distance',
 		'current_status' => 'Current Availabity',
+		'bike_status' => 'Bike Status',
 	];
