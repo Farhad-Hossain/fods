@@ -38,7 +38,7 @@ return [
     'order' => 'Order',
     'delivery_address' => 'Delivery Address',
     'order_status' => 'Order Status',
-    'delivery_management' => 'Delivery Management',
+    'driver_management' => 'Driver Management',
     'driver_registration' => 'Driver Registration',
     'driver_list' => 'Driver List',
     'driver_boy_ledger' => 'Driver Boy Ledger',
@@ -83,5 +83,6 @@ return [
     'add_customer' => 'Add Customer',
     'customer_list' => 'Customer List',
     'customer_register' => 'Customer Register',
-    'edit_customer' => 'Edit Customer'
+    'edit_customer' => 'Edit Customer',
+    'drivers' => 'Drivers',
 ];

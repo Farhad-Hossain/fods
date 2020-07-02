@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Backend\Admin\Settings;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Admin\GlobalSettingsPostRequest;
 use App\Models\GlobalSetting;
+use App\Models\Country;
+use App\Models\City;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\Array_;
 
@@ -28,7 +30,9 @@ class GlobalController extends Controller
             $setting->country = '';
             $sttring->city = '';
         }
-    	return view('backend.pages.settings.global_settings_form', compact('setting'));
+        $countries = Country::where('status', 1)->get();
+        $cities = City::where('status', 1)->get();
+    	return view('backend.pages.settings.global_settings_form', compact('setting', 'countries', 'cities'));
     }
 
     /*store/update global settings from admin panel*/

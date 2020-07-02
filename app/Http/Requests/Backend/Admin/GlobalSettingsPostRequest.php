@@ -32,7 +32,7 @@ class GlobalSettingsPostRequest extends FormRequest
             'selling_charge' => 'required',
             'contact_address' => 'required',
             'app_status' => 'required',
-            'app_description' => 'required'
+            'app_description' => 'required',
             'country' => 'required',
             'city' => 'required',
         ];
