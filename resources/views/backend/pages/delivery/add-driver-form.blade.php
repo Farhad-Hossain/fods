@@ -130,7 +130,7 @@
                                
                                    <table class="table table-sm table-collapsed" id="time_table">
                                        <?php 
-                                           $days = ['Mon','Tue','Wed','Thu','Fri','Sut','Sun'];
+                                           $days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
                                            for($i = 1; $i <= 7; $i++){ ?>
                                                <tr>
                                                    <td>

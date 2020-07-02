@@ -93,6 +93,24 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function () {
         ]);
         /*Customer route end*/
 
+        /*Driver route start*/
+        Route::post('driver', [
+            'uses' => 'DriverController@storeNewDriver'
+        ]);
+        Route::get('driver', [
+            'uses' => 'DriverController@getAllDriver'
+        ]);
+        Route::get('driver/{id}', [
+            'uses' => 'DriverController@getSingleDriver'
+        ]);
+        Route::patch('driver/{id}', [
+            'uses' => 'DriverController@updateDriver'
+        ]);
+        Route::delete('driver/{id}', [
+            'uses' => 'DriverController@deleteDriver'
+        ]);
+        /*Driver route end*/
+
 
     });
     /*

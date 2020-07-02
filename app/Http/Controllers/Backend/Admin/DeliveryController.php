@@ -69,11 +69,9 @@ class DeliveryController extends Controller
 	    	    $time->open_status   = $request->$d ? 1 : 2;
 	    	    $time->time_from     = $request->$from;
 	    	    $time->time_to       = $request->$to;
-	    	    $time->save();
+                $time->save();
+            }
 
-	    	    DB::commit();
-	    	    
-	    	}
     	}catch(Exception $e){
     		DB::rollBack();
     		session('type','danger');
@@ -81,6 +79,7 @@ class DeliveryController extends Controller
     		return redirect()->back()->withInput();
     	}
 
+        DB::commit();
     	session('type','success');
     	session('message','Driver registered successfully');
     	return redirect()->route('backend.delivery.driver-list');

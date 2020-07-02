@@ -43,7 +43,7 @@ class DriverCreateRequest extends FormRequest
             'Wed_time_to' => 'required',
             'Thu_time_to' => 'required',
             'Fri_time_to' => 'required',
-            'Sut_time_to' => 'required',
+            'Sat_time_to' => 'required',
             'Sun_time_to' => 'required',
 
 
