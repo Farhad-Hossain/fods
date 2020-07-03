@@ -129,7 +129,7 @@
                             @enderror
                            </div>
                          </div>
-                         <div class="card-footer">
+                         <div class="">
                           <button type="submit" class="btn btn-success mr-2">Save Changes</button>
                           <a href="{!! route('backend.delivery.driver-list') !!}" class="btn btn-success mr-2">Cancel</a>
                           <button type="reset" class="btn btn-secondary">Reset</button>

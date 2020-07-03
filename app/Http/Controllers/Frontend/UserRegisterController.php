@@ -129,7 +129,7 @@ class UserRegisterController extends Controller
             $user->last_login_ip = request()->ip();
             $user->status   = 1;
             $user->save();
-
+            // Driver
             $driver = new Driver();
             $driver->user_id = $user->id;
             $driver->city = $request->city;
@@ -141,21 +141,6 @@ class UserRegisterController extends Controller
             $driver->status = 1;
             $driver_id = $driver->save();
     
-            $days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sut', 'Sun'];
-            for($i = 0; $i < sizeof($days); $i++){
-                $time = new DriverTiming();
-                $time->driver_id = $driver_id;
-                $time->day           = $days[$i];
-
-                $d = $days[$i].'_day';
-                $from = $days[$i].'_time_from';
-                $to = $days[$i].'_time_to';
-
-                $time->open_status   = $request->$d ? 1 : 2;
-                $time->time_from     = $request->$from;
-                $time->time_to       = $request->$to;
-                $time->save();
-            }
             DB::commit();
             session('type', 'danger');
             session('message', 'Congratulations ! Driver Registerd Successfully');

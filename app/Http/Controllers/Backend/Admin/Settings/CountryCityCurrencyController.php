@@ -22,14 +22,37 @@ class CountryCityCurrencyController extends Controller
     {
     	$request->validate([
     		'country_name' => 'required|unique:countries,name',
+            'two_letter_iso_code' => 'required|unique:countries,two_letter_iso_code',
+            'three_letter_iso_code' => 'required|unique:countries,three_letter_iso_code',
+            'country_code' => 'required',
     	]);
+
+        if($request->hasFile('flag_image')){
+            $flag_name = time().$request->file('flag_image')->getClientOriginalExtension();
+            $request->file('flag_image')->storeAs('country_flags', $flag_name);
+        }else{
+            $flag_name = '';
+        }
 
     	$country = new Country();
     	$country->name = $request->country_name;
+        $country->two_letter_iso_code = $request->two_letter_iso_code;
+        $country->three_letter_iso_code = $request->three_letter_iso_code;
+        $country->country_code = $request->country_code;
+        $country->country_flag = $request->$flag_name;
     	$country->status = 1;
     	$country->save();
     	session(['type'=>'success', 'message'=>'Country Added successfully.']);
     	return redirect()->back();
+    }
+    public function delete_country($country_id)
+    {
+        $country = Country::findOrFail($country_id);
+        $country->status = 2;
+        $country->save();
+
+        session(['type'=>'success', 'message'=>'Country Deleted Successfully']);
+        return redirect()->back();
     }
     public function add_city_submit(Request $request)
     {

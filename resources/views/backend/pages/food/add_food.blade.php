@@ -25,8 +25,8 @@
                                     <div class="row">
                                         <div class="form-group col-sm-12 col-md-6">
                                             <label for="restaurant">{!! __('admin_add_food.restaurant') !!} <span class="text-danger">*</span></label>
-                                            <select name="restaurant" id="restaurant" class="form-control" required>
-                                                <option value="">--Select Restaurant--</option>
+                                            <select name="restaurant" id="restaurant" class="form-control selectpicker" required data-size="7" data-live-search="true">
+                                                <option value="">Select</option>
                                                 @if(!empty($restaurants))
                                                     @foreach($restaurants as $restaurant)
                                                         <option value="{!! $restaurant->id !!}" {!! (old('restaurant') == $restaurant->id)?'selected':'' !!}>{!! $restaurant->name !!}</option>
@@ -39,8 +39,8 @@
                                         </div>
                                         <div class="form-group col-sm-12 col-md-6">
                                             <label for="food_category">{!! __('admin_add_food.food_category') !!} <span class="text-danger">*</span></label>
-                                            <select name="food_category" id="food_category" class="form-control" required>
-                                                <option value="">--Select Food Category--</option>
+                                            <select name="food_category" id="food_category" class="form-control selectpicker" required data-size="7" data-live-search="true">
+                                                <option value="">Select</option>
                                                 @if(!empty($food_categories))
                                                     @foreach($food_categories as $food_category)
                                                         <option value="{!! $food_category->id !!}" {!! (old('food_category') == $food_category->id)?'selected':'' !!}>{!! $food_category->name !!}</option>

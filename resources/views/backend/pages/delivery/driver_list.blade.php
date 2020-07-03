@@ -87,6 +87,11 @@
                             <td>{{ $driver->phone }}</td>
                             <td>{{ $driver->user->email }}</td>
                             <td>{{ $driver->max_delivery_distance }} Km</td>
+                            @if($driver->active_status == 1)
+                                <td class="text-success text-bold"><b>Online</b></td>
+                            @else
+                                <td class="text-danger text-bold"><b>Ofline</b></td>
+                            @endif
                             @if( $driver->have_bike == 1 )
                                 <td class="text-success text-bold"><b>{{ 'Yes' }}</b></td>
                             @else

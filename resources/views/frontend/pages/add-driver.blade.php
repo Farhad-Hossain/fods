@@ -97,68 +97,6 @@
 							</div>
 						</div>
 					</div>
-					<div class="basic-info">
-						<h4>Timing</h4>						
-						<div class="form-group">
-							<div class="checkbox-title">Add Time*</div>
-							<div class="filter-checkboxs">
-								<ul>
-									<table class="table table-sm table-collapsed" id="time_table">
-
-									    <!-- Monday -->
-									    <?php 
-									        $days = ['Mon','Tue','Wed','Thu','Fri','Sut','Sun'];
-									        for($i = 1; $i <= 7; $i++){ ?>
-
-									            <tr>
-									                <td>
-									                    <input type="checkbox" id="d<?=$i?>" value="1" name="{{$days[$i-1]}}_day">
-									                    <label for="d<?=$i?>" title="Monday"><?=$days[$i-1]?></label>
-									                </td>   
-									                <td>
-									                    <select class="selectpicker" tabindex="-98" name="{{$days[$i-1]}}_time_from">
-									                        <option value="12">12.00 AM</option>
-									                        <option value="1">01.00 AM</option>
-									                        <option value="2">02.00 AM</option>
-									                        <option value="3">03.00 AM</option>
-									                        <option value="4">04.00 AM</option>
-									                        <option value="5">05.00 AM</option>
-									                        <option value="6">06.00 AM</option>
-									                        <option value="7">07.00 AM</option>
-									                        <option value="8">08.00 AM</option>
-									                        <option value="9">09.00 AM</option>
-									                        <option value="9">10.00 AM</option>
-									                        <option value="9">11.00 AM</option>
-									                    </select>        
-									                </td>
-									                <td>to</td>
-									                <td>
-									                    <select class="selectpicker" tabindex="-98" name="{{$days[$i-1]}}_time_to">
-									                        <option value="12">12.00 PM</option>
-									                        <option value="1">01.00 PM</option>
-									                        <option value="2">02.00 PM</option>
-									                        <option value="3">03.00 PM</option>
-									                        <option value="4">04.00 PM</option>
-									                        <option value="5">05.00 PM</option>
-									                        <option value="6">06.00 PM</option>
-									                        <option value="7">07.00 PM</option>
-									                        <option value="8">08.00 PM</option>
-									                        <option value="9">09.00 PM</option>
-									                        <option value="9">10.00 PM</option>
-									                        <option value="9">11.00 PM</option>
-									                    </select>
-									                </td>
-									            </tr>
-
-
-									    <?php 
-									        }
-									    ?>
-									</table>									
-								</ul>
-							</div>
-						</div>
-					</div>					
 					<div class="basic-info c-top">
 						<h4>More Details</h4>												
 						<div class="form-group">
@@ -185,8 +123,8 @@
 							<div class="filter-radio">
 								<ul>
 									<li>
-									  <input type="radio" value="1" id="c7" name="earning_style">
-									  <label for="c7">Every order commission</label>
+									  <input type="radio" value="1" id="c71" name="earning_style">
+									  <label for="c71">Every order commission</label>
 									</li>
 									<li>
 									  <input type="radio" value="2" id="c8" name="earning_style">
@@ -214,8 +152,6 @@
 								</ul>
 							</div>
 						</div>
-						
-						
 					</div>					
 					<button type="submit" class="add-resto-btn1 btn-link">Add As Driver</button>
 				</div>

@@ -1,18 +1,4 @@
 @extends('backend.master')
-@section('custom_style')
-    <link href="{{asset('backend')}}/assets/plugins/custom/datatables/datatables.bundle.css?v=7.0.3" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="{!! asset('frontend/plugins/wickedpicker/dist/wickedpicker.min.css') !!}">
-    <style type="text/css">
-        #time_table tr td{
-            vertical-align: middle;
-        }
-        .wickedpicker__controls {
-            padding: 0;
-            margin: 0;
-        }
-    </style>
-@endsection
-
 @section('main_content')
     <div class="container-fluid">
         @include('backend.message.flash_message')
@@ -23,7 +9,11 @@
                         <h3 class="card-title">{!! __('delivery.driver_registration') !!}</h3>
                         <div class="card-toolbar">
                             <div class="example-tools justify-content-center">
-
+                              @if($errors->any())
+                                @foreach($errors->all() as $error)
+                                  <p class="alert alert-danger">{{$error}}</p>
+                                @endforeach
+                              @endif
                             </div>
                         </div>
                     </div>
@@ -124,37 +114,6 @@
                              <p class="text-danger">{{ $message }}</p>
                            @enderror
                           </div>
-                          <!--  -->
-                           <div class="form-group col-sm-12 col-md-12">
-                            <p class="h3 text-center">Timing</p>
-                               
-                                   <table class="table table-sm table-collapsed" id="time_table">
-                                       <?php 
-                                           $days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-                                           for($i = 1; $i <= 7; $i++){ ?>
-                                               <tr>
-                                                   <td>
-                                                       <input type="checkbox" id="d<?=$i?>" value="1" name="{{$days[$i-1]}}_day">
-                                                       <label for="d<?=$i?>" title="Monday"><?=$days[$i-1]?></label>
-                                                   </td>   
-                                                   <td>
-                                                       <input type="text" name="{{$days[$i-1]}}_time_from" class="timepicker"/>
-                                                   </td>
-                                                   <td>to</td>
-                                                   <td>
-                                                       <input type="text" name="{{$days[$i-1]}}_time_to" class="timepicker"/>
-                                                   </td>
-                                               </tr>
-                                       <?php 
-                                           }
-                                       ?>
-                                   </table>
-                               
-                               @error('active_days')
-                                   <p class="text-info">{!! $message !!}</p>
-                               @enderror
-                           </div>
-                           <!--  -->
                            <div class="form-group col-sm-12 col-md-6">
                             <label>Earning Style*</label>
                             <div class="radio-inline">
@@ -170,7 +129,7 @@
                             @enderror
                            </div>
                          </div>
-                         <div class="card-footer">
+                         <div class="">
                           <button type="submit" class="btn btn-success mr-2">Register</button>
                           <a href="{!! route('backend.delivery.driver-list') !!}" class="btn btn-success mr-2">Cancel</a>
                           <button type="reset" class="btn btn-secondary">Reset</button>
@@ -182,13 +141,4 @@
             </div>
         </div>
     </div>
-@endsection
-@section('custom_script')
-    <script src="{!! asset('frontend/plugins/wickedpicker/dist/wickedpicker.min.js') !!}"></script>
-    <script>
-        var options = {
-            twentyFour: true,  //Display 24 hour format, defaults to false
-        };
-        $('.timepicker').wickedpicker(options);
-    </script>
 @endsection

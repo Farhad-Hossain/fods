@@ -91,6 +91,8 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
         Route::post('add-country', 'CountryCityCurrencyController@add_country_submit')->name('add_country');
         Route::post('add-city', 'CountryCityCurrencyController@add_city_submit')->name('add_city');
         Route::post('add-currency', 'CountryCityCurrencyController@add_currency_submit')->name('add_currency');
+
+        Route::get('{country}/delete', 'CountryCityCurrencyController@delete_country')->name('delete_country');
 	});
     // Restaurant 
     Route::group(['prefix'=>'restaurant', 'as'=>'restaurant.' ], function(){

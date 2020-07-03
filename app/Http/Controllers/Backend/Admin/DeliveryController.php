@@ -52,26 +52,6 @@ class DeliveryController extends Controller
 	    	$driver->status = 1;
 	    	$driver->save();
 	    	$driver_id = $driver->id;
-	    	// Driver timing
-	    	$days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-	    	for($i = 0; $i < sizeof($days); $i++){
-	    	    $time = new DriverTiming();
-	    	    $time->driver_id = $driver_id;
-	    	    $time->day           = $days[$i];
-
-	    	    $d = $days[$i].'_day';
-	    	    $from = $days[$i].'_time_from';
-	    	    $to = $days[$i].'_time_to';
-
-	    	    $request->$from = str_replace(" ", "", $request->$from);
-	    	    $request->$to = str_replace(" ", "", $request->$to);
-
-	    	    $time->open_status   = $request->$d ? 1 : 2;
-	    	    $time->time_from     = $request->$from;
-	    	    $time->time_to       = $request->$to;
-                $time->save();
-            }
-
     	}catch(Exception $e){
     		DB::rollBack();
     		session('type','danger');

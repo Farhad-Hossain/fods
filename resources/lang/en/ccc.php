@@ -8,4 +8,8 @@ return [
 	'currency' => 'Currencies',
 	'add_currency' => 'Add Currency',
 	'currency_name' => 'Currency name',
+	'two_letter_iso_code' => 'Two Letter ISO Code',
+	'three_letter_iso_code' => 'Three Letter ISO Code',
+	'country_code' => 'Country Code',
+	'country_flag' => 'Country Flag',
 ];
