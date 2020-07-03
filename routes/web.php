@@ -57,6 +57,20 @@ Route::group(['namespace'=>'Frontend', 'as'=>'frontend.'], function() {
     Route::group(['prefix'=>'food', 'as'=>'food.'], function(){
         Route::get('{food}/details', 'FoodController@getFoodDetails')->name('details');
     });
+
+    /*
+     * Begin:: Cart Route
+     * */
+    Route::group(['prefix'=>'cart', 'as'=>'cart.'], function(){
+        Route::get('add', [
+            'as' => 'add',
+            'uses' => 'CartController@addToCart'
+        ]);
+    });
+
+    /*
+     * End:: Cart Route
+     * */
     
 });
 // END:frontend Routes

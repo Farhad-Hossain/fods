@@ -13,5 +13,5 @@
 <!--begin::Page Scripts(used by this page)-->
 <script src="{!! asset('backend/assets/js/pages/widgets.js?v=7.0.3') !!}"></script>
 <!--end::Page Scripts-->
-
+<script type="text/javascript" src="{!! asset('assets/frontend/plugins/growl-alert/javascripts/jquery.growl.js') !!}"></script>
 @yield('custom_script')

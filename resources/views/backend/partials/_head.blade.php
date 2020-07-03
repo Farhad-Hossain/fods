@@ -22,4 +22,6 @@
 <!--end::Layout Themes-->
 <link rel="shortcut icon" href="{!! asset('backend/assets/media/logos/favicon.ico') !!}" />
 
+<link rel="stylesheet" href="{!! asset('assets/frontend/plugins/growl-alert/stylesheets/jquery.growl.css') !!}">
+
 @yield('custom_style')
