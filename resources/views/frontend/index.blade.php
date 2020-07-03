@@ -201,27 +201,28 @@
                 </div>
             </div>
             <div class="row">
+                @foreach($foods as $food)
                 <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
                     <div class="all-meal">
                         <div class="top">
-                            <a href="meal_detail.html"><div class="bg-gradient"></div></a>
+                            <a href="{!! route('frontend.food.details', $food->id) !!}"><div class="bg-gradient"></div></a>
                             <div class="top-img">
-                                <img src="{!! asset('frontend/images/') !!}/homepage/meals/img-1.jpg" alt="">
+                                <img src="{!! asset('uploads/food') !!}/{!! $food->image !!}" alt="">
                             </div>
                             <div class="logo-img">
-                                <img src="{!! asset('frontend/images/') !!}/homepage/meals/logo-1.jpg" alt="">
+                                <img src="{!! asset('uploads/logo') !!}/{!! $food->restaurant->image !!}" alt="">
                             </div>
                             <div class="top-text">
-                                <div class="heading"><h4><a href="meal_detail.html">Bonn Burgur</a></h4></div>
+                                <div class="heading"><h4><a href="meal_detail.html">{!! $food->food_name !!}</a></h4></div>
                                 <div class="sub-heading">
-                                    <h5><a href="restaurant_detail.html">Rooster</a></h5>
-                                    <p>$5.00</p>
+                                    <h5><a href="restaurant_detail.html">{!! $food->restaurant->name !!}</a></h5>
+                                    <p>${!! $food->price !!}</p>
                                 </div>
                             </div>
                         </div>
                         <div class="bottom">
                             <div class="bottom-text">
-                                <div class="delivery"><i class="fas fa-shopping-cart"></i>Delivery Free : Free</div>
+                                <div class="delivery"><i class="fas fa-shopping-cart"></i>Delivery Free : ${!! $food->restaurant->delivery_charge !!}</div>
                                 <div class="time"><i class="far fa-clock"></i>Delivery Time : 30 Min</div>
                                 <div class="star">
                                     <i class="fas fa-star"></i>
@@ -236,76 +237,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
-                    <div class="all-meal">
-                        <div class="top">
-                            <a href="meal_detail.html"><div class="bg-gradient"></div></a>
-                            <div class="top-img">
-                                <img src="{!! asset('frontend/images/') !!}/homepage/meals/img-2.jpg" alt="">
-                            </div>
-                            <div class="logo-img">
-                                <img src="{!! asset('frontend/images/') !!}/homepage/meals/logo-2.jpg" alt="">
-                            </div>
-                            <div class="top-text">
-                                <div class="heading"><h4><a href="meal_detail.html">Two Burgurs</a></h4></div>
-                                <div class="sub-heading">
-                                    <h5><a href="restaurant_detail.html">Chef House</a></h5>
-                                    <p>$5.00</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bottom">
-                            <div class="bottom-text">
-                                <div class="delivery"><i class="fas fa-shopping-cart"></i>Delivery Free : Free</div>
-                                <div class="time"><i class="far fa-clock"></i>Delivery Time : 30 Min</div>
-                                <div class="star">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <span>4.5</span>
-                                    <div class="comments"><a href="#"><i class="fas fa-comment-alt"></i>05</a></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
-                    <div class="all-meal">
-                        <div class="top">
-                            <a href="meal_detail.html"><div class="bg-gradient"></div></a>
-                            <div class="top-img">
-                                <img src="{!! asset('frontend/images/') !!}/homepage/meals/img-3.jpg" alt="">
-                            </div>
-                            <div class="logo-img">
-                                <img src="{!! asset('frontend/images/') !!}/homepage/meals/logo-3.jpg" alt="">
-                            </div>
-                            <div class="top-text">
-                                <div class="heading"><h4><a href="meal_detail.html">Large Cheese Pizza...</a></h4></div>
-                                <div class="sub-heading">
-                                    <h5><a href="restaurant_detail.html">Limon Resto</a></h5>
-                                    <p>$12.00</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bottom">
-                            <div class="bottom-text">
-                                <div class="delivery"><i class="fas fa-shopping-cart"></i>Delivery Free : Free</div>
-                                <div class="time"><i class="far fa-clock"></i>Delivery Time : 30 Min</div>
-                                <div class="star">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <span>4.5</span>
-                                    <div class="comments"><a href="#"><i class="fas fa-comment-alt"></i>05</a></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
+                
                 <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
                     <div class="all-meal">
                         <div class="top">

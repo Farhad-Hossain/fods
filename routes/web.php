@@ -53,6 +53,10 @@ Route::group(['namespace'=>'Frontend', 'as'=>'frontend.'], function() {
     Route::group(['prefix'=>'blog', 'as'=>'blog.'], function(){
         Route::get('our-blogs', 'BlogController@showOurBlogsPage')->name('our-blogs');
     });
+    // Food details
+    Route::group(['prefix'=>'food', 'as'=>'food.'], function(){
+        Route::get('{food}/details', 'FoodController@getFoodDetails')->name('details');
+    });
     
 });
 // END:frontend Routes
