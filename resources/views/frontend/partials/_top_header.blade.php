@@ -16,10 +16,17 @@
                     <ul class="list-inline">
                         <li><a href="#"><i class="far fa-calendar-alt"></i>Table Bookings</a> </li>
                         <li><a href="#"><i class="far fa-bookmark"></i>Bookmarks <span class="badge badge-secondary">2</span></a></li>
-                        <li><a href="#"><i class="fas fa-shopping-cart"></i>Food Orders <span class="badge badge-secondary">3</span></a></li>
+                        <li class="nav-item dropdown" id="min_car_content">
+                            <a href="#" class="dropdown-toggle-no-caret" id="orderDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-shopping-cart"></i>Food Orders <span class="badge badge-secondary">0</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="orderDropdown" id="mini_cart_dropdown">
+
+                            </div>
+                        </li>
 
                         <li class="nav-item dropdown">
-                            <a  class="dropdown-toggle-no-caret" href="#" id="accountDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle"></i>John Doe  <i class="fas fa-caret-down"></i></a>
+                            <a class="dropdown-toggle-no-caret" href="#" id="accountDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle"></i>John Doe  <i class="fas fa-caret-down"></i></a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdown">
                                 <a class="dropdown-item" href="my_profile_dashbord.html"> My Profile</a>
                                 <a class="dropdown-item" href="#"> Bookmarks</a>

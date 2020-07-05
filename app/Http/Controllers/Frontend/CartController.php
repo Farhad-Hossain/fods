@@ -24,14 +24,39 @@ class CartController extends Controller
             Cart::add([
                 'id' => $food->id,
                 'name' => $food->food_name,
-                'qty' => $request->qty,
+                'qty' => $request->food_quantity,
                 'price' => $food->price
             ]);
 
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Something went wrong'], 500);
+            return response()->json(['message' => 'Something went wrong'.$e->getMessage()], 500);
         };
 
         return response()->json(['message' => 'Successfully added this food'], 200);
+    }
+
+    public function getCartContent()
+    {
+        $contents = Cart::content();
+
+        return view('frontend.partials._top_mini_cart_content', compact('contents'));
+    }
+
+    public function removeCartContent(Request $request)
+    {
+        $cart_data = Cart::content()->where('id', $request->id)->first();
+        Cart::remove($cart_data->rowId);
+        return response()->json([
+            'message' => 'Remove Success',
+            'status' => 200
+        ]);
+    }
+
+
+    public function showCheckoutPage()
+    {
+        $cart_contents = Cart::content();
+
+        return view('frontend.pages.checkout', compact('cart_contents'));
     }
 }

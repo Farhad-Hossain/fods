@@ -62,9 +62,21 @@ Route::group(['namespace'=>'Frontend', 'as'=>'frontend.'], function() {
      * Begin:: Cart Route
      * */
     Route::group(['prefix'=>'cart', 'as'=>'cart.'], function(){
-        Route::get('add', [
+        Route::post('add', [
             'as' => 'add',
             'uses' => 'CartController@addToCart'
+        ]);
+        Route::post('getContent', [
+            'as' => 'getContent',
+            'uses' => 'CartController@getCartContent'
+        ]);
+        Route::post('removeContent', [
+            'as' => 'removeContent',
+            'uses' => 'CartController@removeCartContent'
+        ]);
+        Route::get('checkout', [
+            'as' => 'checkout',
+            'uses' => 'CartController@showCheckoutPage'
         ]);
     });
 

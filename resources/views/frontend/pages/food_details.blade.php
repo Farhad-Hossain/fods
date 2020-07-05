@@ -474,7 +474,7 @@
                             </div>
                         </div>
                         <div class="order-now-check">
-                            <button class="on-btn btn-link" onclick="">Order Now</button>
+                            <button class="on-btn btn-link" onclick="addToCart({!! $food->id !!})">Order Now</button>
                         </div>
                     </div>
 
@@ -504,28 +504,6 @@
             });
         });
 
-        function addToCart(food_id) {
-            let csrf_token = $("#_token").val();
-            let food_quantity = $("#qty_input").val();
-            let post_url = "{!! route('frontend.cart.add') !!}";
-            $.ajax({
-                type: "POST",
-                url: post_url,
-                data: {_token: csrf_token, food_id: food_id, food_quantity},
-                success: function( data ) {
-                    // console.log( data );
-                    if (data.status !== 200) {
-                        $.growl.notice({ title: "Success", message: data.message });
-                    } else {
-                        getTopCartContent();
-                        $.growl.notice({ title: "Success", message: "Food Added Successfully!" });
-                    }
-                }
-            });
-        }
 
-        function getTopCartContent() {
-            console.log("Go Ahed");
-        }
     </script>
 @endsection
