@@ -15,15 +15,29 @@
 
     <!-- Fontawesome styles for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
 @endsection
 
 @section('main_content')
 
-    @if($errors->hasAny())
-        @foreach($errors->all() as $error)
-            <p class="text-danger">{{ $error }}</p>
-        @endforeach
-    @endif
+    @include('backend.message.flash_message')
+    @include('backend.message.emergency_form_validation')
 
     <!--title-bar start-->
     <section class="title-bar">
@@ -87,7 +101,7 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="td-content"><input type="number" class="" value="{!! $content->qty !!}"></td>
+                                            <td class="td-content">{!! $content->qty !!}</td>
                                             <td class="td-content">{!! $content->price !!}</td>
                                             <td class="td-content">{!! $content->price * $content->qty !!}</td>
                                             <td><button class="remove-btn" onclick="removeContent({!! $content->id !!})">Remove</button></td>
@@ -106,7 +120,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="map">
+                    {{--<div class="map">
                         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6848.588137286094!2d75.8069355495411!3d30.878433570394723!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391a822f25912599%3A0xa51f780d31824240!2sShaheed+Bhagat+Singh+Nagar%2C+Ludhiana%2C+Punjab!5e0!3m2!1sen!2sin!4v1556363627043!5m2!1sen!2sin" style="border:0" allowfullscreen></iframe>
                         <div class="map-location-tooltip">
                             <div class="tooltip tooltip-main">
@@ -118,8 +132,8 @@
                                 <span class="tooltip-content">Your Location</span>
                             </div>
                         </div>
-                    </div>
-                    <div class="yf-location">
+                    </div>--}}
+                    {{--<div class="yf-location">
                         <ul>
                             <li><span><i class="fas fa-map-marker-alt"></i></span><ins>Your location</ins></li>
                             <li class="circles">
@@ -162,7 +176,7 @@
                             </li>
                             <li><span><i class="fas fa-map-marker-alt"></i></span><ins>Food location</ins></li>
                         </ul>
-                    </div>
+                    </div>--}}
                     <div class="food-delivery-time">
                         <p>We will Deliver in 35 min <p>
                     </div>
@@ -190,7 +204,7 @@
                 </div>
 
                 <div class="col-lg-4 col-md-4">
-                    <div class="right-address">
+                    {{--<div class="right-address">
                         <h4>Address</h4>
                         <form>
                             <div class="form-group">
@@ -230,8 +244,8 @@
                                 <input type="text" class="video-form" id="inputZip" placeholder="Zip Code">
                             </div>
                         </form>
-                    </div>
-                    <div class="right-payment-method">
+                    </div>--}}
+                    {{--<div class="right-payment-method">
                         <h4>Payment Method</h4>
                         <div class="single-payment-method">
                             <div class="payment-method-name">
@@ -314,8 +328,8 @@
                                 </form>
                             </div>
                         </div>
-                    </div>
-                    <div class="right-contact-dt">
+                    </div>--}}
+                    {{--<div class="right-contact-dt">
                         <h4>Confirm</h4>
                         <form>
                             <div class="form-group">
@@ -331,8 +345,8 @@
                                 </div>
                             </div>
                         </form>
-                    </div>
-                    <div class="promocode">
+                    </div>--}}
+                    {{--<div class="promocode">
                         <h4>Promocode</h4>
                         <form>
                             <input class="coupon-input" name="newsletter" type="text" placeholder="Enter promo code">
@@ -342,32 +356,16 @@
                                 </div>
                             </div>
                         </form>
-                    </div>
+                    </div>--}}
                     <div class="your-order">
                         <h4>Your Order</h4>
-                        <div class="order-d">
-                            <div class="item-dt-left">
-                                <span>Toasty Buns Burgers</span>
-                                <p>2 X $11</p>
-                            </div>
-                            <div class="item-dt-right">
-                                <p>$22.00</p>
-                            </div>
-                        </div>
+
                         <div class="order-d">
                             <div class="item-dt-left">
                                 <span>Item Total</span>
                             </div>
                             <div class="item-dt-right">
-                                <p>$22.00</p>
-                            </div>
-                        </div>
-                        <div class="order-d">
-                            <div class="item-dt-left">
-                                <span>Promocode <a href="#">(Natto50)</a></span>
-                            </div>
-                            <div class="item-dt-right">
-                                <p>- $11.00</p>
+                                <p>{!! number_format($subTotal, 2) !!}</p>
                             </div>
                         </div>
                         <div class="order-d">
@@ -375,7 +373,7 @@
                                 <span>Taxes</span>
                             </div>
                             <div class="item-dt-right">
-                                <p>$2.00</p>
+                                <p>0.00</p>
                             </div>
                         </div>
                         <div class="order-d">
@@ -383,28 +381,31 @@
                                 <span>Delivery Charges</span>
                             </div>
                             <div class="item-dt-right">
-                                <p>Free</p>
+                                @php($delivery_charge = 50)
+                                <p>{!! number_format($delivery_charge, 2) !!}</p>
                             </div>
                         </div>
-                        <div class="order-d">
-                            <div class="item-dt-left">
-                                <span>Your Saving</span>
-                            </div>
-                            <div class="item-dt-right">
-                                <p>$9.00</p>
-                            </div>
-                        </div>
+
                         <div class="total-bill">
                             <div class="total-bill-text">
                                 <h5>Total</h5>
                             </div>
                             <div class="total-bill-payment">
-                                <p>$13.00</p>
+                                <p>{!! number_format(($subTotal + $delivery_charge), 2) !!}</p>
                             </div>
                         </div>
                     </div>
                     <div class="checkout-btn">
-                        <button type="submit" class="chkout-btn btn-link">Checkout Now</button>
+                        <form action="{!! route('frontend.cart.submit-order') !!}" method="post">
+                            @csrf
+                            <button type="submit" class="chkout-btn btn-link">Checkout Now</button>
+                        </form>
+                        {{--<button class="btn btn-primary btn-lg btn-block" id="sslczPayBtn"
+                                token="if you have any token validation"
+                                postdata="your javascript arrays or objects which requires in backend"
+                                order="If you already have the transaction generated for current order"
+                                endpoint="{{ url('/pay-via-ajax') }}"> Checkout Now
+                        </button>--}}
                     </div>
                 </div>
             </div>
@@ -420,9 +421,25 @@
     <script src="{!! asset('frontend') !!}/js/bootstrap-datepicker.js"></script>
     <script src="{!! asset('frontend') !!}/js/bootstrap-select.js"></script>
     <script>
-        $(document).ready(function () {
+        var obj = {};
+        obj.cus_name = $('#customer_name').val();
+        obj.cus_phone = $('#mobile').val();
+        obj.cus_email = $('#email').val();
+        obj.cus_addr1 = $('#address').val();
+        obj.amount = $('#total_amount').val();
 
-        });
+        $('#sslczPayBtn').prop('postdata', obj);
+
+        (function (window, document) {
+            var loader = function () {
+                var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+                // script.src = "https://seamless-epay.sslcommerz.com/embed.min.js?" + Math.random().toString(36).substring(7); // USE THIS FOR LIVE
+                script.src = "https://sandbox.sslcommerz.com/embed.min.js?" + Math.random().toString(36).substring(7); // USE THIS FOR SANDBOX
+                tag.parentNode.insertBefore(script, tag);
+            };
+
+            window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+        })(window, document);
 
 
     </script>

@@ -11,4 +11,8 @@
         @endforeach
     @endif
 
+        <a class="dropdown-item" href="{!! route('frontend.cart.checkout') !!}">
+            <button class="btn btn-primary">View Checkout</button>
+        </a>
+
 </div>

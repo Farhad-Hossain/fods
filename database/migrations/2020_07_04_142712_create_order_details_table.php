@@ -15,6 +15,14 @@ class CreateOrderDetailsTable extends Migration
     {
         Schema::create('order_details', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('order_id')->comment('order_id from orders table');
+            $table->unsignedInteger('user_id');
+            $table->integer('restaurant_id')->unsigned()->comment('restaurant id');
+            $table->integer('food_id')->unsigned()->comment('food id');
+            $table->decimal('price', 10, 2)->comment('Price amount of order');
+            $table->decimal('discount', 10, 2)->comment('discount amount of this order');
+            $table->decimal('payable_amount', 10, 2)->comment('payable amount of this order');
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
     }

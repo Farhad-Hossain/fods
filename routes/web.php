@@ -74,10 +74,21 @@ Route::group(['namespace'=>'Frontend', 'as'=>'frontend.'], function() {
             'as' => 'removeContent',
             'uses' => 'CartController@removeCartContent'
         ]);
-        Route::get('checkout', [
-            'as' => 'checkout',
-            'uses' => 'CartController@showCheckoutPage'
-        ]);
+        Route::group(['middleware' => 'auth'], function () {
+            Route::get('checkout', [
+                'as' => 'checkout',
+                'uses' => 'CartController@showCheckoutPage'
+            ]);
+            Route::post('submit-order', [
+                'as' => 'submit-order',
+                'uses' => 'CartController@submitOrder'
+            ]);
+            Route::get('payment-options/{order_id}', [
+                'as' => 'payment',
+                'uses' => 'CartController@showPaymentOptionPage'
+            ]);
+        });
+
     });
 
     /*
@@ -89,7 +100,7 @@ Route::group(['namespace'=>'Frontend', 'as'=>'frontend.'], function() {
     Route::get('example2', 'SslCommerzPaymentController@exampleHostedCheckout');
 
     Route::post('pay', 'SslCommerzPaymentController@index');
-    Route::post('pay-via-ajax', 'SslCommerzPaymentController@payViaAjax');
+    Route::post('pay-via-ajax/{id}', 'SslCommerzPaymentController@payViaAjax')->name('pay-via-ajax');
 
     Route::post('success', 'SslCommerzPaymentController@success');
     Route::post('fail', 'SslCommerzPaymentController@fail');

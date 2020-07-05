@@ -76,7 +76,7 @@
             data: {_token: csrf_token, id: id},
             success: function( data ) {
                 getTopCartContent();
-                alert("Food Removed !")
+                alert("Food Removed !");
             }
         });
     }
