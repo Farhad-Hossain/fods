@@ -2,8 +2,8 @@
     <!--begin::Brand-->
     <div class="brand flex-column-auto" id="kt_brand">
         <!--begin::Logo-->
-        <a href="#" class="brand-logo">
-            <img alt="Logo" src="{!! asset('backend/assets//media/logos/logo-light.png') !!}"/>
+        <a href="{!! URL::to('/dashboard') !!}" class="brand-logo">
+            <img alt="logo" src="{!! asset('uploads/') !!}/logo/{!! $gd['globals']->admin_logo ?? '' !!}" style="width: 100%; height: 50px;">
         </a>
         <!--end::Logo-->
         <!--begin::Toggle-->
@@ -37,7 +37,7 @@
             <ul class="menu-nav">
                 <!-- Begin::Dashboard -->
                 <li class="menu-item menu-item-active" aria-haspopup="true">
-                    <a href="index.html" class="menu-link">
+                    <a href="{!! URL::to('/dashboard') !!}" class="menu-link">
                         <span class="svg-icon menu-icon">
                             <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Layers.svg-->
                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -131,7 +131,6 @@
                                         <span></span>
                                     </i>
                                     <span class="menu-text">{!! __('backend_menus.restaurant') !!}</span>
-                                    <i class="menu-arrow"></i>
                                 </a>
                             </li>
 
@@ -276,7 +275,7 @@
                                 </span>
                             </li>
                             <li class="menu-item" aria-haspopup="true">
-                                <a href="layout/general/no-header-menu.html" class="menu-link">
+                                <a href="{!! route('backend.order.list') !!}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
@@ -294,7 +293,7 @@
                             </li>
 
                             <li class="menu-item" aria-haspopup="true">
-                                <a href="layout/general/no-header-menu.html" class="menu-link">
+                                <a href="javascript:;" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>

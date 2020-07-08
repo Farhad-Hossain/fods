@@ -1,0 +1,1 @@
+$("#datatable_table").dataTable();

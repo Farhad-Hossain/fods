@@ -214,7 +214,6 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
             'as' => 'delete',
             'uses' => 'FoodController@deleteFood'
         ]);
-
         // cusines
         Route::group(['prefix'=>'cuisines', 'as'=>'cuisines.'], function(){
             Route::get('list', 'CuisineController@view_cuisines_list')->name('list');
@@ -242,6 +241,15 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
     /*
      * END::Food Route
      * */
+
+    // START::ORDER
+    Route::group(['prefix'=>'order', 'as'=>'order.'], function(){
+    	Route::get('list', 'OrderController@show_order_list')->name('list');
+
+        Route::get('{order}/details', 'OrderController@show_order_details')->name('details');
+
+        Route::get('{order}/delete', 'OrderController@delete_order')->name('delete');
+    });
 
 
     /*

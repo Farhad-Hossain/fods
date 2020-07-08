@@ -89,13 +89,35 @@
                                 </div>
                             </div>
 
-                            <div class="form-group col-sm-12 col-md-6">
+                            <div class="form-group col-sm-12 col-md-4">
                                 <label>{!! __('backend_gs_form.app_logo') !!}</label>
                                 <div></div>
                                 <div class="custom-file">
                                         <input type="file" class="custom-file-input" name="app_logo"/>
                                     <label class="custom-file-label">Choose file</label>
                                     @error('app_logo')
+                                    <span class="form-text text-warning">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-12 col-md-4">
+                                <label>{!! __('backend_gs_form.admin_logo') !!}</label>
+                                <div></div>
+                                <div class="custom-file">
+                                        <input type="file" class="custom-file-input" name="admin_logo"/>
+                                    <label class="custom-file-label">Choose file</label>
+                                    @error('admin_logo')
+                                    <span class="form-text text-warning">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-12 col-md-4">
+                                <label>{!! __('backend_gs_form.mobile_logo') !!}</label>
+                                <div></div>
+                                <div class="custom-file">
+                                        <input type="file" class="custom-file-input" name="mobile_logo"/>
+                                    <label class="custom-file-label">Choose file</label>
+                                    @error('mobile_logo')
                                     <span class="form-text text-warning">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -129,6 +151,14 @@
                                     @endforeach
                                 </select>
                                 @error('city')
+                                <span class="form-text text-warning">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <div class="form-group col-sm-12 col-md-6">
+                                <label>{!! __('backend_gs_form.current_version') !!}</label>
+                                <input type="number" name="current_version" step="0.01" min="1" max="100" required class="form-control" value="1.0">
+                                @error('current_version')
                                 <span class="form-text text-warning">{{ $message }}</span>
                                 @enderror
                             </div>

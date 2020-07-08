@@ -21,5 +21,8 @@ return [
     'app_description'   => 'Short Description',
     'country'           => 'Country',
     'city'              => 'City',
+    'current_version'   => 'Current Version',
+    'admin_logo'        => 'Admin Logo',
+    'mobile_logo'       => 'Mobile Logo',
 
 ];

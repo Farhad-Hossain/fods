@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Database\Schema\Builder;
 use Illuminate\Support\ServiceProvider;
+use App\Models\GlobalSetting;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,5 +27,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Builder::defaultStringLength(191); // Update defaultStringLength
+        $gd['globals'] = GlobalSetting::first();
+        View::share('gd', $gd);
     }
 }

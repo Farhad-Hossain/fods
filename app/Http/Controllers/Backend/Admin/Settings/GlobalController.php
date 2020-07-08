@@ -55,8 +55,10 @@ class GlobalController extends Controller
             $global_setting->contact_address = $request->contact_address;
             $global_setting->app_status = $request->app_status;
             $global_setting->short_description = $request->app_description;
-            $global_setting->country = $request->country ?? '';
+            $global_setting->country = $request->country;
             $global_setting->city = $request->city ?? '';
+            $global_setting->current_version = $request->current_version ?? '';
+
 
             if($request->hasFile('app_logo'))
             {
@@ -64,10 +66,28 @@ class GlobalController extends Controller
                 $fileNameToStore = '_'.time().'.'.$extension;
                 $app_logo = $request->file('app_logo')->storeAs('logo', $fileNameToStore);
             } else {
-                $fileNameToStore = "";
+                $fileNameToStore = $global_setting->app_logo ?? "";
+            }
+            if($request->hasFile('admin_logo'))
+            {
+                $extension = $request->file('admin_logo')->getClientOriginalExtension();
+                $admin_fileNameToStore = 'admin_'.time().'.'.$extension;
+                $admin_logo = $request->file('admin_logo')->storeAs('logo', $fileNameToStore);
+            } else {
+                $admin_fileNameToStore = $global_setting->admin_logo ?? "";
+            }
+            if($request->hasFile('mobile_logo'))
+            {
+                $extension = $request->file('mobile_logo')->getClientOriginalExtension();
+                $mobile_fileNameToStore = 'mobile_'.time().'.'.$extension;
+                $mobile_logo = $request->file('mobile_logo')->storeAs('logo', $fileNameToStore);
+            } else {
+                $mobile_fileNameToStore = $global_setting->mobile_logo ?? "";
             }
 
             $global_setting->app_logo = $fileNameToStore;
+            $global_setting->admin_logo = $admin_fileNameToStore;
+            $global_setting->mobile_logo = $mobile_fileNameToStore;
 
             $global_setting->save();
 
