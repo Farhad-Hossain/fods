@@ -16,8 +16,19 @@ class OrderController extends Controller
     }
     public function show_order_details($order_id)
     {
-    	$order_details = OrderDetail::where('order_id', $order_id)->first();
-    	return view('backend.pages.orders.details', $order_details);
+    	$order = Order::where('id', $order_id)->first();
+        // dd($order);
+    	return view('backend.pages.orders.details', compact('order'));
+    }
+    public function show_order_status_list()
+    {
+        $orders = Order::where('order_status', '<>', 0)->orderBy('id', 'desc')->get();
+        return view('backend.pages.orders.status_list', compact('orders'));
+    }
+    public function show_addresses()
+    {
+        $orders = Order::where('order_status', '<>', 0)->orderBy('id', 'desc')->get();
+        return view('backend.pages.orders.addresses', compact('orders'));   
     }
     public function delete_order($order_id)
     {

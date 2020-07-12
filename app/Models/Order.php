@@ -25,4 +25,9 @@ class Order extends Model
         $order_id = $order_id."ORD".$id;
         return $order_id;
     }
+
+    public function details()
+    {
+        return $this->hasOne('App\Models\OrderDetail', 'order_id');
+    }
 }

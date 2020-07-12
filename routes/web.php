@@ -88,8 +88,16 @@ Route::group(['namespace'=>'Frontend', 'as'=>'frontend.'], function() {
                 'uses' => 'CartController@showPaymentOptionPage'
             ]);
         });
+    });
+    /*
+    BEGIN::Restaurant Rating and reviws 
+    */
+    Route::group(['prefix'=>'rating-reviews', 'as'=>'rating_reviews.', 'middleware'=>'auth'], function(){
+        Route::post('restaurant-review-submit', 'RatingReviewController@restaurant_review_submit')->name('restaurant_review_submit');
+        Route::post('food-review-submit', 'RatingReviewController@food_review_submit')->name('food_review_submit');
 
     });
+    
 
     /*
      * End:: Cart Route
@@ -159,6 +167,8 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
             Route::post('edit-tag', 'RestaurantController@edit_tag_submit')->name('edit_submit');
             Route::get('{tag}/delete', 'RestaurantController@delete_tag')->name('delete');
         });
+        Route::get('rating-and-reviews', 'RestaurantController@show_rating_and_reviews')->name('rating_and_reviews');
+        Route::get('{restaurant_id}/reviews', 'RestaurantController@get_all_reviews_by_ajax')->name('reviews');
     });
 
     /*
@@ -235,6 +245,9 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
             'as' => 'extra_food.edit',
             'uses' => 'ExtraFoodController@editExtraFoodSubmit'
         ]);
+        // END::Extra food
+        Route::get('rating-reviews', 'FoodController@show_rating_and_reviews')->name('rating_reviews');
+        Route::get('reviews', 'FoodController@get_reviews')->name('reviews');
 
 
     });
@@ -245,9 +258,9 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
     // START::ORDER
     Route::group(['prefix'=>'order', 'as'=>'order.'], function(){
     	Route::get('list', 'OrderController@show_order_list')->name('list');
-
+        Route::get('status-list', 'OrderController@show_order_status_list')->name('status_list');
+        Route::get('address-list', 'OrderController@show_addresses')->name('addresses');
         Route::get('{order}/details', 'OrderController@show_order_details')->name('details');
-
         Route::get('{order}/delete', 'OrderController@delete_order')->name('delete');
     });
 

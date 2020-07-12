@@ -32,4 +32,13 @@ class Food extends Model
     {
         return $this->belongsTo('App\Models\FoodCategory', 'food_category_id', 'id');
     }
+
+    public function reviews()
+    {
+        return $this->hasMany('App\Models\FoodReview', 'food_id');
+    }
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'user_id');
+    }
 }

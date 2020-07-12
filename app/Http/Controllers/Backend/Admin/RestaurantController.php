@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Restaurant;
 use App\Models\Cuisine;
 use App\Models\RestaurantTag;
+use App\Models\RestaurantRating;
+use App\Models\RestaurantReview;
 
 class RestaurantController extends Controller
 {
@@ -138,7 +140,18 @@ class RestaurantController extends Controller
 	}
 	// End::Tags
 
-	
+	// Rating and Reviews
+	// Rating and Reviews
+	public function show_rating_and_reviews()
+	{
+		$ratings = RestaurantRating::where('status', 1)->orderBy('id', 'desc')->get();
+		return view('backend.pages.restaurants.rating_and_reviews', compact('ratings'));
+	}
+	public function get_all_reviews_by_ajax($restaurant_id)
+	{
+		$reviews = RestaurantReview::where('restaurant_id', $restaurant_id)->get();
+		return response()->json($reviews);
+	}
 
 	// end
 }

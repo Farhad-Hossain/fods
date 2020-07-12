@@ -76,6 +76,13 @@
 												<p class="text-danger">{!! $message !!}</p>
 											@enderror
 										</div>
+										<div class="form-group">
+											<label>The place where we will deliver a product for you</label>
+											<textarea name="default_delivery_address" class="form-control"></textarea>
+											@error('default_delivery_address')
+												<p class="text-danger">{!! $message !!}</p>
+											@enderror
+										</div>
 										<div class="signup-checkbox text-left">
 											<input type="checkbox" id="c1" name="cb" required>
 											<label for="c1">I agree to GonoTech's <span>Terms of Service, Policy</span>and<span>Content Policies</span>.</label>

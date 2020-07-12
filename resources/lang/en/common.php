@@ -19,5 +19,6 @@ return [
 	'no' => 'No',
     'add' => 'Add',
     'close' => 'Close',
-    'save_changes' => 'Save Changes'
+    'save_changes' => 'Save Changes',
+    'time' => 'Time',
 ];

@@ -153,7 +153,7 @@
                             </li>
 
                             <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                <a href="javascript:;" class="menu-link menu-toggle">
+                                <a href="{!! route('backend.restaurant.rating_and_reviews') !!}" class="menu-link menu-toggle">
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
@@ -241,6 +241,15 @@
                                     <span class="menu-text">{!! __('backend_menus.extra_foods') !!}</span>
                                 </a>
                             </li>
+
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="{!! route('backend.food.rating_reviews') !!}" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text">{!! __('backend_menus.rating_and_reviews') !!}</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>
@@ -284,7 +293,7 @@
                             </li>
 
                             <li class="menu-item" aria-haspopup="true">
-                                <a href="layout/general/no-header-menu.html" class="menu-link">
+                                <a href="{!! route('backend.order.addresses') !!}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
@@ -293,7 +302,7 @@
                             </li>
 
                             <li class="menu-item" aria-haspopup="true">
-                                <a href="javascript:;" class="menu-link">
+                                <a href="{!! route('backend.order.status_list') !!}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>

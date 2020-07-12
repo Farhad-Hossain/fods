@@ -15,4 +15,8 @@ return [
 	'email' => 'Email',
 	'website' => 'Website',
 	'address' => 'Address',
+	'restaurant_name' => 'Restaurant Name',
+	'stars' => 'Stars',
+	'reviews' => 'Reviews',
+	'see_reviews' => 'See Reviews',
 ];

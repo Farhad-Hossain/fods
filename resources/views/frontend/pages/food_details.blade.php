@@ -19,10 +19,14 @@
 
 @section('main_content')
 
-    @if($errors->hasAny())
-        @foreach($errors->all() as $error)
-            <p class="text-danger">{{ $error }}</p>
-        @endforeach
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
     @endif
 
     <!--BEGIN::Title bar-->
@@ -330,8 +334,11 @@
                                                 <li><i class="fas fa-star"></i></li>
                                             </ul>
                                         </div>
-                                        <form>
-                                            <input type="text" class="rating-input" name="post"
+                                        <form action="{!! route('frontend.rating_reviews.food_review_submit') !!}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="restaurant_id" value="{!! $food->restaurant->id !!}">
+                                            <input type="hidden" name="food_id" value="{!! $food->id !!}">
+                                            <input type="text" class="rating-input" name="review_content"
                                                    placeholder="Please describe the reason for your rating to help the author">
                                             <input class="rating-btn btn-link" type="submit" value="Save Review">
                                         </form>
@@ -339,10 +346,12 @@
                                 </div>
                                 <div class="main-comments">
                                     <div class="rating-1">
+
+                                        @foreach($food->reviews as $review)
                                         <div class="user-detail-heading">
                                             <a href="user_profile_view.html"><img
                                                         src="images/recipe-details/comment-5.png" alt=""></a>
-                                            <h4> Joy Cutler</h4><br>
+                                            <h4>{!! $review->user->name !!}</h4><br>
                                             <div class="rate-star">
                                                 <i class="fas fa-star"></i>
                                                 <i class="fas fa-star"></i>
@@ -355,39 +364,12 @@
                                         <div class="reply-time">
                                             <p><i class="far fa-clock"></i>12 hours ago</p>
                                         </div>
-                                        <div class="comment-description">
-                                            <p>Morbi hendrerit ipsum vel feugiat maximus. Duis posuere justo neque, sit
-                                                amet efficitur quam aliquam non. Integer gravida ex quis lacinia
-                                                consectetur.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="main-comments bm-margin">
-                                    <div class="rating-1">
-                                        <div class="user-detail-heading">
-                                            <a href="user_profile_view.html"><img
-                                                        src="images/recipe-details/comment-3.png" alt=""></a>
-                                            <h4> Jass Singh</h4><br>
-                                            <div class="rate-star">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                                <span>4.5</span>
+                                            <div class="comment-description">
+                                                <p>{!! $review->review_content !!}</p>
                                             </div>
-                                        </div>
-                                        <div class="reply-time">
-                                            <p><i class="far fa-clock"></i>12 hours ago</p>
-                                        </div>
-                                        <div class="comment-description">
-                                            <p>Morbi hendrerit ipsum vel feugiat maximus. Duis posuere justo neque, sit
-                                                amet efficitur quam aliquam non. Integer gravida ex quis lacinia
-                                                consectetur.</p>
-                                        </div>
+                                        @endforeach
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
