@@ -27,13 +27,13 @@ class FoodCategoryController extends Controller
                 $fileNameToStore = '_' . time() . '.' . $extension;
                 $category_image = $request->file('image')->storeAs('category', $fileNameToStore);
             } else {
-                $fileNameToStore = "";
+                $category_image = "";
             }
 
             $category = new FoodCategory();
             $category->name = $request->name;
             $category->description = $request->description;
-            $category->image = $fileNameToStore;
+            $category->image = $category_image;
             $category->save();
 
 
@@ -51,7 +51,7 @@ class FoodCategoryController extends Controller
 
     public function showFoodCategoryList()
     {
-        $food_categories = FoodCategory::where('status', '<>', 3)->get();
+        $food_categories = FoodCategory::all();
         return view('backend.pages.food.category.food_category_list', compact('food_categories'));
     }
 
@@ -74,15 +74,15 @@ class FoodCategoryController extends Controller
                 $fileNameToStore = '_' . time() . '.' . $extension;
                 $category_image = $request->file('image')->storeAs('category', $fileNameToStore);
             } else {
-                $fileNameToStore = $category->image ?? '';
+                $category_image = $category->image ?? '';
             }
 
             $category->name = $request->name;
             $category->description = $request->description;
-            $category->image = $fileNameToStore;
+            $category->image = $category_image;
             $category->status = $request->status;
             $category->save();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             DB::rollBack();
             session()->flash('type', 'danger');
             session()->flash('message', 'Something went wrong to add food category. ' . $e->getMessage());
