@@ -36,14 +36,14 @@ class FoodController extends Controller
                 $fileNameToStore = '_'.time().'.'.$extension;
                 $category_image = $request->file('image')->storeAs('food', $fileNameToStore);
             } else {
-                $fileNameToStore = "";
+                $category_image = "";
             }
 
             $food = new Food();
             $food->restaurant_id = $request->restaurant;
             $food->food_category_id = $request->food_category;
             $food->food_name = $request->name;
-            $food->image = $fileNameToStore;
+            $food->image = $category_image;
             $food->price = $request->price;
             $food->discount_price = $request->discount_price;
             $food->description = $request->description;

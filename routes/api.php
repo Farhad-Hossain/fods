@@ -74,6 +74,63 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function () {
         ]);
         /*Restaurant Tag route end*/
 
+        /*
+     * BEGIN::Food Route
+     * */
+        Route::group(['prefix'=>'food', 'as'=>'food.'], function(){
+            Route::group(['prefix' => 'category'], function () {
+                Route::post('', [
+                    'uses' => 'FoodCategoryController@storeNewFoodCategory'
+                ]);
+                Route::get('', [
+                    'uses' => 'FoodCategoryController@getAllFoodCategory'
+                ]);
+                Route::get('{id}', [
+                    'uses' => 'FoodCategoryController@getSingleFoodCategory'
+                ]);
+                Route::patch('{id}', [
+                    'uses' => 'FoodCategoryController@updateFoodCategory'
+                ]);
+                Route::delete('{id}', [
+                    'uses' => 'FoodCategoryController@deleteFoodCategory'
+                ]);
+            });
+
+            Route::post('', [
+                'uses' => 'FoodController@storeNewFood'
+            ]);
+            Route::get('', [
+                'uses' => 'FoodController@getAllFood'
+            ]);
+            Route::get('{id}', [
+                'uses' => 'FoodController@getSingleFood'
+            ]);
+            Route::patch('{id}', [
+                'uses' => 'FoodController@updateFood'
+            ]);
+            Route::delete('{id}', [
+                'uses' => 'FoodController@deleteFood'
+            ]);
+
+            // Extra Food
+            Route::get('extra-food/list', [
+                'as' => 'extra_food.list',
+                'uses' => 'ExtraFoodController@showExtraFoodListPage'
+            ]);
+            Route::post('extra-food/add',[
+                'as' => 'extra_food.add',
+                'uses' => 'ExtraFoodController@addExtraFoodSubmit'
+            ]);
+            Route::post('extra-food/edit',[
+                'as' => 'extra_food.edit',
+                'uses' => 'ExtraFoodController@editExtraFoodSubmit'
+            ]);
+            // END::Extra food
+        });
+        /*
+         * END::Food Route
+         * */
+
 
         /*Customer route start*/
         Route::post('customer', [
