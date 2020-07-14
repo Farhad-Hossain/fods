@@ -144,8 +144,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary font-weight-bold">{!! __('extra_food.add') !!}</button>
                         <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary font-weight-bold">{!! __('extra_food.add') !!}</button>
                     </div>
                 </form>
             </div>
@@ -183,8 +183,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary font-weight-bold">{!! __('extra_food.edit_btn') !!}</button>
                         <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary font-weight-bold">{!! __('extra_food.edit_btn') !!}</button>
                     </div>
                 </form>
             </div>
@@ -195,15 +195,5 @@
 @section('custom_script')
     <script src="{{asset('backend')}}/assets/plugins/custom/datatables/datatables.bundle.js?v=7.0.3"></script>
     <script src="{{asset('backend')}}/assets/js/pages/crud/datatables/advanced/column-visibility.js?v=7.0.3"></script>
-    <script type="text/javascript">
-        $("#restaurant_table").dataTable();
-
-        function arise_modal_for_edit(id, name, cat, price)
-        {
-            $("#edit_form input[name='id']").val(id);
-            $("#edit_form input[name='name']").val(name);
-            $("#edit_form select[name='category']").val(cat);
-            $("#edit_form input[name='price']").val(price);
-        }
-    </script>
+    <script src="{{asset('backend')}}/assets/js/customs/extra_food_list.js"></script>
 @endsection

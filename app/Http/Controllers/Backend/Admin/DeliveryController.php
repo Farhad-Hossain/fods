@@ -114,6 +114,12 @@ class DeliveryController extends Controller
     	session(['type'=>'success', 'message'=>'Driver Deleted successfully']);
     	return redirect()->back();
     }
-
     // END::Driver
+
+    // BEGIN::Payment related routes 
+    // BEGIN::Payment related routes
+    public function make_payment()
+    {
+        return view('backend.pages.delivery.payment.make_payment_page');
+    } 
 }

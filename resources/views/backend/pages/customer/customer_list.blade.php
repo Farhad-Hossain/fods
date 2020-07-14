@@ -207,7 +207,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">{!! __('common.add') !!}</button>
+                        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">{!! __('common.close') !!}</button>
                         <button type="submit" class="btn btn-primary font-weight-bold">{!! __('common.save_changes') !!}</button>
                     </div>
                 </form>

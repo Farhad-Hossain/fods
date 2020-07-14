@@ -135,7 +135,7 @@
                             </li>
 
                             <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                <a href="javascript:;" class="menu-link menu-toggle">
+                                <a href="{!! route('backend.restaurant.payment.make_a_payment') !!}" class="menu-link menu-toggle">
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
@@ -223,7 +223,7 @@
                                     <span class="menu-text">{!! __('backend_menus.cuisines') !!}</span>
                                 </a>
                             </li>
-
+    <!-- 
                             <li class="menu-item" aria-haspopup="true">
                                 <a href="{!! route('backend.food.extra_food.list') !!}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -232,7 +232,7 @@
                                     <span class="menu-text">{!! __('backend_menus.groups_extra_foods') !!}</span>
                                 </a>
                             </li>
-
+     -->
                             <li class="menu-item" aria-haspopup="true">
                                 <a href="{!! route('backend.food.extra_food.list') !!}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -352,7 +352,7 @@
                                 </a>
                             </li>
                             <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                <a href="javascript:;" class="menu-link menu-toggle">
+                                <a href="{!! route('backend.delivery.payment.make_a_payment') !!}" class="menu-link menu-toggle">
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>

@@ -153,5 +153,13 @@ class RestaurantController extends Controller
 		return response()->json($reviews);
 	}
 
+
+	// BEGIN::Payment and transaction related routes
+	// BEGIN::Payment and transaction related routes
+	public function make_payment(){
+		return view('backend.pages.restaurants.make_payment_page');
+	}
 	// end
+
+
 }

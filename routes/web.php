@@ -169,6 +169,10 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
         });
         Route::get('rating-and-reviews', 'RestaurantController@show_rating_and_reviews')->name('rating_and_reviews');
         Route::get('{restaurant_id}/reviews', 'RestaurantController@get_all_reviews_by_ajax')->name('reviews');
+
+        Route::group(['prefix'=>'payment', 'as'=>'payment.'], function(){
+            Route::get('make-a-payment', 'RestaurantController@make_payment')->name('make_a_payment');
+        });
     });
 
     /*
@@ -315,6 +319,10 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
 
         Route::get('{Driver}/driver-edit', 'DeliveryController@edit_driver_form')->name('driver-edit');
         Route::get('{driver}/delete', 'DeliveryController@delete_driver_submit')->name('driver-delete');
+
+        Route::group(['prefix'=>'payment', 'as'=>'payment.'], function(){
+            Route::get('make-a-payment', 'DeliveryController@make_payment')->name('make_a_payment');
+        });
 
 
     });
