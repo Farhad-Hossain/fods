@@ -35,7 +35,7 @@ class Food extends Model
 
     public function reviews()
     {
-        return $this->hasMany('App\Models\FoodReview', 'food_id');
+        return $this->hasMany('App\Models\FoodRatingReview', 'food_id');
     }
     public function user()
     {

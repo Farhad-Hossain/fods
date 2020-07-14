@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Order extends Model
 {
-    protected $guard = [];
+    protected $guarded = [];
 
 
     public function user()

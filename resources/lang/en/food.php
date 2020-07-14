@@ -7,5 +7,6 @@ return [
 	'add_food' => 'Add Food',
 	'food_name' => 'Food names',
 	'star_count' => 'Rating Stars',
-	'see_reviews' => 'See Reviews',
+	'see_reviews' => 'Review',
+	'reviewer' => 'Reviewer Name',
 ];

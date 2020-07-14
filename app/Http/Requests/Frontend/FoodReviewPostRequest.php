@@ -24,6 +24,7 @@ class FoodReviewPostRequest extends FormRequest
     public function rules()
     {
         return [
+            'star_count' => 'required|numeric|between:1,5',
             'food_id' => 'required|integer|min:1',
             'restaurant_id' => 'required|integer|min:1',
             'review_content' => 'required|between:1,250',

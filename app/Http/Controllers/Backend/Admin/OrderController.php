@@ -38,4 +38,22 @@ class OrderController extends Controller
         session(['type'=>'success', 'message'=>'Order Deleted successfully']);
         return redirect()->back();
     }
+    public function change_status_submit(Request $request)
+    {
+        Order::findOrFail($request->order_id)->update([
+            'order_status' => $request->order_status,
+        ]);
+        session(['type'=>'success', 'message'=>'Status updated successfully']);
+        return redirect()->back();
+
+    }
+    public function change_payment_status_submit(Request $request)
+    {
+        Order::findOrFail($request->payment_order_id)->update([
+            'payment_status' => $request->payment_status,
+        ]);
+
+        session(['type'=>'success', 'message'=>'Updated Successfully']);
+        return redirect()->back();
+    }
 }

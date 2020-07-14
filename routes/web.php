@@ -95,8 +95,8 @@ Route::group(['namespace'=>'Frontend', 'as'=>'frontend.'], function() {
     Route::group(['prefix'=>'rating-reviews', 'as'=>'rating_reviews.', 'middleware'=>'auth'], function(){
         Route::post('restaurant-review-submit', 'RatingReviewController@restaurant_review_submit')->name('restaurant_review_submit');
         Route::post('food-review-submit', 'RatingReviewController@food_review_submit')->name('food_review_submit');
-
     });
+
     
 
     /*
@@ -246,7 +246,9 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
             'uses' => 'ExtraFoodController@editExtraFoodSubmit'
         ]);
         // END::Extra food
-        Route::get('rating-reviews', 'FoodController@show_rating_and_reviews')->name('rating_reviews');
+
+        // BEGIN::Rating Review
+        Route::get('rating-reviews', 'FoodController@get_all_reviews')->name('rating_reviews');
         Route::get('reviews', 'FoodController@get_reviews')->name('reviews');
 
 
@@ -262,6 +264,9 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
         Route::get('address-list', 'OrderController@show_addresses')->name('addresses');
         Route::get('{order}/details', 'OrderController@show_order_details')->name('details');
         Route::get('{order}/delete', 'OrderController@delete_order')->name('delete');
+
+        Route::post('change-payment-status', 'OrderController@change_payment_status_submit')->name('change_payment_status');
+        Route::post('change-status', 'OrderController@change_status_submit')->name('change_status');
     });
 
 

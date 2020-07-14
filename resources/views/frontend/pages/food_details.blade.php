@@ -127,7 +127,7 @@
                                 <li>
 										<span class="views" data-toggle="tooltip" data-placement="top" title="Comments">
 											<i class="fas fa-comment-alt"></i>
-											<ins>05</ins>
+											<ins>{!! $food->reviews->count() !!}</ins>
 										</span>
                                 </li>
                                 <li>
@@ -158,162 +158,13 @@
                     <div class="all-tabs">
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <a href="#comments" class="nav-link active" aria-controls="comments" role="tab"
-                                   data-toggle="tab">05 Comments</a>
-                            </li>
-                            <li class="nav-item" role="presentation">
                                 <a href="#reviews" class="nav-link" aria-controls="reviews" role="tab"
-                                   data-toggle="tab">03 Reviews</a>
+                                   data-toggle="tab">{!! $food->reviews->count() !!} Reviews</a>
                             </li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" role="tabpanel" id="comments">
-                                <div class="comment-post">
-                                    <div class="post-items">
-                                        <div class="img-dp">
-                                            <i class="fas fa-user"></i>
-                                        </div>
-                                        <form>
-                                            <input type="text" class="post-input" name="post"
-                                                   placeholder="Write a comment">
-                                            <input class="submit-btn btn-link" type="submit" value="Post Comment">
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="main-comments">
-                                    <div class="comment-1">
-                                        <div class="user-detail-heading">
-                                            <a href="user_profile_view.html"><img
-                                                        src="images/recipe-details/comment-1.png" alt=""></a>
-                                            <h4> Rock Smith</h4>
-                                        </div>
-                                        <div class="reply-time">
-                                            <a href="#reply-comment">Reply</a>
-                                            <p><i class="far fa-clock"></i>12 hours ago</p>
-                                        </div>
-                                        <div class="comment-description">
-                                            <p>Morbi hendrerit ipsum vel feugiat maximus. Duis posuere justo neque, sit
-                                                amet efficitur quam aliquam non. Integer gravida ex quis lacinia
-                                                consectetur.</p>
-                                        </div>
-                                    </div>
-                                    <div class="reply-1">
-                                        <div class="user-detail-heading">
-                                            <a href="user_profile_view.html"><img
-                                                        src="images/recipe-details/reply-1.png" alt=""></a>
-                                            <h4> Rock Smith</h4>
-                                        </div>
-                                        <div class="reply-time">
-                                            <p><i class="far fa-clock"></i>12 hours ago</p>
-                                        </div>
-                                        <div class="comment-description">
-                                            <p><a href="user_profile_view.html">@RockSmith</a> Thank you</p>
-                                        </div>
-                                    </div>
-                                    <div class="reply-comment">
-                                        <div class="post-items">
-                                            <div class="reply-dp">
-                                                <a href="my_dashboard.html"><img src="images/recipe-details/reply-1.png"
-                                                                                 alt=""></a>
-                                            </div>
-                                            <form>
-                                                <input type="text" class="reply-input" name="post"
-                                                       placeholder="Write a reply">
-                                                <input class="reply-btn btn-link" type="submit" value="Reply">
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="main-comments">
-                                    <div class="comment-1">
-                                        <div class="user-detail-heading">
-                                            <a href="user_profile_view.html"><img
-                                                        src="images/recipe-details/comment-2.png" alt=""></a>
-                                            <h4> Jassica William</h4>
-                                        </div>
-                                        <div class="reply-time">
-                                            <a href="#reply-comment">Reply</a>
-                                            <p><i class="far fa-clock"></i>12 hours ago</p>
-                                        </div>
-                                        <div class="comment-description">
-                                            <p>Morbi hendrerit ipsum vel feugiat maximus. Duis posuere justo neque, sit
-                                                amet efficitur quam aliquam non. Integer gravida ex quis lacinia
-                                                consectetur.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="main-comments">
-                                    <div class="comment-1">
-                                        <div class="user-detail-heading">
-                                            <a href="user_profile_view.html"><img
-                                                        src="images/recipe-details/comment-3.png" alt=""></a>
-                                            <h4> Jass Singh</h4>
-                                        </div>
-                                        <div class="reply-time">
-                                            <a href="#reply-comment">Reply</a>
-                                            <p><i class="far fa-clock"></i>12 hours ago</p>
-                                        </div>
-                                        <div class="comment-description">
-                                            <p>Morbi hendrerit ipsum vel feugiat maximus. Duis posuere justo neque, sit
-                                                amet efficitur quam aliquam non. Integer gravida ex quis lacinia
-                                                consectetur.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="main-comments">
-                                    <div class="comment-1">
-                                        <div class="user-detail-heading">
-                                            <a href="user_profile_view.html"><img
-                                                        src="images/recipe-details/comment-4.png" alt=""></a>
-                                            <h4> Johnson Smith</h4>
-                                        </div>
-                                        <div class="reply-time">
-                                            <a href="#reply-comment">Reply</a>
-                                            <p><i class="far fa-clock"></i>12 hours ago</p>
-                                        </div>
-                                        <div class="comment-description">
-                                            <p>Morbi hendrerit ipsum vel feugiat maximus. Duis posuere justo neque, sit
-                                                amet efficitur quam aliquam non. Integer gravida ex quis lacinia
-                                                consectetur.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="main-comments">
-                                    <div class="comment-1">
-                                        <div class="user-detail-heading">
-                                            <a href="user_profile_view.html"><img
-                                                        src="images/recipe-details/comment-5.png" alt=""></a>
-                                            <h4> Joy Cutler</h4>
-                                        </div>
-                                        <div class="reply-time">
-                                            <a href="#reply-comment">Reply</a>
-                                            <p><i class="far fa-clock"></i>12 hours ago</p>
-                                        </div>
-                                        <div class="comment-description">
-                                            <p>Morbi hendrerit ipsum vel feugiat maximus. Duis posuere justo neque, sit
-                                                amet efficitur quam aliquam non. Integer gravida ex quis lacinia
-                                                consectetur.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="main-pagination">
-                                    <nav aria-label="Page navigation example">
-                                        <ul class="pagination">
-                                            <li class="page-item">
-                                                <a class="page-link" href="#" aria-label="Previous">
-                                                    <i class="fas fa-chevron-left"></i>
-                                                </a>
-                                            </li>
-                                            <li class="page-item"><a class="page-link active" href="#">1</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#" aria-label="Next">
-                                                    <i class="fas fa-chevron-right"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </nav>
-                                </div>
+                                
                             </div>
 
                             <div class="tab-pane" role="tabpanel" id="reviews">
@@ -324,18 +175,19 @@
                                                 <i class="fas fa-user"></i>
                                             </div>
                                         </a>
+                                        <form action="{!! route('frontend.rating_reviews.food_review_submit') !!}" method="POST">
+                                            @csrf
                                         <div class="select-rating">
                                             <h4>Your Rating :</h4>
                                             <ul class="rating-stars">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
+                                                <li><i class="fas fa-star" onclick="setRating(1)"></i></li>
+                                                <li><i class="fas fa-star" onclick="setRating(2)"></i></li>
+                                                <li><i class="fas fa-star" onclick="setRating(3)"></i></li>
+                                                <li><i class="fas fa-star" onclick="setRating(4)"></i></li>
+                                                <li><i class="fas fa-star" onclick="setRating(5)"></i></li>
                                             </ul>
                                         </div>
-                                        <form action="{!! route('frontend.rating_reviews.food_review_submit') !!}" method="POST">
-                                            @csrf
+                                            <input type="hidden" name="star_count" value="0" required>
                                             <input type="hidden" name="restaurant_id" value="{!! $food->restaurant->id !!}">
                                             <input type="hidden" name="food_id" value="{!! $food->id !!}">
                                             <input type="text" class="rating-input" name="review_content"
@@ -358,11 +210,11 @@
                                                 <i class="fas fa-star"></i>
                                                 <i class="fas fa-star"></i>
                                                 <i class="far fa-star"></i>
-                                                <span>4.5</span>
+                                                <span>{!! $review->count_stars !!}</span>
                                             </div>
                                         </div>
                                         <div class="reply-time">
-                                            <p><i class="far fa-clock"></i>12 hours ago</p>
+                                            <p><i class="far fa-clock"></i>{!! $review->created_at->diffForHumans(); !!}</p>
                                         </div>
                                             <div class="comment-description">
                                                 <p>{!! $review->review_content !!}</p>
@@ -485,6 +337,10 @@
                 }
             });
         });
+        function setRating(star_count)
+        {
+            $("input[name='star_count']").val(star_count);
+        }
 
 
     </script>

@@ -31,24 +31,6 @@
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="nav-icon la la-copy"></i>
-                                        <span class="nav-text">Copy</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon la la-file-excel-o"></i>
-                                        <span class="nav-text">Excel</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon la la-file-text-o"></i>
-                                        <span class="nav-text">CSV</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
                                         <i class="nav-icon la la-file-pdf-o"></i>
                                         <span class="nav-text">PDF</span>
                                     </a>
@@ -58,10 +40,6 @@
                         <!--end::Dropdown Menu-->
                     </div>
                     <!--end::Dropdown-->
-                    <!--begin::Button-->
-                    <a href="javascript:;" class="btn btn-primary font-weight-bolder">
-                    <i class="la la-plus"></i>New Record</a>
-                    <!--end::Button-->
                 </div>
             </div>
             <div class="card-body">
@@ -86,12 +64,27 @@
                             <td>{!! $order->user->name !!}</td>
                             <td>{!! $order->payable_amount !!}</td>
                             @if( $order->payment_status == 0 )
-                                <td class="text-danger"><b>Pending</b></td>
+                                <td class="text-danger">
+                                    <b>Pending</b>
+                                    <b class="badge badge-primary payment_status_change_btn" id='{!! $order->id !!}'>Change</b>
+                                </td>
                             @else
-                                <td class="text-success"><b>Done</b></td>
+                                <td class="text-success">
+                                    <b>Done</b>
+                                    <b class="badge badge-primary payment_status_change_btn" id='{!! $order->id !!}'>Change</b>
+                                </td>
                             @endif
                             @if($order->order_status == 1)
-                                <td class="text-warning"><b>Pending</b></td>
+                                <td class="text-warning">
+                                    <b>Pending</b>
+                                    <b class="badge badge-primary status_change_btn" id='{!! $order->id !!}'>Change</b>
+                                </td>
+                            @endif
+                            @if($order->order_status == 2)
+                                <td class="text-warning">
+                                    <b>Done</b>
+                                    <b class="badge badge-success status_change_btn" id='{!! $order->id !!}'>Change</b>
+                                </td>
                             @endif
                             <td>
                                 <a href="{!! route('backend.order.details', $order->id) !!}">
@@ -115,8 +108,89 @@
     </div>
 @endsection
 
+@section('modals')
+    <!-- Payment Status modal -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="payment_status_modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Change Payment Status</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{!! route('backend.order.change_payment_status') !!}" method="POST">
+                        @csrf
+                        <input type="hidden" name="payment_order_id" value="">
+                        <label class="radio radio-primary">
+                            <input type="radio" checked="" name="payment_status" value="0" /> Pending
+                            <span></span>
+                        </label>
+                        <br />
+                        <br />
+                        <label class="radio radio-primary">
+                            <input type="radio" checked="unchecked" name="payment_status" value="1"/> Paid
+                            <span></span>
+                        </label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+                    </form>
+            </div>
+        </div>
+    </div>
+    <!-- Sattus Modal -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="status_modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Change Status</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{!! route('backend.order.change_status') !!}" method="POST">
+                        @csrf
+                        <input type="hidden" name="order_id" value="">
+                        <label class="radio radio-primary">
+                            <input type="radio" checked="" name="order_status" value="1" /> Pending
+                            <span></span>
+                        </label>
+                        <br />
+                        <br />
+                        <label class="radio radio-primary">
+                            <input type="radio" checked="unchecked" name="order_status" value="2"/> Done
+                            <span></span>
+                        </label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+                    </form>
+            </div>
+        </div>
+    </div>
+@endsection
+
+
 @section('custom_script')
     <script src="{{asset('backend')}}/assets/plugins/custom/datatables/datatables.bundle.js?v=7.0.3"></script>
     <script src="{{asset('backend')}}/assets/js/pages/crud/datatables/advanced/column-visibility.js?v=7.0.3"></script>
     <script src="{{asset('backend')}}/assets/js/datatable.js"></script>
+    <script type="text/javascript">
+        $('.payment_status_change_btn').click(function(){
+            $('input[name="payment_order_id"]').val( $(this).attr('id') );
+            $('#payment_status_modal').modal();
+        });
+        $('.status_change_btn').click(function(){
+           $('input[name="order_id"]').val( $(this).attr('id') );
+           $('#status_modal').modal(); 
+        });
+
+    </script>
 @endsection

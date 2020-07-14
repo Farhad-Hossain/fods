@@ -9,8 +9,8 @@ use App\Models\FoodCategory;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\FoodRating;
-use App\Models\FoodReview;
+use App\Models\FoodRatingReview;
+
 
 class FoodController extends Controller
 {
@@ -125,17 +125,13 @@ class FoodController extends Controller
         $foods = Food::orderBy('id', 'desc')->get();
         return redirect()->route('backend.food.list', compact('foods'));
     }
-
-    public function show_rating_and_reviews()
+    public function get_all_reviews()
     {
-        $ratings = FoodRating::where('status', 1)->orderBy('id', 'desc')->get();
+        $ratings = FoodRatingReview::where('status', 1)->orderBy('id', 'desc')->get();
         return view('backend.pages.food.rating_and_reviews', compact('ratings'));
     }
-    public function get_reviews()
+    public function add_rating_review_submit()
     {
-        $reviews = FoodReview::where('status', 1)->orderBy('id', 'desc')->get();
-        return response()->json($reviews);
+        return view('backend.pages.food.rating_and_reviews', compact('ratings'));
     }
-
-
 }

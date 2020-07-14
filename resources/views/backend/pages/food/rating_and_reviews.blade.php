@@ -23,29 +23,10 @@
                         <!--begin::Dropdown Menu-->
                         <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
                             <ul class="nav flex-column nav-hover">
-                                <li class="nav-header font-weight-bolder text-uppercase text-primary pb-2">Choose an option:</li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
                                         <i class="nav-icon la la-print"></i>
                                         <span class="nav-text">Print</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon la la-copy"></i>
-                                        <span class="nav-text">Copy</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon la la-file-excel-o"></i>
-                                        <span class="nav-text">Excel</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon la la-file-text-o"></i>
-                                        <span class="nav-text">CSV</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -58,11 +39,6 @@
                         </div>
                         <!--end::Dropdown Menu-->
                     </div>
-                    <!--end::Dropdown-->
-                    <!--begin::Button-->
-                    <a href="#" class="btn btn-primary font-weight-bolder">
-                    <i class="la la-plus"></i>New Record</a>
-                    <!--end::Button-->
                 </div>
             </div>
             <div class="card-body">
@@ -72,6 +48,7 @@
                         <tr>
                             <th>#</th>
                             <th>{!! __('food.food_name') !!}</th>
+                            <th>{!! __('food.reviewer') !!}</th>
                             <th>{!! __('food.star_count') !!}</th>
                             <th>{!! __('food.see_reviews') !!}</th>
                         </tr>
@@ -81,16 +58,14 @@
                         <tr>
                             <th>{!! $loop->iteration !!}</th>
                             <td>{!! $rating->food->food_name !!}</td>
+                            <td>{!! $rating->reviewer->name !!}</td>
                             <td class="">
-                                @for( $i = 0; $i < $rating->stars; $i++ )
+                                @for( $i = 0; $i < $rating->count_stars; $i++ )
                                     <i class="fas fa-star text-danger"></i>
                                 @endfor
                             </td>
                             <td>
-                                <?php $route_url = route('backend.food.reviews', $rating->restaurant->id) ?>
-                                <a href="javascript:;" onclick="collect_food_reviews_and_arise_modal('{!! $route_url !!}')">
-                                    {!! __('rest.see_reviews') !!}
-                                </a>
+                                {!! $rating->review_content !!}
                             </td>
                         </tr>
                         @endforeach
