@@ -75,8 +75,8 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function () {
         /*Restaurant Tag route end*/
 
         /*
-     * BEGIN::Food Route
-     * */
+         * BEGIN::Food Route
+         * */
         Route::group(['prefix'=>'food', 'as'=>'food.'], function(){
             Route::group(['prefix' => 'category'], function () {
                 Route::post('', [
@@ -130,6 +130,20 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function () {
         /*
          * END::Food Route
          * */
+
+
+        /*Order route start*/
+        Route::get('order', [
+            'uses' => 'OrderController@getAllOrders'
+        ]);
+        Route::get('order/{id}', [
+            'uses' => 'OrderController@getSingleOrder'
+        ]);
+        Route::get('order/details/{id}', [
+            'uses' => 'OrderController@getOrderDetails'
+        ]);
+        /*Order route end*/
+
 
 
         /*Customer route start*/
