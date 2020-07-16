@@ -173,6 +173,7 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
         Route::group(['prefix'=>'payment', 'as'=>'payment.'], function(){
             Route::get('make-a-payment', 'RestaurantController@make_payment')->name('make_a_payment');
         });
+        Route::post('restaurant-make-payment', 'TransactionController@make_transaction_submit')->name('make_payment');
     });
 
     /*
@@ -331,7 +332,9 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
 
         Route::group(['prefix'=>'payment', 'as'=>'payment.'], function(){
             Route::get('make-a-payment', 'DeliveryController@make_payment')->name('make_a_payment');
+
         });
+        Route::post('transaction','TransactionController@make_transaction_submit')->name('make_payment');
 
 
     });

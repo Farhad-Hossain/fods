@@ -6,7 +6,7 @@
             <div class="col-sm-12 col-md-12">
                 <div class="card card-custom gutter-b example example-compact">
                     <div class="card-header">
-                        <h3 class="card-title">{!! __('customer.payment') !!}</h3>
+                        <h3 class="card-title">{!! __('transaction.transaction_form') !!}</h3>
                         <div class="card-toolbar">
                             <div class="example-tools justify-content-center">
                               @if($errors->any())
@@ -23,7 +23,7 @@
                         <div class="row">
                          @csrf
                         <div class="col-sm-12 col-md-6">
-                        <form class="form" action="{!! route('backend.delivery.make_payment') !!}" method="POST" enctype="multipart/form-data">
+                        <form class="form" action="{!! route('backend.restaurant.make_payment') !!}" method="POST" enctype="multipart/form-data">
                           @csrf
                              <div class="form-group">
                                <label>{!! __('transaction.transaction_type') !!}</label>

@@ -10,6 +10,7 @@ use App\Http\Requests\Backend\Driver\EditDriverPost;
 use App\User;
 use App\Models\Driver;
 use App\Models\DriverTiming;
+use App\Models\Transaction;
 use DB;
 
 class DeliveryController extends Controller
@@ -120,6 +121,8 @@ class DeliveryController extends Controller
     // BEGIN::Payment related routes
     public function make_payment()
     {
-        return view('backend.pages.delivery.payment.make_payment_page');
+        $reliable_target_users = Driver::where('status', 1)->get();
+        $last_five_transactions = Transaction::where('status',1)->orderBy('id', 'desc')->get();
+        return view('backend.pages.delivery.payment.make_payment_page', compact('reliable_target_users', 'last_five_transactions'));
     } 
 }

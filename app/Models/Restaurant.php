@@ -12,6 +12,10 @@ class Restaurant extends Model
     {
     	return $this->belongsTo('App\User', 'user_id');
     }
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'user_id');
+    }
 
 
     public function all_characteristics()

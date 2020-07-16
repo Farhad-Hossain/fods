@@ -9,6 +9,7 @@ use App\Models\Cuisine;
 use App\Models\RestaurantTag;
 use App\Models\RestaurantRating;
 use App\Models\RestaurantReview;
+use App\Models\Transaction;
 
 class RestaurantController extends Controller
 {
@@ -157,8 +158,11 @@ class RestaurantController extends Controller
 	// BEGIN::Payment and transaction related routes
 	// BEGIN::Payment and transaction related routes
 	public function make_payment(){
-		return view('backend.pages.restaurants.make_payment_page');
+		$reliable_target_users = Restaurant::where('status', 1)->get();
+		$last_five_transactions = Transaction::orderBy('id', 'desc')->limit(5)->get();
+		return view('backend.pages.restaurants.transaction.transaction_form', compact('reliable_target_users', 'last_five_transactions'));
 	}
+	
 	// end
 
 
