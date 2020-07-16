@@ -114,15 +114,12 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function () {
 
             // Extra Food
             Route::get('extra-food/list', [
-                'as' => 'extra_food.list',
                 'uses' => 'ExtraFoodController@showExtraFoodListPage'
             ]);
             Route::post('extra-food/add',[
-                'as' => 'extra_food.add',
                 'uses' => 'ExtraFoodController@addExtraFoodSubmit'
             ]);
             Route::post('extra-food/edit',[
-                'as' => 'extra_food.edit',
                 'uses' => 'ExtraFoodController@editExtraFoodSubmit'
             ]);
             // END::Extra food
@@ -161,6 +158,9 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function () {
         ]);
         Route::delete('customer/{id}', [
             'uses' => 'CustomerController@deleteCustomer'
+        ]);
+        Route::post('customer/payment', [
+            'uses' => 'CustomerController@storeNewPayment'
         ]);
         /*Customer route end*/
 
