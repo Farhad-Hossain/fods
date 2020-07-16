@@ -23,4 +23,5 @@ return [
 	'paid_amount' => 'Paid Amount',
 	'order_status_list' => 'Order Status List',
 	'address' => 'Address',
+	'payment' => 'Payment',
 ];

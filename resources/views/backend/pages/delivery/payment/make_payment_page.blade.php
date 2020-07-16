@@ -1,38 +1,70 @@
-@extends('backend.master', ['title'=>'Make a Payment'])
+@extends('backend.master')
 @section('main_content')
     <div class="container-fluid">
         @include('backend.message.flash_message')
-        <!--begin::Card-->
-        <div class="card card-custom">
-            <div class="card-header">
-                <div class="card-title">
-                    <span class="card-icon">
-                        <i class="flaticon2-heart-rate-monitor text-primary"></i>
-                    </span>
-                    <h3 class="card-label">Payment Form</h3>
-                </div>
-                <div class="card-toolbar">
-                    <!--begin::Dropdown-->
-                    <div class="dropdown dropdown-inline mr-2">
-                        <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="la la-download"></i>Export</button>
-                        <!--begin::Dropdown Menu-->
-                        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                            <ul class="nav flex-column nav-hover">
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon la la-file-pdf-o"></i>
-                                        <span class="nav-text">PDF</span>
-                                    </a>
-                                </li>
-                            </ul>
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <div class="card card-custom gutter-b example example-compact">
+                    <div class="card-header">
+                        <h3 class="card-title">{!! __('order.payment') !!}</h3>
+                        <div class="card-toolbar">
+                            <div class="example-tools justify-content-center">
+                              @if($errors->any())
+                                @foreach($errors->all() as $error)
+                                  <p class="alert alert-danger">{{$error}}</p>
+                                @endforeach
+                              @endif
+                            </div>
                         </div>
-                        <!--end::Dropdown Menu-->
                     </div>
-                    <!--end::Dropdown-->
+
+                    <div class="card-body">
+                        <!--begin::Form-->
+                        <div class="row">
+                         @csrf
+                        <div class="col-sm-12 col-md-6">
+                        <form class="form" action="" method="POST" enctype="multipart/form-data">
+                             <div class="form-group">
+                               <label>Payment Type</label>
+                               <input type="text" class="form-control">
+                             </div>
+                             <div class="form-group">
+                                 <label>Select Driver</label>
+                                <select name="food_category" id="food_category" class="form-control selectpicker" required data-size="7" data-live-search="true">
+                                  <option value="AK">Alaska</option>
+                                  <option value="HI">Hawaii</option>
+                                  <option value="CA">California</option>
+                                </select>
+                             </div>
+                        </form>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <h3>Last 5 transactions</h3>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Driver</th>
+                                        <th>Amount</th>
+                                        <th>Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Farhad Hossain</td>
+                                        <td>1000</td>
+                                        <td>Credit</td>
+                                    </tr>
+                                </tbody>
+                                <tbody>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                        </div>
+                        <!--end::Form-->
+                    </div>
                 </div>
             </div>
         </div>
-        <!--end::Card-->
     </div>
 @endsection

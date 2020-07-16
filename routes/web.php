@@ -303,6 +303,15 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
             'as' => 'delete',
             'uses' => 'CustomerController@deleteCustomer'
         ]);
+        Route::get('payment-transaction',[
+            'as' => 'payment_transaction',
+            'uses' => 'TransactionController@make_transaction_form',
+        ]);
+        Route::post('payment-transaction',[
+            'as' => 'payment_transaction',
+            'uses' => 'TransactionController@make_transaction_submit',
+        ]);
+        Route::get('wallet-amount', 'TransactionController@get_wallet_amount')->name('wallet_amount');
     });
     /*
      * End::Customer Route
