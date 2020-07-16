@@ -40,8 +40,9 @@ class TransactionController extends Controller
     	return redirect()->back();
     }
 
-    public function get_wallet_amount($user_id)
+    public function get_wallet_amount(Request $request)
     {
+        $user_id = $request->user_id;
     	$debit = Transaction::where('transaction_to', $user_id)->where('transaction_type', 2)->sum('transaction_amount');
     	$credit = Transaction::where('transaction_to', $user_id)->where('transaction_type', 1)->sum('transaction_amount');
     	return $credit-$debit;
