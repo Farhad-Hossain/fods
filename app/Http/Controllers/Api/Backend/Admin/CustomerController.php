@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api\Backend\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\Transaction;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -160,5 +162,46 @@ class CustomerController extends Controller
 
         DB::commit();
         return response()->json(['message' => 'Deleted Success!'], 200);
+    }
+
+    public function storeNewPayment(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'transaction_type' => 'required|numeric',
+            'transaction_to_id' => 'required|numeric',
+            'transaction_amount' => 'required|min:0',
+            'transaction_medium' => 'required',
+            'transaction_reference' => 'required',
+        ]);
+        if ($validator->fails()) {
+            $error = $validator->messages();
+            return response()->json($error, 400);
+        }
+
+        DB::beginTransaction();
+        try {
+            $transaction_id = 'T'.time();
+
+            $transaction = new Transaction();
+            $transaction->transaction_by = Auth::id();
+            $transaction->transaction_to = $request->transaction_to_id;
+            $transaction->transaction_id = $transaction_id;
+            $transaction->transaction_type = $request->transaction_type;
+            $transaction->transaction_medium = $request->transaction_medium;
+            $transaction->transaction_amount = $request->transaction_amount;
+            $transaction->transaction_referance = $request->transaction_reference;
+            $transaction->transaction_description = $request->transaction_description;
+            $transaction->status = 1;
+            $transaction->ip_address = $request->ip();
+            $transaction->save();
+
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return response()->json(['message' => $exception->getMessage()], 500);
+        }
+
+        DB::commit();
+
+        return response()->json($transaction, 200);
     }
 }

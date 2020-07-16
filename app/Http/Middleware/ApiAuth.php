@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App\User;
 use Closure;
+use Illuminate\Support\Facades\Auth;
 
 class ApiAuth
 {
@@ -23,6 +24,7 @@ class ApiAuth
         if (empty($user)) {
             return response()->json('Unauthorized.', 401);
         }
+        Auth::login($user);
         return $next($request);
     }
 }
