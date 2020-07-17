@@ -122,6 +122,21 @@ Route::group(['namespace'=>'Frontend', 'as'=>'frontend.'], function() {
 
 Auth::routes();
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // DEGIN::Backend Routes
 Route::get('dashboard', [
     'uses' => 'Backend\DashboardController@showDashboard',
@@ -141,7 +156,8 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
 		Route::get('roles', 'UserController@viewRoleList')->name('roles');
 	});
 
-    // Settings
+    /*BEGIN::Setings*/
+    /*BEGIN::Setings*/
 	Route::group(['prefix'=>'settings', 'as'=>'settings.', 'namespace'=>'Settings'], function(){
 		Route::get('global-settings', 'GlobalController@global_settings_form')->name('global_settings');
 		Route::post('global-settings', 'GlobalController@global_settings_submit');
@@ -153,7 +169,11 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
 
         Route::get('{country}/delete', 'CountryCityCurrencyController@delete_country')->name('delete_country');
 	});
-    // Restaurant 
+    /*END::Setings*/
+    /*END::Setings*/
+
+    /*BEGIN::Restaurant*/
+    /*BEGIN::Restaurant*/
     Route::group(['prefix'=>'restaurant', 'as'=>'restaurant.' ], function(){
         Route::get('list', 'RestaurantController@view_restaurant_list')->name('list');
         Route::get('{Restaurant}/edit', 'RestaurantController@view_restaurant_edit_form')->name('edit');
@@ -173,12 +193,14 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
         Route::group(['prefix'=>'payment', 'as'=>'payment.'], function(){
             Route::get('make-a-payment', 'RestaurantController@make_payment')->name('make_a_payment');
         });
+        Route::get('restaurant-transactions', 'RestaurantController@get_transaction_list')->name('transactions');
         Route::post('restaurant-make-payment', 'TransactionController@make_transaction_submit')->name('make_payment');
     });
+    /*END::Restaurant*/
+    /*END::Restaurant*/
 
-    /*
-     * BEGIN::Food Route
-     * */
+    /*BEGIN::Food*/
+    /*BEGIN::Food*/
     Route::group(['prefix'=>'food', 'as'=>'food.'], function(){
         Route::get('category/add', [
             'as' => 'category.add',
@@ -258,26 +280,30 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
 
 
     });
-    /*
-     * END::Food Route
-     * */
+    /*END::Food*/
+    /*END::Food*/
 
-    // START::ORDER
+    /*BEGIN::Order*/
+    /*BEGIN::Order*/
     Route::group(['prefix'=>'order', 'as'=>'order.'], function(){
     	Route::get('list', 'OrderController@show_order_list')->name('list');
-        Route::get('status-list', 'OrderController@show_order_status_list')->name('status_list');
         Route::get('address-list', 'OrderController@show_addresses')->name('addresses');
         Route::get('{order}/details', 'OrderController@show_order_details')->name('details');
         Route::get('{order}/delete', 'OrderController@delete_order')->name('delete');
 
+        Route::post('create-status','OrderController@create_order_status')->name('create_status');
+        Route::post('edit-status/{id}','OrderController@edit_order_status')->name('edit_status');
+        Route::get('status-list', 'OrderController@show_order_status_list')->name('status_list');
+        
         Route::post('change-payment-status', 'OrderController@change_payment_status_submit')->name('change_payment_status');
         Route::post('change-status', 'OrderController@change_status_submit')->name('change_status');
     });
+    /*END::Order*/
+    /*END::Order*/
 
 
-    /*
-     * BEGIN::Customer Route
-     * */
+    /*BEGIN::Customer*/
+    /*BEGIN::Customer*/
     Route::group(['prefix'=>'customer', 'as'=>'customer.'], function() {
 
         Route::get('add', [
@@ -314,9 +340,8 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
         ]);
         Route::get('wallet-amount', 'TransactionController@get_wallet_amount')->name('wallet_amount');
     });
-    /*
-     * End::Customer Route
-     * */
+    /*END::Customer*/
+    /*END::Customer*/
 
     // BEGIN::Delivery
     Route::group(['prefix'=>'delivery', 'as'=>'delivery.'], function(){

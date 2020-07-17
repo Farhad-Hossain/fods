@@ -23,7 +23,7 @@ class CreateOrdersTable extends Migration
             $table->decimal('total_discount', 10, 2)->comment('total discount amount of this order');
             $table->decimal('payable_amount', 10, 2)->comment('payable amount of this order');
             $table->decimal('paid_amount', 10, 2)->default(0);
-            $table->tinyInteger('order_status')->comment('1 = pending');
+            $table->tinyInteger('order_status')->comment('default 0=pending')->default(0);
             $table->tinyInteger('payment_status')->comment('0=pending, 1=done');
             $table->integer('payment_reference')->unsigned()->nullable()->comment('Payment reference from payment details table');
             $table->integer('payment_type')->unsigned()->nullable()->comment('payment type');

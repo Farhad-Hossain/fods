@@ -31,24 +31,6 @@
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="nav-icon la la-copy"></i>
-                                        <span class="nav-text">Copy</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon la la-file-excel-o"></i>
-                                        <span class="nav-text">Excel</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon la la-file-text-o"></i>
-                                        <span class="nav-text">CSV</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
                                         <i class="nav-icon la la-file-pdf-o"></i>
                                         <span class="nav-text">PDF</span>
                                     </a>
@@ -59,8 +41,9 @@
                     </div>
                     <!--end::Dropdown-->
                     <!--begin::Button-->
-                    <a href="javascript:;" class="btn btn-primary font-weight-bolder">
-                    <i class="la la-plus"></i>New Record</a>
+                    <a href="javascript:;" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#order_status_add_modal"> 
+                        <i class="la la-plus"></i>New Record
+                    </a>
                     <!--end::Button-->
                 </div>
             </div>
@@ -70,37 +53,26 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>{!! __('order.order_id') !!}</th>
-                            <th>{!! __('order.customer_name') !!}</th>
-                            <th>{!! __('order.payable_amount') !!}</th>
-                            <th>{!! __('order.payment_status') !!}</th>
-                            <th>{!! __('common.status') !!}</th>
+                            <th>{!! __('order.status_name') !!}</th>
+                            <th>{!! __('order.current_state') !!}</th>
                             <th>{!! __('common.action') !!}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($orders as $order)
+                        @foreach($statuses as $status)
                         <tr>
                             <td>{!! $loop->iteration !!}</td>
-                            <td>{!! $order->order_id !!}</td>
-                            <td>{!! $order->user->name !!}</td>
-                            <td>{!! $order->payable_amount !!}</td>
-                            @if( $order->payment_status == 0 )
-                                <td class="text-danger"><b>Pending</b></td>
+                            <td>{!! $status->status_name !!}</td>
+                            @if( $status->status == 1 )
+                                <td><b class="text-success">Active</b></td>
                             @else
-                                <td class="text-success"><b>Done</b></td>
-                            @endif
-                            @if($order->order_status == 1)
-                                <td class="text-warning"><b>Pending</b></td>
+                                <td><b class="text-danger">Deactivated</b></td>
                             @endif
                             <td>
-                                <a href="{!! route('backend.order.details', $order->id) !!}">
-                                    <i class="fas fa-border-none text-primary mr-2"></i>
-                                </a>
-                                <a href="javascript:;" class="text-primary mr-2">
+                                <a href="javascript:;" data-toggle="modal" data-target="#order_status_edit_modal" onclick="set_edit_form_value('{!! $status->status_name !!}', '{!! route("backend.order.edit_status", $status->id) !!}' )">
                                     <i class="far fa-edit text-primary"></i>
                                 </a>
-                                <a href="{!! route('backend.order.delete', $order->id) !!}" class="text-danger" onclick="return confirm('Are you sure want to delete ??')">
+                                <a href="javascript:;" class="text-danger" onclick="return confirm('Are you sure want to delete ??')">
                                     <i class="far fa-trash-alt text-danger"></i>
                                 </a>
                             </td>
@@ -114,9 +86,53 @@
         <!--end::Card-->
     </div>
 @endsection
+@section('modals')
+<!-- Modal-->
+<div class="modal fade" id="order_status_edit_modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Order Status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <form action="" method="POST" id="edit_form">
+                @csrf
+                <div class="modal-body">
+                   <div class="form-group">
+                    <label>Status name</label>
+                    <input type="text" class="form-control" id="order_status_name" name="order_status_name" placeholder="Enter status name" required/>
+                   </div>
+                   <div class="form-group">
+                       <label>Status</label>
+                       <select class="form-control" name="status">
+                           <option value="1">Active</option>
+                           <option value="2">Inactive</option>
+                       </select>
+                   </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@endsection
 
 @section('custom_script')
     <script src="{{asset('backend')}}/assets/plugins/custom/datatables/datatables.bundle.js?v=7.0.3"></script>
     <script src="{{asset('backend')}}/assets/js/pages/crud/datatables/advanced/column-visibility.js?v=7.0.3"></script>
     <script src="{{asset('backend')}}/assets/js/datatable.js"></script>
+    <script>
+        function set_edit_form_value(name, route)
+        {
+            $("#edit_form").attr('action', route);
+
+            $("#order_status_name").val(name);
+        }
+    </script>
 @endsection

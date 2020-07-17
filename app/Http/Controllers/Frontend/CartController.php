@@ -87,7 +87,6 @@ class CartController extends Controller
                 $order->total_discount = $total_discount;
                 $order->payable_amount = $payable_amount;
                 $order->paid_amount = 0;
-                $order->order_status = 1;
                 $order->payment_status = 0;//0=pending
                 $order->save();
 

@@ -24,4 +24,7 @@ return [
 	'order_status_list' => 'Order Status List',
 	'address' => 'Address',
 	'payment' => 'Payment',
+	'status_name' => 'Status name',
+	'current_state' => 'Current state',
+	'current_state' => 'Visibility',
 ];

@@ -1,5 +1,4 @@
 <?php 
-
 	return [
 		'transaction_type' => 'Transaction Type',
 		'select_driver' => 'Select Driver',

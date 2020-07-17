@@ -51,7 +51,6 @@
                             <th>{!! __('order.order_id') !!}</th>
                             <th>{!! __('order.customer_name') !!}</th>
                             <th>{!! __('order.payable_amount') !!}</th>
-                            <th>{!! __('order.payment_status') !!}</th>
                             <th>{!! __('common.status') !!}</th>
                             <th>{!! __('common.action') !!}</th>
                         </tr>
@@ -63,29 +62,25 @@
                             <td>{!! $order->order_id !!}</td>
                             <td>{!! $order->user->name !!}</td>
                             <td>{!! $order->payable_amount !!}</td>
+                            {{--
                             @if( $order->payment_status == 0 )
                                 <td class="text-danger">
                                     <b>Pending</b>
-                                    <b class="badge badge-primary payment_status_change_btn" id='{!! $order->id !!}'>Change</b>
+                                    <b class="badge badge-primary payment_status_change_btn" id='{!! $order->id !!}' style="cursor: pointer;">Change</b>
                                 </td>
                             @else
                                 <td class="text-success">
                                     <b>Done</b>
-                                    <b class="badge badge-primary payment_status_change_btn" id='{!! $order->id !!}'>Change</b>
+                                    <b class="badge badge-primary payment_status_change_btn" id='{!! $order->id !!}' style="cursor: pointer;">Change</b>
                                 </td>
                             @endif
-                            @if($order->order_status == 1)
-                                <td class="text-warning">
-                                    <b>Pending</b>
-                                    <b class="badge badge-primary status_change_btn" id='{!! $order->id !!}'>Change</b>
-                                </td>
-                            @endif
-                            @if($order->order_status == 2)
-                                <td class="text-warning">
-                                    <b>Done</b>
-                                    <b class="badge badge-success status_change_btn" id='{!! $order->id !!}'>Change</b>
-                                </td>
-                            @endif
+                            --}}
+                            <td>
+                                <b class="text-primary">{!! $order->status['status_name'] !!}</b>
+                                <b class="badge badge-primary status_change_btn" oid="{!! $order->id !!}" status_name="{!! $order->status->status_name !!}" style="cursor: pointer;">
+                                    Change
+                                </b>
+                            </td>
                             <td>
                                 <a href="{!! route('backend.order.details', $order->id) !!}">
                                     <i class="fas fa-border-none text-primary mr-2"></i>
@@ -156,16 +151,11 @@
                     <form action="{!! route('backend.order.change_status') !!}" method="POST">
                         @csrf
                         <input type="hidden" name="order_id" value="">
-                        <label class="radio radio-primary">
-                            <input type="radio" checked="" name="order_status" value="1" /> Pending
-                            <span></span>
-                        </label>
-                        <br />
-                        <br />
-                        <label class="radio radio-primary">
-                            <input type="radio" checked="unchecked" name="order_status" value="2"/> Done
-                            <span></span>
-                        </label>
+                        <select class="form-control" name="order_status">
+                            @foreach( $order_statuses as $status )
+                                <option value="{!! $status->id !!}">{!! $status->status_name !!}</option>
+                            @endforeach
+                        </select>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -188,7 +178,7 @@
             $('#payment_status_modal').modal();
         });
         $('.status_change_btn').click(function(){
-           $('input[name="order_id"]').val( $(this).attr('id') );
+           $('input[name="order_id"]').val( $(this).attr('oid') );
            $('#status_modal').modal(); 
         });
 

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use App\Models\OrderStatus;
 
 class Order extends Model
 {
@@ -29,5 +30,10 @@ class Order extends Model
     public function details()
     {
         return $this->hasMany('App\Models\OrderDetail', 'order_id');
+    }
+
+    public function status()
+    {
+        return $this->belongsTo('App\Models\OrderStatus', 'order_status');
     }
 }

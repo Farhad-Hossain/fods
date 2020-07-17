@@ -157,6 +157,10 @@ class RestaurantController extends Controller
 
 	// BEGIN::Payment and transaction related routes
 	// BEGIN::Payment and transaction related routes
+	public function get_transaction_list()
+	{
+		return view('backend.pages.restaurants.transaction.transaction_list');
+	}
 	public function make_payment(){
 		$reliable_target_users = Restaurant::where('status', 1)->get();
 		$last_five_transactions = Transaction::orderBy('id', 'desc')->limit(5)->get();
