@@ -24,11 +24,10 @@ class TransactionPostRequest extends FormRequest
     public function rules()
     {
         return [
-            'transaction_type' => 'required|numeric',
             'transaction_to_id' => 'required|numeric',
             'transaction_amount' => 'required|min:0',
             'transaction_medium' => 'required',
-            'transaction_referance' => 'required',
+            'transaction_description' => 'required',
         ];
     }
 }

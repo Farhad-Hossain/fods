@@ -27,4 +27,5 @@ return [
 	'status_name' => 'Status name',
 	'current_state' => 'Current state',
 	'current_state' => 'Visibility',
+	'delivery_address' => 'Delivery Address',
 ];

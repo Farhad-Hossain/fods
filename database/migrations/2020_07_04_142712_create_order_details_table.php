@@ -19,9 +19,11 @@ class CreateOrderDetailsTable extends Migration
             $table->unsignedInteger('user_id');
             $table->integer('restaurant_id')->unsigned()->comment('restaurant id');
             $table->integer('food_id')->unsigned()->comment('food id');
+            $table->integer('appointed_driver_id')->unsigned();
             $table->decimal('price', 10, 2)->comment('Price amount of order');
             $table->decimal('discount', 10, 2)->comment('discount amount of this order');
             $table->decimal('payable_amount', 10, 2)->comment('payable amount of this order');
+            $table->string('delivery_address', 255);
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });

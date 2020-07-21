@@ -194,7 +194,7 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
             Route::get('make-a-payment', 'RestaurantController@make_payment')->name('make_a_payment');
         });
         Route::get('restaurant-transactions', 'RestaurantController@get_transaction_list')->name('transactions');
-        Route::post('restaurant-make-payment', 'TransactionController@make_transaction_submit')->name('make_payment');
+        Route::post('restaurant-make-payment', 'RestaurantController@make_transaction_submit')->name('make_payment');
     });
     /*END::Restaurant*/
     /*END::Restaurant*/
@@ -332,7 +332,7 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
         ]);
         Route::get('payment-transaction',[
             'as' => 'payment_transaction',
-            'uses' => 'TransactionController@make_transaction_form',
+            'uses' => 'CustomerController@get_transactions',
         ]);
         Route::post('payment-transaction',[
             'as' => 'payment_transaction',
@@ -359,7 +359,8 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
             Route::get('make-a-payment', 'DeliveryController@make_payment')->name('make_a_payment');
 
         });
-        Route::post('transaction','TransactionController@make_transaction_submit')->name('make_payment');
+        Route::get('driver-transactions','DeliveryController@get_transactions')->name('transaction_list');
+        Route::post('transaction','DeliveryController@make_transaction_submit')->name('make_payment');
 
 
     });

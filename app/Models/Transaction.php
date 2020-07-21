@@ -12,4 +12,8 @@ class Transaction extends Model
     {
     	return $this->belongsTo('App\User', 'transaction_to');
     }
+    public function user()
+    {
+    	return $this->belongsTo('App\User', 'transaction_by');
+    }
 }

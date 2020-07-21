@@ -10,6 +10,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Transaction;
 
 class CustomerController extends Controller
 {
@@ -129,6 +130,12 @@ class CustomerController extends Controller
         session()->flash('type', 'success');
         session()->flash('message', 'Customer Deleted Successfully');
         return redirect()->back();
+    }
+
+    public function get_transactions()
+    {
+        $transactions = Transaction::where('transaction_type', 1)->get();
+        return view('backend.pages.customer.transaction.transactions', compact('transactions'));
     }
 
 

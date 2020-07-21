@@ -51,6 +51,7 @@
                             <th>{!! __('order.order_id') !!}</th>
                             <th>{!! __('order.customer_name') !!}</th>
                             <th>{!! __('order.payable_amount') !!}</th>
+                            <th>{!! __('order.delivery_address') !!}</th>
                             <th>{!! __('common.status') !!}</th>
                             <th>{!! __('common.action') !!}</th>
                         </tr>
@@ -62,19 +63,7 @@
                             <td>{!! $order->order_id !!}</td>
                             <td>{!! $order->user->name !!}</td>
                             <td>{!! $order->payable_amount !!}</td>
-                            {{--
-                            @if( $order->payment_status == 0 )
-                                <td class="text-danger">
-                                    <b>Pending</b>
-                                    <b class="badge badge-primary payment_status_change_btn" id='{!! $order->id !!}' style="cursor: pointer;">Change</b>
-                                </td>
-                            @else
-                                <td class="text-success">
-                                    <b>Done</b>
-                                    <b class="badge badge-primary payment_status_change_btn" id='{!! $order->id !!}' style="cursor: pointer;">Change</b>
-                                </td>
-                            @endif
-                            --}}
+                            <td>{!! $order->details->delivery_address !!}</td>
                             <td>
                                 <b class="text-primary">{!! $order->status['status_name'] !!}</b>
                                 <b class="badge badge-primary status_change_btn" oid="{!! $order->id !!}" status_name="{!! $order->status->status_name !!}" style="cursor: pointer;">

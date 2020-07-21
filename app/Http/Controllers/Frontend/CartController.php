@@ -7,6 +7,7 @@ use App\Models\Food;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use Illuminate\Http\Request;
+use App\Models\Transaction;
 
 use Cart;
 use Illuminate\Support\Facades\Auth;
@@ -61,6 +62,7 @@ class CartController extends Controller
     {
         $cart_contents = Cart::content();
 
+
         return view('frontend.pages.checkout', compact('cart_contents'));
     }
 
@@ -71,7 +73,6 @@ class CartController extends Controller
             $cart_contents = Cart::content();
 
             if ($cart_contents->count() > 0) {
-
 
                 $total_discount = 0;
                 $delivery_charge = 50;
@@ -87,8 +88,9 @@ class CartController extends Controller
                 $order->total_discount = $total_discount;
                 $order->payable_amount = $payable_amount;
                 $order->paid_amount = 0;
-                $order->payment_status = 0;//0=pending
+                $order->payment_status = 1;//0=pending
                 $order->save();
+
 
                 $order_unique_id = Order::getNewOrderId($order->id);
                 $order->order_id = $order_unique_id;
@@ -111,6 +113,8 @@ class CartController extends Controller
                     $order_details->price = $content->price;
                     $order_details->discount = $discount;
                     $order_details->payable_amount = $pay_amount;
+                    $order_details->delivery_address = 'Demo Address';
+                    
                     $order_details->status = 1;
                     $order_details->save();
                 }

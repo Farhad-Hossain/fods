@@ -12,7 +12,7 @@
                     <span class="card-icon">
                         <i class="flaticon2-heart-rate-monitor text-primary"></i>
                     </span>
-                    <h3 class="card-label">Restaurant Transactions</h3>
+                    <h3 class="card-label">Driver Transactions</h3>
                 </div>
                 <div class="card-toolbar">
                     <!--begin::Dropdown-->
@@ -61,7 +61,7 @@
                             <td>{!! $loop->iteration !!}</td>
                             <td>{!! $transaction->created_at->format('g:i a jS F Y') !!}</td>
                             <td>{!! $transaction->transaction_id !!}</td>
-                            <td>{!! $transaction->order_id ? 'Order' : 'WithDraw' !!}</td>
+                            <td>{!! $transaction->order_id ? 'Order' : 'Withdraw' !!}</td>
                             <td>{!! $transaction->user->name !!}</td>
                             <td><b>{!! $transaction->transaction_amount !!}</b></td>
                             <td>

@@ -12,7 +12,7 @@
                     <span class="card-icon">
                         <i class="flaticon2-heart-rate-monitor text-primary"></i>
                     </span>
-                    <h3 class="card-label">Restaurant Transactions</h3>
+                    <h3 class="card-label">Transaction List</h3>
                 </div>
                 <div class="card-toolbar">
                     <!--begin::Dropdown-->
@@ -48,9 +48,7 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Date</th>
                             <th>Transaction Id</th>
-                            <th>Transaction Type</th>
                             <th>User</th>
                             <th>Transaction Amount</th>
                             <th>Status</th>
@@ -59,19 +57,15 @@
                         @foreach($transactions as $transaction)
                         <tr>
                             <td>{!! $loop->iteration !!}</td>
-                            <td>{!! $transaction->created_at->format('g:i a jS F Y') !!}</td>
                             <td>{!! $transaction->transaction_id !!}</td>
-                            <td>{!! $transaction->order_id ? 'Order' : 'WithDraw' !!}</td>
                             <td>{!! $transaction->user->name !!}</td>
                             <td><b>{!! $transaction->transaction_amount !!}</b></td>
-                            <td>
-                                <a href="javascript:;" class="text-primary mr-2">
-                                    <i class="far fa-edit text-primary"></i>
-                                </a>
-                                <a href="javascript:;" class="text-danger" onclick="return confirm('Are you sure want to delete this driver ?')">
-                                    <i class="far fa-trash-alt text-danger"></i>
-                                </a>
-                            </td>
+                            @if($transaction->transaction_status == 'Pending')
+                                <td><b class="badge badge-warning">{!! $transaction->transaction_status !!}</b></td>
+                            @endif
+                            @if($transaction->transaction_status == 'Paid')
+                                <td><b class="badge badge-success">{!! $transaction->transaction_status !!}</b></td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>

@@ -69,12 +69,16 @@
                                 <td><b class="text-danger">Deactivated</b></td>
                             @endif
                             <td>
+                                @if($status->id != 1 && $status->id != 2)
                                 <a href="javascript:;" data-toggle="modal" data-target="#order_status_edit_modal" onclick="set_edit_form_value('{!! $status->status_name !!}', '{!! route("backend.order.edit_status", $status->id) !!}' )">
                                     <i class="far fa-edit text-primary"></i>
                                 </a>
                                 <a href="javascript:;" class="text-danger" onclick="return confirm('Are you sure want to delete ??')">
                                     <i class="far fa-trash-alt text-danger"></i>
                                 </a>
+                                @else
+                                <div class="text-danger">Not Customable</div>
+                                @endif
                             </td>
                         </tr>
                         @endforeach
@@ -87,6 +91,39 @@
     </div>
 @endsection
 @section('modals')
+<!-- Modal-->
+<div class="modal fade" id="order_status_add_modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Order Status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <form action="{!! route('backend.order.create_status') !!}" method="POST" id="edit_form">
+                @csrf
+                <div class="modal-body">
+                   <div class="form-group">
+                    <label>Status name</label>
+                    <input type="text" class="form-control" id="order_status_name" name="order_status_name" placeholder="Enter status name" required/>
+                   </div>
+                   <div class="form-group">
+                       <label>Status</label>
+                       <select class="form-control" name="status">
+                           <option value="1">Active</option>
+                           <option value="2">Inactive</option>
+                       </select>
+                   </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <!-- Modal-->
 <div class="modal fade" id="order_status_edit_modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
     <div class="modal-dialog" role="document">

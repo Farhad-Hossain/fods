@@ -11,6 +11,9 @@ use App\User;
 use App\Models\Driver;
 use App\Models\DriverTiming;
 use App\Models\Transaction;
+use App\Models\DriverTransaction;
+use App\Http\Requests\Backend\Admin\TransactionPostRequest;
+use Carbon\Carbon;
 use DB;
 
 class DeliveryController extends Controller
@@ -119,10 +122,42 @@ class DeliveryController extends Controller
 
     // BEGIN::Payment related routes 
     // BEGIN::Payment related routes
+    public function get_transactions()
+    {
+        $transactions = DriverTransaction::all();
+        return view('backend.pages.delivery.payment.transaction_list', compact('transactions'));
+    }
     public function make_payment()
     {
         $reliable_target_users = Driver::where('status', 1)->get();
-        $last_five_transactions = Transaction::where('status',1)->orderBy('id', 'desc')->get();
+        $last_five_transactions = DriverTransaction::orderBy('id', 'desc')->get();
         return view('backend.pages.delivery.payment.make_payment_page', compact('reliable_target_users', 'last_five_transactions'));
     } 
+    public function make_transaction_submit(TransactionPostRequest $request)
+    {
+        $credit = DriverTransaction::where('user_id', $request->transaction_to_id)->where('credit_debit', 1)->sum('transaction_amount');
+        $debit = DriverTransaction::where('user_id', $request->transaction_to_id)->where('credit_debit', 2)->sum('transaction_amount');
+
+        $wallet = $credit - $debit;
+        if($wallet < $request->transaction_amount){
+            session(['type'=>'danger', 'message'=>'Insufficient Balance!']);
+            return redirect()->back();
+        }
+        
+        $transaction_id = 'T'.date('d').rand(10).rand(100);
+
+        $transaction = new DriverTransaction();
+        $transaction->user_id = $request->transaction_to_id;
+        $transaction->transaction_id = $transaction_id;
+        $transaction->transaction_amount = $request->transaction_amount;
+        $transaction->credit_debit = 2; // Debit
+        $transaction->method = 'Cash on Hand';
+        $transaction->status = 1;
+        $transaction->ip_address = $request->ip();
+        $transaction->description = $request->transaction_description;
+        $transaction->save();
+
+        session(['type'=>'success', 'message'=>'Transaction Successful!']);
+        return redirect()->back();
+    }
 }

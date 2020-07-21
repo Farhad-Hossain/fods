@@ -10,6 +10,8 @@ use App\Models\RestaurantTag;
 use App\Models\RestaurantRating;
 use App\Models\RestaurantReview;
 use App\Models\Transaction;
+use App\Models\RestaurantTransaction;
+use App\Http\Requests\Backend\Admin\TransactionPostRequest;
 
 class RestaurantController extends Controller
 {
@@ -159,12 +161,41 @@ class RestaurantController extends Controller
 	// BEGIN::Payment and transaction related routes
 	public function get_transaction_list()
 	{
-		return view('backend.pages.restaurants.transaction.transaction_list');
+		$transactions = RestaurantTransaction::orderBy('id', 'desc')->get();
+		return view('backend.pages.restaurants.transaction.transaction_list', compact('transactions'));
 	}
 	public function make_payment(){
 		$reliable_target_users = Restaurant::where('status', 1)->get();
-		$last_five_transactions = Transaction::orderBy('id', 'desc')->limit(5)->get();
+		$last_five_transactions = RestaurantTransaction::orderBy('id', 'desc')->limit(5)->get();
 		return view('backend.pages.restaurants.transaction.transaction_form', compact('reliable_target_users', 'last_five_transactions'));
+	}
+	public function make_transaction_submit(TransactionPostRequest $request)
+	{
+	    $credit = RestaurantTransaction::where('user_id', $request->transaction_to_id)->where('credit_debit', 1)->sum('transaction_amount');
+	    $debit = RestaurantTransaction::where('user_id', $request->transaction_to_id)->where('credit_debit', 2)->sum('transaction_amount');
+
+	    $wallet = $credit - $debit;
+	    dd($credit.'-'.$debit.'-'.$wallet);
+	    if($wallet < $request->transaction_amount){
+	        session(['type'=>'danger', 'message'=>'Insufficient Balance!']);
+	        return redirect()->back();
+	    }
+	    
+	    $transaction_id = 'T'.date('d').rand(10).rand(100);
+
+	    $transaction = new RestaurantTransaction();
+	    $transaction->user_id = $request->transaction_to_id;
+	    $transaction->transaction_id = $transaction_id;
+	    $transaction->transaction_amount = $request->transaction_amount;
+	    $transaction->credit_debit = 2; // Debit
+	    $transaction->method = $request->transaction_medium;
+	    $transaction->status = 1;
+	    $transaction->ip_address = $request->ip();
+	    $transaction->description = $request->transaction_description;
+	    $transaction->save();
+
+	    session(['type'=>'success', 'message'=>'Transaction Successful!']);
+	    return redirect()->back();
 	}
 	
 	// end
