@@ -38,9 +38,12 @@
                 </a>
                 <a href="#" class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5" onclick="event.preventDefault();
                                      document.getElementById('logout-form').submit();">
-                        {{ __('Sign Out') }}
-                    </a>
+                    {{ __('Log out') }}
                 </a>
+                <form id="logout-form" action="{!! route('logout') !!}" style="display: none;" method="POST">
+                    @csrf
+                    <input type="submit" name="">
+                </form>
             </div>
         </div>
     </div>

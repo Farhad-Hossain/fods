@@ -145,7 +145,7 @@ Route::get('dashboard', [
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.', 'middleware'=>'auth'], function(){
+Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.', 'middleware'=>['auth', 'admin'] ], function(){
 	Route::get('/', 'DashboardController@showDashboard')->name('dashboard');
 
 	// Users and role management
@@ -361,8 +361,25 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
         });
         Route::get('driver-transactions','DeliveryController@get_transactions')->name('transaction_list');
         Route::post('transaction','DeliveryController@make_transaction_submit')->name('make_payment');
-
-
     });
+});
+
+/*
+    BEGIN::Restaurant Admin Controller 
+*/
+Route::group(['prefix'=>'restaurant-admin', 'namespace'=>'Backend\Restaurant', 'as'=>'backend.restAdmin.', 'middleware'=>['auth', 'restaurant'] ], function(){
+    Route::get('/dashboard', 'DashboardController@showDashboard')->name('dashboard');
+
+    // BEGIN::Order 
+    Route::group(['prefix'=>'order', 'as'=>'order.'], function(){
+        Route::get('list', 'OrderController@showOrderList')->name('list');
+        Route::post('appoint-driver', 'OrderController@appointDriver')->name('appoint_driver');
+    });
+    // BEGIN::Food
+    Route::group(['prefix'=>'food', 'as'=>'food.'], function(){
+        Route::get('list', 'FoodController@showFoodList')->name('list');
+        // Route::get('food-edit/{food_id}', 'FoodController@showFoodEditForm')->name('edit_form');
+    });
+
 });
 // END::Backend routes

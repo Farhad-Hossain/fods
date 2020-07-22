@@ -16,4 +16,8 @@ class OrderDetail extends Model
     {
     	return $this->belongsTo('App\Models\Restaurant', 'restaurant_id');
     }
+    public function appointed_driver()
+    {
+    	return $this->belongsTo('App\Models\Driver', 'appointed_driver_id');
+    }
 }

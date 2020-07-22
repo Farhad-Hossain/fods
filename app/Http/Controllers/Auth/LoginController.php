@@ -59,13 +59,13 @@ class LoginController extends Controller
         if ($this->attemptLogin($request)) {
 
             if (Auth::user()->role == 0) {
-                $this->redirectTo = "/admin";
+                // $this->redirectTo = "/admin";
             } elseif (Auth::user()->role == 1) {
-                $this->redirectTo = "/restaurant";
+                // $this->redirectTo = "/restaurant-admin";
             } elseif (Auth::user()->role == 2) {
-                $this->redirectTo = "/driver";
+                // $this->redirectTo = "/driver";
             } elseif (Auth::user()->role == 3) {
-                $this->redirectTo = "/customer";
+                // $this->redirectTo = "/customer";
             }
 
             return $this->sendLoginResponse($request);
