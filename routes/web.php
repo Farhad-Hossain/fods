@@ -374,11 +374,23 @@ Route::group(['prefix'=>'restaurant-admin', 'namespace'=>'Backend\Restaurant', '
     Route::group(['prefix'=>'order', 'as'=>'order.'], function(){
         Route::get('list', 'OrderController@showOrderList')->name('list');
         Route::post('appoint-driver', 'OrderController@appointDriver')->name('appoint_driver');
+        Route::get('reject/{order}', 'OrderController@rejectOrderSubmit')->name('rejectSubmit');
     });
     // BEGIN::Food
     Route::group(['prefix'=>'food', 'as'=>'food.'], function(){
+        Route::get('add', 'FoodController@showFoodAddForm')->name('add');
+        Route::post('add', 'FoodController@storeFoodSubmit');
         Route::get('list', 'FoodController@showFoodList')->name('list');
-        // Route::get('food-edit/{food_id}', 'FoodController@showFoodEditForm')->name('edit_form');
+        Route::get('food-edit/{food}', 'FoodController@showFoodEditForm')->name('edit_form');
+        Route::post('food-edit-submit/{food}', 'FoodController@editFoodSubmit')->name('edit_food_submit');
+        Route::get('delete/{food}', 'FoodController@deleteFoodSubmit')->name('delete');
+
+        Route::get('cuisines', 'FoodController@showCuisines')->name('cuisines');
+    });
+
+    // BEGIN::Delivery 
+    Route::group(['prefix'=>'driver', 'as'=>'driver.'], function(){
+        Route::get('list', 'DriverController@showDriverList')->name('list');
     });
 
 });

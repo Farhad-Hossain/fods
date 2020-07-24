@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\OrderStatus;
 use App\Models\Driver;
+
 use Auth;
 
 class OrderController extends Controller
@@ -37,6 +38,10 @@ class OrderController extends Controller
     		session(['type'=>'danger', 'message'=>'Something went wrong']);
     		return redirect()->back();
     	}
+
+    }
+    public function rejectOrderSubmit(Order $order)
+    {
 
     }
 }

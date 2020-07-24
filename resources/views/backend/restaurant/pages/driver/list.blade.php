@@ -12,7 +12,7 @@
                     <span class="card-icon">
                         <i class="flaticon2-heart-rate-monitor text-primary"></i>
                     </span>
-                    <h3 class="card-label">{!! __('backend_menus.food_list') !!}</h3>
+                    <h3 class="card-label">Drivers</h3>
                 </div>
                 <div class="card-toolbar">
                     <!--begin::Dropdown-->
@@ -59,7 +59,7 @@
                     </div>
                     <!--end::Dropdown-->
                     <!--begin::Button-->
-                    <a href="{!! route('backend.restAdmin.food.add') !!}" class="btn btn-primary font-weight-bolder">
+                    <a href="{{ route('backend.delivery.driver-register') }}" class="btn btn-primary font-weight-bolder">
                     <i class="la la-plus"></i>New Record</a>
                     <!--end::Button-->
                 </div>
@@ -70,42 +70,32 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Name</th>
-                            <th>Category</th>
-                            <th>Price</th>
-                            <th>Discount Price</th>
-                            <th>Featured</th>
-                            <th>Status</th>
-                            <th>{{ __('driver_list.action') }}</th>
+                            <th>{{ __('driver_list.name') }}</th>
+                            <th>{{ __('driver_list.contact') }}</th>
+                            <th>{{ __('driver_list.email') }}</th>
+                            <th>{{ __('delivery.max_delivery_distance') }}</th>
+                            <th>{{ __('driver_list.current_status') }}</th>
+                            <th>{{ __('driver_list.bike_status') }}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($foods as $food)
+                        @foreach($drivers as $driver)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $food->food_name }}</td>
-                            <td>{{ $food->foodCategory->name }}</td>
-                            <td>{{ $food->price }}</td>
-                            <td>{{ $food->discount_price }}</td>
-                            @if( $food->status == 1 )
-                                <td><b class="text-success">Active</b></td>
+                            <td>{{ $driver->user->name }}</td>
+                            <td>{{ $driver->phone }}</td>
+                            <td>{{ $driver->user->email }}</td>
+                            <td>{{ $driver->max_delivery_distance }} Km</td>
+                            @if($driver->active_status == 1)
+                                <td class="text-success text-bold"><b>Online</b></td>
                             @else
-                                <td><b class="text-danger">Deleted</b></td>
+                                <td class="text-danger text-bold"><b>Ofline</b></td>
                             @endif
-                            @if($food->featured == 1)
-                                <td><b class="text-success">Yes</b></td>
+                            @if( $driver->have_bike == 1 )
+                                <td class="text-success text-bold"><b>{{ 'Yes' }}</b></td>
                             @else
-                                <td><b class="text-danger">No</b></td>
+                                <td class="text-success text-bold"><b>{{ 'Buy Soon' }}</b></td>
                             @endif
-                            
-                            <td>
-                                <a href="{{ route('backend.restAdmin.food.edit_form', $food->id) }}" class="text-primary mr-2">
-                                    <i class="far fa-edit text-primary"></i>
-                                </a>
-                                <a href="{!! route('backend.restAdmin.food.delete', $food->id) !!}" class="text-danger" onclick="return confirm('Are you sure want to delete ??')">
-                                    <i class="far fa-trash-alt text-danger"></i>
-                                </a>
-                            </td>
                         </tr>
                         @endforeach
                     </tbody>

@@ -74,9 +74,9 @@
                             </td>
                             <td>
                                 <b class="text-primary">{!! $order->status['status_name'] !!}</b>
-                                <b class="badge badge-primary status_change_btn" oid="{!! $order->id !!}" status_name="{!! $order->status->status_name !!}" style="cursor: pointer;">
+                                <!-- <b class="badge badge-primary status_change_btn" oid="{!! $order->id !!}" status_name="{!! $order->status->status_name !!}" style="cursor: pointer;">
                                     Change
-                                </b>
+                                </b> -->
                             </td>
                             <td>
                             	<div class="dropdown dropdown-inline mr-4">
@@ -87,6 +87,11 @@
                             	        <a href="javascript:;" class="nav-link appoint_driver_btn" order_id="{!! $order->id !!}">
                             	            <span class="nav-text">Appoint a Driver</span>
                             	        </a>
+                                        {--
+                                        <a href="{!! route('backend.restAdmin.order.rejectSubmit', $order->id) !!}" class="nav-link" order_id="{!! $order->id !!}" onclick="return confirm('Are you sure want to reject?')">
+                                            <span class="nav-text font-weight-bold text-danger">Reject</span>
+                                        </a>
+                                        --}
                             	    </div>
                             	</div>
 
