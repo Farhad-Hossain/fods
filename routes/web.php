@@ -386,11 +386,20 @@ Route::group(['prefix'=>'restaurant-admin', 'namespace'=>'Backend\Restaurant', '
         Route::get('delete/{food}', 'FoodController@deleteFoodSubmit')->name('delete');
 
         Route::get('cuisines', 'FoodController@showCuisines')->name('cuisines');
+        Route::post('cuisine-add', 'FoodController@addCuisinePost')->name('add_cuisine_submit');
+
+        Route::get('rating-reviews', 'FoodController@showRatingReviews')->name('rating_reviews');
     });
 
     // BEGIN::Delivery 
     Route::group(['prefix'=>'driver', 'as'=>'driver.'], function(){
         Route::get('list', 'DriverController@showDriverList')->name('list');
+    });
+
+    // Wallet
+    Route::group(['prefix'=>'wallet', 'as'=>'wallet.'], function(){
+        Route::get('withdrawal-request', 'WalletController@showWithdrawalRequestForm')->name('withdrawalRequestForm');
+        Route::post('withdraw', 'WalletController@withdrawRequestSubmit')->name('withdrawRequestSubmit');
     });
 
 });

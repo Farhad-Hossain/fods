@@ -47,4 +47,5 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Models\Restaurant', 'user_id');
     }
+    
 }

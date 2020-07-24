@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Restaurant extends Model
 {
-    protected $guard = [];
+    protected $guarded = [];
 
     public function owner()
     {
@@ -25,7 +25,7 @@ class Restaurant extends Model
 
     public function cuisines()
     {
-    	return $this->hasOne('App\Models\Cuisine', 'id');
+    	return $this->hasOne('App\Models\Cuisine','id', 'cuisine');
     }
 
     public function tag()

@@ -112,17 +112,9 @@
                                 </a>
                             </li>
      -->
-                            <li class="menu-item" aria-haspopup="true">
-                                <a href="{!! route('backend.food.extra_food.list') !!}" class="menu-link">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">{!! __('backend_menus.extra_foods') !!}</span>
-                                </a>
-                            </li>
 
                             <li class="menu-item" aria-haspopup="true">
-                                <a href="{!! route('backend.food.rating_reviews') !!}" class="menu-link">
+                                <a href="{!! route('backend.restAdmin.food.rating_reviews') !!}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
@@ -279,6 +271,14 @@
 									<span class="menu-text">{!! __('backend_menus.wallet') !!}</span>
 								</span>
                             </li>
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="{!! route('backend.restAdmin.wallet.withdrawalRequestForm') !!}" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text">Withdrowal Request</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>
@@ -300,6 +300,7 @@
                                     <path d="M12,14 C8.6862915,14 6,11.3137085 6,8 C6,4.6862915 8.6862915,2 12,2 C15.3137085,2 18,4.6862915 18,8 C18,11.3137085 15.3137085,14 12,14 Z M8.81595773,7.80077353 C8.79067542,7.43921955 8.47708263,7.16661749 8.11552864,7.19189981 C7.75397465,7.21718213 7.4813726,7.53077492 7.50665492,7.89232891 C7.62279197,9.55316612 8.39667037,10.8635466 9.79502238,11.7671393 C10.099435,11.9638458 10.5056723,11.8765328 10.7023788,11.5721203 C10.8990854,11.2677077 10.8117724,10.8614704 10.5073598,10.6647638 C9.4559885,9.98538454 8.90327706,9.04949813 8.81595773,7.80077353 Z"
                                           fill="#000000" opacity="0.3"/>
                                 </g>
+
                             </svg>
                             <!--end::Svg Icon-->
                         </span>

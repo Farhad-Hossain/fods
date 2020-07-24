@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Food;
 use App\Models\FoodCategory;
 use App\Models\Cuisine;
+use App\Models\Restaurant;
+use App\Models\RestaurantCuisine;
+use App\Models\FoodRatingReview;
 use App\Http\Requests\Backend\Admin\Food\CreateFoodPostRequest;
 use Auth;
 
@@ -128,7 +131,24 @@ class FoodController extends Controller
     */
     public function showCuisines()
     {
+        $restCuisine = Auth::user()->restaurant->cuisines;
+        
         $cuisines = Cuisine::where('status', 1)->get();
-        return view('backend.restaurant.pages.food.cuisines', compact('cuisines'));
+        return view('backend.restaurant.pages.food.cuisines', compact('cuisines', 'restCuisine'));
+    }
+    public function addCuisinePost(Request $request)
+    {
+
+        Auth::user()->restaurant->update([
+            'cuisine' => $request->cuisine_id,
+        ]);
+        session(['type'=>'success', 'message'=>'Cuisine added successfully']);
+        return redirect()->back();
+    }
+    public function showRatingReviews()
+    {
+        $reviews = FoodRatingReview::where('restaurant_id', Auth::user()->restaurant->id)->get();
+
+        return view('backend.restaurant.pages.reviews.reviews', compact('reviews'));
     }
 }
