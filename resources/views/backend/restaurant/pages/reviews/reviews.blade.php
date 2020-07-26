@@ -2,7 +2,6 @@
 @section('custom_style')
     <link href="{{asset('backend')}}/assets/plugins/custom/datatables/datatables.bundle.css?v=7.0.3" rel="stylesheet" type="text/css" />
 @endsection
-
 @section('main_content')
     <div class="container-fluid">
         @include('backend.message.flash_message')
@@ -13,7 +12,7 @@
                     <span class="card-icon">
                         <i class="flaticon2-heart-rate-monitor text-primary"></i>
                     </span>
-                    <h3 class="card-label">{{ __('cuisines.cuisines') }}</h3>
+                    <h3 class="card-label">Food Rarting and Reviews</h3>
                 </div>
                 <div class="card-toolbar">
                     <!--begin::Dropdown-->
@@ -59,7 +58,6 @@
                         <!--end::Dropdown Menu-->
                     </div>
                     <!--end::Dropdown-->
-                    
                 </div>
             </div>
             <div class="card-body">
@@ -68,13 +66,26 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>{{ __('cuisines.name') }}</th>
-                            <th>{{ __('cuisines.status') }}</th>
-                            <th>{{ __('cuisines.action') }}</th>
+                            <th>Food Name</th>
+                            <th>Reviewer</th>
+                            <th>Rating</th>
+                            <th>Review</th>
                         </tr>
                     </thead>
                     <tbody>
-                        
+                        @foreach($reviews as $review)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $review->food->food_name }}</td>
+                            <td>{{ $review->reviewer->name }}</td>
+                            <td>
+                                @for($i = 0; $i < $review->count_stars; $i++)
+                                    <i class="fas fa-star text-info"></i>
+                                @endfor
+                            </td>
+                            <td>{{ $review->review_content }}</td>
+                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
                 <!--end: Datatable-->
@@ -87,4 +98,7 @@
 @section('custom_script')
     <script src="{{asset('backend')}}/assets/plugins/custom/datatables/datatables.bundle.js?v=7.0.3"></script>
     <script src="{{asset('backend')}}/assets/js/pages/crud/datatables/advanced/column-visibility.js?v=7.0.3"></script>
+    <script type="text/javascript">
+        $("#restaurant_table").dataTable();
+    </script>
 @endsection

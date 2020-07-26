@@ -148,7 +148,6 @@ class FoodController extends Controller
     public function showRatingReviews()
     {
         $reviews = FoodRatingReview::where('restaurant_id', Auth::user()->restaurant->id)->get();
-
         return view('backend.restaurant.pages.reviews.reviews', compact('reviews'));
     }
 }

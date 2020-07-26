@@ -64,9 +64,9 @@
                             <td>{!! $order->order_id !!}</td>
                             <td>{!! $order->user->name !!}</td>
                             <td>{!! $order->payable_amount !!}</td>
-                            <td>{!! $order->details->delivery_address !!}</td>
+                            <td>{!! isset( $order->details->delivery_address ) ? $order->details->delivery_address : '' !!}</td>
                             <td>
-                            	@if($order->details->appointed_driver_id)
+                            	@if(isset( $order->details->appointed_driver_id) )
                             		{!! $order->details->appointed_driver->user->name !!}
                             	@else
                             		<b class="text-danger">Not Appointed Yet</b>
@@ -87,11 +87,11 @@
                             	        <a href="javascript:;" class="nav-link appoint_driver_btn" order_id="{!! $order->id !!}">
                             	            <span class="nav-text">Appoint a Driver</span>
                             	        </a>
-                                        {--
+                                        {{--
                                         <a href="{!! route('backend.restAdmin.order.rejectSubmit', $order->id) !!}" class="nav-link" order_id="{!! $order->id !!}" onclick="return confirm('Are you sure want to reject?')">
                                             <span class="nav-text font-weight-bold text-danger">Reject</span>
                                         </a>
-                                        --}
+                                        --}}
                             	    </div>
                             	</div>
 

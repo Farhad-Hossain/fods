@@ -23,16 +23,15 @@
                     <div class="m-2 p-2"></div>
                       @csrf
                         <div class="form-group">
-                            <label class="text-danger">Withdrawal Amount (Minimum Amount 50)</label>
-                            <input type="number" name="withdrawal_amount" min="50" max="{!! $availableBalance !!}" class="form-control" placeholder="Maximum {!! $availableBalance !!}">
+                            <label class="text-danger">Withdrawal Amount (Eligible Amount 50)</label>
+                            <input type="number" name="withdrawal_amount" min="50" max = "{!! $availableBalance !!}" class="form-control" placeholder="Maximum {!! $availableBalance !!}">
                             @error('withdrawal_amount')
                                 <p class="text-danger">{!! $message !!}</p>
                             @enderror
                         </div>
-                        <div class="card-footer">
+                        <div>
                             <button type="submit" class="btn btn-success mr-2">Send Request</button>
                             <button type="reset" class="btn btn-secondary">Reset</button>
-                            
                             <a  href="{!! URL::previous() !!}" type="button" class="btn btn-success mr-2">
                                 Cancel
                             </a>
@@ -44,3 +43,4 @@
         <!--end::Card-->
     </div>
 @endsection
+<!-- max="{!! $availableBalance !!}" -->

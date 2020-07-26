@@ -27,6 +27,7 @@ class OrderController extends Controller
     		'driver_id' => 'required',
     	]);
     	try{
+            
 	    	$order_details = OrderDetail::where('order_id', $request->order_id)->update([
 	    		'appointed_driver_id' => $request->driver_id,
 	    	]);
