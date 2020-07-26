@@ -41,7 +41,7 @@
                 <div class="col-md-6">
                     <div class="right-title-text">
                         <ul>
-                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{!! route('frontend.home') !!}">Home</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Food Details</li>
                         </ul>
                     </div>
@@ -237,13 +237,13 @@
                             <a href="javascript:;" onclick="myFunction()" id="readBtn">See All</a>
                         </div>
                         <div class="price">
-                            <span>${!! $food->price !!}</span>
+                            <span class="food_price">{!! $food->price !!}</span>
                         </div>
                         <div class="dt-detail">
                             <ul>
                                 <li>
                                     <div class="delivery"><i class="fas fa-shopping-cart"></i>Delivery Free :
-                                        ${!! $food->restaurant->delivery_charge !!}</div>
+                                        <span class="food_delivery_charge">{!! $food->restaurant->delivery_charge !!}</span></div>
                                 </li>
                                 <li>
                                     <div class="time"><i class="far fa-clock"></i>Delivery Time : 30 Min</div>
@@ -260,11 +260,11 @@
                                     @foreach( $extra_foods_non_vegetarian as $extra_food )
                                         <li>
                                             <p class="food-left">
-                                                <input type="checkbox" value="{!! $extra_food->price !!}"
-                                                       id="c1_{!! $extra_food->id !!}" name="cb">
+                                                <input type="checkbox" onchange="calculateTotalAmountInFoodDetail()" value="{!! $extra_food->id !!}"
+                                                       id="c1_{!! $extra_food->id !!}" name="extra_food">
                                                 <label for="c1_{!! $extra_food->id !!}">{!! $extra_food->name !!}</label>
                                             </p>
-                                            <span>${!! $extra_food->price !!}</span>
+                                            <span class="ep_{!! $extra_food->id !!}">{!! $extra_food->price !!}</span>
                                         </li>
                                     @endforeach
                                 </ul>
@@ -275,11 +275,11 @@
                                     @foreach($extra_foods_vegetarian as $extra_food)
                                         <li>
                                             <p class="food-left">
-                                                <input type="checkbox" value="{!! $extra_food->price !!}"
-                                                       id="c2_{!! $extra_food->id !!}" name="cb">
+                                                <input type="checkbox" onchange="calculateTotalAmountInFoodDetail()" value="{!! $extra_food->id !!}"
+                                                       id="c2_{!! $extra_food->id !!}" name="extra_food">
                                                 <label for="c2_{!! $extra_food->id !!}">{!! $extra_food->name !!}</label>
                                             </p>
-                                            <span>${!! $extra_food->price !!}</span>
+                                            <span class="ep_{!! $extra_food->id !!}">{!! $extra_food->price !!}</span>
                                         </li>
                                     @endforeach
                                 </ul>
@@ -294,7 +294,7 @@
                                 </div>
                                 <input type="number" id="qty_input" class="qty-control" value="1" min="1">
                                 <div class="input-group-prepend">
-                                    <button class="add-btn btn-sm" id="plus-btn"><i class="fas fa-plus-square"></i>
+                                    <button class="add-btn btn-sm" id="plus-btn" onclick="calculateTotalAmountInFoodDetail()"><i class="fas fa-plus-square"></i>
                                     </button>
                                 </div>
                             </div>
@@ -304,7 +304,7 @@
                                 <h5>Total</h5>
                             </div>
                             <div class="total-price">
-                                <p>$17.00</p>
+                                <p></p>
                             </div>
                         </div>
                         <div class="order-now-check">
@@ -329,12 +329,15 @@
             $('#qty_input').prop('disabled', true);
             $('#plus-btn').click(function () {
                 $('#qty_input').val(parseInt($('#qty_input').val()) + 1);
+                calculateTotalAmountInFoodDetail();
             });
             $('#minus-btn').click(function () {
                 $('#qty_input').val(parseInt($('#qty_input').val()) - 1);
                 if ($('#qty_input').val() == 0) {
                     $('#qty_input').val(1);
                 }
+
+                calculateTotalAmountInFoodDetail();
             });
         });
         function setRating(star_count)

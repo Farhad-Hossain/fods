@@ -12,8 +12,8 @@ class FoodController extends Controller
     public function getFoodDetails($food_id)
     {
     	$food = Food::findOrFail($food_id);
-    	$extra_foods_vegetarian = ExtraFood::where('category',1)->get();
-    	$extra_foods_non_vegetarian = ExtraFood::where('category',2)->get();
+    	$extra_foods_vegetarian = ExtraFood::where('category',1)->where('restaurant_id', $food->restaurant_id)->get();
+    	$extra_foods_non_vegetarian = ExtraFood::where('category',2)->where('restaurant_id', $food->restaurant_id)->get();
     	
     	return view('frontend.pages.food_details', compact('food', 'extra_foods_vegetarian', 'extra_foods_non_vegetarian'));
     }

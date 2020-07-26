@@ -71,7 +71,8 @@
                         <tr>
                             <th>#</th>
                             <th>{{ __('common.name') }}</th>
-                            <th>{{ __('common.category') }}</th>
+                            <th>{{ __('common.restaurant') }}</th>
+                            <th>{{ __('common.status') }}</th>
                             <th>{{ __('common.price') }}</th>
                             <th>{{ __('common.action') }}</th>
                         </tr>
@@ -81,6 +82,7 @@
                         <tr>
                             <th>{{ $loop->iteration }}</th>
                             <td>{{ $extra_food->name }}</td>
+                            <td>{{ $extra_food->restaurant->name }}</td>
                             @if( $extra_food->status == 1 )
                                 <td><b class="text-success">Active</b></td>
                             @else
@@ -90,6 +92,7 @@
                             <td>
                                 <a href="javascript:;" class="text-primary mr-2" onclick="arise_modal_for_edit(
                                     '{!! $extra_food->id !!}',
+                                    '{!! $extra_food->restaurant_id !!}',
                                     '{!! $extra_food->name !!}',
                                     '{!! $extra_food->category !!}',
                                     '{!! $extra_food->price !!}',
@@ -126,6 +129,17 @@
                     @csrf
                     <div class="modal-body">
                         <input type="hidden" name="id">
+                        <div class="form-group">
+                            <label>{!! __('common.restaurant') !!}</label>
+                            <select name="restaurant" id="restaurant" class="form-control selectpicker" required data-size="7" data-live-search="true">
+                                <option value="">Select</option>
+                                @if(!empty($restaurants))
+                                    @foreach($restaurants as $restaurant)
+                                        <option value="{!! $restaurant->id !!}" {!! (old('restaurant') == $restaurant->id)?'selected':'' !!}>{!! $restaurant->name !!}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label>{!! __('common.name') !!}</label>
                             <input type="text" name="name" required class="form-control">
@@ -165,6 +179,17 @@
                     @csrf
                     <div class="modal-body">
                         <input type="hidden" name="id">
+                        <div class="form-group">
+                            <label>{!! __('common.restaurant') !!}</label>
+                            <select name="restaurant" id="restaurant" class="form-control selectpicker" required data-size="7" data-live-search="true">
+                                <option value="">Select</option>
+                                @if(!empty($restaurants))
+                                    @foreach($restaurants as $restaurant)
+                                        <option value="{!! $restaurant->id !!}" {!! (old('restaurant') == $restaurant->id)?'selected':'' !!}>{!! $restaurant->name !!}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label>{!! __('common.name') !!}</label>
                             <input type="text" name="name" required class="form-control">

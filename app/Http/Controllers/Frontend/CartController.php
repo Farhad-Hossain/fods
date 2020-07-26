@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\ExtraFood;
 use App\Models\Food;
 use App\Models\Order;
 use App\Models\OrderDetail;
@@ -33,6 +34,24 @@ class CartController extends Controller
                 'price' => $food->price
             ]);
 
+            if (is_array($request->extra_food)) {
+                if (count($request->extra_food) > 0) {
+                    foreach ($request->extra_food as $extra_food) {
+                        $extra_food = ExtraFood::where('id', $extra_food)
+                            ->where('status', 1)
+                            ->first();
+                        if (!empty($extra_food)) {
+                            Cart::instance('extra_food')->add([
+                                'id' => $extra_food->id,
+                                'name' => $extra_food->name,
+                                'qty' => 1,
+                                'price' => $extra_food->price
+                            ]);
+                        }
+                    }
+                }
+            }
+
         } catch (\Exception $e) {
             return response()->json(['message' => 'Something went wrong'.$e->getMessage()], 500);
         };
@@ -43,27 +62,39 @@ class CartController extends Controller
     public function getCartContent()
     {
         $contents = Cart::content();
+        $extra_contents = Cart::instance('extra_food')->content();
 
-        return view('frontend.partials._top_mini_cart_content', compact('contents'));
+        return view('frontend.partials._top_mini_cart_content', compact('contents', 'extra_contents'));
     }
 
     public function removeCartContent(Request $request)
     {
-        $cart_data = Cart::content()->where('id', $request->id)->first();
-        Cart::remove($cart_data->rowId);
-        return response()->json([
-            'message' => 'Remove Success',
-            'status' => 200
-        ]);
+        if ($request->extra == true) {
+            $cart_data = Cart::instance('extra_food')->content()->where('id', $request->id)->first();
+            Cart::instance('extra_food')->remove($cart_data->rowId);
+            return response()->json([
+                'message' => 'Remove Success',
+                'status' => 200
+            ]);
+        } else {
+            $cart_data = Cart::content()->where('id', $request->id)->first();
+            Cart::remove($cart_data->rowId);
+            return response()->json([
+                'message' => 'Remove Success',
+                'status' => 200
+            ]);
+        }
+
     }
 
 
     public function showCheckoutPage()
     {
         $cart_contents = Cart::content();
+        $extra_contents = Cart::instance('extra_food')->content();
+        $delivery_charge = Food::getTotalDeliveryChargeFromCart($cart_contents);
 
-
-        return view('frontend.pages.checkout', compact('cart_contents'));
+        return view('frontend.pages.checkout', compact('cart_contents', 'extra_contents', 'delivery_charge'));
     }
 
     public function submitOrder()
@@ -71,15 +102,20 @@ class CartController extends Controller
         DB::beginTransaction();
         try {
             $cart_contents = Cart::content();
+            $subtotal = Cart::subtotal();
+            $subtotal = str_replace(',', '', $subtotal);
+
+            $extra_contents = Cart::instance('extra_food')->content();
+            $extra_subtotal = Cart::instance('extra_food')->subtotal();
+            $extra_subtotal = str_replace(',', '', $extra_subtotal);
+
 
             if ($cart_contents->count() > 0) {
+                $delivery_charge = Food::getTotalDeliveryChargeFromCart($cart_contents);
 
                 $total_discount = 0;
-                $delivery_charge = 50;
 
-                $subtotal = Cart::subtotal();
-                $subtotal = str_replace(',', '', $subtotal);
-                $subtotal += $delivery_charge;
+                $subtotal += $delivery_charge + $extra_subtotal;
                 $payable_amount = $subtotal - $total_discount;
 
                 $order = new Order();
@@ -88,7 +124,8 @@ class CartController extends Controller
                 $order->total_discount = $total_discount;
                 $order->payable_amount = $payable_amount;
                 $order->paid_amount = 0;
-                $order->payment_status = 1;//0=pending
+                $order->order_status = 1;//1=pending
+                $order->payment_status = 0;//0=pending
                 $order->save();
 
 
@@ -108,6 +145,7 @@ class CartController extends Controller
 
                     $order_details->order_id = $order->id;
                     $order_details->user_id = Auth::id();
+                    $order_details->food_type = 1;//1=food
                     $order_details->restaurant_id = $food->restaurant_id;
                     $order_details->food_id = $food->id;
                     $order_details->price = $content->price;
@@ -115,6 +153,29 @@ class CartController extends Controller
                     $order_details->payable_amount = $pay_amount;
                     $order_details->delivery_address = 'Demo Address';
                     
+                    $order_details->status = 1;
+                    $order_details->save();
+                }
+                foreach ($extra_contents as $content) {
+                    $extra_food = ExtraFood::where('id', $content->id)
+                        ->where('status', 1)
+                        ->first();
+
+                    $discount = 0;
+                    $pay_amount = $content->price - $discount;
+
+                    $order_details = new OrderDetail();
+
+                    $order_details->order_id = $order->id;
+                    $order_details->user_id = Auth::id();
+                    $order_details->food_type = 2;//2=extra food
+                    $order_details->restaurant_id = $extra_food->restaurant_id;
+                    $order_details->food_id = $extra_food->id;
+                    $order_details->price = $content->price;
+                    $order_details->discount = $discount;
+                    $order_details->payable_amount = $pay_amount;
+                    $order_details->delivery_address = 'Demo Address';
+
                     $order_details->status = 1;
                     $order_details->save();
                 }

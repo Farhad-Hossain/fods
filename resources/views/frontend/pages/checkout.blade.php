@@ -109,6 +109,36 @@
                                         @php($subTotal += ($content->price * $content->qty))
                                     @endforeach
                                 @endif
+                                @if(!empty($cart_contents))
+                                    @foreach($extra_contents as $content)
+                                        <tr>
+                                            <td>
+                                                <div class="checkout-thumb">
+                                                    <a href="#">
+                                                        <img src="images/checkout/thumb-1.jpg" class="img-responsive" alt="thumb" title="thumb">
+                                                    </a>
+                                                </div>
+                                                <div class="name">
+                                                    <a href="#"><h4>{!! $content->name !!}</h4></a>
+                                                    <a href="#"><p>Restaurant Name</p></a>
+                                                    <div class="star">
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                        <span>4.5</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="td-content">{!! $content->qty !!}</td>
+                                            <td class="td-content">{!! $content->price !!}</td>
+                                            <td class="td-content">{!! $content->price * $content->qty !!}</td>
+                                            <td><button class="remove-btn" onclick="removeContent({!! $content->id !!}, true)">Remove</button></td>
+                                        </tr>
+                                        @php($subTotal += ($content->price * $content->qty))
+                                    @endforeach
+                                @endif
                                 </tbody>
                                 <tbody>
                                 <tr>
@@ -381,7 +411,6 @@
                                 <span>Delivery Charges</span>
                             </div>
                             <div class="item-dt-right">
-                                @php($delivery_charge = 50)
                                 <p>{!! number_format($delivery_charge, 2) !!}</p>
                             </div>
                         </div>

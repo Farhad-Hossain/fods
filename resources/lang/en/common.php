@@ -21,4 +21,5 @@ return [
     'close' => 'Close',
     'save_changes' => 'Save Changes',
     'time' => 'Time',
+    'restaurant' => 'Restaurant'
 ];
