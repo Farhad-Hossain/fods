@@ -30,6 +30,30 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function () {
     Route::post('customer-register', [
         'uses' => 'Frontend\UserRegisterController@storeNewCustomer'
     ]);
+
+    Route::post('order', [
+        'uses' => 'Frontend\OrderController@submitOrder'
+    ]);
+
+    Route::get('restaurant/list', [
+        'uses' => 'Frontend\RestaurantController@getAllRestaurant'
+    ]);
+    Route::get('food/list', [
+        'uses' => 'Frontend\FoodController@getAllFood'
+    ]);
+    Route::get('food/featured/list', [
+        'uses' => 'Frontend\FoodController@getFeaturedFoodList'
+    ]);
+    Route::get('extra-food/list/{restaurant_id?}', [
+        'uses' => 'Frontend\FoodController@getAllExtraFood'
+    ]);
+    Route::get('extra-food/vegetarian/list/{restaurant_id?}', [
+        'uses' => 'Frontend\FoodController@getVegetarianExtraFood'
+    ]);
+    Route::get('extra-food/non-vegetarian/list/{restaurant_id?}', [
+        'uses' => 'Frontend\FoodController@getNonVegetarianExtraFood'
+    ]);
+
     /*
      * Admin Route Start
      * */
