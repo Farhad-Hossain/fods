@@ -15,23 +15,7 @@
 
     <!-- Fontawesome styles for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="{!! asset('frontend') !!}/css/custom/payment_options.css">
 @endsection
 
 @section('main_content')
@@ -88,23 +72,5 @@
     <script src="{!! asset('frontend') !!}/js/thumbnail.slider.js"></script>
     <script src="{!! asset('frontend') !!}/js/bootstrap-datepicker.js"></script>
     <script src="{!! asset('frontend') !!}/js/bootstrap-select.js"></script>
-    <script>
-        var obj = {};
-        obj.order_id = $('#order_id').val();
-
-        $('#sslczPayBtn').prop('postdata', obj);
-
-        (function (window, document) {
-            var loader = function () {
-                var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
-                // script.src = "https://seamless-epay.sslcommerz.com/embed.min.js?" + Math.random().toString(36).substring(7); // USE THIS FOR LIVE
-                script.src = "https://sandbox.sslcommerz.com/embed.min.js?" + Math.random().toString(36).substring(7); // USE THIS FOR SANDBOX
-                tag.parentNode.insertBefore(script, tag);
-            };
-
-            window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-        })(window, document);
-
-
-    </script>
+    <script src="{!! asset('frontend') !!}/js/custom/payment_options.js"></script>
 @endsection

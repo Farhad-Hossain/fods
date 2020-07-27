@@ -1,0 +1,8 @@
+#time_table tr td {
+    vertical-align: middle;
+}
+
+.wickedpicker__controls {
+    padding: 0;
+    margin: 0;
+}

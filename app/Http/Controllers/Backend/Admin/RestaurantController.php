@@ -9,6 +9,7 @@ use App\Models\Cuisine;
 use App\Models\RestaurantTag;
 use App\Models\RestaurantRating;
 use App\Models\RestaurantReview;
+use App\Models\WithdrawalRequest;
 use App\Models\Transaction;
 use App\Models\RestaurantTransaction;
 use App\Http\Requests\Backend\Admin\TransactionPostRequest;
@@ -198,6 +199,30 @@ class RestaurantController extends Controller
 	    return redirect()->back();
 	}
 	
+	public function show_payout_requests()
+	{
+		$reqs = WithdrawalRequest::orderBy('id', 'desc')->get();
+
+		return view('backend.pages.restaurants.transaction.payout_requests', compact('reqs'));
+	}
+
+	public function make_request_done($req)
+	{
+		try {
+			$req = WithdrawalRequest::findOrFail($req);
+			$req->status = 2;
+			$req->save();
+		} catch (Exception $e) {
+			session(['type'=>'danger', 'message'=>'Something went wrong.']);
+			return redirect()->back();
+		}
+
+		session(['type'=>'success', 'message'=>'Status Updated.']);
+		return redirect()->back();
+		
+
+
+	}
 	// end
 
 
