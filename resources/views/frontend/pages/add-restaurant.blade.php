@@ -2,15 +2,7 @@
 
 @section('custom_style')
     <link rel="stylesheet" href="{!! asset('frontend/plugins/wickedpicker/dist/wickedpicker.min.css') !!}">
-    <style type="text/css">
-        #time_table tr td{
-            vertical-align: middle;
-        }
-        .wickedpicker__controls {
-            padding: 0;
-            margin: 0;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="{!! asset('frontend') !!}/css/custom/add_restaurant.css">
 @endsection
 
 @section('main_content')
@@ -372,10 +364,5 @@
 
 @section('custom_script')
     <script src="{!! asset('frontend/plugins/wickedpicker/dist/wickedpicker.min.js') !!}"></script>
-    <script>
-        var options = {
-            twentyFour: true,  //Display 24 hour format, defaults to false
-        };
-        $('.timepicker').wickedpicker(options);
-    </script>
+    <script src="{!! asset('frontend') !!}/js/custom/weekedpicker.js"></script>
 @endsection

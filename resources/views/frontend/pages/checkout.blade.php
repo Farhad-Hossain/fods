@@ -427,6 +427,10 @@
                     <div class="checkout-btn">
                         <form action="{!! route('frontend.cart.submit-order') !!}" method="post">
                             @csrf
+                            <div class="">
+                                <p>Your Delivery Address</p>
+                                <textarea name="delivery_address" class="form-control mb-2 text-dark">{!! Auth::user()->customer->default_delivery_address ?? '' !!}</textarea>
+                            </div>
                             <button type="submit" class="chkout-btn btn-link">Checkout Now</button>
                         </form>
                         {{--<button class="btn btn-primary btn-lg btn-block" id="sslczPayBtn"
@@ -449,27 +453,5 @@
     <script src="{!! asset('frontend') !!}/js/thumbnail.slider.js"></script>
     <script src="{!! asset('frontend') !!}/js/bootstrap-datepicker.js"></script>
     <script src="{!! asset('frontend') !!}/js/bootstrap-select.js"></script>
-    <script>
-        var obj = {};
-        obj.cus_name = $('#customer_name').val();
-        obj.cus_phone = $('#mobile').val();
-        obj.cus_email = $('#email').val();
-        obj.cus_addr1 = $('#address').val();
-        obj.amount = $('#total_amount').val();
-
-        $('#sslczPayBtn').prop('postdata', obj);
-
-        (function (window, document) {
-            var loader = function () {
-                var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
-                // script.src = "https://seamless-epay.sslcommerz.com/embed.min.js?" + Math.random().toString(36).substring(7); // USE THIS FOR LIVE
-                script.src = "https://sandbox.sslcommerz.com/embed.min.js?" + Math.random().toString(36).substring(7); // USE THIS FOR SANDBOX
-                tag.parentNode.insertBefore(script, tag);
-            };
-
-            window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-        })(window, document);
-
-
-    </script>
+    <script src="{!! asset('frontend') !!}/js/custom/checkout.js"></script>
 @endsection

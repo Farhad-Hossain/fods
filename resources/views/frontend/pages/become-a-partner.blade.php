@@ -1,6 +1,4 @@
 @extends('frontend.master')
-
-
 @section('main_content')
 
     <!--title-bar start-->

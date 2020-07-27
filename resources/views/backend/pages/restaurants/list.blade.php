@@ -66,7 +66,7 @@
             </div>
             <div class="card-body">
                 <!--begin: Datatable-->
-                <table class="table table-bordered table-hover table-checkable" id="restaurant_table" style="margin-top: 13px !important">
+                <table class="table table-bordered table-hover table-checkable" id="datatable_table" style="margin-top: 13px !important">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -126,7 +126,5 @@
 @section('custom_script')
     <script src="{{asset('backend')}}/assets/plugins/custom/datatables/datatables.bundle.js?v=7.0.3"></script>
     <script src="{{asset('backend')}}/assets/js/pages/crud/datatables/advanced/column-visibility.js?v=7.0.3"></script>
-    <script type="text/javascript">
-        $("#restaurant_table").dataTable();
-    </script>
+    <script src="{{asset('backend')}}/assets/js/datatable.js"></script>
 @endsection

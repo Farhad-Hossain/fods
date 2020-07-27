@@ -97,7 +97,7 @@ class CartController extends Controller
         return view('frontend.pages.checkout', compact('cart_contents', 'extra_contents', 'delivery_charge'));
     }
 
-    public function submitOrder()
+    public function submitOrder(Request $request)
     {
         DB::beginTransaction();
         try {
@@ -123,6 +123,7 @@ class CartController extends Controller
                 $order->sub_total = $subtotal;
                 $order->total_discount = $total_discount;
                 $order->payable_amount = $payable_amount;
+                $order->delivery_address = $request->delivery_address;
                 $order->paid_amount = 0;
                 $order->order_status = 1;//1=pending
                 $order->payment_status = 0;//0=pending

@@ -164,12 +164,5 @@
     <script src="{{asset('backend')}}/assets/plugins/custom/datatables/datatables.bundle.js?v=7.0.3"></script>
     <script src="{{asset('backend')}}/assets/js/pages/crud/datatables/advanced/column-visibility.js?v=7.0.3"></script>
     <script src="{{asset('backend')}}/assets/js/datatable.js"></script>
-    <script>
-        function set_edit_form_value(name, route)
-        {
-            $("#edit_form").attr('action', route);
-
-            $("#order_status_name").val(name);
-        }
-    </script>
+    <script src="{{asset('backend')}}/assets/js/customs/order_status_list.js"></script>
 @endsection

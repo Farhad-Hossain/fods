@@ -195,6 +195,8 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
         });
         Route::get('restaurant-transactions', 'RestaurantController@get_transaction_list')->name('transactions');
         Route::post('restaurant-make-payment', 'RestaurantController@make_transaction_submit')->name('make_payment');
+        Route::get('payout-requests', 'RestaurantController@show_payout_requests')->name('payout_requests');
+        Route::get('make-done-payout/{req}', 'RestaurantController@make_request_done')->name('change_payout_request_status');
     });
     /*END::Restaurant*/
     /*END::Restaurant*/

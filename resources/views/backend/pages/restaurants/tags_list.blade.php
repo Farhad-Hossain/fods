@@ -140,25 +140,6 @@
 @section('custom_script')
     <script src="{{asset('backend')}}/assets/plugins/custom/datatables/datatables.bundle.js?v=7.0.3"></script>
     <script src="{{asset('backend')}}/assets/js/pages/crud/datatables/advanced/column-visibility.js?v=7.0.3"></script>
-    <script type="text/javascript">
-        $("#restaurant_table").dataTable();
-
-
-        function set_for_edit(id, name)
-        {
-            $("#tag_modal_title").text("{{ __('tags.modal_edit_title') }}");
-            var action = "{{ route('backend.restaurant.tags.edit_submit') }}";
-            $("form").attr('action', action)
-            $("input[name='id']").val(id);
-            $("input[name='name']").val(name);
-        }
-        function set_for_create()
-        {
-            $("#tag_modal_title").text("{{ __('tags.modal_create_title') }}");
-            var action = "{{ route('backend.restaurant.tags.add_submit') }}";
-            $("form").attr('action', action)
-            $("input[name='id']").val("");
-            $("input[name='name']").val("");
-        }
-    </script>
+    <script src="{{asset('backend')}}/assets/js/datatable.js"></script>
+    <script src="{{asset('backend')}}/assets/js/customs/restaurant_tag_list.js"></script>
 @endsection

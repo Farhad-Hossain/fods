@@ -3,16 +3,7 @@
     <link href="{{asset('backend')}}/assets/plugins/custom/datatables/datatables.bundle.css?v=7.0.3" rel="stylesheet"
           type="text/css"/>
     <link rel="stylesheet" href="{!! asset('frontend/plugins/wickedpicker/dist/wickedpicker.min.css') !!}">
-    <style type="text/css">
-        #time_table tr td {
-            vertical-align: middle;
-        }
-
-        .wickedpicker__controls {
-            padding: 0;
-            margin: 0;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="{{asset('backend')}}/assets/css/custom/food_add_food_category.css">
 @endsection
 
 @section('main_content')
@@ -82,10 +73,5 @@
 @endsection
 @section('custom_script')
     <script src="{!! asset('frontend/plugins/wickedpicker/dist/wickedpicker.min.js') !!}"></script>
-    <script>
-        var options = {
-            twentyFour: true,  //Display 24 hour format, defaults to false
-        };
-        $('.timepicker').wickedpicker(options);
-    </script>
+    <script src="{{asset('backend')}}/assets/js/customs/weekedpicker.js"></script>
 @endsection

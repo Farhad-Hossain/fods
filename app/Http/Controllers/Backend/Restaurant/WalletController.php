@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\Restaurant;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\RestaurantTransaction;
-use App\Models\withdrawalRequest;
+use App\Models\WithdrawalRequest;
 use Auth;
 
 class WalletController extends Controller
@@ -26,7 +26,7 @@ class WalletController extends Controller
 
         if ($availableBalance > $request->withdrawal_amount) {
             try {
-                $req = new withdrawalRequest();
+                $req = new WithdrawalRequest();
                 $req->user_id = Auth::user()->id;
                 $req->requested_amount = $request->withdrawal_amount;
                 $req->save();

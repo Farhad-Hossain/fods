@@ -86,15 +86,5 @@
     <script src="{{asset('backend')}}/assets/plugins/custom/datatables/datatables.bundle.js?v=7.0.3"></script>
     <script src="{{asset('backend')}}/assets/js/pages/crud/datatables/advanced/column-visibility.js?v=7.0.3"></script>
     <script src="{{asset('backend')}}/assets/js/datatable.js"></script>
-    <script type="text/javascript">
-        $('.payment_status_change_btn').click(function(){
-            $('input[name="payment_order_id"]').val( $(this).attr('id') );
-            $('#payment_status_modal').modal();
-        });
-        $('.status_change_btn').click(function(){
-           $('input[name="order_id"]').val( $(this).attr('oid') );
-           $('#status_modal').modal(); 
-        });
-
-    </script>
+    <script src="{{asset('backend')}}/assets/js/customs/customer_transactions.js"></script>
 @endsection
