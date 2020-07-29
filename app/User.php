@@ -47,5 +47,13 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Models\Restaurant', 'user_id');
     }
+    public function admin()
+    {
+        return $this->hasOne('App\Models\Admin', 'user_id');
+    }
+    public function role()
+    {
+        return $this->hasOne('App\Models\Role');
+    }
     
 }

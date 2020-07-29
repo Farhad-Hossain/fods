@@ -19,7 +19,7 @@ return [
     'restaurant' => 'Restaurant',
     'promotion' => 'Promotion',
     'coupon' => 'Coupon',
-    'payment_transaction' => 'Payment Transaction',
+    'payment_transaction' => 'Sales Transaction',
     'cash_on_delivery' => 'Cash On Delivery',
     'payout' => 'Payout',
     'ledger' => 'Ledger',

@@ -150,10 +150,16 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
 
 	// Users and role management
 	Route::group(['prefix'=>'users', 'as'=>'users.'], function(){
+        Route::post('create', 'UserController@createAdminSubmit')->name('create');
+
         Route::get('list', 'UserController@viewUsersList')->name('list');
         Route::post('edit/{id}', 'UserController@updateUser')->name('edit');
         Route::get('delete/{id}', 'UserController@deleteUser')->name('delete');
 		Route::get('roles', 'UserController@viewRoleList')->name('roles');
+
+
+        Route::get('accesses/{user_id}', 'UserController@access_form_view')->name('access_form');
+        Route::post('accesses-update-sumit', 'UserController@accessFormSubmit')->name('access_form_submit');
 	});
 
     /*BEGIN::Setings*/

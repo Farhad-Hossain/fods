@@ -17,4 +17,5 @@ class FoodController extends Controller
     	
     	return view('frontend.pages.food_details', compact('food', 'extra_foods_vegetarian', 'extra_foods_non_vegetarian'));
     }
+
 }

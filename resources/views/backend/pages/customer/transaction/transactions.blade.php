@@ -15,31 +15,7 @@
                     <h3 class="card-label">Transaction List</h3>
                 </div>
                 <div class="card-toolbar">
-                    <!--begin::Dropdown-->
-                    <div class="dropdown dropdown-inline mr-2">
-                        <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="la la-download"></i>Export</button>
-                        <!--begin::Dropdown Menu-->
-                        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                            <ul class="nav flex-column nav-hover">
-                                <li class="nav-header font-weight-bolder text-uppercase text-primary pb-2">Choose an option:</li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon la la-print"></i>
-                                        <span class="nav-text">Print</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon la la-file-pdf-o"></i>
-                                        <span class="nav-text">PDF</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!--end::Dropdown Menu-->
-                    </div>
-                    <!--end::Dropdown-->
+                    
                 </div>
             </div>
             <div class="card-body">

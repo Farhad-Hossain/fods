@@ -50,6 +50,7 @@
                              <div class="form-group">
                                <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Are you confirm ??')">Make Payment
                                </button>
+                               <a href="{!!url()->previous()!!}" class="btn btn-sm btn-warning">Cancel</a>
                                <button type="reset" class="btn btn-sm btn-info">Reset</button>
 
                              </div>
