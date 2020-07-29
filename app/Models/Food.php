@@ -42,4 +42,34 @@ class Food extends Model
         }
         return $delivery_charge;
     }
+
+    public static function getSubTotalFromRequestedFoods($order_foods)
+    {
+        $subtotal = 0;
+        if (is_array($order_foods)) {
+            foreach ($order_foods as $content) {
+                $price = $content['quantity'] * $content['price'];
+                $subtotal += $price;
+            }
+        }
+        return $subtotal;
+    }
+
+    public static function getTotalDeliveryChargeFromRequestedFoods($order_foods)
+    {
+        $delivery_charge = 0;
+        $added_restaurant = array();
+        if (is_array($order_foods)) {
+            foreach ($order_foods as $d_content) {
+                $food = Food::where('id', $d_content['id'])
+                    ->where('status', 1)
+                    ->first();
+                if (!in_array($food->restaurant_id, $added_restaurant)) {
+                    $added_restaurant[] = $food->restaurant_id;
+                    $delivery_charge += $food->restaurant->delivery_charge;
+                }
+            }
+        }
+        return $delivery_charge;
+    }
 }
