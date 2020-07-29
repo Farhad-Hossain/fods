@@ -18,47 +18,8 @@
                 <div class="card-toolbar">
                     <!--begin::Dropdown-->
                     <div class="dropdown dropdown-inline mr-2">
-                        <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="la la-download"></i>Export</button>
-                        <!--begin::Dropdown Menu-->
-                        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                            <ul class="nav flex-column nav-hover">
-                                <li class="nav-header font-weight-bolder text-uppercase text-primary pb-2">Choose an option:</li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon la la-print"></i>
-                                        <span class="nav-text">Print</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon la la-copy"></i>
-                                        <span class="nav-text">Copy</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon la la-file-excel-o"></i>
-                                        <span class="nav-text">Excel</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon la la-file-text-o"></i>
-                                        <span class="nav-text">CSV</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon la la-file-pdf-o"></i>
-                                        <span class="nav-text">PDF</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!--end::Dropdown Menu-->
+                        
                     </div>
-                    <!--end::Dropdown-->
                     <!--begin::Button-->
                     <a href="javascript:;" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#add_customer_modal" >
                     <i class="la la-plus"></i>{!! __('backend_menus.add_customer') !!}</a>
@@ -67,13 +28,14 @@
             </div>
             <div class="card-body">
                 <!--begin: Datatable-->
-                <table class="table table-bordered table-hover table-checkable" id="customer_table" style="margin-top: 13px !important">
+                <table class="table table-bordered table-hover table-checkable" id="datatable_table" style="margin-top: 13px !important">
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>{!! __('common.name') !!}</th>
                             <th>{!! __('common.email') !!}</th>
                             <th>{!! __('common.phone_number') !!}</th>
+                            <th>Delivery Address</th>
                             <th>{!! __('common.status') !!}</th>
                             <th>{!! __('common.action') !!}</th>
                         </tr>
@@ -85,6 +47,7 @@
                             <td>{!! $customer->user->name !!}</td>
                             <td>{!! $customer->user->email !!}</td>
                             <td>{!! $customer->phone_number !!}</td>
+                            <td>{!! $customer->default_delivery_address ?? '' !!}</td>
                             @if( $customer->status == 1 )
                                 <td><b class="text-success">Active</b></td>    
                             @else
@@ -96,6 +59,7 @@
                                     '{!! $customer->user->name !!}',
                                     '{!! $customer->user->email !!}',
                                     '{!! $customer->phone_number !!}',
+                                    '{!! $customer->default_delivery_address !!}',
                                     '{!! $customer->status !!}',
                                  )">
                                     <i class="far fa-edit text-primary"></i>
@@ -145,6 +109,11 @@
                         </div>
 
                         <div class="form-group">
+                           <label>Delivery Address</label>
+                            <textarea name="default_delivery_address" class="form-control"></textarea>
+                        </div>
+
+                        <div class="form-group">
                             <label>{!! __('common.password') !!}</label>
                             <input type="password" name="password" id="password" class="form-control" required>
                         </div>
@@ -187,6 +156,11 @@
                         </div>
 
                         <div class="form-group">
+                           <label>Delivery Address</label>
+                            <textarea name="default_delivery_address" class="form-control"></textarea>
+                        </div>
+
+                        <div class="form-group">
                            <label>{!! __('common.password') !!}</label>
                             <input type="password" name="password" id="password" class="form-control">
                         </div>
@@ -219,5 +193,6 @@
 @section('custom_script')
     <script src="{{asset('backend')}}/assets/plugins/custom/datatables/datatables.bundle.js?v=7.0.3"></script>
     <script src="{{asset('backend')}}/assets/js/pages/crud/datatables/advanced/column-visibility.js?v=7.0.3"></script>
+    <script src="{!!asset('backend')!!}/assets/js/datatable.js"></script>
     <script src="{!! asset('backend/assets/js/customs/customer_page.js') !!}"></script>
 @endsection

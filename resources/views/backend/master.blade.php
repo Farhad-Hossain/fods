@@ -34,6 +34,9 @@ License: You must have a valid license purchased only from themeforest(the above
         @if(Auth::user()->role == 1)
             @include('backend.restaurant.partials._aside_bar')
         @endif
+        @if(Auth::user()->role == 2)
+            @include('backend.driver.partials._aside_bar')
+        @endif
         <!--end::Aside-->
         <!--begin::Wrapper-->
         <div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">

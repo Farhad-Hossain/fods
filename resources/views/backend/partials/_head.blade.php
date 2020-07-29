@@ -24,6 +24,9 @@
 <link rel="shortcut icon" href="{!! asset('backend/assets/media/logos/favicon.ico') !!}" />
 
 <link rel="stylesheet" href="{!! asset('assets/frontend/plugins/growl-alert/stylesheets/jquery.growl.css') !!}">
+<link rel="stylesheet" type="text/css" href="{!! asset('backend') !!}/assets/css/main.css">
+<link rel="stylesheet" type="text/css" href="{!! asset('backend') !!}/assets/js/datatable.js">
+
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 
 @yield('custom_style')

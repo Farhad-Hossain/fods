@@ -84,7 +84,6 @@
                     <div class="menu-submenu">
                         <i class="menu-arrow"></i>
                         <ul class="menu-subnav">
-                            @if(Auth::user()->admin->role->user_management == 1)
                             <li class="menu-item" aria-haspopup="true">
                                 <a href="{!! route('backend.users.list') !!}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -93,7 +92,6 @@
                                     <span class="menu-text">{!! __('backend_menus.users') !!}</span>
                                 </a>
                             </li>
-                            @endif
                         </ul>
                     </div>
                 </li>
@@ -136,7 +134,6 @@
                                 </a>
                             </li>
 
-                            @if(Auth::user()->admin->role->see_restaurant_sales_transaction)
                             <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="{!! route('backend.restaurant.transactions') !!}" class="menu-link menu-toggle">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -145,9 +142,7 @@
                                     <span class="menu-text">{!! __('backend_menus.payment_transaction') !!}</span>
                                 </a>
                             </li>
-                            @endif
 
-                            @if(Auth::user()->admin->role->make_restaurant_withdrawal)
                             <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="{!! route('backend.restaurant.payment.make_a_payment') !!}" class="menu-link menu-toggle">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -156,7 +151,7 @@
                                     <span class="menu-text">{!! __('backend_menus.payout') !!} </span>
                                 </a>
                             </li>
-                            
+
                             <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="{!! route('backend.restaurant.payout_requests') !!}" class="menu-link menu-toggle">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -165,10 +160,7 @@
                                     <span class="menu-text">Payout Requests</span>
                                 </a>
                             </li>
-                            @endif
 
-            
-                            @if(Auth::user()->admin->role->restaurant_rating_review)
                             <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="{!! route('backend.restaurant.rating_and_reviews') !!}" class="menu-link menu-toggle">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -177,8 +169,6 @@
                                     <span class="menu-text">{!! __('backend_menus.rating_and_reviews') !!}</span>
                                 </a>
                             </li>
-                            @endif
-                            @if(Auth::user()->admin->role->restaurant_tag)
                             <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="{{ route('backend.restaurant.tags.list') }}" class="menu-link menu-toggle">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -187,7 +177,6 @@
                                     <span class="menu-text">{!! __('backend_menus.tags') !!}</span>
                                 </a>
                             </li>
-                            @endif
                         </ul>
                     </div>
                 </li>
@@ -217,7 +206,6 @@
                     <div class="menu-submenu">
                         <i class="menu-arrow"></i>
                         <ul class="menu-subnav">
-                            @if(Auth::user()->admin->role->food_category)
                             <li class="menu-item" aria-haspopup="true">
                                 <a href="{!! route('backend.food.category.list') !!}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -226,8 +214,7 @@
                                     <span class="menu-text">{!! __('backend_menus.food_category') !!}</span>
                                 </a>
                             </li>
-                            @endif
-                            @if(Auth::user()->admin->role->see_food_list)
+                            
                             <li class="menu-item" aria-haspopup="true">
                                 <a href="{!! route('backend.food.list') !!}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -236,8 +223,7 @@
                                     <span class="menu-text">{!! __('backend_menus.food') !!}</span>
                                 </a>
                             </li>
-                            @endif
-                            @if(Auth::user()->admin->role->create_cuisine)
+                            
                             <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="{{ route('backend.food.cuisines.list') }}" class="menu-link menu-toggle">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -246,7 +232,6 @@
                                     <span class="menu-text">{!! __('backend_menus.cuisines') !!}</span>
                                 </a>
                             </li>
-                            @endif
     <!-- 
                             <li class="menu-item" aria-haspopup="true">
                                 <a href="{!! route('backend.food.extra_food.list') !!}" class="menu-link">
@@ -257,7 +242,6 @@
                                 </a>
                             </li>
      -->
-                            @if(Auth::user()->admin->role->extra_food)
                             <li class="menu-item" aria-haspopup="true">
                                 <a href="{!! route('backend.food.extra_food.list') !!}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -266,9 +250,7 @@
                                     <span class="menu-text">{!! __('backend_menus.extra_foods') !!}</span>
                                 </a>
                             </li>
-                            @endif
-    
-                            @if(Auth::user()->admin->role->food_rating_review)
+
                             <li class="menu-item" aria-haspopup="true">
                                 <a href="{!! route('backend.food.rating_reviews') !!}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -277,7 +259,6 @@
                                     <span class="menu-text">{!! __('backend_menus.rating_and_reviews') !!}</span>
                                 </a>
                             </li>
-                            @endif
                         </ul>
                     </div>
                 </li>
@@ -311,7 +292,6 @@
                                     <span class="menu-text">{!! __('backend_menus.order_management') !!}</span>
                                 </span>
                             </li>
-                            @if(Auth::user()->admin->role->see_order_list)
                             <li class="menu-item" aria-haspopup="true">
                                 <a href="{!! route('backend.order.list') !!}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -320,7 +300,6 @@
                                     <span class="menu-text">{!! __('backend_menus.order') !!} </span>
                                 </a>
                             </li>
-                            @endif
 
                             <li class="menu-item" aria-haspopup="true">
                                 <a href="{!! route('backend.order.addresses') !!}" class="menu-link">
@@ -478,9 +457,9 @@
                         <i class="menu-arrow"></i>
                         <ul class="menu-subnav">
                             <li class="menu-item menu-item-parent" aria-haspopup="true">
-								<span class="menu-link">
-									<span class="menu-text">{!! __('backend_menus.payment_gateway') !!}</span>
-								</span>
+                                <span class="menu-link">
+                                    <span class="menu-text">{!! __('backend_menus.payment_gateway') !!}</span>
+                                </span>
                             </li>
                         </ul>
                     </div>
@@ -510,9 +489,9 @@
                         <i class="menu-arrow"></i>
                         <ul class="menu-subnav">
                             <li class="menu-item menu-item-parent" aria-haspopup="true">
-								<span class="menu-link">
-									<span class="menu-text">{!! __('backend_menus.wallet') !!}</span>
-								</span>
+                                <span class="menu-link">
+                                    <span class="menu-text">{!! __('backend_menus.wallet') !!}</span>
+                                </span>
                             </li>
                         </ul>
                     </div>
@@ -697,9 +676,9 @@
                         <i class="menu-arrow"></i>
                         <ul class="menu-subnav">
                             <li class="menu-item menu-item-parent" aria-haspopup="true">
-								<span class="menu-link">
-									<span class="menu-text">{!! __('backend_menus.sales_report') !!}</span>
-								</span>
+                                <span class="menu-link">
+                                    <span class="menu-text">{!! __('backend_menus.sales_report') !!}</span>
+                                </span>
                             </li>
                             <li class="menu-item" aria-haspopup="true">
                                 <a href="features/miscellaneous/kanban-board.html" class="menu-link">
@@ -767,8 +746,7 @@
                                     <span class="menu-text">{!! __('backend_menus.global_setting') !!}</span>
                                 </span>
                             </li>
-    
-                            @if(Auth::user()->admin->role->global_setting)
+
                             <li class="menu-item" aria-haspopup="true">
                                 <a href="{{ route('backend.settings.global_settings') }}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -777,7 +755,15 @@
                                     <span class="menu-text">{!! __('backend_menus.global_settings') !!}</span>
                                 </a>
                             </li>
-                            @endif
+        
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="features/miscellaneous/kanban-board.html" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text">{!! __('backend_menus.localization') !!}</span>
+                                </a>
+                            </li>
 
                             <li class="menu-item" aria-haspopup="true">
                                 <a href="{!! route('backend.settings.ccc') !!}" class="menu-link">
@@ -785,6 +771,69 @@
                                         <span></span>
                                     </i>
                                     <span class="menu-text">{!! __('backend_menus.country') !!}, {!! __('backend_menus.area') !!}, {!! __('backend_menus.currency') !!}</span>
+                                </a>
+                            </li>
+
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="features/miscellaneous/cropper.html" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text"></span>
+                                </a>
+                            </li>
+
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="features/miscellaneous/cropper.html" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text">{!! __('backend_menus.mobile_apps_setting') !!}</span>
+                                </a>
+                            </li>
+
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="features/miscellaneous/cropper.html" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text">{!! __('backend_menus.theme') !!}</span>
+                                </a>
+                            </li>
+
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="features/miscellaneous/cropper.html" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text">{!! __('backend_menus.website_setting') !!}</span>
+                                </a>
+                            </li>
+
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="features/miscellaneous/cropper.html" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text">{!! __('backend_menus.social_authentication') !!}</span>
+                                </a>
+                            </li>
+
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="features/miscellaneous/cropper.html" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text">{!! __('backend_menus.push_notification') !!}</span>
+                                </a>
+                            </li>
+
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="features/miscellaneous/cropper.html" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text">{!! __('backend_menus.mail_setting') !!}</span>
                                 </a>
                             </li>
                         </ul>

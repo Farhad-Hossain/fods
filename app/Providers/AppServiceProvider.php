@@ -28,6 +28,11 @@ class AppServiceProvider extends ServiceProvider
     {
         Builder::defaultStringLength(191); // Update defaultStringLength
         $gd['globals'] = GlobalSetting::first();
-        View::share('gd', $gd);
+        $role = [
+            'user_create' => 1,
+            'restaurant_create' => 0,
+            'restaurant_edit' => 0,
+        ];
+        View::share(['gd' => $gd, 'role' => $role ]);
     }
 }

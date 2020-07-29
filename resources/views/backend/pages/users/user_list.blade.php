@@ -16,104 +16,40 @@
                     <h3 class="card-label">{!! __('user_list.user_list') !!}</h3>
                 </div>
                 <div class="card-toolbar">
-                    <!--begin::Dropdown-->
-                    <div class="dropdown dropdown-inline mr-2">
-                        <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="la la-download"></i>Export</button>
-                        <!--begin::Dropdown Menu-->
-                        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                            <ul class="nav flex-column nav-hover">
-                                <li class="nav-header font-weight-bolder text-uppercase text-primary pb-2">Choose an option:</li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon la la-print"></i>
-                                        <span class="nav-text">Print</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon la la-copy"></i>
-                                        <span class="nav-text">Copy</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon la la-file-excel-o"></i>
-                                        <span class="nav-text">Excel</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon la la-file-text-o"></i>
-                                        <span class="nav-text">CSV</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon la la-file-pdf-o"></i>
-                                        <span class="nav-text">PDF</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!--end::Dropdown Menu-->
-                    </div>
-                    <!--end::Dropdown-->
                     <!--begin::Button-->
-                    <a href="javascript:;" class="btn btn-primary font-weight-bolder">
-                    <i class="la la-plus"></i>New Record</a>
+                    @if($role['user_create'])
+                        <a href="javascript:;" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#add_admin_modal">
+                        <i class="la la-plus"></i>Add User
+                    </a>    
+                    @endif
                     <!--end::Button-->
                 </div>
             </div>
             <div class="card-body">
                 <!--begin: Datatable-->
-                <table class="table table-bordered table-hover table-checkable" id="user_table" style="margin-top: 13px !important">
+                <table class="table table-bordered table-hover table-checkable" id="datatable_table" style="margin-top: 13px !important">
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>{!! __('common.name') !!}</th>
-                            <th>{!! __('common.email') !!}</th>
-                            <th>{!! __('user_list.role') !!}</th>
-                            <th>{!! __('common.status') !!}</th>
-                            <th>{{ __('common.action') }}</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Designation</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($users as $user)
-                        	<tr>
-                        		<th>{!! $loop->iteration !!}</th>
-                        		<td>{!! $user->name !!}</td>
-                        		<td>{!! $user->email !!}</td>
-                        		@if( $user->role == 0 )
-                        			<td>System Admin</td>
-                        		@elseif( $user->role == 1 )
-                        			<td>Restaurant</td>
-                        		@elseif( $user->role == 2 )
-                        			<td>Driver</td>
-                        		@elseif( $user->role == 3 )
-                        			<td>Customer</td>
-                        		@endif
-                                <td>
-                                    @if( $user->status == 1 )
-                                        <b class="text-success">Active</b>
-                                    @elseif( $user->status == 0 )
-                                        <b class="text-danger">Inactive</b>
-                                    @endif
-                                </td>
-                        		<td>
-                                    <a href="javascript:void(0);" class="text-primary mr-2" data-toggle="modal" data-target="#edit_user_modal" onclick="set_value_and_rise_edit_modal(
-                                            '{!! route("backend.users.edit", $user->id) !!}',
-                                            '{!! $user->name !!}',
-                                            '{!! $user->email !!}',
-                                            '{!! $user->status !!}',
-                                            )">
-                                        <i class="far fa-edit mr-2 text-success"></i>
-                                    </a>
-                                    <a href="{!! route('backend.users.delete', $user->id) !!}" onclick="return confirm('Are you sure to delete this?')">
-                        			    <i class="far fa-trash-alt mr-2 text-danger"></i>
-                                    </a>
-                        		</td>
-                        	</tr>
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>{{ $user->admin->phone }}</td>
+                            <td>{{ $user->admin->designation ?? '' }}</td>
+                            <td>
+                                <a href="{!! route('backend.users.access_form', $user->id) !!}">Role manage</a>
+                            </td>
+                        </tr>
                         @endforeach
                     </tbody>
                 </table>
@@ -180,6 +116,57 @@
             </div>
         </div>
     </div>
+
+
+    <!-- 
+        Add Admin user
+    -->
+    <div class="modal fade" id="add_admin_modal" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create User Form</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <form action="{!! route('backend.users.create') !!}" method="POST">
+                <div class="modal-body" style="height: 400px;">
+                        @csrf
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" class="form-control" name="name" required value="{!! old('name') !!}">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" class="form-control" name="email" required value="{!! old('email') !!}">
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="text" class="form-control" name="phone" required value="{!! old('phone') !!}">
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" class="form-control" name="password" required value="{!! old('password') !!}"> 
+                        </div>
+                        <div class="form-group">
+                            <label>Designation</label>
+                            <input type="text" class="form-control" name="designation" required value="{!!old('designation')!!}">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea class="form-control" name="description" value="{!! old('description') !!}"></textarea>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Create User</button>
+                </div>
+                <div class="m-4"></div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
 
 
@@ -188,4 +175,6 @@
      <script src="{{asset('backend')}}/assets/plugins/custom/datatables/datatables.bundle.js?v=7.0.3"></script>
      <script src="{{asset('backend')}}/assets/js/pages/crud/datatables/advanced/column-visibility.js?v=7.0.3"></script>
      <script src="{!! asset('backend/assets/js/customs/user_page.js') !!}"></script>
+     <script src="{{asset('backend')}}/assets/js/datatable.js"></script>
+     
  @endsection

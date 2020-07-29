@@ -14,60 +14,9 @@
                 <div class="card card-custom bg-gray-100 card-stretch gutter-b">
                     <!--begin::Header-->
                     <div class="card-header border-0 bg-danger py-2">
-                        <h3 class="card-title font-weight-bolder text-white">Sales Stat</h3>
+                        <h3 class="card-title font-weight-bolder text-white">History</h3>
                         <div class="card-toolbar">
-                            <div class="dropdown dropdown-inline">
-                                <a href="#" class="btn btn-transparent-white btn-sm font-weight-bolder dropdown-toggle px-5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Export</a>
-                                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                                    <!--begin::Navigation-->
-                                    <ul class="navi navi-hover">
-                                        <li class="navi-header pb-1">
-                                            <span class="text-primary text-uppercase font-weight-bold font-size-sm">Add new:</span>
-                                        </li>
-                                        <li class="navi-item">
-                                            <a href="#" class="navi-link">
-                                                <span class="navi-icon">
-                                                    <i class="flaticon2-shopping-cart-1"></i>
-                                                </span>
-                                                <span class="navi-text">Order</span>
-                                            </a>
-                                        </li>
-                                        <li class="navi-item">
-                                            <a href="#" class="navi-link">
-                                                <span class="navi-icon">
-                                                    <i class="flaticon2-calendar-8"></i>
-                                                </span>
-                                                <span class="navi-text">Event</span>
-                                            </a>
-                                        </li>
-                                        <li class="navi-item">
-                                            <a href="#" class="navi-link">
-                                                <span class="navi-icon">
-                                                    <i class="flaticon2-graph-1"></i>
-                                                </span>
-                                                <span class="navi-text">Report</span>
-                                            </a>
-                                        </li>
-                                        <li class="navi-item">
-                                            <a href="#" class="navi-link">
-                                                <span class="navi-icon">
-                                                    <i class="flaticon2-rocket-1"></i>
-                                                </span>
-                                                <span class="navi-text">Post</span>
-                                            </a>
-                                        </li>
-                                        <li class="navi-item">
-                                            <a href="#" class="navi-link">
-                                                <span class="navi-icon">
-                                                    <i class="flaticon2-writing"></i>
-                                                </span>
-                                                <span class="navi-text">File</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <!--end::Navigation-->
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
                     <!--end::Header-->
@@ -94,7 +43,7 @@
                                         </svg>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <a href="#" class="text-danger font-weight-bold font-size-h6">Income Reports</a>
+                                    <a href="{!! route('backend.restaurant.list') !!}" class="text-danger font-weight-bold font-size-h6">{!! $total_restaurant !!} Restaurants</a>
                                 </div>
                                 <div class="col bg-light-warning px-6 py-8 rounded-xl mr-7 mb-7">
                                     <span class="svg-icon svg-icon-3x svg-icon-warning d-block my-2">
@@ -110,7 +59,7 @@
                                         </svg>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <a href="#" class="text-warning font-weight-bold font-size-h6">Weekly Sales</a>
+                                    <a href="{!! route('backend.food.list') !!}" class="text-warning font-weight-bold font-size-h6">{!! $total_food !!} Foods</a>
                                 </div>
                                 <div class="col bg-light-primary px-6 py-8 rounded-xl mb-7">
                                     <span class="svg-icon svg-icon-3x svg-icon-primary d-block my-2">
@@ -124,7 +73,7 @@
                                         </svg>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <a href="#" class="text-primary font-weight-bold font-size-h6 mt-2">New Users</a>
+                                    <a href="{!! route('backend.delivery.driver-list') !!}" class="text-primary font-weight-bold font-size-h6 mt-2">{!! $total_driver !!} Drivers</a>
                                 </div>
                             </div>
                             <!--end::Row-->
@@ -142,7 +91,7 @@
                                         </svg>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <a href="#" class="text-danger font-weight-bold font-size-h6 mt-2">Item Orders</a>
+                                    <a href="{!! route('backend.order.list') !!}" class="text-danger font-weight-bold font-size-h6 mt-2">{!! $orders->count() !!} Orders</a>
                                 </div>
                                 <div class="col bg-light-success px-6 py-8 rounded-xl">
                                     <span class="svg-icon svg-icon-3x svg-icon-success d-block my-2">
@@ -158,21 +107,72 @@
                                     </span>
                                     <a href="#" class="text-success font-weight-bold font-size-h6 mt-2">Bug Reports</a>
                                 </div>
+
+                                <div class="col-12 bg-light px-6 py-8 rounded-xl my-8">
+                                <p class="h3">Recent Orders</p>
+                                <!--begin: Datatable-->
+                                <table class="table table-bordered table-hover table-checkable" id="datatable_table" style="margin-top: 13px !important">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>{!! __('order.order_id') !!}</th>
+                                            <th>{!! __('order.customer_name') !!}</th>
+                                            <th>{!! __('order.payable_amount') !!}</th>
+                                            <th>{!! __('order.delivery_address') !!}</th>
+                                            <th>{!! __('common.status') !!}</th>
+                                            <th>{!! __('common.action') !!}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($orders as $order)
+                                        <tr>
+                                            <td>{!! $loop->iteration !!}</td>
+                                            <td>{!! $order->order_id !!}</td>
+                                            <td>{!! $order->user->name !!}</td>
+                                            <td>{!! $order->payable_amount !!}</td>
+                                            <td>{!! $order->delivery_address !!}</td>
+                                            <td>
+                                                <b class="text-primary">{!! $order->status['status_name'] !!}</b>
+                                                <b class="badge badge-primary status_change_btn" oid="{!! $order->id !!}" status_name="{!! $order->status->status_name !!}" style="cursor: pointer;">
+                                                    Change
+                                                </b>
+                                            </td>
+                                            <td>
+                                                <a href="{!! route('backend.order.details', $order->id) !!}">
+                                                    <i class="fas fa-border-none text-primary mr-2"></i>
+                                                </a>
+                                                <a href="javascript:;" class="text-primary mr-2">
+                                                    <i class="far fa-edit text-primary"></i>
+                                                </a>
+                                                <a href="{!! route('backend.order.delete', $order->id) !!}" class="text-danger" onclick="return confirm('Are you sure want to delete ??')">
+                                                    <i class="far fa-trash-alt text-danger"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                                </div>
+                                <!--end: Datatable-->
                             </div>
                             <!--end::Row-->
                         </div>
                         <!--end::Stats-->
                     </div>
                     <!--end::Body-->
+
                 </div>
                 <!--end::Mixed Widget 1-->
+                
             </div>
         <!--end::Row-->
+        
+
         <!--end::Dashboard-->
     </div>
 @endsection
 
 
 @section('custom_script')
-
+    <script src="{{asset('backend')}}/assets/js/datatable.js"></script>
 @endsection

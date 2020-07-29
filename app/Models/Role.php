@@ -6,14 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
-    protected $fillable = [
-    	'role', 'status'
-    ];
+    protected $guarded = [];
 
-    public function users()
+    public function user()
     {
-    	return $this->belongsTo(\App\User::class, 'id', 'role');
+        return $this->belongsTo('\App\User', 'user_id');
     }
 }
-
-

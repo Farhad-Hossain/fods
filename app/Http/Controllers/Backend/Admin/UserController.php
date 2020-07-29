@@ -5,14 +5,16 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Admin\User\UpdateUserPostRequest;
 use Illuminate\Http\Request;
 use App\User;
+use App\Models\Admin;
 use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
+use DB;
 
 class UserController extends Controller
 {
     public function viewUsersList()
     {
-    	$users = User::orderBy('id', 'desc')->get();
+    	$users = User::where('role', 0)->orderBy('id', 'desc')->get();
     	return view('backend.pages.users.user_list', compact('users'));
     }
 
@@ -68,6 +70,85 @@ class UserController extends Controller
     {
     	$userRoles = Role::all();
     	return view('backend.pages.users.user_roles', compact('userRoles'));
+    }
+
+
+    public function createAdminSubmit(Request $request)
+    {
+        DB::beginTransaction();
+        try{
+            $user = new User();
+            $user->name = $request->name;
+            $user->role = 0;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+            $user->password_salt = $request->password;
+            $user->last_login_ip = request()->ip();
+            $user->save();
+
+            $user_id = $user->id;
+            $admin = new Admin();
+            $admin->user_id = $user_id;
+            $admin->phone = $request->phone;
+            $admin->designation = $request->designation;
+            $admin->save();
+
+            $role = new Role();
+            $role->user_id = $user_id;
+            $role->save();
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            session(['type'=>'danger', 'message'=>'Something went wrong.']);
+            return redirect()->back();            
+        }
+        DB::commit();
+
+        session(['type'=>'success', 'message'=>'User created successfully']);
+        return redirect()->back();
+    }
+
+    public function access_form_view($user_id)
+    {
+        $roles = Role::where('user_id', $user_id)->first();
+        return view('backend.pages.users.role_manage_form', compact('roles'));
+    }
+    public function accessFormSubmit(Request $request)
+    {
+
+        $create_admin = $request->create_admin?1:0 ;
+        $edit_admin = $request->edit_admin?1:0;
+        $create_restaurant = $request->create_restaurant?1:0;
+        $edit_restaurant = $request->edit_restaurant?1:0;
+        $create_food = $request->create_food?1:0;
+        $edit_food = $request->edit_food?1:0;
+        
+        
+
+        $roler = Role::where('user_id', $request->user_id)->first();
+        $roler->create_admin = $create_admin;
+        $roler->edit_admin = $edit_admin;
+        $roler->create_restaurant = $create_restaurant;
+        $roler->edit_restaurant = $edit_restaurant;
+        $roler->create_food = $create_food;
+        $roler->edit_food = $edit_food;
+        $roler->create_driver = $request->create_driver?1:0;
+        $roler->edit_driver = $request->edit_driver?1:0;
+        $roler->see_restaurant_sales_transaction = $request->see_restaurant_sales_transaction?1:0;
+        $roler->make_restaurant_withdrawal = $request->make_restaurant_withdrawal?1:0;
+        $roler->restaurant_rating_review = $request->restaurant_rating_review?1:0;
+        $roler->global_setting = $request->global_setting?1:0;
+        $roler->see_order_list = $request->see_order_list?1:0;
+        $roler->restaurant_tag = $request->restaurant_tag?1:0;
+        $roler->food_category = $request->food_category?1:0;
+        $roler->food_rating_review = $request->food_rating_review?1:0;
+        $roler->user_management = $request->user_management?1:0;
+
+
+        $roler->save();
+        
+        session(['type'=>'success', 'message'=>'User access updated.']);
+        return redirect()->back();
     }
     
     

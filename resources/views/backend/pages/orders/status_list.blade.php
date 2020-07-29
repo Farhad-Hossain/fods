@@ -15,34 +15,9 @@
                     <h3 class="card-label">{!! __('order.order_status_list') !!}</h3>
                 </div>
                 <div class="card-toolbar">
-                    <!--begin::Dropdown-->
-                    <div class="dropdown dropdown-inline mr-2">
-                        <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="la la-download"></i>Export</button>
-                        <!--begin::Dropdown Menu-->
-                        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                            <ul class="nav flex-column nav-hover">
-                                <li class="nav-header font-weight-bolder text-uppercase text-primary pb-2">Choose an option:</li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon la la-print"></i>
-                                        <span class="nav-text">Print</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon la la-file-pdf-o"></i>
-                                        <span class="nav-text">PDF</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!--end::Dropdown Menu-->
-                    </div>
-                    <!--end::Dropdown-->
                     <!--begin::Button-->
                     <a href="javascript:;" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#order_status_add_modal"> 
-                        <i class="la la-plus"></i>New Record
+                        <i class="la la-plus"></i>Add New Status
                     </a>
                     <!--end::Button-->
                 </div>
@@ -151,7 +126,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary font-weight-bold">Save changes</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Add Status</button>
                 </div>
             </form>
         </div>
