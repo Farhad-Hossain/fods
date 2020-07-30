@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\ExtraFood;
 use App\Models\Food;
 use App\Models\Order;
 use App\Models\OrderDetail;
@@ -25,16 +26,13 @@ class OrderController extends Controller
 
         DB::beginTransaction();
         try {
-
             $cart_contents = $request->foods;
             $subtotal = Food::getSubTotalFromRequestedFoods($cart_contents);
 
             $extra_contents = $request->extra_foods;
             $extra_subtotal = Food::getSubTotalFromRequestedFoods($cart_contents);
-
-
             if (count($cart_contents) > 0) {
-                $delivery_charge = Food::getTotalDeliveryChargeFromCart($cart_contents);
+                $delivery_charge = Food::getTotalDeliveryChargeFromRequestedFoods($cart_contents);
 
                 $total_discount = 0;
 
@@ -73,6 +71,7 @@ class OrderController extends Controller
                         $order_details->food_type = 1;//1=food
                         $order_details->restaurant_id = $food->restaurant_id;
                         $order_details->food_id = $food->id;
+                        $order_details->quantity = $content['quantity'];
                         $order_details->price = $content['price'];
                         $order_details->discount = $discount;
                         $order_details->payable_amount = $pay_amount;
@@ -81,34 +80,36 @@ class OrderController extends Controller
                         $order_details->save();
                     }
                 }
-                foreach ($extra_contents as $content) {
-                    $extra_food = ExtraFood::where('id', $content->id)
-                        ->where('status', 1)
-                        ->first();
+                if (is_array($extra_contents)) {
+                    foreach ($extra_contents as $content) {
+                        $extra_food = ExtraFood::where('id', $content['id'])
+                            ->where('status', 1)
+                            ->first();
 
-                    $discount = 0;
-                    $pay_amount = $content->price - $discount;
+                        $discount = 0;
+                        $pay_amount = $content['price'] - $discount;
 
-                    $order_details = new OrderDetail();
+                        $order_details = new OrderDetail();
 
-                    $order_details->order_id = $order->id;
-                    $order_details->user_id = Auth::id();
-                    $order_details->food_type = 2;//2=extra food
-                    $order_details->restaurant_id = $extra_food->restaurant_id;
-                    $order_details->food_id = $extra_food->id;
-                    $order_details->price = $content->price;
-                    $order_details->discount = $discount;
-                    $order_details->payable_amount = $pay_amount;
-                    $order_details->delivery_address = 'Demo Address';
+                        $order_details->order_id = $order->id;
+                        $order_details->user_id = Auth::id();
+                        $order_details->food_type = 2;//2=extra food
+                        $order_details->restaurant_id = $extra_food->restaurant_id;
+                        $order_details->food_id = $extra_food->id;
+                        $order_details->quantity = $content['quantity'];
+                        $order_details->price = $content['price'];
+                        $order_details->discount = $discount;
+                        $order_details->payable_amount = $pay_amount;
 
-                    $order_details->status = 1;
-                    $order_details->save();
+                        $order_details->status = 1;
+                        $order_details->save();
+                    }
                 }
             } else {
-                session()->flash('type', 'warning');
-                session()->flash('message', 'Cart is Empty');
-                return redirect()->back();
+                return response()->json(['message' => 'Cart is empty'], 200);
             }
+
+            $ret_data = Order::with('details')->where('id', $order->id)->get();
         } catch (\Exception $exception) {
             DB::rollBack();
             return response()->json(['message' => $exception->getMessage()], 500);
@@ -116,6 +117,7 @@ class OrderController extends Controller
 
         DB::commit();
 
-        return response()->json('', 200);
+
+        return response()->json($ret_data, 200);
     }
 }

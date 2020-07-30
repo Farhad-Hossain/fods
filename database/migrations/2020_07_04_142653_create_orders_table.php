@@ -27,6 +27,7 @@ class CreateOrdersTable extends Migration
             $table->tinyInteger('payment_status')->comment('0=pending, 1=done');
             $table->integer('payment_reference')->unsigned()->nullable()->comment('Payment reference from payment details table');
             $table->integer('payment_type')->unsigned()->nullable()->comment('payment type');
+            $table->string('delivery_address', 255);
             $table->integer('user_address_id')->unsigned()->nullable();
             $table->timestamps();
         });

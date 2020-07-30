@@ -33,7 +33,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function () {
 
     Route::post('order', [
         'uses' => 'Frontend\OrderController@submitOrder'
-    ]);
+    ])->middleware('api_auth');
 
     Route::get('restaurant/list', [
         'uses' => 'Frontend\RestaurantController@getAllRestaurant'

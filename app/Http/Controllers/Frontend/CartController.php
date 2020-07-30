@@ -149,10 +149,10 @@ class CartController extends Controller
                     $order_details->food_type = 1;//1=food
                     $order_details->restaurant_id = $food->restaurant_id;
                     $order_details->food_id = $food->id;
+                    $order_details->quantity = $content->qty;
                     $order_details->price = $content->price;
                     $order_details->discount = $discount;
                     $order_details->payable_amount = $pay_amount;
-                    $order_details->delivery_address = 'Demo Address';
                     
                     $order_details->status = 1;
                     $order_details->save();
@@ -172,10 +172,10 @@ class CartController extends Controller
                     $order_details->food_type = 2;//2=extra food
                     $order_details->restaurant_id = $extra_food->restaurant_id;
                     $order_details->food_id = $extra_food->id;
+                    $order_details->quantity = $content->qty;
                     $order_details->price = $content->price;
                     $order_details->discount = $discount;
                     $order_details->payable_amount = $pay_amount;
-                    $order_details->delivery_address = 'Demo Address';
 
                     $order_details->status = 1;
                     $order_details->save();
