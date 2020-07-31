@@ -14,7 +14,13 @@ use App\Models\Transaction;
 use App\Models\City;
 use App\Models\GlobalSetting;
 use App\Models\RestaurantTransaction;
+use App\Models\RestaurantService;
+use App\Models\RestaurantTiming;
+use App\Models\RestaurantCharacteristic;
 use App\Http\Requests\Backend\Admin\TransactionPostRequest;
+use Illuminate\Support\Facades\Hash;
+use App\User;
+use DB;
 
 class RestaurantController extends Controller
 {
@@ -225,12 +231,16 @@ class RestaurantController extends Controller
 	public function restaurantAddForm()
 	{
 		$globals_info = GlobalSetting::first();
+		$cuisines = Cuisine::where('status', 1)->get();
 		$cities = City::where('country_id', $globals_info->country)->get();
-		return view('backend.pages.restaurants.add_form', compact('cities'));
+		$tags = RestaurantTag::where('status', 1)->get();
+		$restaurant_services = RestaurantService::where('status', 1)->get();
+		return view('backend.pages.restaurants.add_form', compact('cities', 'cuisines', 'tags', 'restaurant_services'));
 	}
 
 	public function restaurantAddSubmit(Request $request)
 	{
+		
 		$globals_info = GlobalSetting::first();
 
 		try{
@@ -293,9 +303,11 @@ class RestaurantController extends Controller
 		    }
 
 		    DB::commit();
-		    echo "User created successfully and Restaurant created successfully. Route should go to next action";
+		    session(['type'=>'success', 'message'=>'Restaurant created successfully']);
+		    return redirect()->back();
 		}catch(\Exception $e){
 		    DB::rollBack();
+
 		    dd('Something went wrong'.$e);
 		}
 	}
