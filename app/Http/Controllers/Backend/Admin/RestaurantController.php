@@ -11,6 +11,8 @@ use App\Models\RestaurantRating;
 use App\Models\RestaurantReview;
 use App\Models\WithdrawalRequest;
 use App\Models\Transaction;
+use App\Models\City;
+use App\Models\GlobalSetting;
 use App\Models\RestaurantTransaction;
 use App\Http\Requests\Backend\Admin\TransactionPostRequest;
 
@@ -219,9 +221,83 @@ class RestaurantController extends Controller
 
 		session(['type'=>'success', 'message'=>'Status Updated.']);
 		return redirect()->back();
-		
+	}
+	public function restaurantAddForm()
+	{
+		$globals_info = GlobalSetting::first();
+		$cities = City::where('country_id', $globals_info->country)->get();
+		return view('backend.pages.restaurants.add_form', compact('cities'));
+	}
 
+	public function restaurantAddSubmit(Request $request)
+	{
+		$globals_info = GlobalSetting::first();
 
+		try{
+		    DB::beginTransaction();
+
+			$user = new User();
+			$user->name 	= $request->user_name;
+			$user->email 	= $request->user_email;
+			$user->role 	= 1;
+			$user->password = Hash::make( $request->user_password );
+			$user->password_salt = $request->user_password;
+			$user->last_login_ip = request()->ip();
+			$user->status 	= 1;
+			$user->save();
+
+			$res = new Restaurant();
+			$res->user_id 	= $user->id;
+			$res->name 		= $request->restaurant_name;
+			$res->city 		= $request->city;
+			$res->phone 	= $request->restaurant_phone;
+			$res->email 	= $request->user_email;
+			$res->address 	= $request->restaurant_address;
+			$res->website 	= $request->restaurant_website;
+			$res->open_status = $request->open_status;
+			$res->open_status = $request->open_status;
+			$res->characteristics = implode(',',$request->characteristices);
+			$res->alcohol_status = $request->alcohol_status;
+			$res->seating_status = $request->seating_status;
+			$res->cuisine = $request->cuisines;
+			$res->tags 		= $request->tags;
+			$res->payment_method = $request->payment_method;
+		    $res->delivery_charge  = $globals_info->default_delivery_charge;
+		    $res->selling_percentage  = $globals_info->default_product_selling_percentage;
+			$res_id = $res->save();
+
+		    $days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+		    for($i = 0; $i < sizeof($days); $i++){
+		        $time = new RestaurantTiming();
+		        $time->restaurant_id = $res_id;
+		        $time->day           = $days[$i];
+
+		        $d = $days[$i].'_day';
+		        $from = $days[$i].'_time_from';
+		        $to = $days[$i].'_time_to';
+
+		        $request->$from = str_replace(" ", "", $request->$from);
+		        $request->$to = str_replace(" ", "", $request->$to);
+
+		        $time->open_status   = $request->$d ? 1 : 2;
+		        $time->time_from     = $request->$from;
+		        $time->time_to       = $request->$to;
+		        $time->save();
+		    }
+
+		    foreach ($request->characteristices as $characteristic) {
+		        $char = new RestaurantCharacteristic();
+		        $char->restaurant_id = $res_id;
+		        $char->restaurant_service_id = $characteristic;
+		        $char->save();
+		    }
+
+		    DB::commit();
+		    echo "User created successfully and Restaurant created successfully. Route should go to next action";
+		}catch(\Exception $e){
+		    DB::rollBack();
+		    dd('Something went wrong'.$e);
+		}
 	}
 	// end
 

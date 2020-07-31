@@ -20,6 +20,7 @@ class DashboardController extends Controller
     /*show dashboard page*/
     public function showDashboard()
     {
+        
         $total_restaurant = Restaurant::count();
         $total_driver = Driver::count();
         $total_customer = Customer::count(); 

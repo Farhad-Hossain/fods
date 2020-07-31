@@ -179,7 +179,7 @@ class UserRegisterController extends Controller
             $customer->user_id 	= $user->id;
             $customer->phone_number = $request->phone_number;
             $customer->status = 1;
-            $customer->default_delivery_address = $request->default_delivery_address;
+            $customer->default_delivery_address = $request->default_delivery_address??'';
             $customer->save();
 
         }catch(\Exception $e){

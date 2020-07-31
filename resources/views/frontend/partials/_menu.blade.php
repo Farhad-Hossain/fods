@@ -27,51 +27,7 @@
                                     <a class="nav-link" href="recipes.html">Recipes</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="partners.html">Partners</a>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle-no-caret" href="#" id="megaDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Pages <i class="fas fa-caret-down"></i></a>
-                                    <div class="dropdown-menu mega-menu dropdown-menu-right">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <a class="dropdown-item" href="about.html"> About us</a>
-                                                <a class="dropdown-item" href="recipe_details.html"> Recipes Detail View</a>
-                                                <a class="dropdown-item" href="upload_recipe.html"> Upload Recipe</a>
-                                                <a class="dropdown-item" href="partners.html"> Partners</a>
-                                                <a class="dropdown-item" href="restaurant_detail.html"> Restaurant Detail View</a>
-                                                <a class="dropdown-item" href="partner_with_us.html"> Become a Partner</a>
-                                                <a class="dropdown-item" href="add_restaurant.html"> Add Restaurant</a>
-
-                                            </div>
-                                            <div class="col-md-3">
-                                                <a class="dropdown-item" href="add_driver.html"> Add Driver</a>
-                                                <a class="dropdown-item" href="meals.html"> Meals</a>
-                                                <a class="dropdown-item" href="meal_detail.html"> Meal Detail View</a>
-                                                <a class="dropdown-item" href="checkout.html"> Checkout</a>
-                                                <a class="dropdown-item" href="bill_slip.html"> Bill Slip</a>
-                                                <a class="dropdown-item" href="browse_places.html"> Browse Places</a>
-                                                <a class="dropdown-item" href="places_nearby.html"> Near Places</a>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <a class="dropdown-item" href="places_cafes.html"> Cafes & More</a>
-                                                <a class="dropdown-item" href="upcoming_events.html"> Upcoming Events</a>
-                                                <a class="dropdown-item" href="event_detail.html"> Event Detail View</a>
-                                                <a class="dropdown-item" href="user_profile_view.html"> User Profile View</a>
-                                                <a class="dropdown-item" href="my_profile_dashbord.html"> My Order Dashboard</a>
-                                                <a class="dropdown-item" href="restaurant_partner_dashbord.html"> Restaurant Partner Dashboard</a>
-                                                <a class="dropdown-item" href="driver_partner_dashbord.html"> Driver Partner Dashboard</a>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <a class="dropdown-item" href="setting.html"> My Setting</a>
-                                                <a class="dropdown-item" href="error_404.html"> Error 404</a>
-                                                <a class="dropdown-item" href="signin.html"> Login Now</a>
-                                                <a class="dropdown-item" href="faq.html"> FAQ</a>
-                                                <a class="dropdown-item" href="our_blog.html"> Our Blog</a>
-                                                <a class="dropdown-item" href="blog_detail.html"> Single Blog Detail View</a>
-                                                <a class="dropdown-item" href="contact.html"> Contact</a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <a class="nav-link" href="{!!route('frontend.become-a-partner')!!}">Partners</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="browse_places.html">Browse Places</a>

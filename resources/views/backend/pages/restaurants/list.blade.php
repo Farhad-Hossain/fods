@@ -22,7 +22,7 @@
                     <!--end::Dropdown-->
                     <!--begin::Button-->
                     @if(Auth::user()->admin->role->create_restaurant == 1)
-                    <a href="#" class="btn btn-primary font-weight-bolder">
+                    <a href="{!!route('backend.restaurant.add')!!}" class="btn btn-primary font-weight-bolder">
                         <i class="la la-plus"></i>Add restaurant
                     </a>
                     @endif

@@ -112,7 +112,7 @@
                         </div>
                         <div class="work-text">
                             <h4>Choose Your Area Restaurant</h4>
-                            <p>Donec et tellus sed lorem condimentum maximus. Sed tempor, leo tempus condimentum.</p>
+                            <p>Choose Your area of restaurant and browse all of your favourite food available from there. </p>
                         </div>
                     </div>
                 </div><div class="col-md-4 col-sm-12 col-xs-12">
@@ -122,7 +122,7 @@
                         </div>
                         <div class="work-text">
                             <h4>Choose Food</h4>
-                            <p>Donec et tellus sed lorem condimentum maximus. Sed tempor, leo tempus condimentum.</p>
+                            <p>See the details information of the food and place an order to get it within a moment.</p>
                         </div>
                     </div>
                 </div>
@@ -133,7 +133,7 @@
                         </div>
                         <div class="work-text">
                             <h4>Delivery</h4>
-                            <p>Donec et tellus sed lorem condimentum maximus. Sed tempor, leo tempus condimentum.</p>
+                            <p>Food will be delivered within a little time to your door.</p>
                         </div>
                     </div>
                 </div>
@@ -207,7 +207,7 @@
                         <div class="top">
                             <a href="{!! route('frontend.food.details', $food->id) !!}"><div class="bg-gradient"></div></a>
                             <div class="top-img">
-                                <img src="{!! asset('uploads/food') !!}/{!! $food->image !!}" alt="">
+                                <img src="{!! asset('uploads') !!}/{!! $food->image !!}" alt="">
                             </div>
                             <div class="logo-img">
                                 <img src="{!! asset('uploads/logo') !!}/{!! $food->restaurant->image !!}" alt="">
@@ -370,14 +370,15 @@
                         <h1> Featured Restaurants </h1>
                     </div>
                     <div class ="bg-resto">
+                        @foreach($restaurants as $restaurant)
                         <div class="resto-item">
                             <div class="row">
                                 <div class="col-md-4 col-sm-12">
                                     <div class="resto-img">
                                         <img src="{!! asset('frontend/images/') !!}/homepage/featured-restaurants/logo_01.jpg" alt="">
                                         <div class="resto-name">
-                                            <h4><a href="#"> Food Roster </a></h4>
-                                            <p>Indian Restaurant</p>
+                                            <h4><a href="#"> {!!$restaurant->name!!} </a></h4>
+                                            <p>{!!$restaurant->city!!}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -388,104 +389,15 @@
                                 </div>
                                 <div class="col-md-4 col-sm-12">
                                     <div class="menu-btn">
-                                        <a class="mn-btn btn-link" href="#"> View Menu</a>
+                                        <a class="mn-btn btn-link" href="#"> View Foods</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="resto-item">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-12">
-                                    <div class="resto-img">
-                                        <img src="{!! asset('frontend/images/') !!}/homepage/featured-restaurants/logo_02.jpg" alt="">
-                                        <div class="resto-name">
-                                            <h4><a href="#"> Chef House </a></h4>
-                                            <p>American Restaurant</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 col-sm-12">
-                                    <div class="resto-location">
-                                        <span><i class="fas fa-map-marker-alt"></i></span>New York City,1569
-                                    </div>
-                                </div>
-                                <div class="col-md-4 col-sm-12">
-                                    <div class="menu-btn">
-                                        <a class="mn-btn btn-link" href="#"> View Menu</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="resto-item">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-12">
-                                    <div class="resto-img">
-                                        <img src="{!! asset('frontend/images/') !!}/homepage/featured-restaurants/logo_03.jpg" alt="">
-                                        <div class="resto-name">
-                                            <h4><a href="#"> Rooster </a></h4>
-                                            <p>Indian Restaurant</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 col-sm-12">
-                                    <div class="resto-location">
-                                        <span><i class="fas fa-map-marker-alt"></i></span>New York City,1569
-                                    </div>
-                                </div>
-                                <div class="col-md-4 col-sm-12">
-                                    <div class="menu-btn">
-                                        <a class="mn-btn btn-link" href="#"> View Menu</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="resto-item">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-12">
-                                    <div class="resto-img">
-                                        <img src="{!! asset('frontend/images/') !!}/homepage/featured-restaurants/logo_04.jpg" alt="">
-                                        <div class="resto-name">
-                                            <h4><a href="#"> Limon Resto </a></h4>
-                                            <p>Australian Restaurant</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 col-sm-12">
-                                    <div class="resto-location">
-                                        <span><i class="fas fa-map-marker-alt"></i></span>New York City,1569
-                                    </div>
-                                </div>
-                                <div class="col-md-4 col-sm-12">
-                                    <div class="menu-btn">
-                                        <a class="mn-btn btn-link" href="#"> View Menu</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="resto-item">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-12">
-                                    <div class="resto-img">
-                                        <img src="{!! asset('frontend/images/') !!}/homepage/featured-restaurants/logo_05.jpg" alt="">
-                                        <div class="resto-name">
-                                            <h4><a href="#"> Ramen Bakery </a></h4>
-                                            <p>Canadian Bakery</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 col-sm-12">
-                                    <div class="resto-location">
-                                        <span><i class="fas fa-map-marker-alt"></i></span>New York City,1569
-                                    </div>
-                                </div>
-                                <div class="col-md-4 col-sm-12">
-                                    <div class="menu-btn">
-                                        <a class="mn-btn btn-link" href="#"> View Menu</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        @if($loop->iteration == 15)
+                            @break
+                        @endif
+                        @endforeach
                 </div>
                 <div class="col-lg-4">
                     <div class="new-heading treading-sellers">

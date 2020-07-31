@@ -181,6 +181,9 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
     /*BEGIN::Restaurant*/
     /*BEGIN::Restaurant*/
     Route::group(['prefix'=>'restaurant', 'as'=>'restaurant.' ], function(){
+        Route::get('add', 'RestaurantController@restaurantAddForm')->name('add');
+        Route::post('add', 'RestaurantController@restaurantAddSubmit');
+        
         Route::get('list', 'RestaurantController@view_restaurant_list')->name('list');
         Route::get('{Restaurant}/edit', 'RestaurantController@view_restaurant_edit_form')->name('edit');
         Route::post('{Restaurant}/edit', 'RestaurantController@submit_restaurant_edit_form');

@@ -57,7 +57,7 @@
                 <div class="col-lg-8 col-md-8">
                     <div id="sync1" class="owl-carousel owl-theme">
                         <div class="item">
-                            <img src="{!! asset('uploads/food') !!}/{!! $food->image !!}" alt="">
+                            <img src="{!! asset('uploads') !!}/{!! $food->image !!}" alt="">
                         </div>
                         <div class="item">
                             <img src="images/meal-detail/img-2.jpg" alt="">
