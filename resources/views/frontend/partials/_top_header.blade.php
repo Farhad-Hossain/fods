@@ -28,7 +28,7 @@
                         <li class="nav-item dropdown">
                             <a class="dropdown-toggle-no-caret" href="#" id="accountDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-user-circle"></i>
-                                John Doe  <i class="fas fa-caret-down"></i>
+                                {!!Auth::user()->name!!}  <i class="fas fa-caret-down"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdown">
                                 <a class="dropdown-item" href=""> My Profile</a>
@@ -46,8 +46,6 @@
                                 <a href="{!! route('login') !!}" class="dropdown-toggle-no-caret" id="">
                                     <i class="fas fa-user-circle"></i>Login
                                 </a>
-
-
                             </li>
                         @endif
                     </ul>

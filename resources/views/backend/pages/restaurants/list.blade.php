@@ -44,7 +44,6 @@
                             <th>{!! __('rest_list.delivery_charge') !!}</th>
                             <th>{!! __('rest_list.systmem_commision') !!}</th>
                             <th>{!! __('rest_list.payment_method') !!}</th>
-                            <th>{!! __('rest_list.characteristics') !!}</th>
                             @if(Auth::user()->admin->role->edit_retaurant == 1)
                                 <th>{!! __('rest_list.action') !!}</th>
                             @endif
@@ -65,11 +64,6 @@
                             <td>{!! $r->delivery_charge !!}</td>
                             <td>{!! $r->selling_percentage !!}</td>
                             <td>{!! ($r->payment_method==1) ? 'Cash Only' : 'Card Only'  !!}</td>
-                            <td>
-                                @foreach($r->all_characteristics as $c)
-                                    {{ $c->service_name->name }}, 
-                                @endforeach
-                            </td>
                             <td>
                                 @if(Auth::user()->admin->role->edit_retaurant == 1)
                                 <a href="{{ route('backend.restaurant.edit', $r->id) }}" class="text-primary mr-2">
