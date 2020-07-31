@@ -27,6 +27,9 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function () {
     Route::post('add-restaurant', [
         'uses' => 'Frontend\UserRegisterController@storeNewRestaurant'
     ]);
+    Route::post('add-driver', [
+        'uses' => 'Frontend\UserRegisterController@storeNewDriver'
+    ]);
     Route::post('customer-register', [
         'uses' => 'Frontend\UserRegisterController@storeNewCustomer'
     ]);

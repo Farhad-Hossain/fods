@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\Driver;
 use App\Models\GlobalSetting;
 use App\Models\Restaurant;
 use App\Models\RestaurantCharacteristic;
@@ -157,5 +158,59 @@ class UserRegisterController extends Controller
         DB::commit();
         $ret_customer = Customer::with('user')->where('id', $customer->id)->first();
         return response()->json($ret_customer, 200);
+    }
+
+
+    public function storeNewDriver(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'city' => 'required',
+            'email' => 'required|unique:users,email',
+            'phone' => 'required',
+            'password' => 'required',
+            'have_bike' => 'required',
+
+            'working_under' => 'required',
+            'earning_style' => 'required',
+            'registered_by' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            $error = $validator->messages();
+            return response()->json($error, 400);
+        }
+
+        try{
+            DB::beginTransaction();
+
+            $user = new User();
+            $user->name     = $request->name;
+            $user->email    = $request->email;
+            $user->role     = 2;
+            $user->password = Hash::make( $request->password );
+            $user->password_salt = $request->password;
+            $user->last_login_ip = request()->ip();
+            $user->status   = 1;
+            $user->save();
+            // Driver
+            $driver = new Driver();
+            $driver->user_id = $user->id;
+            $driver->city = $request->city;
+            $driver->phone =$request->phone;
+            $driver->have_bike = $request->have_bike;
+            $driver->max_delivery_distance = $request->working_under;
+            $driver->earning_style = $request->earning_style;
+            $driver->registered_by = $request->registered_by;
+            $driver->status = 1;
+            $driver->save();
+
+        }catch(\Exception $e){
+            DB::rollBack();
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+        DB::commit();
+        $ret_driver = Driver::with('user')->where('id', $driver->id)->first();
+        return response()->json($ret_driver, 200);
     }
 }
