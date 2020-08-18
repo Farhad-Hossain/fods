@@ -16,8 +16,11 @@ use App\Models\GlobalSetting;
 use App\Models\RestaurantTransaction;
 use App\Models\RestaurantService;
 use App\Models\RestaurantTiming;
+use App\Models\RestaurantFavorite;
 use App\Models\RestaurantCharacteristic;
+use App\Models\RestaurantAppointedTag;
 use App\Http\Requests\Backend\Admin\TransactionPostRequest;
+use App\Models\RestaurantAppointedCuisine;
 use Illuminate\Support\Facades\Hash;
 use App\User;
 use DB;
@@ -35,7 +38,9 @@ class RestaurantController extends Controller
 	public function view_restaurant_edit_form($r)
 	{
 		$r = Restaurant::findOrFail($r);
-		return view('backend.pages.restaurants.edit_form', compact('r') );
+		$cities = City::where('status', 1)->get();
+		$tags = RestaurantTag::where('status', 1)->get();
+		return view('backend.pages.restaurants.edit_form', compact('r', 'cities', 'tags') );
 	}
 	public function submit_restaurant_edit_form(Request $request, Restaurant $restaurant)
 	{
@@ -52,6 +57,40 @@ class RestaurantController extends Controller
 			$rs->selling_percentage = $request->selling_percentage;
 			$rs->payment_method = $request->payment_method;
 			$rs->alcohol_status = $request->alcohol_status;
+			$rs->seating_status = $request->seating_status;
+
+
+			if( $request->hasFile('restaurant_photo') ){
+				$extension = $request->file('restaurant_photo')->getClientOriginalExtension();
+				$fileNameToBeStore = 'rest_'.time().'.'.$extension;
+				$request->file('restaurant_photo')->storeAs('logo', $fileNameToBeStore);
+			} else {
+				$fileNameToBeStore = $rs->photo ?? '';
+			}
+
+			if( $request->hasFile('restaurant_logo') ){
+				$extension = $request->file('restaurant_logo')->getClientOriginalExtension();
+				$logo_fileNameToBeStore = 'rest_logo_'.time().'.'.$extension;
+				$request->file('restaurant_logo')->storeAs('logo', $logo_fileNameToBeStore);
+			} else {
+				$logo_fileNameToBeStore = $rs->photo ?? '';
+			}
+
+			if ( $request->tags ) {
+				$rs->appointedTags()->delete();
+
+				foreach($request->tags as $tag_id){
+					$rest_tag = new RestaurantAppointedTag();
+					$rest_tag->restaurant_id = $rs->id;
+					$rest_tag ->restaurantTag_id = $tag_id;
+
+					$rest_tag->save();
+				}
+			}
+
+			$rs->logo = 'logo/'.$logo_fileNameToBeStore;
+			$rs->cover_photo = 'logo/'.$fileNameToBeStore;
+
 			$rs->save();
 		}catch(\Exception $e){
 			session(['type'=>'danger', 'message'=>'Something went wrong'.$e]);
@@ -240,7 +279,7 @@ class RestaurantController extends Controller
 
 	public function restaurantAddSubmit(Request $request)
 	{
-		
+
 		$globals_info = GlobalSetting::first();
 
 		try{
@@ -256,6 +295,18 @@ class RestaurantController extends Controller
 			$user->status 	= 1;
 			$user->save();
 
+			if($request->hasFile('restaurant_photo')){
+				$extension = $request->file('restaurant_photo')->getClientOriginalExtension();
+				$fileNameToBeStore = 'rest_'.time().'.'.$extension;
+				$request->file('restaurant_photo')->storeAs('logo', $fileNameToBeStore);
+			}
+
+			if($request->hasFile('restaurant_logo')){
+				$extension = $request->file('restaurant_logo')->getClientOriginalExtension();
+				$logo_fileNameToBeStore = 'rest_logo_'.time().'.'.$extension;
+				$request->file('restaurant_logo')->storeAs('logo', $logo_fileNameToBeStore);
+			}
+
 			$res = new Restaurant();
 			$res->user_id 	= $user->id;
 			$res->name 		= $request->restaurant_name;
@@ -266,20 +317,37 @@ class RestaurantController extends Controller
 			$res->website 	= $request->restaurant_website;
 			$res->open_status = $request->open_status;
 			$res->open_status = $request->open_status;
-			$res->characteristics = implode(',',$request->characteristices);
+			$res->characteristics = 1;
 			$res->alcohol_status = $request->alcohol_status;
 			$res->seating_status = $request->seating_status;
-			$res->cuisine = $request->cuisines;
-			$res->tags 		= $request->tags;
+			
 			$res->payment_method = $request->payment_method;
 		    $res->delivery_charge  = $globals_info->default_delivery_charge;
 		    $res->selling_percentage  = $globals_info->default_product_selling_percentage;
+		    $res->cover_photo = 'logo/'.$fileNameToBeStore;
+		    $res->logo = 'logo/'.$logo_fileNameToBeStore;
 			$res_id = $res->save();
+
+			foreach($request->cuisines as $cuisine_id) {
+				$rest_cuisine = new RestaurantAppointedCuisine();
+				$rest_cuisine->restaurant_id = $res->id;
+				$rest_cuisine->cuisine_id = $cuisine_id;
+
+				$rest_cuisine->save();
+			}
+
+			foreach($request->tags as $tag_id){
+				$rest_tag = new RestaurantAppointedTag();
+				$rest_tag->restaurant_id = $res_id;
+				$rest_tag ->restaurantTag_id = $tag_id;
+
+				$rest_tag->save();
+			}
 
 		    $days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 		    for($i = 0; $i < sizeof($days); $i++){
 		        $time = new RestaurantTiming();
-		        $time->restaurant_id = $res_id;
+		        $time->restaurant_id = $res->id;
 		        $time->day           = $days[$i];
 
 		        $d = $days[$i].'_day';
@@ -295,12 +363,14 @@ class RestaurantController extends Controller
 		        $time->save();
 		    }
 
+		    /*
 		    foreach ($request->characteristices as $characteristic) {
 		        $char = new RestaurantCharacteristic();
 		        $char->restaurant_id = $res_id;
 		        $char->restaurant_service_id = $characteristic;
 		        $char->save();
 		    }
+		    */
 
 		    DB::commit();
 		    session(['type'=>'success', 'message'=>'Restaurant created successfully']);
@@ -310,6 +380,12 @@ class RestaurantController extends Controller
 
 		    dd('Something went wrong'.$e);
 		}
+	}
+
+	public function showFavoriteList()
+	{
+		$favorites = RestaurantFavorite::all();
+		return view('backend.pages.restaurants.favorites', compact('favorites'));
 	}
 	// end
 

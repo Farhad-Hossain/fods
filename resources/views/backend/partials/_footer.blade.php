@@ -2,7 +2,7 @@
     <!--begin::Copyright-->
     <!--begin::Nav-->
     <div class="nav nav-dark">
-        <a href="{!! URL::to('/') !!}" target="_blank" class="nav-link pl-0 pr-5">{!! date('Y') !!} &copy; Food Delivery System</a>
+        <a href="{!! URL::to('/') !!}" target="_blank" class="nav-link pl-0 pr-5">{!! date('Y') !!} &copy; {{ $gd['globals']->short_description }}</a>
     </div>
     <!--end::Nav-->
     <div class="text-dark order-2 order-md-1">

@@ -30,20 +30,22 @@ class FoodController extends Controller
 
         try {
 
+
+            $food = new Food();
+            $food->restaurant_id = $request->restaurant;
+            $food->food_category_id = $request->food_category;
+            $food->food_name = $request->name;
+
             if($request->hasFile('image'))
             {
                 $extension = $request->file('image')->getClientOriginalExtension();
                 $fileNameToStore = '_'.time().'.'.$extension;
                 $category_image = $request->file('image')->storeAs('food', $fileNameToStore);
             } else {
-                $category_image = "";
+                $fileNameToStore = "";
             }
+            $food->image = 'food/'.$fileNameToStore;
 
-            $food = new Food();
-            $food->restaurant_id = $request->restaurant;
-            $food->food_category_id = $request->food_category;
-            $food->food_name = $request->name;
-            $food->image = $category_image;
             $food->price = $request->price;
             $food->discount_price = $request->discount_price;
             $food->description = $request->description;

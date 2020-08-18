@@ -11,6 +11,10 @@ Route::group(['namespace'=>'Frontend', 'as'=>'frontend.'], function() {
         'uses' => 'HomeController@showIndexPage',
         'as' => 'home'
     ]);
+    Route::get('my-profile',[
+        'uses' => 'ProfileController@showProfileInfo',
+        'as' => 'myProfile'
+    ]);
     Route::get('become-a-partner', [
         'uses' => 'PageController@showBecomeAPartnerPage',
         'as' => 'become-a-partner'
@@ -97,6 +101,11 @@ Route::group(['namespace'=>'Frontend', 'as'=>'frontend.'], function() {
         Route::post('food-review-submit', 'RatingReviewController@food_review_submit')->name('food_review_submit');
     });
 
+    Route::group(['prefix'=>'favourite', 'as'=>'favourite.', 'middleware'=>'auth'], function(){
+        Route::get('add/{restaurant_id}', 'FoodController@addRestaurantToFavourite')->name('addRestaurant');
+        Route::get('remove/{restaurant_id}', 'FoodController@removeRestaurantFromFavourite')->name('removeRestaurant');
+    });
+
     
 
     /*
@@ -145,7 +154,23 @@ Route::get('dashboard', [
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+
+Route::get('admin/login', [
+    'uses'=>'Backend\Auth\AuthController@loginForm',
+    'as' => 'adminLogin'
+]);
+Route::get('restaurant/login', [
+    'uses'=>'Backend\Auth\AuthController@loginForm',
+    'as' => 'restaurantLogin'
+]);
+Route::get('driver/login', [
+    'uses' => 'Backend\Auth\AuthController@loginForm',
+    'as' => 'driverLogin'
+]);
+
 Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.', 'middleware'=>['auth', 'admin'] ], function(){
+
+
 	Route::get('/', 'DashboardController@showDashboard')->name('dashboard');
 
 	// Users and role management
@@ -156,10 +181,13 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
         Route::post('edit/{id}', 'UserController@updateUser')->name('edit');
         Route::get('delete/{id}', 'UserController@deleteUser')->name('delete');
 		Route::get('roles', 'UserController@viewRoleList')->name('roles');
+        Route::get('admin-user-role', 'UserController@adminUserRole')->name('admin_user_role');
+        Route::get('admin-user-role-create-form', 'UserController@adminRoleCreateForm')->name('adminRoleCreateForm');
+        Route::post('admin-user-role-create-submit', 'UserController@adminUserRoleCreateSubmit')->name('adminRoleCreateSubmit');
 
 
         Route::get('accesses/{user_id}', 'UserController@access_form_view')->name('access_form');
-        Route::post('accesses-update-sumit', 'UserController@accessFormSubmit')->name('access_form_submit');
+        Route::post('accesses-update-submit', 'UserController@accessFormSubmit')->name('access_form_submit');
 	});
 
     /*BEGIN::Setings*/
@@ -206,6 +234,8 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
         Route::post('restaurant-make-payment', 'RestaurantController@make_transaction_submit')->name('make_payment');
         Route::get('payout-requests', 'RestaurantController@show_payout_requests')->name('payout_requests');
         Route::get('make-done-payout/{req}', 'RestaurantController@make_request_done')->name('change_payout_request_status');
+
+        Route::get('favorites', 'RestaurantController@showFavoriteList')->name('favorites');
     });
     /*END::Restaurant*/
     /*END::Restaurant*/

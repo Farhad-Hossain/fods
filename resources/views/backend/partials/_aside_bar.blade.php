@@ -3,7 +3,7 @@
     <div class="brand flex-column-auto" id="kt_brand">
         <!--begin::Logo-->
         <a href="{!! URL::to('/dashboard') !!}" class="brand-logo">
-            <img alt="logo" src="{!! asset('uploads/') !!}/logo/{!! $gd['globals']->admin_logo ?? '' !!}" style="width: 100%; height: 50px;">
+            <img alt="logo" src="{!! asset('uploads') !!}/logo/{!! $gd['globals']->admin_logo ?? '' !!}" style="width: 100%; height: 50px;">
         </a>
         <!--end::Logo-->
         <!--begin::Toggle-->
@@ -93,6 +93,17 @@
                                     <span class="menu-text">{!! __('backend_menus.users') !!}</span>
                                 </a>
                             </li>
+                            <!--
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="{!! route('backend.users.admin_user_role') !!}" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text">Role Manage</span>
+                                </a>
+                            </li>
+                            -->
+                            
                             @endif
                         </ul>
                     </div>
@@ -188,6 +199,14 @@
                                 </a>
                             </li>
                             @endif
+                            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                <a href="{{ route('backend.restaurant.favorites') }}" class="menu-link menu-toggle">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text">Favaourites</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>

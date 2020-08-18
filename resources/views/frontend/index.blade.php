@@ -1,4 +1,4 @@
-@extends('frontend.master')
+@extends('frontend.master', ['title'=>'Home'])
 
 
 @section('main_content')
@@ -207,10 +207,10 @@
                         <div class="top">
                             <a href="{!! route('frontend.food.details', $food->id) !!}"><div class="bg-gradient"></div></a>
                             <div class="top-img">
-                                <img src="{!! asset('uploads') !!}/{!! $food->image !!}" alt="">
+                                <img src="{!! asset('uploads') !!}/{!! $food->image !!}" alt="" style="width: 100%; max-height: 185px;">
                             </div>
                             <div class="logo-img">
-                                <img src="{!! asset('uploads/logo') !!}/{!! $food->restaurant->image !!}" alt="">
+                                <img src="{!! asset('uploads') !!}/{!! $food->restaurant->logo !!}" alt="">
                             </div>
                             <div class="top-text">
                                 <div class="heading"><h4><a href="{!! route('frontend.food.details', $food->id) !!}">{!! $food->food_name !!}</a></h4></div>

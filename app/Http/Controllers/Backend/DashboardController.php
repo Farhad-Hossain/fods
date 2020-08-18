@@ -9,16 +9,21 @@ use App\Models\Driver;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Food;
+use Auth;
 
 class DashboardController extends Controller
 {
 	public function __construct()
 	{
-	
+	   
 	}
     /*show dashboard page*/
     public function showDashboard()
     {
+        if(Auth::user()->role == 3){
+            return redirect()->route('frontend.home');
+        }
+
         $total_restaurant = Restaurant::count();
         $total_driver = Driver::count();
         $total_customer = Customer::count(); 

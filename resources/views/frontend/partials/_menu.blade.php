@@ -4,7 +4,9 @@
             <div class="col-md-2 col-sm-12 col-xs-12">
                 <div class="menu-left text-center text-md-left">
                     <div class="logo-box">
-                        <a href="{!! route('frontend.home') !!}"><img src="{!! asset('frontend/images/') !!}/logo.svg" alt=""></a>
+                        <a href="{!! route('frontend.home') !!}">
+                            <img src="{!! asset('uploads') !!}/logo/{{$gd['globals']->website_logo}}" alt="Logo" height="40px;">
+                        </a>
                     </div>
                 </div>
             </div>

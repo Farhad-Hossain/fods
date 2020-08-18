@@ -3351,10 +3351,10 @@ padding-left: 152px;
 	background-image: -moz-linear-gradient( 90deg, rgb(227,136,2) 0%, rgb(255,168,3) 100%);
 	background-image: -webkit-linear-gradient( 90deg, rgb(227,136,2) 0%, rgb(255,168,3) 100%);
 	background-image: -ms-linear-gradient( 90deg, rgb(227,136,2) 0%, rgb(255,168,3) 100%);
-	width: 80px;
+	
 	height: 30px;
 	color: #fff;
-    padding: 8px 0px;
+    padding: 6px 3px;
     cursor: pointer;
 	margin-top: 11px;
 	font-family:"Consolas";

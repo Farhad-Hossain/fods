@@ -1,4 +1,4 @@
-@extends('frontend.master')
+@extends('frontend.master', ['title'=>'Payment'])
 
 @section('custom_style')
     <!-- Bootstrap core CSS-->

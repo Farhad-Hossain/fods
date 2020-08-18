@@ -38,7 +38,6 @@ class GlobalController extends Controller
     /*store/update global settings from admin panel*/
     public function global_settings_submit(GlobalSettingsPostRequest $request)
     {
-
         try {
 
             $global_setting = GlobalSetting::first();
@@ -57,6 +56,7 @@ class GlobalController extends Controller
             $global_setting->short_description = $request->app_description;
             $global_setting->country = $request->country;
             $global_setting->city = $request->city ?? '';
+            
             $global_setting->current_version = $request->current_version ?? '';
 
 
@@ -72,7 +72,7 @@ class GlobalController extends Controller
             {
                 $extension = $request->file('admin_logo')->getClientOriginalExtension();
                 $admin_fileNameToStore = 'admin_'.time().'.'.$extension;
-                $admin_logo = $request->file('admin_logo')->storeAs('logo', $fileNameToStore);
+                $admin_logo = $request->file('admin_logo')->storeAs('logo', $admin_fileNameToStore);
             } else {
                 $admin_fileNameToStore = $global_setting->admin_logo ?? "";
             }
@@ -80,14 +80,40 @@ class GlobalController extends Controller
             {
                 $extension = $request->file('mobile_logo')->getClientOriginalExtension();
                 $mobile_fileNameToStore = 'mobile_'.time().'.'.$extension;
-                $mobile_logo = $request->file('mobile_logo')->storeAs('logo', $fileNameToStore);
+                $mobile_logo = $request->file('mobile_logo')->storeAs('logo', $mobile_fileNameToStore);
             } else {
                 $mobile_fileNameToStore = $global_setting->mobile_logo ?? "";
             }
+            if($request->hasFile('website_logo')){
+                $extension = $request->file('website_logo')->getClientOriginalExtension();
+                $website_logo_fileNameToStore = 'web_'.time().'.'.$extension;
+                $website_logo = $request->file('website_logo')->storeAs('logo', $website_logo_fileNameToStore);
+            } else {
+                $website_logo_fileNameToStore = $global_setting->website_logo ?? "";
+            }
+            if( $request->hasFile('login_page_cover_photo') ){
+                $extension = $request->file('login_page_cover_photo')->getClientOriginalExtension();
+                $login_page_cover_photo_fileNameToStore = 'login_cover_'.time().'.'.$extension;
+                $login_page_cover_photo = $request->file('login_page_cover_photo')->storeAs('logo', $login_page_cover_photo_fileNameToStore);
+            } else {
+                $login_page_cover_photo_fileNameToStore = $global_setting->login_page_cover_photo ?? "";   
+            }
+
+            if( $request->hasFile('address_bar_icon') ){
+                $extension = $request->file('address_bar_icon')->getClientOriginalExtension();
+                $address_bar_icon_fileNameToStore = 'address_bar_icon_'.time().'.'.$extension;
+                $address_bar_icon = $request->file('address_bar_icon')->storeAs('logo', $address_bar_icon_fileNameToStore);
+            } else {
+                $address_bar_icon_fileNameToStore = $global_setting->address_bar_icon ?? '';
+            }
+
 
             $global_setting->app_logo = $fileNameToStore;
             $global_setting->admin_logo = $admin_fileNameToStore;
             $global_setting->mobile_logo = $mobile_fileNameToStore;
+            $global_setting->website_logo = $website_logo_fileNameToStore;
+            $global_setting->login_page_cover_photo = $login_page_cover_photo_fileNameToStore;
+            $global_setting->address_bar_icon = $address_bar_icon_fileNameToStore;
 
             $global_setting->save();
 

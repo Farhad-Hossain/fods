@@ -1,4 +1,4 @@
-@extends('frontend.master')
+@extends('frontend.master', ['title'=>'Contact Us'])
 @section('main_content')
 	<!--header end-->	
 	<!--title-bar start-->

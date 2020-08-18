@@ -14,8 +14,11 @@ class AddMultipleColumnToGlobalSettings extends Migration
     public function up()
     {
         Schema::table('global_settings', function (Blueprint $table) {
-            $table->string('admin_logo');
-            $table->string('mobile_logo');
+            $table->string('admin_logo')->nullable();
+            $table->string('mobile_logo')->nullable();
+            $table->string('website_logo')->nullable();
+            $table->string('login_page_cover_photo')->nullable();
+            $table->string('address_bar_icon')->nullable();
             $table->string('current_version');
         });
     }

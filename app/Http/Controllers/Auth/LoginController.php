@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
 class LoginController extends Controller
 {
     /*
@@ -77,5 +78,28 @@ class LoginController extends Controller
         $this->incrementLoginAttempts($request);
 
         return $this->sendFailedLoginResponse($request);
+    }
+
+    public function logout(Request $request)
+    {
+        $role = Auth::user()->role;
+        Auth::logout();
+        
+        // Admin redirect
+        if( $role == 0 ){
+            return redirect()->route('adminLogin');
+        }
+        // Restaurant redirect
+        if( $role == 1 ){
+            return redirect()->route('restaurantLogin');   
+        }
+        // Driver redirect
+        if( $role == 2 ){
+            return redirect()->route('driverLogin');
+        }
+        // Customer redirectr
+        if( $role == 3 ){
+            return redirect()->route('frontend.home');
+        }
     }
 }

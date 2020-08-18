@@ -14,7 +14,17 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
+        
         if (! $request->expectsJson()) {
+
+            if ( stripos(url()->full(), 'admin' ) ) {
+                return route('adminLogin');
+            } else if ( stripos(url()->full(), 'restaurant' ) ) {
+                return route('restaurantLogin');
+            } else if ( stripos( url()->full(), 'driver' ) ) {
+                return route('driverLogin');
+            }
+
             return route('login');
         }
     }

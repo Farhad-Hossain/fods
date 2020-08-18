@@ -36,6 +36,7 @@ class CustomerController extends Controller
             $user->password = Hash::make( $request->password );
             $user->password_salt = $request->password;
             $user->last_login_ip = request()->ip();
+            $customer->default_delivery_address = $request->default_delivery_address??'';
             $user->status 	= 1;
             $user->save();
 

@@ -1,4 +1,4 @@
-@extends('frontend.master')
+@extends('frontend.master', ['title'=>'Food Details'])
 
 @section('custom_style')
     <!-- Bootstrap core CSS-->
@@ -92,23 +92,38 @@
                                 <a href="restaurant_detail.html"><img src="images/restaurant-detail/logo-10.jpg" alt=""></a>
                             </div>
                             <div class="name-location">
-                                <a href="restaurant_detail.html"><h1>{!! $food->restaurant->name !!}</h1></a>
+                                <a href="restaurant_detail.html">
+                                    <h1>
+                                        {!! $food->restaurant->name !!} 
+                                        @if(isThisRestaurantFavouritedByAuthUser( $food->restaurant->id) )
+                                        <a href="{!!route('frontend.favourite.removeRestaurant', $food->restaurant->id)!!}" onclick="return confirm('Sur want to remove from favourite ?')">
+                                        <span class="views mt-3" data-toggle="tooltip" data-placement="top" title="Added to Favourite">
+                                            <i class="fas fa-heart text-success text-sm"></i>
+                                        </span>
+                                        </a>
+                                        @endif
+                                    </h1>
+                                </a>
                                 <p><span><i class="fas fa-map-marker-alt"></i></span>{!! $food->restaurant->city !!}</p>
                             </div>
                         </div>
                         <div class="right-side-btns">
-                            <div class="bagde-dt">
-                                <div class="partner-badge">
-                                    Partner
+                            @if(isThisRestaurantFavouritedByAuthUser( $food->restaurant->id) )
+                                
+                            @else
+                                <div class="bagde-dt">
+                                    <a href="{!!route('frontend.favourite.addRestaurant', $food->restaurant->id)!!}" onclick="return confirm('Add to favourite?')">
+                                    <div class="partner-badge">
+                                        Add to Favourite
+                                    </div>
+                                    </a>
                                 </div>
-                            </div>
+                            @endif
                             <div class="resto-review-stars">
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <span>4.5/5</span>
+                                <span>3/5</span>
                             </div>
                         </div>
                     </div>

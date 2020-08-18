@@ -31,7 +31,7 @@
                                 {!!Auth::user()->name!!}  <i class="fas fa-caret-down"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdown">
-                                <a class="dropdown-item" href=""> My Profile</a>
+                                <a class="dropdown-item" href="{{ route('frontend.myProfile') }}"> My Profile</a>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();"> Logout</a>

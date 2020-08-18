@@ -56,7 +56,12 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function () {
     Route::get('extra-food/non-vegetarian/list/{restaurant_id?}', [
         'uses' => 'Frontend\FoodController@getNonVegetarianExtraFood'
     ]);
-
+    Route::get('restaurant_details/{restaurant_id}', [
+        'uses' => 'Frontend\RestaurantController@getRestaurantDetails'
+    ]);
+    Route::get('restaurant-with-foods/{restaurant_id}', [
+        'uses' => 'Frontend\RestaurantController@restaurantWithFoods'
+    ]);
     /*
      * Admin Route Start
      * */
@@ -83,6 +88,9 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function () {
         ]);
         /*Cuisines route end*/
 
+        /*Restaurant route*/
+        
+
         /*Restaurant Tag route start*/
         Route::post('restaurant-tag', [
             'uses' => 'RestaurantTagController@storeNewTag'
@@ -100,6 +108,16 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function () {
             'uses' => 'RestaurantTagController@deleteTag'
         ]);
         /*Restaurant Tag route end*/
+
+        /*Restaurant Favourite start*/
+        Route::get('rest-favourite-add/{restaurant_id}', [
+            'uses'=>'FoodController@addRestaurantToFavourite'
+        ]);
+        Route::get('rest-favourite-remove/{restaurant_id}', [
+            'uses' => 'FoodController@removeRestaurantFromFavourite'
+        ]);
+        /*Restaurant Favourite end*/
+        
 
         /*
          * BEGIN::Food Route

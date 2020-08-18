@@ -127,7 +127,7 @@
                         <i aria-hidden="true" class="ki ki-close"></i>
                     </button>
                 </div>
-                <form action="{{ route('backend.food.category.add') }}" id="edit_category_form" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('backend.food.category.add') }}" id="add_category_form" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">

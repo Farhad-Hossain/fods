@@ -18,6 +18,7 @@ class CreateGlobalSettingsTable extends Migration
             $table->string('app_name');
             $table->text('short_description');
             $table->string('app_logo')->nullable();
+            $table->
             $table->tinyInteger('theme_color')->comment('1=Dark, 2=Light');
             $table->string('navbar_color');
             $table->string('contact_email');

@@ -44,7 +44,7 @@
                             <th>{!! __('rest_list.delivery_charge') !!}</th>
                             <th>{!! __('rest_list.systmem_commision') !!}</th>
                             <th>{!! __('rest_list.payment_method') !!}</th>
-                            @if(Auth::user()->admin->role->edit_retaurant == 1)
+                            @if(Auth::user()->admin->role->edit_restaurant == 1)
                                 <th>{!! __('rest_list.action') !!}</th>
                             @endif
 
@@ -60,20 +60,20 @@
                             <td>{!! $r->city !!}</td>
                             <td>{!! $r->phone !!}</td>
                             <td>{!! $r->address !!}</td>
-                            <td>{!! ($r->open_staus==1) ? 'Open now' : 'Closed Now' !!}</td>
+                            <td>{!! ($r->open_staus==1) ? 'Opened' : 'Closed' !!}</td>
                             <td>{!! $r->delivery_charge !!}</td>
                             <td>{!! $r->selling_percentage !!}</td>
                             <td>{!! ($r->payment_method==1) ? 'Cash Only' : 'Card Only'  !!}</td>
+                            @if(Auth::user()->admin->role->edit_restaurant == 1)
                             <td>
-                                @if(Auth::user()->admin->role->edit_retaurant == 1)
                                 <a href="{{ route('backend.restaurant.edit', $r->id) }}" class="text-primary mr-2">
                                     <i class="far fa-edit text-primary"></i>
                                 </a>
                                 <a href="{!! route('backend.restaurant.delete', $r->id) !!}" class="text-danger" onclick="return confirm('Are you sure want to delete ??')">
                                     <i class="far fa-trash-alt text-danger"></i>
                                 </a>
-                                @endif
                             </td>
+                            @endif
                             
                         </tr>
                         @endforeach

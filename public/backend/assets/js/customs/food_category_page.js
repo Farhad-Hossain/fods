@@ -3,6 +3,7 @@ $("#food_category_table").dataTable();
 
 function set_value_and_rise_edit_modal(route_address, id, name, description, status)
 {
+	
 	$('#edit_category_form').attr('action', route_address);
 	$('#edit_category_form input[name="id"]').val(id);
 	$('#edit_category_form input[name="name"]').val(name);

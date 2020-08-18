@@ -1,4 +1,4 @@
-@extends('frontend.master')
+@extends('frontend.master', ['title'=>'About Us'])
 @section('main_content')
 	<!--title-bar start-->
 	<section class="title-bar">

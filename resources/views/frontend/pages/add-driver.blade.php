@@ -1,4 +1,4 @@
-@extends('frontend.master')
+@extends('frontend.master', ['title'=>'Register Driver'])
 
 @section('custom_style')
     

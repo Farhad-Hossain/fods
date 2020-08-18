@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Models\Admin;
 use App\Models\Role;
+use App\Models\AdminUsersRole;
 use Illuminate\Support\Facades\Hash;
 use DB;
 
@@ -126,29 +127,50 @@ class UserController extends Controller
         
 
         $roler = Role::where('user_id', $request->user_id)->first();
-        $roler->create_admin = $create_admin;
-        $roler->edit_admin = $edit_admin;
+
+        // Restaurant
         $roler->create_restaurant = $create_restaurant;
         $roler->edit_restaurant = $edit_restaurant;
-        $roler->create_food = $create_food;
-        $roler->edit_food = $edit_food;
-        $roler->create_driver = $request->create_driver?1:0;
-        $roler->edit_driver = $request->edit_driver?1:0;
+        $roler->create_cuisine = $request->create_cuisine?1:0;
         $roler->see_restaurant_sales_transaction = $request->see_restaurant_sales_transaction?1:0;
         $roler->make_restaurant_withdrawal = $request->make_restaurant_withdrawal?1:0;
         $roler->restaurant_rating_review = $request->restaurant_rating_review?1:0;
+        $roler->restaurant_tag = $request->restaurant_tag?1:0;
+        // Food
+        $roler->create_food = $create_food;
+        $roler->see_food_list = $request->see_food_list?1:0;
+        $roler->edit_food = $edit_food;
+        $roler->food_category = $request->food_category?1:0;
+        $roler->extra_food = $request->extra_food?1:0;
+        $roler->food_rating_review = $request->food_rating_review?1:0;
+        // User
+        $roler->user_management = $request->user_management?1:0;
+        $roler->create_admin = $create_admin;
+        $roler->edit_admin = $edit_admin;
+        // Driver
+        $roler->create_driver = $request->create_driver?1:0;
+        $roler->edit_driver = $request->edit_driver?1:0;
+        // Global Settings
         $roler->global_setting = $request->global_setting?1:0;
         $roler->see_order_list = $request->see_order_list?1:0;
-        $roler->restaurant_tag = $request->restaurant_tag?1:0;
-        $roler->food_category = $request->food_category?1:0;
-        $roler->food_rating_review = $request->food_rating_review?1:0;
-        $roler->user_management = $request->user_management?1:0;
 
-
-        $roler->save();
-        
+        $roler->save();        
         session(['type'=>'success', 'message'=>'User access updated.']);
         return redirect()->back();
+    }
+
+    public function adminUserRole()
+    {
+        $admin_user_roles = AdminUsersRole::where('status', 1)->get();
+        return view('backend.pages.users.admin_role_list', compact('admin_user_roles'));
+    }
+    public function adminUserRoleCreateSubmit(Request $request)
+    {
+        dd($request->all);
+    }
+    public function adminRoleCreateForm()
+    {
+        dd('hhh');
     }
     
     

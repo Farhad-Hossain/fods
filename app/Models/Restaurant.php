@@ -8,6 +8,10 @@ class Restaurant extends Model
 {
     protected $guarded = [];
 
+    protected $hidden = [
+        'id', 'updated_at', 'created_at', 'user_id',
+    ];
+
     public function owner()
     {
     	return $this->belongsTo('App\User', 'user_id');
@@ -25,11 +29,50 @@ class Restaurant extends Model
 
     public function cuisines()
     {
-    	return $this->hasOne('App\Models\Cuisine','id', 'cuisine');
+    	return $this->hasManyThrough(
+            'App\Models\Cuisine',
+            'App\Models\RestaurantAppointedCuisine',
+            'restaurant_id',
+            'id',
+        );
     }
 
-    public function tag()
+    public function tags()
     {
-    	return $this->hasOne('App\Models\RestaurantTag', 'id');
+    	return $this->hasManyThrough(
+            'App\Models\RestaurantTag', 
+            'App\Models\RestaurantAppointedTag',
+            'restaurant_id',
+            'id',
+        );
     }
+
+    public function appointedTags()
+    {
+        return $this->hasMany('App\Models\RestaurantAppointedTag');
+    }
+
+
+
+    public function foods()
+    {
+        return $this->hasMany('App\Models\Food', 'restaurant_id')->orderBy('id', 'desc');
+    }
+
+    public function total_reviews()
+    {
+        return $this->hasMany('App\Models\RestaurantReview', 'restaurant_id');
+    }
+
+    public function isFavouriteToAuthUser()
+    {
+        return $this->hasOne('App\Models\RestaurantFavourite', 'inserted_by');
+    }
+
+    public function restCity()
+    {
+        return $this->belongsTo('App\Models\City', 'city');
+    }
+
+
 }

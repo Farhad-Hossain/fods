@@ -1,4 +1,4 @@
-@extends('frontend.master')
+@extends('frontend.master', ['title'=>'Register Customer'])
 
 @section('custom_style')
     

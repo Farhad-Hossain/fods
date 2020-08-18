@@ -20,7 +20,7 @@
                 </div>
             </div>
             <!--begin::Form-->
-            <form class="form" action="{!! route('backend.restaurant.add') !!}" method="POST">
+            <form class="form" action="{!! route('backend.restaurant.add') !!}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="card-body">
                <div class="row">
@@ -71,14 +71,33 @@
                             <p class="text-danger">{!! $message !!}</p>
                        @enderror
                    </div>
+                   
+
                    <div class="form-group col-sm-12 col-md-4">
-                       <label>City</label>
-                       <select class="form-control selectpicker" data-size="7" data-live-search="true" name="city" required>
-                         @foreach($cities as $city)
-                             <option value="{!! $city->name !!}">{!! $city->name !!}</option>
-                         @endforeach
-                        </select>
+                       <label>Logo</label>
+                       <div></div>
+                       <div class="custom-file">
+                           <input type="file" class="custom-file-input" name="restaurant_logo"/>
+                           <label class="custom-file-label">Choose file</label>
+                           @error('restaurant_logo')
+                           <span class="form-text text-warning">{{ $message }}</span>
+                           @enderror
+                       </div> 
                    </div>
+
+                   <div class="form-group col-sm-12 col-md-4">
+                       <label>Cover Photo</label>
+                       <div></div>
+                       <div class="custom-file">
+                           <input type="file" class="custom-file-input" name="restaurant_photo"/>
+                           <label class="custom-file-label">Choose file</label>
+                           @error('restaurant_photo')
+                           <span class="form-text text-warning">{{ $message }}</span>
+                           @enderror
+                       </div> 
+                   </div>
+
+
                    
                    <div class="form-group col-sm-12 col-md-4">
                        <label>Open Status</label>
@@ -125,9 +144,9 @@
                        @enderror
                    </div>
                    <div class="form-group col-sm-12 col-md-4">
-                       <label>Cuisine</label>
-                       <select name="cuisines" class="form-control selectpicker" required data-size="7" data-live-search="true">
-                           <option value="">Select Cuisine</option>
+                       <label>Cuisines</label>
+                       <select name="cuisines[]" multiple="" class="form-control selectpicker" required data-size="7" data-live-search="true">
+                           <option value="">Select Cuisines</option>
                            @foreach($cuisines as $cuisine)
                                <option value="{{ $cuisine->id }}">{{ $cuisine->name }}</option>
                            @endforeach
@@ -136,21 +155,11 @@
                            <p class="text-info">{!! $message !!}</p>
                        @enderror
                    </div>
-                   <div class="form-group col-sm-12 col-md-4">
-                       <div class="checkbox-title">Services*</div>
-                       <div class="filter-checkboxs">
-                           @foreach($restaurant_services as $service)
-                               <input type="checkbox" id="cs{{ $loop->iteration }}" name="characteristices[]" value="{{ $service->id }}">
-                               <label for="cs{{ $loop->iteration }}" title="Monday">{{ $service->name }}</label>
-                           @endforeach
-                           @error('characteristices')
-                               <p class="text-info">{!! $message !!}</p>
-                           @enderror
-                       </div>
-                   </div>
+                   
                    <div class="form-group col-sm-12 col-md-4">
                        <label>Select tag</label>
-                       <select class="form-control selectpicker" required data-size="7" data-live-search="true" name="tags" required>
+
+                       <select multiple="" class="form-control selectpicker" required data-size="7" data-live-search="true" name="tags[]" required>
                            <option value="">Select Tags</option>
                            @foreach($tags as $tag)
                                <option value="{{ $tag->id }}">{{ $tag->name }}</option>
@@ -172,6 +181,15 @@
                         @enderror
                    </div>
                    <div class="form-group col-sm-12 col-md-4">
+                       <label>City</label>
+                       <select class="form-control selectpicker" data-size="7" data-live-search="true" name="city" required>
+                         @foreach($cities as $city)
+                             <option value="{!! $city->id !!}">{!! $city->name !!}</option>
+                         @endforeach
+                        </select>
+                   </div>
+
+                   <div class="form-group col-sm-12 col-md-4">
                        <label>Address</label>
                        <textarea name="restaurant_address" rows="3" class="form-control" required>{!!old('restaurant_address')!!}</textarea>
                        @error('restaurant_address')
@@ -186,48 +204,17 @@
                           <?php 
                               $days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
                               for($i = 1; $i <= 7; $i++){ ?>
-
                                   <tr>
                                       <td>
                                           <input type="checkbox" id="d<?=$i?>" value="1" name="{{$days[$i-1]}}_day">
-                                          <label for="d<?=$i?>" title="Monday"><?=$days[$i-1]?></label>
+                                          <label for="d<?=$i?>"><?=$days[$i-1]?></label>
                                       </td>   
                                       <td>
                                           <input type="text" name="{{$days[$i-1]}}_time_from" class="timepicker"/>
-
-                                          {{--<select class="selectpicker" tabindex="-98" name="{{$days[$i-1]}}_time_from">
-                                              <option value="12">12.00 AM</option>
-                                              <option value="1">01.00 AM</option>
-                                              <option value="2">02.00 AM</option>
-                                              <option value="3">03.00 AM</option>
-                                              <option value="4">04.00 AM</option>
-                                              <option value="5">05.00 AM</option>
-                                              <option value="6">06.00 AM</option>
-                                              <option value="7">07.00 AM</option>
-                                              <option value="8">08.00 AM</option>
-                                              <option value="9">09.00 AM</option>
-                                              <option value="9">10.00 AM</option>
-                                              <option value="9">11.00 AM</option>
-                                          </select>        --}}
                                       </td>
                                       <td>to</td>
                                       <td>
                                           <input type="text" name="{{$days[$i-1]}}_time_to" class="timepicker"/>
-
-                                          {{--<select class="selectpicker" tabindex="-98" name="{{$days[$i-1]}}_time_to">
-                                              <option value="12">12.00 PM</option>
-                                              <option value="1">01.00 PM</option>
-                                              <option value="2">02.00 PM</option>
-                                              <option value="3">03.00 PM</option>
-                                              <option value="4">04.00 PM</option>
-                                              <option value="5">05.00 PM</option>
-                                              <option value="6">06.00 PM</option>
-                                              <option value="7">07.00 PM</option>
-                                              <option value="8">08.00 PM</option>
-                                              <option value="9">09.00 PM</option>
-                                              <option value="9">10.00 PM</option>
-                                              <option value="9">11.00 PM</option>
-                                          </select>--}}
                                       </td>
                                   </tr>
 

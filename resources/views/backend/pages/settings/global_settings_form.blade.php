@@ -90,16 +90,17 @@
                             </div>
 
                             <div class="form-group col-sm-12 col-md-4">
-                                <label>{!! __('backend_gs_form.app_logo') !!}</label>
+                                <label>Website Logo</label>
                                 <div></div>
                                 <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="app_logo"/>
+                                        <input type="file" class="custom-file-input" name="website_logo"/>
                                     <label class="custom-file-label">Choose file</label>
-                                    @error('app_logo')
+                                    @error('website_logo')
                                     <span class="form-text text-warning">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
+
                             <div class="form-group col-sm-12 col-md-4">
                                 <label>{!! __('backend_gs_form.admin_logo') !!}</label>
                                 <div></div>
@@ -111,8 +112,21 @@
                                     @enderror
                                 </div>
                             </div>
+
                             <div class="form-group col-sm-12 col-md-4">
-                                <label>{!! __('backend_gs_form.mobile_logo') !!}</label>
+                                <label>App Logo</label>
+                                <div></div>
+                                <div class="custom-file">
+                                        <input type="file" class="custom-file-input" name="app_logo"/>
+                                    <label class="custom-file-label">Choose file</label>
+                                    @error('app_logo')
+                                    <span class="form-text text-warning">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            
+                            <div class="form-group col-sm-12 col-md-4">
+                                <label>Mobile View Logo</label>
                                 <div></div>
                                 <div class="custom-file">
                                         <input type="file" class="custom-file-input" name="mobile_logo"/>
@@ -123,9 +137,33 @@
                                 </div>
                             </div>
 
+                            <div class="form-group col-sm-12 col-md-4">
+                                <label>Login Page Cover Photo</label>
+                                <div></div>
+                                <div class="custom-file">
+                                        <input type="file" class="custom-file-input" name="login_page_cover_photo"/>
+                                    <label class="custom-file-label">Choose file</label>
+                                    @error('login_page_cover_photo')
+                                    <span class="form-text text-warning">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group col-sm-12 col-md-4">
+                                <label>Icon of Adress bar</label>
+                                <div></div>
+                                <div class="custom-file">
+                                        <input type="file" class="custom-file-input" name="address_bar_icon"/>
+                                    <label class="custom-file-label">Choose file</label>
+                                    @error('address_bar_icon')
+                                    <span class="form-text text-warning">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
                             <div class="form-group col-sm-12 col-md-6">
-                                <label>{!! __('backend_gs_form.app_description') !!}</label>
-                                <textarea class="form-control" name="app_description" required>{!! $setting->short_description !!}</textarea>
+                                <label>Copy Right</label>
+                                <input type="text" class="form-control" name="app_description" value="{!! $setting->short_description !!}" required>
                                 @error('app_description')
                                 <span class="form-text text-warning">{{ $message }}</span>
                                 @enderror
@@ -157,7 +195,7 @@
 
                             <div class="form-group col-sm-12 col-md-6">
                                 <label>{!! __('backend_gs_form.current_version') !!}</label>
-                                <input type="number" name="current_version" step="0.01" min="1" max="100" required class="form-control" value="1.0">
+                                <input type="text" name="current_version" required class="form-control" value="{{ $gd['globals']->current_version }}">
                                 @error('current_version')
                                 <span class="form-text text-warning">{{ $message }}</span>
                                 @enderror

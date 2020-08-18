@@ -41,7 +41,7 @@
                                 <option value="">--Select Restaurant--</option>
                                 @if(!empty($restaurants))
                                     @foreach($restaurants as $restaurant)
-                                        <option value="{!! $restaurant->id !!}" {!! ($food->retaurant_id == $restaurant->id)?'selected':'' !!}>{!! $restaurant->name !!}</option>
+                                        <option value="{!! $restaurant->id !!}" {!! ($food->restaurant_id == $restaurant->id)?'selected':'' !!}>{!! $restaurant->name !!}</option>
                                     @endforeach
                                 @endif
                             </select>

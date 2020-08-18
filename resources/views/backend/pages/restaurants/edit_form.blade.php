@@ -9,111 +9,93 @@
                     <span class="card-icon">
                         <i class="flaticon2-heart-rate-monitor text-primary"></i>
                     </span>
-                    <h3 class="card-label">Restaurant</h3>
+                    <h3 class="card-label">Restaurant - Edit</h3>
                 </div>
                 <div class="card-toolbar">
-                    <!--begin::Dropdown-->
-                    <div class="dropdown dropdown-inline mr-2">
-                        <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="la la-download"></i>Export</button>
-                        <!--begin::Dropdown Menu-->
-                        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                            <ul class="nav flex-column nav-hover">
-                                <li class="nav-header font-weight-bolder text-uppercase text-primary pb-2">Choose an option:</li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon la la-print"></i>
-                                        <span class="nav-text">Print</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon la la-copy"></i>
-                                        <span class="nav-text">Copy</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon la la-file-excel-o"></i>
-                                        <span class="nav-text">Excel</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon la la-file-text-o"></i>
-                                        <span class="nav-text">CSV</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon la la-file-pdf-o"></i>
-                                        <span class="nav-text">PDF</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!--end::Dropdown Menu-->
-                    </div>
-                    <!--end::Dropdown-->
                     <!--begin::Button-->
-                    <a href="#" class="btn btn-primary font-weight-bolder">
-                    <i class="la la-plus"></i>New Record</a>
+                    <a href="{{ route('backend.restaurant.list') }}" class="btn btn-primary font-weight-bolder">
+                        Restaurant list
+                    </a>
                     <!--end::Button-->
                 </div>
             </div>
             <!--begin::Form-->
-            <form class="form" action="{!! route('backend.restaurant.edit', $r->id) !!}" method="POST">
+            <form class="form" action="{!! route('backend.restaurant.edit', $r->id) !!}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="card-body">
                         <input type="hidden" name="id" value="{!! $r->id !!}" required>
                         <div class="form-group row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <label>{!! __('rest.name') !!}</label>
                                 <input type="text" class="form-control" name="name" value="{!! $r->name !!}" />
                                 @error('name')
                                     <p class="text-danger">{!! $message !!}</p>
                                 @enderror
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <label>{!! __('rest.city') !!}</label>
-                                <input type="text" class="form-control" name="city" value="{!! $r->city !!}" />
+                                <select class="form-control selectpicker" data-size="7" data-live-search="true" name="city" required>
+                                  @foreach($cities as $city)
+                                      <option value="{!! $city->id !!}" {{ $city->id == $r->city ? 'selected' : '' }} >{!! $r->restCity->name !!}</option>
+                                  @endforeach
+                                </select>
                                 @error('city')
                                     <p class="text-danger">{!! $message !!}</p>
                                 @enderror
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <label>{!! __('rest.email') !!}</label>
                                 <input type="email" class="form-control" name="email" value="{!! $r->email !!}" />
                                 @error('email')
                                     <p class="text-danger">{!! $message !!}</p>
                                 @enderror
                             </div>
-                            
-                            <div class="col-lg-6">
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-lg-4">
                                 <label>{!! __('rest.phone') !!}</label>
                                 <input type="text" class="form-control" name="phone" value="{!! $r->phone !!}" />
                             </div>
-                            
+                            <div class="col-lg-4">
+                                <label>Logo</label>
+                                <div></div>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" name="restaurant_logo"/>
+                                    <label class="custom-file-label">Choose file</label>
+                                    @error('restaurant_photo')
+                                    <span class="form-text text-warning">{{ $message }}</span>
+                                    @enderror
+                                </div> 
+                            </div>
+                            <div class="col-lg-4">
+                                <label>Cover Photo</label>
+                                <div></div>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" name="restaurant_photo"/>
+                                    <label class="custom-file-label">Choose file</label>
+                                    @error('restaurant_photo')
+                                    <span class="form-text text-warning">{{ $message }}</span>
+                                    @enderror
+                                </div> 
+                            </div>
                         </div>
+
                         <div class="form-group row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <label>{!! __('rest.delivery_charge') !!}</label>
                                 <input type="text" class="form-control" name="delivery_charge" value="{!! $r->delivery_charge !!}" required />
                                 @error('delivery_charge')
                                     <p class="text-danger">{!! $message !!}</p>
                                 @enderror
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <label>{!! __('rest.selling_percentage') !!}</label>
                                 <input type="number" class="form-control" name="selling_percentage" value="{!! $r->selling_percentage !!}" required />
                                 @error('selling_percentage')
                                     <p class="text-danger">{!! $message !!}</p>
                                 @enderror
                             </div>
-                        </div>
-                        <div class="form-group row">
                             <div class="col-lg-4">
                                 <label>{!! __('rest.payment_method') !!}</label>
                                 <select class="form-control" name="payment_method" required>
@@ -125,6 +107,9 @@
                                     <p class="text-danger">{!! $message !!}</p>
                                 @enderror
                             </div>
+                        </div>
+
+                        <div class="form-group row">    
                             <div class="col-lg-4">
                                 <label>{!! __('rest.website') !!}</label>
                                 <input type="text" name="website" class="form-control" value="{!! $r->website !!}" required>
@@ -139,8 +124,6 @@
                                     <p class="text-danger">{!! $message !!}</p>
                                 @enderror
                             </div>
-                        </div>
-                        <div class="form-group row">
                             <div class="col-lg-4">
                                 <label>{!! __('rest.status') !!}</label>
                                 <div class="radio-inline">
@@ -152,6 +135,8 @@
                                     <span></span></label>
                                 </div>
                             </div>
+                        </div>
+                        <div class="form-group row">
                             <div class="col-lg-4">
                                 <label>{!! __('rest.alcohol_status') !!}</label>
                                 <div class="radio-inline">
@@ -163,6 +148,31 @@
                                     <span></span></label>
                                 </div>
                             </div>
+                            <div class="col-lg-4">
+                                <label>Seating</label>
+                                <div class="radio-inline">
+                                  <label class="radio">
+                                  <input type="radio" name="seating_status" value="1" /> Available
+                                  <span></span></label>
+                                  <label class="radio">
+                                  <input type="radio" name="seating_status" value="2" /> Not Available
+                                  <span></span></label>
+                                </div>
+                                @error('seating_status')
+                                    <p class="text-info">{!! $message !!}</p>
+                                @enderror
+                            </div>
+                            <div class="form-group col-sm-12 col-md-4">
+                                <label>Select tag</label>
+
+                                <select multiple="" class="form-control selectpicker" required data-size="7" data-live-search="true" name="tags[]" required>
+                                    <option value="">Select Tags</option>
+                                    @foreach($tags as $tag)
+                                        <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
                         </div>
                         
             </div>

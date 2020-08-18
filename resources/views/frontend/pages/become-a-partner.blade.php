@@ -1,4 +1,4 @@
-@extends('frontend.master')
+@extends('frontend.master', ['title'=>'Become a partner'])
 @section('main_content')
 
     <!--title-bar start-->

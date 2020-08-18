@@ -6,9 +6,9 @@
     <meta name="author" content="">
 
     <!-- Favicon -->
-    <link href="{!! asset('frontend/images/fav.png') !!}" rel="shortcut icon" type="image/x-icon"/>
+    <link href="{!! asset('uploads') !!}/logo/{{$gd['globals']->website_logo}}" rel="shortcut icon" type="image/x-icon"/>
 
-    <title>Natto | {{ $title ?? '' }} </title>
+    <title>{{$gd['globals']->app_name}} | {{ $title ?? '' }} </title>
 
     <!-- Bootstrap core CSS-->
     <link href="{!! asset('frontend/vendor/bootstrap/css/bootstrap.min.css') !!}" rel="stylesheet">

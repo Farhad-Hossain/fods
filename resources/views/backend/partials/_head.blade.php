@@ -21,7 +21,7 @@
 <link href="{!! asset('backend/assets/css/themes/layout/brand/dark.css?v=7.0.3') !!}" rel="stylesheet" type="text/css" />
 <link href="{!! asset('backend/assets/css/themes/layout/aside/dark.css?v=7.0.3') !!}" rel="stylesheet" type="text/css" />
 <!--end::Layout Themes-->
-<link rel="shortcut icon" href="{!! asset('backend/assets/media/logos/favicon.ico') !!}" />
+<link rel="shortcut icon" href="{!! asset('uploads') !!}/logo/{{ $gd['globals']->address_bar_icon }}" />
 
 <link rel="stylesheet" href="{!! asset('assets/frontend/plugins/growl-alert/stylesheets/jquery.growl.css') !!}">
 <link rel="stylesheet" type="text/css" href="{!! asset('backend') !!}/assets/css/main.css">

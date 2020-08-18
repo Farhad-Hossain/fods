@@ -92,7 +92,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                 <div class="pb-13 pt-lg-0 pt-5">
                                     <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">Welcome to {!!$gd['globals']->app_name!!}</h3>
                                     <span class="text-muted font-weight-bold font-size-h4">New Here?
-                                    <a href="javascript:;" id="kt_login_signup" class="text-primary font-weight-bolder">Create an Account</a></span>
+                                    <a href="{!! route('frontend.customer-register') !!}" class="text-primary font-weight-bolder">Create an Account</a></span>
                                 </div>
 
                                 <!--begin::Title-->
@@ -201,11 +201,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     </div>
                     <!--end::Content body-->
                     <!--begin::Content footer-->
-                    <div class="d-flex justify-content-lg-start justify-content-center align-items-end py-7 py-lg-0">
-                        <a href="javascript:;" class="text-primary font-weight-bolder font-size-h5">Terms</a>
-                        <a href="javascript:;" class="text-primary ml-10 font-weight-bolder font-size-h5">Plans</a>
-                        <a href="javascript:;" class="text-primary ml-10 font-weight-bolder font-size-h5">Contact Us</a>
-                    </div>
+                    
                     <!--end::Content footer-->
                 </div>
                 

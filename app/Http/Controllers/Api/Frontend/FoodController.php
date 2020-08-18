@@ -61,4 +61,35 @@ class FoodController extends Controller
         }
         return response()->json($extra_foods, 200);
     }
+
+
+    public function addRestaurantToFavourite($restaurant_id)
+    {
+        try{
+            $favourite = new RestaurantFavorite();
+
+            $restuarant = $favourite->insert([
+                'restaurant_id' => $restaurant_id,
+                'ip' => request()->ip(),
+                'status' => 1,
+                'inserted_by' => auth()->user()->id,
+            ]);
+
+            
+            return response()->json($restaurant, 200);
+        } catch(Exception $e) {
+
+        }
+    }
+
+    public function removeRestaurantFromFavourite($restaurant_id)
+    {
+        try{
+            $favourite = RestaurantFavorite::where('restaurant_id', $restaurant_id)
+            ->delete();
+            return response()->json($favourite, 200);
+        } catch (Exception $e) {
+            
+        }
+    }
 }
