@@ -26,6 +26,8 @@ class LoginController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
+        return response()->json($user, 200);
+        
 
         if (Hash::check($request->password, $user->password)) {
 

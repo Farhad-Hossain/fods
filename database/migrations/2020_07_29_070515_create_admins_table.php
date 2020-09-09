@@ -17,6 +17,7 @@ class CreateAdminsTable extends Migration
             $table->id();
             $table->integer('user_id')->unsigned();
             $table->string('designation');
+            $table->string('photo')->nullable();
             $table->string('phone');
             $table->text('description')->nullable();
             $table->tinyInteger('status')->unsigned()->default(1);

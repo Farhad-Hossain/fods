@@ -175,7 +175,13 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
 
 	// Users and role management
 	Route::group(['prefix'=>'users', 'as'=>'users.'], function(){
+        Route::get('my-profile', 'UserController@viewMyProfile')->name('myProfile');
+        Route::post('my-profile-edit-submit', 'UserController@editMyProfileSubmit')->name('myProfileEditSubmit');
+        Route::post('change-password', 'UserController@changePasswordSubmit')->name('changePasswordSubmit');
+
         Route::post('create', 'UserController@createAdminSubmit')->name('create');
+        Route::post('editAdmin', 'UserController@editAdminSubmit')->name('editSubmit');
+
 
         Route::get('list', 'UserController@viewUsersList')->name('list');
         Route::post('edit/{id}', 'UserController@updateUser')->name('edit');

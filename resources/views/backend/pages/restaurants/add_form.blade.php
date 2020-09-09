@@ -190,6 +190,11 @@
                    </div>
 
                    <div class="form-group col-sm-12 col-md-4">
+                       <label>Commission ( In percentage )</label>
+                       <input type="number" class="form-control" name="commission" step="0.01" required>
+                   </div>
+
+                   <div class="form-group col-sm-12 col-md-4">
                        <label>Address</label>
                        <textarea name="restaurant_address" rows="3" class="form-control" required>{!!old('restaurant_address')!!}</textarea>
                        @error('restaurant_address')

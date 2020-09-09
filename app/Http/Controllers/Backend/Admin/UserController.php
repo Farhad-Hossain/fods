@@ -9,14 +9,89 @@ use App\Models\Admin;
 use App\Models\Role;
 use App\Models\AdminUsersRole;
 use Illuminate\Support\Facades\Hash;
+use Auth;
 use DB;
 
 class UserController extends Controller
 {
+
     public function viewUsersList()
     {
     	$users = User::where('role', 0)->orderBy('id', 'desc')->get();
     	return view('backend.pages.users.user_list', compact('users'));
+    }
+
+    public function viewMyProfile()
+    {
+        $myProfile = User::where('id', Auth::user()->id)->with('admin')->get();
+        return view('backend.pages.users.myProfile', ['myProfile'=>$myProfile[0]]);
+    }
+
+    public function editMyProfileSubmit(Request $request)
+    {
+        
+        DB::beginTransaction();
+        try{
+            $user = User::find( Auth::user()->id );
+
+            if ( $request->hasFile('profile_avatar') ) {
+                $extension = $request->file('profile_avatar')->getClientOriginalExtension();
+                $fileNameToStore = '_'.time().'.'.$extension;
+                $request->file('profile_avatar')->storeAs('logo',$fileNameToStore);
+            } else {
+                $fileNameToStore = $user->admin->photo??'';
+            }
+
+            $user->name = $request->name;
+            $user->email = $request->email;
+
+            $user->admin->photo = 'logo/'.$fileNameToStore;
+            $user->admin->designation = $request->designation;
+            $user->admin->phone = $request->phone;
+
+            $user->save();
+            $user->admin->save();
+
+        } catch (Exception $e) {
+            DB::rollback();
+            session(['type'=>'danger', 'message'=>'Something went wrong']);
+            return redirect()->back();
+        }
+
+        DB::commit();
+        session(['type'=>'success', 'message'=>'Profile updated successfully.']);
+        return redirect()->back();
+    }
+
+    public function changePasswordSubmit(Request $request)
+    {
+        $request->validate([
+            'current_password'=>'required',
+            'new_password'=>'required',
+            'confirm_password'=>'required'
+        ]);
+        $user = Auth::user();
+        
+        if ( $request->current_password == $user->password_salt ) {
+            if ( $request->new_password == $request->confirm_password ) {
+                try {
+                    $user->password = Hash::make($request->new_password);
+                    $user->password_salt = $request->new_password;
+
+                    session(['type'=>'success', 'message'=>'Password changed.']);
+                    $user->save();
+                    return redirect()->back();
+                } catch ( Exception $e ) {
+
+                }
+            } else {
+                session(['type'=>'danger', 'message'=>'Confirm Password does not matched.']);
+                return redirect()->back();
+            }
+        } else {
+            session(['type'=>'danger', 'message'=>'Wrong Password.']);
+            return redirect()->back();
+        }
     }
 
     public function updateUser(UpdateUserPostRequest $request, $id)
@@ -49,6 +124,8 @@ class UserController extends Controller
         return redirect()->back();
     }
 
+
+
     public function deleteUser($id)
     {
         try {
@@ -76,6 +153,14 @@ class UserController extends Controller
 
     public function createAdminSubmit(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'profile_photo' => 'required',
+            'email' => 'required|unique:users,email',
+            'phone' => 'required|unique:admins,phone',
+            'designation' => 'required',
+        ]);
+
         DB::beginTransaction();
         try{
             $user = new User();
@@ -87,11 +172,21 @@ class UserController extends Controller
             $user->last_login_ip = request()->ip();
             $user->save();
 
+            if ( $request->hasFile('profile_photo') ) {
+                $extension = $request->file('profile_photo')->getClientOriginalExtension();
+                $fileNameToStore = '_'.time().'.'.$extension;
+                $profile_photo = $request->file('profile_photo')->storeAs('logo', $fileNameToStore);
+            } else {
+                $fileNameToStore = '';
+            }
+
             $user_id = $user->id;
             $admin = new Admin();
             $admin->user_id = $user_id;
+            $admin->photo = 'logo/'.$fileNameToStore ?? '';
             $admin->phone = $request->phone;
             $admin->designation = $request->designation;
+            $admin->description = $request->description ?? '';
             $admin->save();
 
             $role = new Role();
@@ -108,6 +203,34 @@ class UserController extends Controller
         session(['type'=>'success', 'message'=>'User created successfully']);
         return redirect()->back();
     }
+    public function editAdminSubmit(Request $request) 
+    {
+        
+        $user = User::find($request->user_id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->admin->phone = $request->phone;
+        $user->admin->designation = $request->designation;
+        $user->admin->description = $request->description;
+
+        if ( $request->hasFile('profile_photo') ) {
+            $extension = $request->file('profile_photo')->getClientOriginalExtension();
+            $fileNameToStore = '_'.time().'.'.$extension;
+            $photo = $request->file('profile_photo')->storeAs('logo', $fileNameToStore);
+        } else {
+            $fileNameToStore = $user->admin->photo ?? '';
+        }
+        $user->admin->photo = 'logo/'.$fileNameToStore;
+
+        $user->save();
+        $user->admin->save();
+
+        session(['type'=>'success', 'message'=>'Updated successfully']);
+        return redirect()->back();
+
+
+
+    }
 
     public function access_form_view($user_id)
     {
@@ -116,7 +239,7 @@ class UserController extends Controller
     }
     public function accessFormSubmit(Request $request)
     {
-
+        
         $create_admin = $request->create_admin?1:0 ;
         $edit_admin = $request->edit_admin?1:0;
         $create_restaurant = $request->create_restaurant?1:0;
@@ -129,6 +252,7 @@ class UserController extends Controller
         $roler = Role::where('user_id', $request->user_id)->first();
 
         // Restaurant
+        $roler->restaurant_management = $request->restaurant_management?1:0;
         $roler->create_restaurant = $create_restaurant;
         $roler->edit_restaurant = $edit_restaurant;
         $roler->create_cuisine = $request->create_cuisine?1:0;
@@ -143,6 +267,10 @@ class UserController extends Controller
         $roler->food_category = $request->food_category?1:0;
         $roler->extra_food = $request->extra_food?1:0;
         $roler->food_rating_review = $request->food_rating_review?1:0;
+        // Order Managewment
+        $roler->order_management = $request->order_management?1:0;
+        $roler->see_order_list = $request->see_order_list?1:0;
+        $roler->order_status = $request->order_status?1:0;
         // User
         $roler->user_management = $request->user_management?1:0;
         $roler->create_admin = $create_admin;

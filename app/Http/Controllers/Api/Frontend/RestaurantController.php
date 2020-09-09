@@ -22,10 +22,9 @@ class RestaurantController extends Controller
 
     public function getRestaurantDetails($restaurant_id)
     {
-
         $restaurant = Restaurant::where('id', $restaurant_id)->first();
         $foods = FoodCategory::with('foodsForRestaurant')->get();
-        return response()->json([$restaurant, $foods], 200);
+        return response()->json(['restaurant'=>$restaurant, 'foods_by_category'=>$foods], 200);
     }
 
     public function restaurantWithFoods($restaurant_id)

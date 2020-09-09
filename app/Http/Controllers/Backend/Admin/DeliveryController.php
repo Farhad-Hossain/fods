@@ -14,6 +14,7 @@ use App\Models\Transaction;
 use App\Models\DriverTransaction;
 use App\Http\Requests\Backend\Admin\TransactionPostRequest;
 use Carbon\Carbon;
+use App\Models\City;
 use DB;
 
 class DeliveryController extends Controller
@@ -27,7 +28,8 @@ class DeliveryController extends Controller
     public function register_driver_form()
     {
     	$title = 'Register Driver';
-    	return view('backend.pages.delivery.add-driver-form', compact('title'));
+        $cities = City::where('status', 1)->get();
+    	return view('backend.pages.delivery.add-driver-form', compact('title', 'cities'));
     }
     public function register_driver_submit(DriverCreateRequest $request)
     {
@@ -47,12 +49,20 @@ class DeliveryController extends Controller
 	    	// Driver
 	    	$driver = new Driver();
 	    	$driver->user_id = $user_id;
+            if ( $request->hasFile('photo') ) {
+                $extension = $request->file('photo')->getClientOriginalExtension();
+                $fileNameToStore = '_'.time().'.'.$extension;
+                $request->file('photo')->storeAs('logo', $fileNameToStore);
+                $fileNameToStore = 'logo/'.$fileNameToStore;
+            } else {
+                $fileNameToStore = '';
+            }
+            $driver->photo = $fileNameToStore ?? '';
 	    	$driver->city = $request->city;
 	    	$driver->phone = $request->phone;
 	    	$driver->have_bike = $request->have_bike;
 	    	$driver->max_delivery_distance = $request->working_distance;
 	    	$driver->earning_style = $request->earning_style;
-	    	$driver->registered_by = $request->registered_company;
 	    	$driver->status = 1;
 	    	$driver->save();
 	    	$driver_id = $driver->id;
@@ -72,7 +82,8 @@ class DeliveryController extends Controller
     public function edit_driver_form($driver_id)
     {
     	$driver = Driver::findOrFail($driver_id);
-    	return view('backend.pages.delivery.edit_driver_form', compact('driver'));
+        $cities = City::where('status', 1)->get();
+    	return view('backend.pages.delivery.edit_driver_form', compact('driver', 'cities'));
     }
 
     public function edit_driver_submit(EditDriverPost $request)
@@ -88,10 +99,19 @@ class DeliveryController extends Controller
 	    	$user->password_salt = $request->password;
 	    	$user->save();
 
+            if ( $request->hasFile('photo') ) {
+                $extension = $request->file('photo')->getClientOriginalExtension();
+                $fileNameToStore = '_'.time().'.'.$extension;
+                $request->file('photo')->storeAs('logo', $fileNameToStore);
+                $fileNameToStore = 'logo/'.$fileNameToStore;
+            } else {
+                $fileNameToStore = $driver->photo ?? '';
+            }
+            $driver->photo = $fileNameToStore;
 	    	$driver->phone = $request->phone;
 	    	$driver->city = $request->city;
 	    	$driver->have_bike = $request->have_bike;
-	    	$driver->registered_by = $request->registered_company;
+	    	
 	    	$driver->max_delivery_distance = $request->working_distance;
 	    	$driver->earning_style = $request->earning_style;
 	    	$driver->save();

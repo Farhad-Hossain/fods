@@ -5,7 +5,7 @@
 @section('main_content')
     <div class="container-fluid">
         @include('backend.message.flash_message')
-        @include('backend.message.emergency_form_validation')
+        <!-- @include('backend.message.emergency_form_validation') -->
         <!--begin::Card-->
         <div class="card card-custom">
             <div class="card-header">
@@ -30,23 +30,31 @@
                 <table class="table table-bordered table-hover table-checkable" id="datatable_table" style="margin-top: 13px !important">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th></th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Phone</th>
                             <th>Designation</th>
+                            <th>Description</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($users as $user)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td>{{ $user->admin->phone }}</td>
-                            <td>{{ $user->admin->designation ?? '' }}</td>
                             <td>
+                                <img src="{{ asset('uploads') }}/{{ $user->admin->photo }}" style="height: 70px; width: 70px;">
+                            </td>
+                            <td class="m_user_id d-none">{{ $user->id }}</td>
+                            <td class="m_name">{{ $user->name }}</td>
+                            <td class="m_email">{{ $user->email }}</td>
+                            <td class="m_phone">{{ $user->admin->phone }}</td>
+                            <td class="m_designation">{{ $user->admin->designation ?? '' }}</td>
+                            <td class="m_description">{{ $user->admin->description }}</td>
+
+                            
+                            <td>
+                                <a href="javascript:;" data-toggle="modal" data-target="#edit_user_modal" class="edit_user_btn">Edit</a> | 
                                 <a href="{!! route('backend.users.access_form', $user->id) !!}">Role manage</a>
                             </td>
                         </tr>
@@ -72,41 +80,43 @@
                         <i aria-hidden="true" class="ki ki-close"></i>
                     </button>
                 </div>
-                <form action="" id="edit_user_form" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('backend.users.editSubmit') }}" id="edit_user_form" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
-                        <input type="hidden" name="id">
+                        @csrf
+                        <input type="hidden" name="user_id">
                         <div class="form-group">
-                            <label>{!! __('backend_user_list.name') !!}</label>
-                            <input type="text" class="form-control" name="name" id="name" required />
+                            <label>Name</label>
+                            <input type="text" class="form-control" name="name" required value="{!! old('name') !!}">
                         </div>
-
                         <div class="form-group">
-                            <label>{!! __('backend_user_list.email') !!}</label>
-                            <input type="text" name="email" class="form-control" id="email" required />
-                        </div>
-
-                        <div class="form-group">
-                            <label>{!! __('backend_user_list.password') !!}</label>
+                            <label>Profile Photo</label>
+                            <div></div>
                             <div class="custom-file">
-                                <input type="password" name="password" class="form-control" id="password"/>
-                            </div>
+                                <input type="file" class="custom-file-input" name="profile_photo"/>
+                                <label class="custom-file-label">Choose file</label>
+                                @error('profile_photo')
+                                <span class="form-text text-warning">{{ $message }}</span>
+                                @enderror
+                            </div> 
                         </div>
-
                         <div class="form-group">
-                            <label>{!! __('common.status') !!}</label>
-                            <div class="radio-inline">
-                                <label class="radio radio-primary">
-                                    <input type="radio" checked="" id="radio_edit_active_status" value="1" name="status" /> Active
-                                    <span></span>
-                                </label>
-                                <label class="radio radio-success">
-                                    <input type="radio" checked="" id="radio_edit_inactive_status" value="2" name="status" /> Inactive
-                                    <span></span>
-                                </label>
-                            </div>
+                            <label>Email</label>
+                            <input type="email" class="form-control" name="email" required value="{!! old('email') !!}">
                         </div>
-
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="text" class="form-control" name="phone" required value="{!! old('phone') !!}">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Designation</label>
+                            <input type="text" class="form-control" name="designation" required value="{!!old('designation')!!}">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea class="form-control" name="description" value="{!! old('description') !!}"></textarea>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
@@ -130,12 +140,23 @@
                         <i aria-hidden="true" class="ki ki-close"></i>
                     </button>
                 </div>
-                <form action="{!! route('backend.users.create') !!}" method="POST">
+                <form action="{!! route('backend.users.create') !!}" method="POST" enctype="multipart/form-data">
                 <div class="modal-body" style="height: 400px;">
                         @csrf
                         <div class="form-group">
                             <label>Name</label>
                             <input type="text" class="form-control" name="name" required value="{!! old('name') !!}">
+                        </div>
+                        <div class="form-group">
+                            <label>Profile Photo</label>
+                            <div></div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" name="profile_photo"/>
+                                <label class="custom-file-label">Choose file</label>
+                                @error('profile_photo')
+                                <span class="form-text text-warning">{{ $message }}</span>
+                                @enderror
+                            </div> 
                         </div>
                         <div class="form-group">
                             <label>Email</label>
@@ -167,6 +188,9 @@
             </div>
         </div>
     </div>
+
+
+    
 @endsection
 
 

@@ -110,7 +110,7 @@ class FoodController extends Controller
         $food->description = $request->description ?? $food->description;
         $food->ingredients = $request->ingredients ?? $food->ingredients;
         $food->unit = $request->unit ?? $food->unit;
-        $food->image = $fileNameToStore;
+        $food->image = 'food/'.$fileNameToStore;
         $food->package_count = $request->package_count ?? $food->package_count;
         $food->weight = $request->weight ?? $food->weight;
         $food->featured = $request->featured ?? $food->featured;

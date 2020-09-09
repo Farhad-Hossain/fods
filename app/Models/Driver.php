@@ -12,4 +12,9 @@ class Driver extends Model
     {
     	return $this->belongsTo('App\User', 'user_id');
     }
+
+    public function driverCity()
+    {
+        return $this->belongsTo('App\Models\City', 'city');
+    }
 }

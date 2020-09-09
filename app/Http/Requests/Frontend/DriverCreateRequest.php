@@ -33,7 +33,6 @@ class DriverCreateRequest extends FormRequest
 
             'working_under' => 'required',
             'earning_style' => 'required',
-            'registered_by' => 'required',
         ];
     }
 }

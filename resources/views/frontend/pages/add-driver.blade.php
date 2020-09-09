@@ -133,25 +133,7 @@
 								</ul>
 							</div>
 						</div>	
-						<div class="form-group">
-							<div class="checkbox-title">Registered By Company*</div>
-							<div class="filter-radio">
-								<ul>
-									<li>
-									  <input type="radio" value="2" id="c9" name="registered_by">
-									  <label for="c9">Uber</label>
-									</li>
-									<li>
-									  <input type="radio" value="3" id="c10" name="registered_by">
-									  <label for="c10">Ola Cab</label>
-									</li>
-									<li>
-									  <input type="radio" value="1" id="c11" name="registered_by">
-									  <label for="c11">None</label>
-									</li>
-								</ul>
-							</div>
-						</div>
+						
 					</div>					
 					<button type="submit" class="add-resto-btn1 btn-link">Add As Driver</button>
 				</div>

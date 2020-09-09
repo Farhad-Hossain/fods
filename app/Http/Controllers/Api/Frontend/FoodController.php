@@ -18,6 +18,26 @@ class FoodController extends Controller
         return response()->json($foods, 200);
     }
 
+    public function searchFood($search_sentence)
+    {
+        $search_words = explode(' ', $search_sentence);
+
+        $foods = Food::where('food_name', 'LIKE', '%'.$search_words[0].'%');
+
+        for ($i = 1; $i < count($search_words); $i++ ) {
+            $foods = $foods->orWhere('food_name', 'LIKE', '%'.$search_words[$i].'%');    
+        }
+        
+        $foods = $foods->with('restaurant')->get();
+
+        return response()->json(['foods'=>$foods]);
+    }
+
+    public function getFoodsByCategory($cat_id)
+    {
+        $foods = Food::where('food_category_id', $cat_id)->orderBy('id', 'desc')->get();
+        return response()->json($foods, 200);
+    }
 
     public function getFeaturedFoodList()
     {

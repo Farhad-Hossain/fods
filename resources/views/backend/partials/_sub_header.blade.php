@@ -1,9 +1,11 @@
-<div class="subheader py-2 py-lg-4 subheader-solid" id="kt_subheader">
-    <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+<div class="subheader subheader-solid bg-light" id="kt_subheader">
+    <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap bg-light">
         <!--begin::Info-->
-        <div class="d-flex align-items-center flex-wrap mr-2">
+        <div class="d-flex align-items-center flex-wrap mr-2 bg-light">
             <!--begin::Page Title-->
-            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">Dashboard</h5>
+            <p class="text-dark font-weight-bold mt-1 mb-1 mr-5 ">
+               <a href="{{ route('backend.dashboard') }}">Dashboard</a> 
+            </p>
             <!--end::Actions-->
         </div>
         <!--end::Info-->

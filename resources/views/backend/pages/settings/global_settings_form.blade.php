@@ -7,7 +7,7 @@
             <div class="row">
                 @csrf
                 <div class="col-sm-12 col-md-12">
-                    <div class="card card-custom gutter-b example example-compact">
+                    <div class="card card-custom gutter-b example-compact">
                         <div class="card-header">
                             <h3 class="card-title">Global Settings</h3>
                             <div class="card-toolbar">
@@ -90,6 +90,7 @@
                             </div>
 
                             <div class="form-group col-sm-12 col-md-4">
+                                <img src="{{asset('uploads')}}/logo/{{$setting->website_logo}}" style="height: 70px; width: 70px; display: block">
                                 <label>Website Logo</label>
                                 <div></div>
                                 <div class="custom-file">
@@ -102,6 +103,7 @@
                             </div>
 
                             <div class="form-group col-sm-12 col-md-4">
+                                <img src="{{asset('uploads')}}/logo/{{$setting->admin_logo}}" style="height: 70px; width: 70px; display: block">
                                 <label>{!! __('backend_gs_form.admin_logo') !!}</label>
                                 <div></div>
                                 <div class="custom-file">
@@ -114,6 +116,7 @@
                             </div>
 
                             <div class="form-group col-sm-12 col-md-4">
+                                <img src="{{asset('uploads')}}/logo/{{$setting->app_logo}}" style="height: 70px; width: 70px; display: block">
                                 <label>App Logo</label>
                                 <div></div>
                                 <div class="custom-file">
@@ -126,6 +129,7 @@
                             </div>
                             
                             <div class="form-group col-sm-12 col-md-4">
+                                <img src="{{asset('uploads')}}/logo/{{$setting->mobile_logo}}" style="height: 70px; width: 70px; display: block">
                                 <label>Mobile View Logo</label>
                                 <div></div>
                                 <div class="custom-file">
@@ -138,6 +142,7 @@
                             </div>
 
                             <div class="form-group col-sm-12 col-md-4">
+                                <img src="{{asset('uploads')}}/logo/{{$setting->login_page_cover_photo}}" style="height: 70px; width: 70px; display: block">
                                 <label>Login Page Cover Photo</label>
                                 <div></div>
                                 <div class="custom-file">
@@ -150,6 +155,7 @@
                             </div>
 
                             <div class="form-group col-sm-12 col-md-4">
+                                <img src="{{asset('uploads')}}/logo/{{$setting->address_bar_icon}}" style="height: 70px; width: 70px; display: block">
                                 <label>Icon of Adress bar</label>
                                 <div></div>
                                 <div class="custom-file">
@@ -171,7 +177,7 @@
 
                             <div class="form-group col-sm-12 col-md-6">
                                 <label>{!! __('backend_gs_form.country') !!}</label>
-                                <select class="form-control" name="country">
+                                <select class="form-control selectpicker" name="country" required data-size="7" data-live-search="true">
                                     @foreach($countries as $country)
                                         <option value="{!! $country->id !!}" {!! $country->id == $setting->country ? 'selected' : '' !!}>{!! $country->name !!}</option>
                                     @endforeach
@@ -183,7 +189,7 @@
 
                             <div class="form-group col-sm-12 col-md-6">
                                 <label>{!! __('backend_gs_form.city') !!}</label>
-                                <select class="form-control" name="city">
+                                <select class="form-control selectpicker" name="city" required data-size="7" data-live-search="true">
                                     @foreach($cities as $city)
                                         <option value="{!! $city->id !!}" {!! $city->id == $setting->city ? 'selected' : '' !!}>{!! $city->name !!}</option>
                                     @endforeach

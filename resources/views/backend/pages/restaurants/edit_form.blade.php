@@ -36,7 +36,7 @@
                                 <label>{!! __('rest.city') !!}</label>
                                 <select class="form-control selectpicker" data-size="7" data-live-search="true" name="city" required>
                                   @foreach($cities as $city)
-                                      <option value="{!! $city->id !!}" {{ $city->id == $r->city ? 'selected' : '' }} >{!! $r->restCity->name !!}</option>
+                                      <option value="{!! $city->id !!}" {{ $city->id == $r->restCity->id ? 'selected' : '' }} >{!! $r->restCity->name !!}</option>
                                   @endforeach
                                 </select>
                                 @error('city')
@@ -58,6 +58,7 @@
                                 <input type="text" class="form-control" name="phone" value="{!! $r->phone !!}" />
                             </div>
                             <div class="col-lg-4">
+                                <img src="{{asset('uploads')}}/{{$r->logo}}" style="height: 70px; width: 70px; display: block">
                                 <label>Logo</label>
                                 <div></div>
                                 <div class="custom-file">
@@ -69,6 +70,7 @@
                                 </div> 
                             </div>
                             <div class="col-lg-4">
+                                <img src="{{asset('uploads')}}/{{$r->cover_photo}}" style="height: 70px; width: 70px; display: block">
                                 <label>Cover Photo</label>
                                 <div></div>
                                 <div class="custom-file">
@@ -152,10 +154,10 @@
                                 <label>Seating</label>
                                 <div class="radio-inline">
                                   <label class="radio">
-                                  <input type="radio" name="seating_status" value="1" /> Available
+                                  <input type="radio" name="seating_status" {!! $r->seating_status == 1 ? 'checked' : '' !!} value="1" /> Available
                                   <span></span></label>
                                   <label class="radio">
-                                  <input type="radio" name="seating_status" value="2" /> Not Available
+                                  <input type="radio" name="seating_status" {!! $r->seating_status == 2 ? 'checked' : '' !!} value="2" /> Not Available
                                   <span></span></label>
                                 </div>
                                 @error('seating_status')
@@ -163,12 +165,11 @@
                                 @enderror
                             </div>
                             <div class="form-group col-sm-12 col-md-4">
-                                <label>Select tag</label>
+                                <label>Tags</label>
 
                                 <select multiple="" class="form-control selectpicker" required data-size="7" data-live-search="true" name="tags[]" required>
-                                    <option value="">Select Tags</option>
                                     @foreach($tags as $tag)
-                                        <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                        <option value="{{ $tag->id }}" {{ $tag->id == $r->tagAppointed['id'] ? 'selected' : '' }}>{{ $tag->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

@@ -31,7 +31,6 @@ class EditDriverPost extends FormRequest
             'phone'=>'required',
             'password'=>'required',
             'have_bike'=>'required',
-            'registered_company'=>'required',
             'working_distance'=>'required',
             'earning_style'=>'required',
         ];

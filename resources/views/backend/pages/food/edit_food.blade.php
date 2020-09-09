@@ -72,6 +72,7 @@
                             @enderror
                         </div>
                         <div class="form-group col-sm-12 col-md-6">
+                            <img src="{{asset('uploads')}}/{{$food->image}}" style="height: 70px; width: 70px; display: block">
                             <label>{!! __('common.image') !!}</label>
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" accept="image/*" placeholder="Upload Image" name="image"/>

@@ -57,7 +57,7 @@
 
                             <td>{!! $r->name !!}</td>
                             <td>{!! $r->owner['name'] !!}</td>
-                            <td>{!! $r->city !!}</td>
+                            <td>{!! $r->restCity->name !!}</td>
                             <td>{!! $r->phone !!}</td>
                             <td>{!! $r->address !!}</td>
                             <td>{!! ($r->open_staus==1) ? 'Opened' : 'Closed' !!}</td>

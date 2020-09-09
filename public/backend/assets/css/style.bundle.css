@@ -60507,7 +60507,8 @@ body {
   display: flex;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  align-items: center; }
+  align-items: center; 
+}
   .subheader .subheader-separator {
     display: block;
     width: 12px;
@@ -60515,7 +60516,8 @@ body {
     border-radius: 2px; }
     .subheader .subheader-separator.subheader-separator-ver {
       width: 1px;
-      height: 22px; }
+      height: 22px; 
+    }
   .subheader.subheader-solid {
     border-top: 1px solid #ECF0F3;
     background-color: #ffffff; }

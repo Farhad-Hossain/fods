@@ -28,10 +28,20 @@ class AddMultipleColumnToRoles extends Migration
             $table->tinyInteger('extra_food')->unsigned()->default(0);
             $table->tinyInteger('food_rating_review')->unsigned()->default(0);
             
-            $table->tinyInteger('see_order_list')->unsigned()->default(0);
             
             $table->tinyInteger('global_setting')->unsigned()->default(0);
             $table->tinyInteger('user_management')->unsigned()->default(0);
+
+            $table->tinyInteger('restaurant_management')->unsigned()->default(0);
+            $table->tinyInteger('food_management')->unsigned()->default(0);
+            $table->tinyInteger('order_management')->unsigned()->default(0);
+            $table->tinyInteger('see_order_list')->unsigned()->default(0);
+            $table->tinyInteger('order_status')->unsigned()->default(0);
+
+            $table->tinyInteger('driver_management')->unsigned()->default(0);
+            $table->tinyInteger('customer')->unsigned()->default(0);
+            $table->tinyInteger('reporting')->unsigned()->default(0);
+            $table->tinyInteger('setting')->unsigned()->default(0);
 
 
         });

@@ -21,9 +21,9 @@ class CountryCityCurrencyController extends Controller
     public function add_country_submit(Request $request)
     {
     	$request->validate([
-    		'country_name' => 'required|unique:countries,name',
-            'two_letter_iso_code' => 'required|unique:countries,two_letter_iso_code',
-            'three_letter_iso_code' => 'required|unique:countries,three_letter_iso_code',
+    		'country_name' => 'required',
+            'two_letter_iso_code' => 'required',
+            'three_letter_iso_code' => 'required',
             'country_code' => 'required',
     	]);
 

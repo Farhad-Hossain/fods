@@ -19,11 +19,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function () {
-
+    
     Route::post('login', [
         'uses' => 'Auth\LoginController@postLogin'
     ]);
-
     Route::post('add-restaurant', [
         'uses' => 'Frontend\UserRegisterController@storeNewRestaurant'
     ]);
@@ -33,7 +32,6 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function () {
     Route::post('customer-register', [
         'uses' => 'Frontend\UserRegisterController@storeNewCustomer'
     ]);
-
     Route::post('order', [
         'uses' => 'Frontend\OrderController@submitOrder'
     ])->middleware('api_auth');
@@ -44,11 +42,19 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function () {
     Route::get('food/list', [
         'uses' => 'Frontend\FoodController@getAllFood'
     ]);
+
+    Route::get('foods/{category_id}/category', [
+        'uses' => 'Frontend\FoodController@getFoodsByCategory'
+    ]);
+
     Route::get('food/featured/list', [
         'uses' => 'Frontend\FoodController@getFeaturedFoodList'
     ]);
     Route::get('extra-food/list/{restaurant_id?}', [
         'uses' => 'Frontend\FoodController@getAllExtraFood'
+    ]);
+    Route::get('food/search/{search}', [
+        'uses' => 'Frontend\FoodController@searchFood'
     ]);
     Route::get('extra-food/vegetarian/list/{restaurant_id?}', [
         'uses' => 'Frontend\FoodController@getVegetarianExtraFood'
@@ -62,6 +68,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function () {
     Route::get('restaurant-with-foods/{restaurant_id}', [
         'uses' => 'Frontend\RestaurantController@restaurantWithFoods'
     ]);
+
     /*
      * Admin Route Start
      * */

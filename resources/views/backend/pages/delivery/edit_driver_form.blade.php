@@ -31,13 +31,29 @@
                              <p class="text-danger">{{ $message }}</p>
                            @enderror
                           </div>
+
                           <div class="form-group col-sm-12 col-md-6">
-                           <label>City</label>
-                           <input type="text" class="form-control"  placeholder="living city" name="city" value="{!! $driver->city !!}" required />
-                           @error('city')
-                             <p class="text-danger">{{ $message }}</p>
+                            <img src="{{asset('uploads')}}/{{$driver->photo}}" style="height: 70px; width: 70px; display: block">
+                           <label>Photo</label>
+                           <div class="custom-file">
+                               <input type="file" class="custom-file-input" accept="image/*" placeholder="Upload Image" name="photo"/>
+                               <label class="custom-file-label" for="customFile">Choose file</label>
+                           </div>
+                           @error('photo')
+                           <p class="text-danger">{{ $message }}</p>
                            @enderror
                           </div>
+
+                          <div class="form-group col-sm-12 col-md-6">
+                              <label>City</label>
+                              <select class="form-control selectpicker" data-size="7" data-live-search="true" name="city" required>
+                                <option value="">--Select CIty--</option>
+                                @foreach($cities as $city)
+                                    <option value="{!! $city->id !!}" {{$driver->driverCity->id == $city->id? 'selected':''}} >{!! $city->name !!}</option>
+                                @endforeach
+                               </select>
+                          </div>
+
                           <div class="form-group col-sm-12 col-md-6">
                            <label>Email Adress</label>
                            <input type="email" class="form-control"  placeholder="john@example.com" name="email" value="{!! $driver->user->email !!}" required />
@@ -78,36 +94,17 @@
                              <p class="text-danger">{{ $message }}</p>
                            @enderror
                           </div>
-                          <!--  -->
-                          <div class="form-group col-sm-12 col-md-6">
-                           <label>Registered by Company*</label>
-                           <div class="radio-inline">
-                             <label class="radio" for="rc1">
-                             <input type="radio" id="rc1" name="registered_company" {!! $driver->registered_by == 1 ? 'checked' : '' !!} value="1" />Uber
-                             <span></span></label>
-                             <label class="radio" for="rc2">
-                             <input type="radio" id="rc2" name="registered_company" {!! $driver->registered_by == 2 ? 'checked' : '' !!} value="2" />Uala
-                             <span></span></label>
-                             <label class="radio" for="rc3">
-                             <input type="radio" id="rc3" name="registered_company" {!! $driver->registered_by == 3 ? 'checked' : '' !!} value="3" />none
-                             <span></span></label>
-                           </div>
-                           @error('registered_company')
-                             <p class="text-danger">{{ $message }}</p>
-                           @enderror
-                          </div>
-                          <!--  -->
                           <div class="form-group col-sm-12 col-md-6">
                            <label>Working Distance*</label>
                            <div class="radio-inline">
                              <label class="radio" for="km3">
-                             <input type="radio" id="km3" name="working_distance" {!! $driver->max_delivery_distance == 1 ? 'checked' : '' !!} value="3" />Working under 3 Km
+                             <input type="radio" id="km3" name="working_distance" {!! $driver->max_delivery_distance == 3 ? 'checked' : '' !!} value="3" />Working under 3 Km
                              <span></span></label>
                              <label class="radio" for="km5">
-                             <input type="radio" id="km5" name="working_distance" {!! $driver->max_delivery_distance == 2 ? 'checked' : '' !!} value="5" />Working under 5 Km
+                             <input type="radio" id="km5" name="working_distance" {!! $driver->max_delivery_distance == 5 ? 'checked' : '' !!} value="5" />Working under 5 Km
                              <span></span></label>
                              <label class="radio" for="km8">
-                             <input type="radio" id="km8" name="working_distance" {!! $driver->max_delivery_distance == 3 ? 'checked' : '' !!} value="8" />Working under 8 Km
+                             <input type="radio" id="km8" name="working_distance" {!! $driver->max_delivery_distance == 8 ? 'checked' : '' !!} value="8" />Working under 8 Km
                              <span></span></label>
                            </div>
                            @error('working_distance')

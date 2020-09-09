@@ -31,7 +31,7 @@ class RestaurantController extends Controller
 	// Restaurant list
 	public function view_restaurant_list()
 	{
-		$rs = Restaurant::where('status',1)->get();
+		$rs = Restaurant::where('status',1)->orderBy('id', 'desc')->get();
 		
 		return view('backend.pages.restaurants.list', compact('rs'));
 	}
@@ -40,6 +40,7 @@ class RestaurantController extends Controller
 		$r = Restaurant::findOrFail($r);
 		$cities = City::where('status', 1)->get();
 		$tags = RestaurantTag::where('status', 1)->get();
+		
 		return view('backend.pages.restaurants.edit_form', compact('r', 'cities', 'tags') );
 	}
 	public function submit_restaurant_edit_form(Request $request, Restaurant $restaurant)
@@ -323,7 +324,7 @@ class RestaurantController extends Controller
 			
 			$res->payment_method = $request->payment_method;
 		    $res->delivery_charge  = $globals_info->default_delivery_charge;
-		    $res->selling_percentage  = $globals_info->default_product_selling_percentage;
+		    $res->selling_percentage  = $request->commission??$globals_info->default_product_selling_percentage;
 		    $res->cover_photo = 'logo/'.$fileNameToBeStore;
 		    $res->logo = 'logo/'.$logo_fileNameToBeStore;
 			$res_id = $res->save();

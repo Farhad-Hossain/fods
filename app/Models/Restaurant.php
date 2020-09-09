@@ -37,6 +37,18 @@ class Restaurant extends Model
         );
     }
 
+    public function tagAppointed() 
+    {
+        return $this->hasOneThrough(
+            'App\Models\RestaurantTag', 
+            'App\Models\RestaurantAppointedTag',
+            'restaurant_id',
+            'id',
+            'id',
+            'restaurantTag_id',
+        );   
+    }
+
     public function tags()
     {
     	return $this->hasManyThrough(
@@ -44,6 +56,8 @@ class Restaurant extends Model
             'App\Models\RestaurantAppointedTag',
             'restaurant_id',
             'id',
+            'id',
+            'restaurantTag_id',
         );
     }
 

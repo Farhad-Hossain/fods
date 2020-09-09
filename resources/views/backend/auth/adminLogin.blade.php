@@ -36,7 +36,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <link href="{{ asset('backend') }}/assets/css/themes/layout/brand/dark.css?v=7.0.3" rel="stylesheet" type="text/css" />
         <link href="{{ asset('backend') }}/assets/css/themes/layout/aside/dark.css?v=7.0.3" rel="stylesheet" type="text/css" />
         <!--end::Layout Themes-->
-        <link rel="shortcut icon" href="{{ asset('backend') }}/assets/media/logos/favicon.ico" />
+        <link rel="shortcut icon" href="{!! asset('uploads') !!}/logo/{{ $gd['globals']->address_bar_icon }}" />
         <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     </head>
     <!--end::Head-->

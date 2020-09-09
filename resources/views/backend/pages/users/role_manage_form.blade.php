@@ -14,10 +14,10 @@
                     </span>
                     <h3 class="card-label">Managing Access : {!! $roles->user->name !!}</h3>
                 </div>
-                
             </div>
             <div class="card-body">
                 <!--begin::Form-->
+                
                 <form class="form" action="{!! route('backend.users.access_form_submit') !!}" method="POST"
                       enctype="multipart/form-data">
                     @csrf
@@ -59,7 +59,7 @@
                             <div class="col-sm-12 col-md-3">
                                 
                                 <label class="checkbox checkbox-outline checkbox-primary w-100 d-block mb-2 menu">
-                                    <input type="checkbox" name="restaurant_management" class="menu" /> <b>Restaurant Management</b>
+                                    <input type="checkbox" name="restaurant_management" class="menu" onchange="mainMenuChange()" {{$roles->restaurant_management?'checked':''}} /> <b>Restaurant Management</b>
                                     <span></span>
                                 </label> 
                                 <hr />
@@ -137,6 +137,22 @@
                             </div>
 
                             <div class="col-sm-12 col-md-3">
+                                <label class="checkbox checkbox-outline checkbox-primary w-100 d-block mb-2">
+                                    <input type="checkbox" name="order_management" {{ $roles->order_management?'checked':'' }} class="menu"/> <b>Order Management</b>
+                                    <span></span>
+                                </label> 
+                                <hr />
+                                <label class="checkbox checkbox-outline checkbox-primary w-100 d-block mb-2">
+                                    <input type="checkbox" name="see_order_list" {!!$roles->see_order_list?'checked':''!!} /> See order List
+                                    <span></span>
+                                </label> 
+                                <label class="checkbox checkbox-outline checkbox-primary w-100 d-block mb-2">
+                                    <input type="checkbox" name="order_status" {!!$roles->order_status?'checked':''!!} /> Order Status
+                                    <span></span>
+                                </label> 
+                            </div>
+
+                            <div class="col-sm-12 col-md-3">
                                 <p><b>Global Settings</b></p>
                                 <label class="checkbox checkbox-outline checkbox-primary w-100 d-block mb-2">
                                     <input type="checkbox" name="global_setting" {!!$roles->global_setting?'checked':''!!}/> Global Setting
@@ -165,12 +181,15 @@
     <script src="{{asset('backend')}}/assets/js/pages/crud/datatables/advanced/column-visibility.js?v=7.0.3"></script>
 
     <script type="text/javascript">
-        $(".menu").change(function(){
-            if ( $(this).prop('checked') == true ) {
-                $(this).parent().parent().find('input:not(:first)').removeAttr('disabled');
-            } else {
-                $(this).parent().parent().find('input:not(:first)').attr('disabled', true);
-            }
-        });
+        function mainMenuChange()
+        {
+            // alert( $(this).prop('checked') );
+            // if ( $(this).prop('checked') == true ) {
+            //     $(this).parent().parent().find('input:not(:first)').removeAttr('disabled');
+            // } else {
+            //     $(this).parent().parent().find('input:not(:first)').attr('disabled', true);
+            // }
+        }
+        
     </script>
 @endsection

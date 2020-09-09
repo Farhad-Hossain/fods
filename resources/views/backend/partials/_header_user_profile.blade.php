@@ -1,6 +1,7 @@
 <div class="offcanvas-header d-flex align-items-center justify-content-between pb-5">
     <h3 class="font-weight-bold m-0">User Profile
-        <small class="text-muted font-size-sm ml-2">12 messages</small></h3>
+        <!-- <small class="text-muted font-size-sm ml-2">12 messages</small> -->
+    </h3>
     <a href="#" class="btn btn-xs btn-icon btn-light btn-hover-primary" id="kt_quick_user_close">
         <i class="ki ki-close icon-xs text-muted"></i>
     </a>
@@ -11,7 +12,7 @@
     <!--begin::Header-->
     <div class="d-flex align-items-center mt-5">
         <div class="symbol symbol-100 mr-5">
-            <div class="symbol-label" style="background-image:url('assets/media/users/300_21.jpg')"></div>
+            <div class="symbol-label" style="background-image:url('')"></div>
             <i class="symbol-badge bg-success"></i>
         </div>
         <div class="d-flex flex-column">
@@ -66,7 +67,7 @@
     <!--begin::Nav-->
     <div class="navi navi-spacer-x-0 p-0">
         <!--begin::Item-->
-        <a href="custom/apps/user/profile-1/personal-information.html" class="navi-item">
+        <a href="{{ route('backend.users.myProfile') }}" class="navi-item">
             <div class="navi-link">
                 <div class="symbol symbol-40 bg-light mr-3">
                     <div class="symbol-label">
@@ -84,7 +85,9 @@
                     </div>
                 </div>
                 <div class="navi-text">
-                    <div class="font-weight-bold">My Profile</div>
+                    <div class="font-weight-bold">
+                        <span>My Profile</span>
+                    </div>
                 </div>
             </div>
         </a>

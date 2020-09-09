@@ -12,21 +12,14 @@
             <div class="col-lg-12 col-xxl-4">
                 <!--begin::Mixed Widget 1-->
                 <div class="card card-custom bg-gray-100 card-stretch gutter-b">
-                    <!--begin::Header-->
-                    <div class="card-header border-0 bg-danger py-2">
-                        <h3 class="card-title font-weight-bolder text-white">History</h3>
-                        <div class="card-toolbar">
-                            
-                        </div>
-                    </div>
-                    <!--end::Header-->
+                    
                     <!--begin::Body-->
                     <div class="card-body p-0 position-relative overflow-hidden">
                         <!--begin::Chart-->
-                        <div id="kt_mixed_widget_1_chart" class="card-rounded-bottom bg-danger" style="height: 100px"></div>
+                        
                         <!--end::Chart-->
                         <!--begin::Stats-->
-                        <div class="card-spacer mt-n25">
+                        <div class="card-spacer">
                             <!--begin::Row-->
                             <div class="row m-0">
                                 <div class="col bg-light-danger px-6 py-8 rounded-xl mr-7 mb-7">

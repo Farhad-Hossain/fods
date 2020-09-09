@@ -93,23 +93,14 @@
                                     <span class="menu-text">{!! __('backend_menus.users') !!}</span>
                                 </a>
                             </li>
-                            <!--
-                            <li class="menu-item" aria-haspopup="true">
-                                <a href="{!! route('backend.users.admin_user_role') !!}" class="menu-link">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">Role Manage</span>
-                                </a>
-                            </li>
-                            -->
-                            
                             @endif
                         </ul>
                     </div>
                 </li>
                 <!-- End::User management -->
+
                 <!-- Begin::Restuarant Management -->
+                @if( Auth::user()->admin->role->restaurant_management == 1 )
                 <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                     <a href="javascript:;" class="menu-link menu-toggle">
                         <span class="svg-icon menu-icon">
@@ -210,6 +201,7 @@
                         </ul>
                     </div>
                 </li>
+                @endif
                 <!-- End::Restuarant Management -->
                 <!-- Begin::Food Management -->
                 <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
@@ -302,6 +294,7 @@
                 </li>
                 <!-- End::Food Management -->
                 <!-- Begin::Order Management -->
+                @if( Auth::user()->admin->role->order_management )
                 <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                     <a href="javascript:;" class="menu-link menu-toggle">
                         <span class="svg-icon menu-icon">
@@ -341,6 +334,7 @@
                             </li>
                             @endif
 
+                            
                             <li class="menu-item" aria-haspopup="true">
                                 <a href="{!! route('backend.order.addresses') !!}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -350,6 +344,7 @@
                                 </a>
                             </li>
 
+                            @if( Auth::user()->admin->role->order_status )
                             <li class="menu-item" aria-haspopup="true">
                                 <a href="{!! route('backend.order.status_list') !!}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -358,9 +353,12 @@
                                     <span class="menu-text">{!! __('backend_menus.order_status') !!}</span>
                                 </a>
                             </li>
+                            @endif
+                            
                         </ul>
                     </div>
                 </li>
+                @endif
                 <!-- End Order Management -->
                 <!-- Begin::Delivery Management -->
 
