@@ -18,7 +18,9 @@ class CreateFoodTable extends Migration
             $table->integer('restaurant_id')->unsigned()->comment('restaurant id from restaurants table');
             $table->integer('food_category_id')->unsigned()->comment('food_category_id from food_categories table');
             $table->string('food_name', 128)->comment('food name');
-            $table->string('image')->nullable()->comment('food image');
+            $table->string('image1')->nullable()->comment('food image 1');
+            $table->string('image2')->nullable()->comment('food image 2');
+            $table->string('image3')->nullable()->comment('food image 3');
             $table->decimal('price', 10,2)->default(0)->comment('food price');
             $table->decimal('discount_price', 10,2)->default(0)->comment('Food Discount Price');
             $table->mediumText('description')->nullable()->comment('food description');

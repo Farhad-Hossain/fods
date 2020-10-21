@@ -1,5 +1,4 @@
 @extends('frontend.master', ['title'=>'Food Details'])
-
 @section('custom_style')
     <!-- Bootstrap core CSS-->
     <link href="{!! asset('frontend') !!}/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -9,16 +8,13 @@
     <link href="{!! asset('frontend') !!}/css/thumbnail.slider.css" rel="stylesheet">
     <link href="{!! asset('frontend') !!}/css/datepicker.css" rel="stylesheet">
     <link href="{!! asset('frontend') !!}/css/bootstrap-select.css" rel="stylesheet">
-
     <!-- Owl Carousel for this template-->
     <link rel="stylesheet" href="assets/owlcarousel/assets/owl.carousel.min.css">
-
     <!-- Fontawesome styles for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 @endsection
 
 @section('main_content')
-
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -28,7 +24,6 @@
             </ul>
         </div>
     @endif
-
     <!--BEGIN::Title bar-->
     <section class="title-bar">
         <div class="container">
@@ -56,19 +51,21 @@
             <div class="row">
                 <div class="col-lg-8 col-md-8">
                     <div id="sync1" class="owl-carousel owl-theme">
+                        @if($food->image1) 
                         <div class="item">
-                            <img src="{!! asset('uploads') !!}/{!! $food->image !!}" alt="">
+                            <img src="{!! asset('uploads') !!}/{!! $food->image1 !!}" alt="">
                         </div>
+                        @endif
+                        @if($food->image2)
                         <div class="item">
-                            <img src="images/meal-detail/img-2.jpg" alt="">
+                            <img src="{!! asset('uploads') !!}/{!! $food->image2 !!}" alt="">
                         </div>
+                        @endif
+                        @if($food->image3)
                         <div class="item">
-                            <img src="images/meal-detail/img-3.jpg" alt="">
+                            <img src="{!! asset('uploads') !!}/{!! $food->image3 !!}" alt="">
                         </div>
-                        <div class="item">
-                            <img src="images/meal-detail/img-4.jpg" alt="">
-                        </div>
-
+                        @endif
                     </div>
 
                     <div id="sync2" class="owl-carousel owl-theme">
@@ -94,17 +91,24 @@
                                 </a>
                             </div>
                             <div class="name-location">
-                                <a href="restaurant_detail.html">
+                                <a href="{{route('frontend.restaurant.details', $food->restaurant->id)}}">
                                     <h1>
-                                        {!! $food->restaurant->name !!} 
-                                        
+                                        {!! $food->restaurant->name !!}
                                     </h1>
                                 </a>
                                 <p><span><i class="fas fa-map-marker-alt"></i></span>{!! $food->restaurant->city !!}</p>
                             </div>
                         </div>
                         <div class="right-side-btns">
-                            
+                            <div class="bagde-dt favourite_btn" ajaxUrl="{{ Auth::id() ? route('frontend.food.addToFavourite', [Auth::id(),$food->id]) : '0' }}">
+                                <div class="partner-badge favourite_btn_text">
+                                    @if ($f == 1)
+                                        Added to favourite
+                                    @else
+                                        Add to favourite
+                                    @endif
+                                </div>                                          
+                            </div>
                             <div class="resto-review-stars">
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
@@ -115,7 +119,7 @@
                     </div>
                     <div class="published-like-comments">
                         <div class="published-time">
-                            <span><i class="far fa-calendar-alt"></i> Member since {!! $food->restaurant->created_at !!}</span>
+                            <span><i class="far fa-calendar-alt"></i> Member since {!! substr($food->restaurant->created_at,0,10) !!}</span>
                         </div>
                         <div class="like-comments">
                             <ul>
@@ -167,7 +171,6 @@
                             <div class="tab-pane active" role="tabpanel" id="comments">
                                 
                             </div>
-
                             <div class="tab-pane" role="tabpanel" id="reviews">
                                 <div class="comment-post">
                                     <div class="post-items">
@@ -192,14 +195,13 @@
                                             <input type="hidden" name="restaurant_id" value="{!! $food->restaurant->id !!}">
                                             <input type="hidden" name="food_id" value="{!! $food->id !!}">
                                             <input type="text" class="rating-input" name="review_content"
-                                                   placeholder="Please describe the reason for your rating to help the author">
+                                                   placeholder="Please describe the reason for your rating to help the author" required>
                                             <input class="rating-btn btn-link" type="submit" value="Save Review">
                                         </form>
                                     </div>
                                 </div>
                                 <div class="main-comments">
                                     <div class="rating-1">
-
                                         @foreach($food->reviews as $review)
                                         <div class="user-detail-heading">
                                             <a href="user_profile_view.html"><img

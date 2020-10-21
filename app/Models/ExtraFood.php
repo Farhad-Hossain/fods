@@ -12,4 +12,8 @@ class ExtraFood extends Model
     {
         return $this->belongsTo('App\Models\Restaurant', 'restaurant_id', 'id');
     }
+    static public function appointedForFood($food_id)
+    {
+        return ;
+    }
 }

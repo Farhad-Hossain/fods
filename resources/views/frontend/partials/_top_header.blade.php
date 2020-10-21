@@ -17,7 +17,7 @@
 
                         <li class="nav-item dropdown" id="min_car_content">
                             <a href="#" class="dropdown-toggle-no-caret" id="orderDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-shopping-cart"></i>Food Orders <span class="badge badge-secondary">0</span>
+                                <i class="fas fa-shopping-cart"></i>Food Orders<span class="badge badge-secondary">0</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="orderDropdown" id="mini_cart_dropdown">
 

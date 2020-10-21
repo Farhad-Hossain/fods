@@ -9,6 +9,11 @@ function isThisRestaurantFavouritedByAuthUser($restaurant_id)
     }else{
         return 0;
     }
+
+    function isTheExtraFoodAppointedToFood($extra_food_id, $food_id)
+    {
+        return 1;
+    }
 }
 
 ?>

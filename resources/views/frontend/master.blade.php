@@ -28,14 +28,14 @@
 <script src="{!! asset('frontend/vendor/jquery-easing/jquery.easing.min.js') !!}"></script>
 <!--Assect scripts for this page-->
 <script src="{!! asset('frontend/vendor/OwlCarousel/owl.carousel.js') !!}"></script>
+<script src="{{asset('frontend')}}/assets/owlcarousel/owl.carousel.js"></script>
 <script src="{!! asset('frontend/js/owlslider.js') !!}"></script>
 <script type="text/javascript" src="{!! asset('assets/frontend/plugins/growl-alert/javascripts/jquery.growl.js') !!}"></script>
 
 @yield('custom_script')
 
-<script>
+<script type="text/javascript">
     function addToCart(food_id) {
-
         let extra_food = [];
         $("input[name=extra_food]").each( function () {
             if ($(this).is(':checked')) {
@@ -61,7 +61,6 @@
             }
         });
     }
-
     function getTopCartContent() {
         let csrf_token = $("#_token").val();
         let post_url = "{!! route('frontend.cart.getContent') !!}";
@@ -74,7 +73,6 @@
             }
         });
     }
-
     function removeContent(id, extra = false) {
         let csrf_token = $("#_token").val();
         let post_url = "{!! route('frontend.cart.removeContent') !!}";
@@ -112,6 +110,7 @@
         getTopCartContent();
         calculateTotalAmountInFoodDetail();
     });
+
 </script>
 </body>
 

@@ -84,7 +84,7 @@
                     <!--begin::Title-->
                     <h4 class="d-flex flex-center rounded-top">
                         <span class="text-white">User Notifications</span>
-                        <span class="btn btn-text btn-success btn-sm font-weight-bold btn-font-md ml-2">23 new</span>
+                        <span class="btn btn-text btn-success btn-sm font-weight-bold btn-font-md ml-2">{{$today_orders->count()}} new Orders today</span>
                     </h4>
                     <!--end::Title-->
                     <!--begin::Tabs-->
@@ -109,6 +109,7 @@
                         <!--begin::Scroll-->
                         <div class="scroll pr-7 mr-n7" data-scroll="true" data-height="300" data-mobile-height="200">
                             <!--begin::Item-->
+                            @foreach($today_orders as $order)
                             <div class="d-flex align-items-center mb-6">
                                 <!--begin::Symbol-->
                                 <div class="symbol symbol-40 symbol-light-primary mr-5">
@@ -129,11 +130,12 @@
                                 <!--end::Symbol-->
                                 <!--begin::Text-->
                                 <div class="d-flex flex-column font-weight-bold">
-                                    <a href="#" class="text-dark text-hover-primary mb-1 font-size-lg">Cool App</a>
+                                    <a href="#" class="text-dark text-hover-primary mb-1 font-size-lg">{{ $order->details->food->food_name }}</a>
                                     <span class="text-muted">Marketing campaign planning</span>
                                 </div>
                                 <!--end::Text-->
                             </div>
+                            @endforeach
                             <!--end::Item-->
                             <!--begin::Item-->
                             <div class="d-flex align-items-center mb-6">

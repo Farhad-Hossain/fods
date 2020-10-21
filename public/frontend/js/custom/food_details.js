@@ -12,6 +12,31 @@ $(document).ready(function () {
 
         calculateTotalAmountInFoodDetail();
     });
+
+    $(".favourite_btn").click(function(){
+        ajaxUrl = $(this).attr('ajaxUrl') ;
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        if ( ajaxUrl == '0' ){
+            alert('Need to Login first.Thank you.');
+        } else {
+            $.ajax({
+               type:'GET',
+               url: ajaxUrl,
+
+               success:function(data){
+                    if ( data == 'data_inserted' ) {
+                        $('.favourite_btn_text').text('Added to favourite');
+                    } else if (data = 'data_removed') {
+                        $('.favourite_btn_text').text('Add to favourite');
+                    }
+               }
+            });
+        }
+    });
 });
 function setRating(star_count)
 {

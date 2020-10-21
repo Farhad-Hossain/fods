@@ -33,6 +33,7 @@ class RestaurantController extends Controller
         $total_reviews = RestaurantService::getRestaurantTotalReviews($restaurant_id);
         $restaurant = Restaurant::with('foods')->where('id', $restaurant_id)->first();
         $average_rating = RestaurantService::getAverageRating($restaurant_id);
+        
 
         return response()->json(['details_and_foods'=>$restaurant, 'total_reviews'=>$total_reviews, 'average_rating'=>$average_rating], 200);
     }

@@ -63,7 +63,7 @@ class CartController extends Controller
     {
         $contents = Cart::content();
         $extra_contents = Cart::instance('extra_food')->content();
-
+        
         return view('frontend.partials._top_mini_cart_content', compact('contents', 'extra_contents'));
     }
 

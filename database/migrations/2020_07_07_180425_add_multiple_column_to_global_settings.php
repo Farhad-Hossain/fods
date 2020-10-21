@@ -19,6 +19,11 @@ class AddMultipleColumnToGlobalSettings extends Migration
             $table->string('website_logo')->nullable();
             $table->string('login_page_cover_photo')->nullable();
             $table->string('address_bar_icon')->nullable();
+            $table->string('facebook')->nullable();
+            $table->string('twitter')->nullable();
+            $table->string('instragram')->nullable();
+            $table->string('linkedin')->nullable();
+            $table->string('youtube')->nullable();
             $table->string('current_version');
         });
     }

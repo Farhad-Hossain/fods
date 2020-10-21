@@ -48,6 +48,21 @@ Route::group(['namespace'=>'Frontend', 'as'=>'frontend.'], function() {
         'uses' => 'ContactUsController@showContactUsForm',
         'as' => 'contact-us',
     ]);
+    // Contact us submit
+    Route::post('contact-us', [
+        'uses'=>'ContactUsController@contactUsSubmit',
+        'as'=>'contact-us'
+    ]);
+    // Partners
+    Route::get('partners', [
+        'uses'=>'RestaurantController@restaurantsAsPartner',
+        'as'=>'restaurantsAsPartner',
+    ]);
+    // How to order
+    Route::get('how-to-order', [
+        'uses'=>'HowToOrderController@showHowToOrderPage',
+        'as'=>'howToOrder',
+    ]);
     // About
     Route::get('about-us', [
         'uses' => 'AboutUsController@showAboutUsPage',
@@ -57,11 +72,25 @@ Route::group(['namespace'=>'Frontend', 'as'=>'frontend.'], function() {
     Route::group(['prefix'=>'blog', 'as'=>'blog.'], function(){
         Route::get('our-blogs', 'BlogController@showOurBlogsPage')->name('our-blogs');
     });
-    // Food details
+    // Food 
     Route::group(['prefix'=>'food', 'as'=>'food.'], function(){
+        Route::get('all-foods','FoodController@showtAllFoods')->name('allFoods');
         Route::get('{food}/details', 'FoodController@getFoodDetails')->name('details');
+        Route::get('add-to-favourite/{customer_id}/{food_id}', 'FoodController@addFoodToFavourite')->name('addToFavourite');
+        Route::match(['get','post'],'foods-for-you',[
+            'uses'=>'FoodController@searchResultByLocationAndRestaurant',
+            'as'=>'searchByLocationAndRestaurant',
+        ]);
+        Route::get('foods-by-category/{cat_id}',[
+            'uses'=>'FoodController@searchByCategory',
+            'as'=>'searchByCategory',
+        ]);
     });
-
+    // Restaurant Details
+    Route::group(['prefix'=>'restaurant','as'=>'restaurant.'], function(){
+        Route::get('{id}/details','RestaurantController@viewRestaurantDetails')->name('details');
+        Route::get('restaurant-and-more','RestaurantController@restaurantAndMore')->name('restaurantAndMore');
+    });
     /*
      * Begin:: Cart Route
      * */
@@ -69,6 +98,10 @@ Route::group(['namespace'=>'Frontend', 'as'=>'frontend.'], function() {
         Route::post('add', [
             'as' => 'add',
             'uses' => 'CartController@addToCart'
+        ]);
+        Route::get('getContent', [
+            'as' => 'getContent',
+            'uses' => 'CartController@getCartContent'
         ]);
         Route::post('getContent', [
             'as' => 'getContent',
@@ -106,8 +139,6 @@ Route::group(['namespace'=>'Frontend', 'as'=>'frontend.'], function() {
         Route::get('remove/{restaurant_id}', 'FoodController@removeRestaurantFromFavourite')->name('removeRestaurant');
     });
 
-    
-
     /*
      * End:: Cart Route
      * */
@@ -131,21 +162,6 @@ Route::group(['namespace'=>'Frontend', 'as'=>'frontend.'], function() {
 
 Auth::routes();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // DEGIN::Backend Routes
 Route::get('dashboard', [
     'uses' => 'Backend\DashboardController@showDashboard',
@@ -153,7 +169,6 @@ Route::get('dashboard', [
 ])->middleware('auth');
 
 Route::get('/home', 'HomeController@index')->name('home');
-
 
 Route::get('admin/login', [
     'uses'=>'Backend\Auth\AuthController@loginForm',
@@ -208,6 +223,19 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
         Route::post('add-currency', 'CountryCityCurrencyController@add_currency_submit')->name('add_currency');
 
         Route::get('{country}/delete', 'CountryCityCurrencyController@delete_country')->name('delete_country');
+
+        Route::get('/payments', 'PaymentController@showPaymentSettingPage')->name('payments');
+        Route::post('/add-payment-method', 'PaymentController@addPaymentMethodSubmit')->name('addPaymentMethod');
+        Route::post('/edit-payment-method', 'PaymentController@editPaymentMethodSubmit')->name('editPaymentMethod');
+        Route::get('/delete-payment-method/{id}', 'PaymentController@deletePaymentMethodSubmit')->name('paymentMethodDeleteSubmit');
+
+        Route::get('/coupons', 'CouponController@getCoupons')->name('coupons');
+        Route::get('/add-coupon', 'CouponController@addCouponView')->name('add_coupon_view');
+        Route::post('add-coupon-submit', 'CouponController@addCouponSubmit')->name('add_coupon_submit');
+        Route::get('edit-coupon/{coupon_id}', 'CouponController@editCouponView')->name('edit_coupon_view');
+        Route::post('edit-coupon-submit', 'CouponController@editCouponSubmit')->name('edit_coupon_submit');
+        Route::get('delete-coupon-submit/{coupon_id}', 'CouponController@deleteCouponSubmit')->name('delete_coupon_submit');
+
 	});
     /*END::Setings*/
     /*END::Setings*/
@@ -325,6 +353,9 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
         Route::get('rating-reviews', 'FoodController@get_all_reviews')->name('rating_reviews');
         Route::get('reviews', 'FoodController@get_reviews')->name('reviews');
 
+        // Ajax
+
+
 
     });
     /*END::Food*/
@@ -390,6 +421,27 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
     /*END::Customer*/
     /*END::Customer*/
 
+    /* BEGIN::Content management */
+    /* BEGIN::Content management */
+    Route::group(['as'=>'content.','prefix'=>'content'], function(){
+        Route::get('contact-info',[
+            'uses'=>'ContentController@updateContactInfo',
+            'as'=>'contactInfo',
+        ]);
+        Route::post('contact-info',[
+            'uses'=>'ContentController@updateContactInfoSubmit',
+            'as'=>'contactInfo',
+        ]);
+        Route::get('all-queries',[
+            'uses'=>'ContentController@seeAllQuiries',
+            'as'=>'allQuiries',
+        ]);
+        Route::get('contact/{contact_id}',[
+            'uses'=>'ContentController@deleteContact',
+            'as'=>'deleteContact',
+        ]);
+    });
+
     // BEGIN::Delivery
     Route::group(['prefix'=>'delivery', 'as'=>'delivery.'], function(){
         Route::get('driver-list', 'DeliveryController@show_driver_list')->name('driver-list');
@@ -409,6 +461,12 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
         Route::get('driver-transactions','DeliveryController@get_transactions')->name('transaction_list');
         Route::post('transaction','DeliveryController@make_transaction_submit')->name('make_payment');
     });
+
+    // Ajax 
+    Route::group(['prefix'=>'ajax','as'=>'ajax.'], function(){
+        Route::get('restaurant-extra-foods/{rest_id}', 'AjaxController@getRestaurantsExtraFoods');
+    });
+
 });
 
 /*

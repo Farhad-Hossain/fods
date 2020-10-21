@@ -100,14 +100,11 @@
                             </div>
                             <div class="col-lg-4">
                                 <label>{!! __('rest.payment_method') !!}</label>
-                                <select class="form-control" name="payment_method" required>
-                                    <option value="1" {!! $r->payment_method == 1 ? 'selected' : '' !!}>Cash Only</option>
-                                    <option value="2" {!! $r->payment_method == 2 ? 'selected' : '' !!}>Card Only</option>
-                                    <option value="3" {!! $r->payment_method == 3 ? 'selected' : '' !!}>Both</option>
+                                <select multiple="" class="form-control selectpicker" required data-size="7" data-live-search="true" name="payment_methods[]" required>
+                                    @foreach($payment_methods as $payment_method)
+                                        <option value="{{$payment_method->id}}" {{ in_array($payment_method->id, $helper_array) ? 'selected' : '' }}>{{$payment_method->method_name}}</option>
+                                    @endforeach
                                 </select>
-                                @error('selling_percentage')
-                                    <p class="text-danger">{!! $message !!}</p>
-                                @enderror
                             </div>
                         </div>
 

@@ -27,7 +27,7 @@
 			<div class="row">	
 				<div class="col-md-12">
 					<div class="new-heading">
-						<h1> What is Natto? </h1>
+						<h1> What is {{$gd['globals']->app_name}}? </h1>
 					</div>						
 				</div>
 				<div class="col-md-12">
@@ -70,7 +70,7 @@
 				</div>
 			</div>
 			<div class="order-now-btn">
-				<a href="meals.html" class="m-btn btn-link">Order Now</a>
+				<a href="{{route('frontend.food.allFoods')}}" class="m-btn btn-link">Order Now</a>
 			</div>
 		</div>
 	</section>
@@ -113,66 +113,19 @@
 			<div class="row">	
 				<div class="col-md-12">					
 					<div class="new-heading p-heading">
-						<h1>Active in 30 Countries</h1>
+						<h1>Active in {{$countries->count()}} Countries</h1>
 					</div>
 				</div>
 			</div>
 			<div class="countries">
 				<div class="row">				
-					<div class="col-md-2 col-sm-12">
-						<ul>
-							<li><a href="#">India</a></li>
-							<li><a href="#">Australia</a></li>
-							<li><a href="#">USA</a></li>
-							<li><a href="#">Italy</a></li>
-							<li><a href="#">Canada</a></li>
-						</ul>
-					</div>
-					<div class="col-md-2 col-sm-12">
-						<ul>
-							<li><a href="#">Iraq</a></li>
-							<li><a href="#">Libiya</a></li>
-							<li><a href="#">UK</a></li>
-							<li><a href="#">Turkey</a></li>
-							<li><a href="#">Ireland</a></li>
-						</ul>
-					</div>
-					<div class="col-md-2 col-sm-12">
-						<ul>
-							<li><a href="#">Poland</a></li>
-							<li><a href="#">Qatar</a></li>
-							<li><a href="#">UAE</a></li>
-							<li><a href="#">Portugal</a></li>
-							<li><a href="#">Lebanon</a></li>
-						</ul>
-					</div>
-					<div class="col-md-2 col-sm-12">
-						<ul>
-							<li><a href="#">Brazil</a></li>
-							<li><a href="#">Sri Lanka</a></li>
-							<li><a href="#">Nepal</a></li>
-							<li><a href="#">bangladesh</a></li>
-							<li><a href="#">China</a></li>
-						</ul>
-					</div>
-					<div class="col-md-2 col-sm-12">
-						<ul>
-							<li><a href="#">The Philipines</a></li>
-							<li><a href="#">Singapur</a></li>
-							<li><a href="#">Malaysia</a></li>
-							<li><a href="#">Indonasia</a></li>
-							<li><a href="#">South Africa</a></li>
-						</ul>
-					</div>
-					<div class="col-md-2 col-sm-12">
-						<ul>
-							<li><a href="#">Japan</a></li>
-							<li><a href="#">New Zealand</a></li>
-							<li><a href="#">West Indies</a></li>
-							<li><a href="#">Chile</a></li>
-							<li><a href="#">Austaria</a></li>
-						</ul>
-					</div>
+					@foreach($countries as $country)
+						<div class="col-md-2 col-sm-12">
+							<ul>
+								<li><a href="javascript:;">{{$country->name}}</a></li>
+							</ul>
+						</div>
+					@endforeach
 				</div>
 			</div>
 		</div>
@@ -266,7 +219,7 @@
 			<div class="row">
 				<div class="col-lg-9 col-md-8">
 					<div class="restaurants-links">
-						<h1>Choose From Over 15,000 Restaurants</h1>
+						<h1>Choose From Over {{$total_restaurants}} Restaurants</h1>
 						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam augue justo, euismod at purus quis, dictum iaculis lorem. Sed dictum, dolor sit amet feugiat posuere, ante arcu iaculis tortor</p>
 					</div>
 				</div>

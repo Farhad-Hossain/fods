@@ -22,6 +22,8 @@ use App\Models\RestaurantAppointedTag;
 use App\Http\Requests\Backend\Admin\TransactionPostRequest;
 use App\Models\RestaurantAppointedCuisine;
 use Illuminate\Support\Facades\Hash;
+use App\Models\PaymentMethod;
+use App\Models\RestaurantAppointedPaymentMethod;
 use App\User;
 use DB;
 
@@ -40,8 +42,15 @@ class RestaurantController extends Controller
 		$r = Restaurant::findOrFail($r);
 		$cities = City::where('status', 1)->get();
 		$tags = RestaurantTag::where('status', 1)->get();
+		$payment_methods = PaymentMethod::all();
+
+		$helper_array = [];
+		$appointed_payment_methods = $r->appointed_payment_methods()->get();
+		foreach($appointed_payment_methods as $appointed_payment_method){
+			$helper_array[] = $appointed_payment_method->id;
+		}
 		
-		return view('backend.pages.restaurants.edit_form', compact('r', 'cities', 'tags') );
+		return view('backend.pages.restaurants.edit_form', compact('r', 'cities', 'tags', 'payment_methods', 'helper_array') );
 	}
 	public function submit_restaurant_edit_form(Request $request, Restaurant $restaurant)
 	{
@@ -56,7 +65,7 @@ class RestaurantController extends Controller
 			$rs->open_status = $request->open_status;
 			$rs->delivery_charge = $request->delivery_charge;
 			$rs->selling_percentage = $request->selling_percentage;
-			$rs->payment_method = $request->payment_method;
+			$rs->payment_method = 1;
 			$rs->alcohol_status = $request->alcohol_status;
 			$rs->seating_status = $request->seating_status;
 
@@ -65,17 +74,26 @@ class RestaurantController extends Controller
 				$extension = $request->file('restaurant_photo')->getClientOriginalExtension();
 				$fileNameToBeStore = 'rest_'.time().'.'.$extension;
 				$request->file('restaurant_photo')->storeAs('logo', $fileNameToBeStore);
+				$fileNameToBeStore = 'logo/'.$fileNameToBeStore;
 			} else {
-				$fileNameToBeStore = $rs->photo ?? '';
+				$fileNameToBeStore = $rs->cover_photo ?? '';
 			}
 
 			if( $request->hasFile('restaurant_logo') ){
 				$extension = $request->file('restaurant_logo')->getClientOriginalExtension();
 				$logo_fileNameToBeStore = 'rest_logo_'.time().'.'.$extension;
 				$request->file('restaurant_logo')->storeAs('logo', $logo_fileNameToBeStore);
+				$logo_fileNameToBeStore = 'logo/'.$logo_fileNameToBeStore;
 			} else {
-				$logo_fileNameToBeStore = $rs->photo ?? '';
+				$logo_fileNameToBeStore = $rs->logo ?? '';
 			}
+
+
+			$rs->logo = $logo_fileNameToBeStore;
+			$rs->cover_photo = $fileNameToBeStore;
+			
+
+			$rs->save();
 
 			if ( $request->tags ) {
 				$rs->appointedTags()->delete();
@@ -89,10 +107,18 @@ class RestaurantController extends Controller
 				}
 			}
 
-			$rs->logo = 'logo/'.$logo_fileNameToBeStore;
-			$rs->cover_photo = 'logo/'.$fileNameToBeStore;
 
-			$rs->save();
+			if (isset($request->payment_methods)) {
+				RestaurantAppointedPaymentMethod::where('restaurant_id', $rs->id)->delete();
+
+				foreach($request->payment_methods as $payment_method_id){
+					$appointed_payment_method = new RestaurantAppointedPaymentMethod();
+					$appointed_payment_method->restaurant_id = $rs->id;
+					$appointed_payment_method->payment_method_id = $payment_method_id;
+
+					$appointed_payment_method->save();
+				}
+			}
 		}catch(\Exception $e){
 			session(['type'=>'danger', 'message'=>'Something went wrong'.$e]);
 			return redirect()->back();

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\FoodAppointedExtraFood;
 
 class Food extends Model
 {
@@ -16,6 +17,30 @@ class Food extends Model
     public function foodCategory()
     {
         return $this->belongsTo('App\Models\FoodCategory', 'food_category_id', 'id');
+    }
+
+    public function appointedExtraFood()
+    {
+        return $this->hasOneThrough(
+            'App\Models\ExtraFood',
+            'App\Models\FoodAppointedExtraFood',
+            'food_id',
+            'id',
+            'id',
+            'extra_food_id'
+        );
+    }
+
+    public function appointedExtraFoods()
+    {
+        return $this->hasManyThrough(
+            'App\Models\ExtraFood',
+            'App\Models\FoodAppointedExtraFood',
+            'food_id',
+            'id',
+            'id',
+            'extra_food_id',
+        );
     }
 
     public function reviews()

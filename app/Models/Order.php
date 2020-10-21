@@ -36,6 +36,11 @@ class Order extends Model
     {
         return $this->belongsTo('App\Models\OrderStatus', 'order_status');
     }
+
+    public function food()
+    {
+        return $this->hasOne('App\Models\Food', 'id', '');
+    }
    
     
 }

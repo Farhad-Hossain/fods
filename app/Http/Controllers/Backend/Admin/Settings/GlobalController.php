@@ -58,6 +58,11 @@ class GlobalController extends Controller
             $global_setting->city = $request->city ?? '';
             
             $global_setting->current_version = $request->current_version ?? '';
+            $global_setting->facebook = $request->facebook??'';
+            $global_setting->twitter = $request->twitter??'';
+            $global_setting->instragram = $request->instragram??'';
+            $global_setting->linkedin = $request->linkedin??'';
+            $global_setting->youtube = $request->youtube??'';
 
 
             if($request->hasFile('app_logo'))

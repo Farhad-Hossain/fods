@@ -23,10 +23,7 @@
                                     <a class="nav-link" href="{{ URL::to('/') }}">Home </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="">How To Orders?</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="recipes.html">Recipes</a>
+                                    <a class="nav-link" href="{{route('frontend.howToOrder')}}">How To Orders?</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{!!route('frontend.become-a-partner')!!}">Partners</a>

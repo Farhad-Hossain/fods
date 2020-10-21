@@ -16,17 +16,30 @@
 <link href="{!! asset('backend/assets/css/style.bundle.css?v=7.0.3') !!}" rel="stylesheet" type="text/css" />
 <!--end::Global Theme Styles-->
 <!--begin::Layout Themes(used by all pages)-->
-<link href="{!! asset('backend/assets/css/themes/layout/header/base/light.css?v=7.0.3') !!}" rel="stylesheet" type="text/css" />
-<link href="{!! asset('backend/assets/css/themes/layout/header/menu/light.css?v=7.0.3') !!}" rel="stylesheet" type="text/css" />
-<link href="{!! asset('backend/assets/css/themes/layout/brand/dark.css?v=7.0.3') !!}" rel="stylesheet" type="text/css" />
-<link href="{!! asset('backend/assets/css/themes/layout/aside/dark.css?v=7.0.3') !!}" rel="stylesheet" type="text/css" />
+@if($gd['globals']->theme_color == 1)
+    <link href="{!! asset('backend/assets/css/themes/layout/header/base/dark.css?v=7.0.3') !!}" rel="stylesheet" type="text/css" />
+    <link href="{!! asset('backend/assets/css/themes/layout/header/menu/dark.css?v=7.0.3') !!}" rel="stylesheet" type="text/css" />
+@elseif($gd['globals']->theme_color == 2)
+    <link href="{!! asset('backend/assets/css/themes/layout/header/base/light.css?v=7.0.3') !!}" rel="stylesheet" type="text/css" />
+    <link href="{!! asset('backend/assets/css/themes/layout/header/menu/light.css?v=7.0.3') !!}" rel="stylesheet" type="text/css" />    
+@endif
+
+@if($gd['globals']->navbar_color == 1)
+    <link href="{!! asset('backend/assets/css/themes/layout/aside/dark.css?v=7.0.3') !!}" rel="stylesheet" type="text/css" />
+    <link href="{!! asset('backend/assets/css/themes/layout/brand/dark.css?v=7.0.3') !!}" rel="stylesheet" type="text/css" />
+@elseif ( $gd['globals']->navbar_color == 2 )
+    <link href="{!! asset('backend/assets/css/themes/layout/aside/light.css?v=7.0.3') !!}" rel="stylesheet" type="text/css" />
+    <link href="{!! asset('backend/assets/css/themes/layout/brand/light.css?v=7.0.3') !!}" rel="stylesheet" type="text/css" />
+@endif
+
 <!--end::Layout Themes-->
-<link rel="shortcut icon" href="{!! asset('uploads') !!}/logo/{{ $gd['globals']->address_bar_icon }}" />
+<link rel="icon" href="{!! asset('uploads') !!}/logo/{{ $gd['globals']->address_bar_icon }}" type="image/icon type" />
 
 <link rel="stylesheet" href="{!! asset('assets/frontend/plugins/growl-alert/stylesheets/jquery.growl.css') !!}">
 <link rel="stylesheet" type="text/css" href="{!! asset('backend') !!}/assets/css/main.css">
 <link rel="stylesheet" type="text/css" href="{!! asset('backend') !!}/assets/js/datatable.js">
 
 <meta name="csrf-token" content="{{ csrf_token() }}" />
+
 
 @yield('custom_style')

@@ -1,5 +1,6 @@
 @extends('backend.master')
 @section('custom_style')
+    <link rel="stylesheet" href="{!! asset('frontend/plugins/wickedpicker/dist/wickedpicker.min.css') !!}">
     <link href="{{asset('backend')}}/assets/plugins/custom/datatables/datatables.bundle.css?v=7.0.3" rel="stylesheet" type="text/css" />
 @endsection
 @section('main_content')
@@ -60,12 +61,32 @@
                                             @enderror
                                         </div>
                                         <div class="form-group col-sm-12 col-md-6">
-                                            <label>{!! __('common.image') !!}</label>
+                                            <label>Image 1</label>
                                             <div class="custom-file">
-                                                <input type="file" class="custom-file-input" accept="image/*" placeholder="Upload Image" name="image"/>
+                                                <input type="file" class="custom-file-input" accept="image/*" placeholder="Upload Image" name="image1"/>
                                                 <label class="custom-file-label" for="customFile">Choose file</label>
                                             </div>
-                                            @error('image')
+                                            @error('image1')
+                                            <p class="text-danger">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-sm-12 col-md-6">
+                                            <label>Image 2</label>
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" accept="image/*" placeholder="Upload Image" name="image2"/>
+                                                <label class="custom-file-label" for="customFile">Choose file</label>
+                                            </div>
+                                            @error('image2')
+                                            <p class="text-danger">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-sm-12 col-md-6">
+                                            <label>Image 3</label>
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" accept="image/*" placeholder="Upload Image" name="image3"/>
+                                                <label class="custom-file-label" for="customFile">Choose file</label>
+                                            </div>
+                                            @error('image3')
                                             <p class="text-danger">{{ $message }}</p>
                                             @enderror
                                         </div>
@@ -118,7 +139,7 @@
                                             @enderror
                                         </div>
                                         <div class="form-group col-sm-12 col-md-6">
-                                            <label for="weight">{!! __('common.weight') !!} <span class="text-danger">*</span></label>
+                                            <label for="weight">Weight (In KG)<span class="text-danger">*</span></label>
                                             <input type="number" step="0.01" class="form-control" placeholder="Enter Food Weight Per Unit" name="weight"
                                                    value="{{ old('weight') }}" min="0.0" required/>
                                             @error('weight')
@@ -145,6 +166,15 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                        <div class="form-group col-sm-12 col-md-6">
+                                            <label>Select Extra Foods</label>
+                                            <select multiple="" class="form-control selectpicker" required data-size="7" data-live-search="true" name="extra_foods[]" id="select_extra_food_input">
+                                                <option value="">Select Extra Food</option>
+                                                @foreach($extra_foods as $extra_food)
+                                                    <option value="{{$extra_food->id}}">{{$extra_food->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="card-footer">
@@ -164,6 +194,7 @@
 @endsection
 
 @section('custom_script')
+    <script src="{!! asset('frontend/plugins/wickedpicker/dist/wickedpicker.min.js') !!}"></script>
     <script src="{{asset('backend')}}/assets/plugins/custom/datatables/datatables.bundle.js?v=7.0.3"></script>
     <script src="{{asset('backend')}}/assets/js/pages/crud/datatables/advanced/column-visibility.js?v=7.0.3"></script>
 @endsection

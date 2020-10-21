@@ -27,7 +27,7 @@ class CreateFoodPostRequest extends FormRequest
             'restaurant' => 'required',
             'food_category' => 'required',
             'name' => 'required',
-            'image' => 'nullable|image',
+            
             'price' => 'required',
             'discount_price' => 'required',
             'description' => 'required',

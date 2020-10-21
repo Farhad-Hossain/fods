@@ -63,7 +63,7 @@
                 <div class="col-lg-8 col-md-12 col-12">
                     <div class="natto-business">
                         <div class="new-heading">
-                            <h1> Natto for Business</h1>
+                            <h1> <span class="text-danger">{{$gd['globals']->app_name}}</span> for Business</h1>
                         </div>
                         <div class="video-9 b-top b-bottom">
                             <div class="top-img">
