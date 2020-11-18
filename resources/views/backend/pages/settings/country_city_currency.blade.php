@@ -1,4 +1,15 @@
 @extends('backend.master', ['title'=>'Country | Area | Currency'])
+
+@section('custom_style')
+<link href="{!! asset('backend/assets/css/plugin/croppie/croppie.css') !!}" rel="stylesheet" type="text/css" />
+<style>
+    #previewimage {
+        height: 350px;
+        width : 100% !important;
+    }
+</style>
+@endsection
+
 @section('main_content')
     <div class="container-fluid">
         @include('backend.message.flash_message')
@@ -31,6 +42,7 @@
                                         <table class="table table-stripped">
                                             <thead>
                                                 <tr>
+                                                    <th></th>
                                                     <th>{!! __('common.name') !!}</th>
                                                     <th>{!! __('ccc.two_letter_iso_code') !!}</th>
                                                     <th>{!! __('ccc.three_letter_iso_code') !!}</th>
@@ -42,6 +54,7 @@
                                             <tbody>
                                                 @foreach($countries as $country)
                                                     <tr>
+                                                        <td><img src="{{ asset('uploads') }}/{{ $country->country_flag }}" style="width: 50px; height: 50px;"></td>
                                                         <td>{!! $country->name !!}</td>
                                                         <td>{!! $country->two_letter_iso_code !!}</td>
                                                         <td>{!! $country->three_letter_iso_code !!}</td>
@@ -95,6 +108,7 @@
                                         <table class="table table-stripped">
                                             <thead>
                                                 <tr>
+                                                    
                                                     <th>{!! __('common.name') !!}</th>
                                                     <th>{!! __('common.status') !!}</th>
                                                     <th>{!! __('common.action') !!}</th>
@@ -103,6 +117,7 @@
                                             <tbody>
                                                 @foreach($cities as $city)
                                                     <tr>
+
                                                         <td>{!! $city->name !!}</td>
                                                         @if($city->status == 1)
                                                             <td class="text-success"><b>Active</b></td>
@@ -194,38 +209,45 @@
                         <i aria-hidden="true" class="ki ki-close"></i>
                     </button>
                 </div>
-                <form action="{!! route('backend.settings.add_country') !!}" method="POST" enctype="multipart/form-data">
+                <div class="row mt-5">
+                </div>
+                <form action="{{ route('backend.settings.add_country') }}" method="POST" id="crop_image" enctype="multipart/form-data">
                     <div class="modal-body">
                             @csrf
                             <div class="form-group">
                                 <label>{!! __('ccc.country_name') !!}</label>
-                                <input type="text" name="country_name" class="form-control" required>
+                                <input type="text" id="country_name" name="country_name" class="form-control" >
                             </div>
                             <div class="form-group">
                                 <label>{!! __('ccc.two_letter_iso_code') !!}</label>
-                                <input type="text" name="two_letter_iso_code" class="form-control" required>
+                                <input type="text" id="two_letter_iso_code" name="two_letter_iso_code" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label>{!! __('ccc.three_letter_iso_code') !!}</label>
-                                <input type="text" name="three_letter_iso_code" class="form-control" required>
+                                <input type="text" id="three_letter_iso_code" name="three_letter_iso_code" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label>{!! __('ccc.country_code') !!}</label>
-                                <input type="text" name="country_code" class="form-control" required>
+                                <input type="text" id="country_code" name="country_code" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>{!! __('ccc.country_flag') !!}</label>
+                                <div class="d-none img-container" style="border-right:1px solid #ddd;">
+                                    <div id="image-preview"></div>
+                                </div>
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" accept="image/*" placeholder="Upload Image" name="flag_image"/>
-                                    <label class="custom-file-label" for="customFile">Choose file</label>
+                                        <input type="file"  name="upload_image" id="upload_image" class="image custom-file-input image" required>
+                                    <label class="custom-file-label" for="upload_image">Choose file</label>
                                 </div>
                             </div>
+                            <input type="hidden" name="country_flag" id="country_flag" value="">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary font-weight-bold">Add Country</button>
+                        <button type="submit" class="btn btn-primary font-weight-bold" id="addCountry">Add Country</button>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>
@@ -299,5 +321,54 @@
             </div>
         </div>
     </div>
-    
 @endsection
+
+@section('custom_script')
+<script src="{{asset('backend/assets/js/pages/features/miscellaneous/croppie.min.js')}}"></script>
+
+<script>
+$(document).ready(function(){
+  
+  $image_crop = $('#image-preview').croppie({
+    enableExif:true,
+    viewport:{
+      width:200,
+      height:150,
+      type:'rectangle'
+    },
+    boundary:{
+      width:300,
+      height:250
+    }
+  });
+
+  $('#upload_image').change(function(){
+    $(".img-container").removeClass('d-none');
+    var reader = new FileReader();
+
+    reader.onload = function(event){
+      $image_crop.croppie('bind', {
+        url:event.target.result
+      }).then(function(){
+        console.log('jQuery bind complete');
+      });
+    }
+    reader.readAsDataURL(this.files[0]);
+  });
+
+  $('#addCountry').click(function(event){
+    $image_crop.croppie('result', {
+      type:'canvas',
+      size:'viewport'
+    }).then(function(response){
+      var _token = $('input[name=_token]').val();
+        $("#country_flag").val(response);
+    });
+  });
+  
+});  
+</script>
+@endsection
+
+
+

@@ -25,6 +25,9 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\PaymentMethod;
 use App\Models\RestaurantAppointedPaymentMethod;
 use App\User;
+
+use App\Helpers\Helper;
+
 use DB;
 
 class RestaurantController extends Controller
@@ -43,6 +46,7 @@ class RestaurantController extends Controller
 		$cities = City::where('status', 1)->get();
 		$tags = RestaurantTag::where('status', 1)->get();
 		$payment_methods = PaymentMethod::all();
+		$cuisines = Cuisine::all();
 
 		$helper_array = [];
 		$appointed_payment_methods = $r->appointed_payment_methods()->get();
@@ -50,10 +54,11 @@ class RestaurantController extends Controller
 			$helper_array[] = $appointed_payment_method->id;
 		}
 		
-		return view('backend.pages.restaurants.edit_form', compact('r', 'cities', 'tags', 'payment_methods', 'helper_array') );
+		return view('backend.pages.restaurants.edit_form', compact('r', 'cities', 'tags', 'payment_methods', 'helper_array', 'cuisines') );
 	}
 	public function submit_restaurant_edit_form(Request $request, Restaurant $restaurant)
 	{
+		DB::beginTransaction();
 		try{
 			$rs = Restaurant::findOrFail($request->id);
 			$rs->name = $request->name;
@@ -68,36 +73,22 @@ class RestaurantController extends Controller
 			$rs->payment_method = 1;
 			$rs->alcohol_status = $request->alcohol_status;
 			$rs->seating_status = $request->seating_status;
-
-
-			if( $request->hasFile('restaurant_photo') ){
-				$extension = $request->file('restaurant_photo')->getClientOriginalExtension();
-				$fileNameToBeStore = 'rest_'.time().'.'.$extension;
-				$request->file('restaurant_photo')->storeAs('logo', $fileNameToBeStore);
-				$fileNameToBeStore = 'logo/'.$fileNameToBeStore;
+			if( $request->restaurant_photo ){
+				$fileNameToBeStore = Helper::insertFile($request->restaurant_photo, 1);
 			} else {
 				$fileNameToBeStore = $rs->cover_photo ?? '';
 			}
 
-			if( $request->hasFile('restaurant_logo') ){
-				$extension = $request->file('restaurant_logo')->getClientOriginalExtension();
-				$logo_fileNameToBeStore = 'rest_logo_'.time().'.'.$extension;
-				$request->file('restaurant_logo')->storeAs('logo', $logo_fileNameToBeStore);
-				$logo_fileNameToBeStore = 'logo/'.$logo_fileNameToBeStore;
+			if( $request->restaurant_logo ){
+				$logo_fileNameToBeStore = Helper::insertFile($request->restaurant_logo, 2);
 			} else {
 				$logo_fileNameToBeStore = $rs->logo ?? '';
 			}
-
-
 			$rs->logo = $logo_fileNameToBeStore;
 			$rs->cover_photo = $fileNameToBeStore;
-			
-
 			$rs->save();
-
 			if ( $request->tags ) {
 				$rs->appointedTags()->delete();
-
 				foreach($request->tags as $tag_id){
 					$rest_tag = new RestaurantAppointedTag();
 					$rest_tag->restaurant_id = $rs->id;
@@ -106,8 +97,6 @@ class RestaurantController extends Controller
 					$rest_tag->save();
 				}
 			}
-
-
 			if (isset($request->payment_methods)) {
 				RestaurantAppointedPaymentMethod::where('restaurant_id', $rs->id)->delete();
 
@@ -119,10 +108,19 @@ class RestaurantController extends Controller
 					$appointed_payment_method->save();
 				}
 			}
+			if ( isset( $request->password ) ) {
+				$restaurant_owner = User::findOrFail($rs->user_id);
+				$restaurant_owner->password_salt = $request->password;
+				$restaurant_owner->password = Hash::make( $request->password );
+				$restaurant_owner->save();
+			}
 		}catch(\Exception $e){
+			DB::rollback();
 			session(['type'=>'danger', 'message'=>'Something went wrong'.$e]);
+			dd($e);
 			return redirect()->back();
 		}
+		DB::commit();
 		session(['type'=>'success', 'message'=>'Restaurant Info Updated successfully']);
 		$rs = Restaurant::where('status',1)->get();
 		return redirect()->route('backend.restaurant.list', compact('rs'));
@@ -301,11 +299,15 @@ class RestaurantController extends Controller
 		$cities = City::where('country_id', $globals_info->country)->get();
 		$tags = RestaurantTag::where('status', 1)->get();
 		$restaurant_services = RestaurantService::where('status', 1)->get();
-		return view('backend.pages.restaurants.add_form', compact('cities', 'cuisines', 'tags', 'restaurant_services'));
+
+		$payment_methods = PaymentMethod::all();
+
+		return view('backend.pages.restaurants.add_form', compact('cities', 'cuisines', 'tags', 'restaurant_services', 'payment_methods'));
 	}
 
 	public function restaurantAddSubmit(Request $request)
 	{
+		// dd($request->all());
 
 		$globals_info = GlobalSetting::first();
 
@@ -322,37 +324,37 @@ class RestaurantController extends Controller
 			$user->status 	= 1;
 			$user->save();
 
-			if($request->hasFile('restaurant_photo')){
-				$extension = $request->file('restaurant_photo')->getClientOriginalExtension();
-				$fileNameToBeStore = 'rest_'.time().'.'.$extension;
-				$request->file('restaurant_photo')->storeAs('logo', $fileNameToBeStore);
+			if($request->restaurant_photo ){
+				$fileNameToBeStore = Helper::insertFile($request->restaurant_photo, 1);
+			} else {
+				$fileNameToBeStore = '';
 			}
 
-			if($request->hasFile('restaurant_logo')){
-				$extension = $request->file('restaurant_logo')->getClientOriginalExtension();
-				$logo_fileNameToBeStore = 'rest_logo_'.time().'.'.$extension;
-				$request->file('restaurant_logo')->storeAs('logo', $logo_fileNameToBeStore);
+			if($request->restaurant_logo ){
+				$logo_fileNameToBeStore = Helper::insertFile($request->restaurant_logo, 1);
+			} else {
+				$fileNameToBeStore = '';	
 			}
 
 			$res = new Restaurant();
 			$res->user_id 	= $user->id;
-			$res->name 		= $request->restaurant_name;
+			$res->name 		= $request->name;
 			$res->city 		= $request->city;
-			$res->phone 	= $request->restaurant_phone;
+			$res->phone 	= $request->phone;
 			$res->email 	= $request->user_email;
-			$res->address 	= $request->restaurant_address;
-			$res->website 	= $request->restaurant_website;
+			$res->address 	= $request->address;
+			$res->website 	= $request->website;
 			$res->open_status = $request->open_status;
 			$res->open_status = $request->open_status;
 			$res->characteristics = 1;
 			$res->alcohol_status = $request->alcohol_status;
 			$res->seating_status = $request->seating_status;
 			
-			$res->payment_method = $request->payment_method;
+			$res->payment_method = 1;
 		    $res->delivery_charge  = $globals_info->default_delivery_charge;
 		    $res->selling_percentage  = $request->commission??$globals_info->default_product_selling_percentage;
-		    $res->cover_photo = 'logo/'.$fileNameToBeStore;
-		    $res->logo = 'logo/'.$logo_fileNameToBeStore;
+		    $res->cover_photo = $fileNameToBeStore;
+		    $res->logo = $logo_fileNameToBeStore;
 			$res_id = $res->save();
 
 			foreach($request->cuisines as $cuisine_id) {
@@ -398,14 +400,16 @@ class RestaurantController extends Controller
 		        $char->save();
 		    }
 		    */
-
+		    
 		    DB::commit();
 		    session(['type'=>'success', 'message'=>'Restaurant created successfully']);
 		    return redirect()->back();
 		}catch(\Exception $e){
 		    DB::rollBack();
 
-		    dd('Something went wrong'.$e);
+		    session(['type'=>'danger', 'message'=>'Something went wrong.'.$e]);
+		    dd($e);
+		    return redirect()->back();
 		}
 	}
 

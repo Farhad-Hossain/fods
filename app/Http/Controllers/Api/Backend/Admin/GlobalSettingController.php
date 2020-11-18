@@ -63,4 +63,6 @@ class GlobalSettingController extends Controller
             return response()->json(['message' => $exception->getMessage()], 500);
         }
     }
+
+    
 }

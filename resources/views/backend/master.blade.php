@@ -1,21 +1,15 @@
-
 <!DOCTYPE html>
-<!--
-Template Name: Metronic - Bootstrap 4 HTML, React, Angular 9 & VueJS Admin Dashboard Theme
-Author: KeenThemes
-Website: http://www.keenthemes.com/
-Contact: support@keenthemes.com
-Follow: www.twitter.com/keenthemes
-Dribbble: www.dribbble.com/keenthemes
-Like: www.facebook.com/keenthemes
-Purchase: https://1.envato.market/EA4JP
-Renew Support: https://1.envato.market/EA4JP
-License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
--->
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <!--begin::Head-->
 <head>
     @include('backend.partials._head')
+    <link href="{!! asset('backend/assets/css/plugin/croppie/croppie.css') !!}" rel="stylesheet" type="text/css" />
+    <style>
+        #previewimage {
+            height: 350px;
+            width : 100% !important;
+        }
+    </style>
 </head>
 <!--end::Head-->
 <!--begin::Body-->
@@ -118,8 +112,91 @@ License: You must have a valid license purchased only from themeforest(the above
     @csrf
 </form>
 <!--end::Sticky Toolbar-->
-@include('backend.partials._scripts')
 @yield('modals')
+
+<div class="modal fade" id="img_cutting_modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Select Area ( Use wheel to zoom in & out )</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="d-none img-container" style="border-right:1px solid #ddd;">
+                    <div id="image-preview"></div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal" id="crop_btn">Crop</button>
+            </div>
+            
+        </div>
+    </div>
+</div>
+@include('backend.partials._scripts')
+
+<script src="{{asset('backend/assets/js/pages/features/miscellaneous/croppie.min.js')}}"></script>
+
+    <script>
+    $(document).ready(function(){
+      
+      $image_crop = $('#image-preview').croppie({
+        enableExif:true,
+        enforceBoundary:true,    
+        showZoomer: false,
+        viewport:{
+          width:600,
+          height:400,
+          type:'square'
+        },
+        boundary:{
+          width:700,
+          height:500,
+        }
+      });
+
+      $('.upload_image').change(function( ){
+
+        field_name = $(this).attr('target');
+        $("#crop_btn").attr('target', field_name);
+
+        $(".img-container").removeClass('d-none');
+        var reader = new FileReader();
+
+        reader.onload = function(event){
+          $image_crop.croppie('bind', {
+            url:event.target.result
+          }).then(function(){
+            console.log('jQuery bind complete');
+          });
+        }
+        reader.readAsDataURL(this.files[0]);
+        
+        $("#img_cutting_modal").modal();
+
+      });
+
+      $('#crop_btn').click(function(event){
+
+        var tr = $(this).attr('target');
+
+        $image_crop.croppie('result', {
+          type:'canvas',
+          size:'viewport'
+        }).then(function(response){
+          var _token = $('input[name=_token]').val();
+          
+          $("input[name="+tr+"]").val(response);
+        });
+      });
+      
+    });  
+    </script>
+
 </body>
 <!--end::Body-->
 </html>

@@ -9,7 +9,6 @@
     <div class="container-fluid">
     @include('backend.message.flash_message')
     <!--begin::Card-->
-        
         <div class="card card-custom">
             <div class="card-header">
                 <div class="card-title">
@@ -20,12 +19,11 @@
                 </div>
 
             </div>
-
             <!--begin::Form-->
-            <form class="form" action="{{ route('backend.food.edit', $food->id) }}" method="POST"
+            <div class="card-body">
+                <form class="form" action="{{ route('backend.food.edit', $food->id) }}" method="POST"
                   enctype="multipart/form-data">
                 @csrf
-                <div class="card-body">
                     <div class="row">
                         <div class="form-group col-sm-12 col-md-6">
                             <label for="restaurant">{!! __('food.restaurant') !!} <span class="text-danger">*</span></label>
@@ -75,34 +73,37 @@
                             <img src="{{asset('uploads')}}/{{$food->image1}}" style="height: 70px; width: 70px; display: block">
                             <label>Image 1</label>
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" accept="image/*" placeholder="Upload Image" name="image1"/>
+                                <input type="file" class="custom-file-input upload_image" accept="image/*" placeholder="Upload Image" target="image1"/>
                                 <label class="custom-file-label" for="customFile">Choose file</label>
                             </div>
                             @error('image1')
                             <p class="text-danger">{{ $message }}</p>
                             @enderror
+                            <input type="hidden" name="image1" value="">
                         </div>
                         <div class="form-group col-sm-12 col-md-4">
                             <img src="{{asset('uploads')}}/{{$food->image2}}" style="height: 70px; width: 70px; display: block">
                             <label>Image 2</label>
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" accept="image/*" placeholder="Upload Image" name="image2"/>
+                                <input type="file" class="custom-file-input upload_image" accept="image/*" placeholder="Upload Image" target="image2"/>
                                 <label class="custom-file-label" for="customFile">Choose file</label>
                             </div>
                             @error('image2')
                             <p class="text-danger">{{ $message }}</p>
                             @enderror
+                            <input type="hidden" name="image2" value="">
                         </div>
                         <div class="form-group col-sm-12 col-md-4">
                             <img src="{{asset('uploads')}}/{{$food->image3}}" style="height: 70px; width: 70px; display: block">
                             <label>Image 3</label>
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" accept="image/*" placeholder="Upload Image" name="image3"/>
+                                <input type="file" class="custom-file-input upload_image" accept="image/*" placeholder="Upload Image" target="image3"/>
                                 <label class="custom-file-label" for="customFile">Choose file</label>
                             </div>
                             @error('image3')
                             <p class="text-danger">{{ $message }}</p>
                             @enderror
+                            <input type="hidden" name="image3" value="">
                         </div>
                         
                         <div class="form-group col-sm-12 col-md-6">
@@ -183,12 +184,12 @@
                             </select>
                         </div>
                     </div>
-                </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-success mr-2">Save Changes</button>
                     <button type="reset" class="btn btn-secondary">Reset</button>
                 </div>
             </form>
+        </div>
             <!--end::Form-->
     </div>
     <!--end::Card-->

@@ -1,4 +1,4 @@
-@extends('backend.master')
+@extends('backend.master', ['title'=>'Edit Food info'])
 @section('custom_style')
     <link href="{{asset('backend')}}/assets/plugins/custom/datatables/datatables.bundle.css?v=7.0.3" rel="stylesheet"
           type="text/css"/>
@@ -9,15 +9,7 @@
     <div class="container-fluid">
     @include('backend.message.flash_message')
     <!--begin::Card-->
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+        
         <div class="card card-custom">
             <div class="card-header">
                 <div class="card-title">
@@ -35,7 +27,21 @@
                 @csrf
                 <div class="card-body">
                     <div class="row">
-                        <div class="form-group col-sm-12 col-md-12">
+                        <div class="form-group col-sm-12 col-md-6">
+                            <label for="restaurant">{!! __('food.restaurant') !!} <span class="text-danger">*</span></label>
+                            <select name="restaurant" id="restaurant" class="form-control" required>
+                                <option value="">--Select Restaurant--</option>
+                                @if(!empty($restaurants))
+                                    @foreach($restaurants as $restaurant)
+                                        <option value="{!! $restaurant->id !!}" {!! ($food->restaurant_id == $restaurant->id)?'selected':'' !!}>{!! $restaurant->name !!}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                            @error('restaurant')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="form-group col-sm-12 col-md-6">
                             <label for="food_category">{!! __('food.food_category') !!} <span class="text-danger">*</span></label>
                             <select name="food_category" id="food_category" class="form-control" required>
                                 <option value="">--Select Food Category--</option>
@@ -58,16 +64,6 @@
                             @enderror
                         </div>
                         <div class="form-group col-sm-12 col-md-6">
-                            <label>{!! __('common.image') !!}</label>
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" accept="image/*" placeholder="Upload Image" name="image"/>
-                                <label class="custom-file-label" for="customFile">Choose file</label>
-                            </div>
-                            @error('image')
-                            <p class="text-danger">{{ $message }}</p>
-                            @enderror
-                        </div>
-                        <div class="form-group col-sm-12 col-md-6">
                             <label for="price">{!! __('common.price') !!} <span class="text-danger">*</span></label>
                             <input type="number" step="0.01" class="form-control" placeholder="Enter Food Price" name="price"
                                    value="{{ $food->price }}" required/>
@@ -75,6 +71,40 @@
                             <p class="text-danger">{{ $message }}</p>
                             @enderror
                         </div>
+                        <div class="form-group col-sm-12 col-md-4">
+                            <img src="{{asset('uploads')}}/{{$food->image1}}" style="height: 70px; width: 70px; display: block">
+                            <label>Image 1</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" accept="image/*" placeholder="Upload Image" name="image1"/>
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                            @error('image1')
+                            <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="form-group col-sm-12 col-md-4">
+                            <img src="{{asset('uploads')}}/{{$food->image2}}" style="height: 70px; width: 70px; display: block">
+                            <label>Image 2</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" accept="image/*" placeholder="Upload Image" name="image2"/>
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                            @error('image2')
+                            <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="form-group col-sm-12 col-md-4">
+                            <img src="{{asset('uploads')}}/{{$food->image3}}" style="height: 70px; width: 70px; display: block">
+                            <label>Image 3</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" accept="image/*" placeholder="Upload Image" name="image3"/>
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                            @error('image3')
+                            <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        
                         <div class="form-group col-sm-12 col-md-6">
                             <label for="discount_price">{!! __('admin_add_food.discount_price') !!} <span class="text-danger">*</span></label>
                             <input type="number" step="0.01" class="form-control" placeholder="Enter Food Discount Price" name="discount_price"
@@ -143,17 +173,27 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="form-group col-sm-12 col-md-6">
+                            <label>Select Extra Foods</label>
+                            <select multiple="" class="form-control selectpicker" required data-size="7" data-live-search="true" name="extra_foods[]" id="select_extra_food_input">
+                                <option value="">Select Extra Food</option>
+                                @foreach($extra_foods as $extra_food)
+                                    <option value="{{$extra_food->id}}" {{ in_array($extra_food->id, $extra_foods_array) ? 'selected' : '' }}>{{$extra_food->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-success mr-2">Save Changes</button>
                     <button type="reset" class="btn btn-secondary">Reset</button>
-                    <a href="{!! route('backend.restAdmin.food.list') !!}" class="btn btn-info">Cancel</a>
                 </div>
             </form>
             <!--end::Form-->
-        </div>
     </div>
     <!--end::Card-->
     </div>
+@endsection
+@section('custom_script')
+    <script src="{!! asset('frontend/plugins/wickedpicker/dist/wickedpicker.min.js') !!}"></script>
 @endsection

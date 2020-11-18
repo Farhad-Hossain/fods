@@ -1,6 +1,8 @@
 @extends('backend.master')
 @section('custom_style')
+    <link rel="stylesheet" href="{!! asset('frontend/plugins/wickedpicker/dist/wickedpicker.min.css') !!}">
     <link href="{{asset('backend')}}/assets/plugins/custom/datatables/datatables.bundle.css?v=7.0.3" rel="stylesheet" type="text/css" />
+
 @endsection
 @section('main_content')
     <div class="container-fluid">
@@ -21,8 +23,23 @@
                             <form class="form" action="{{ route('backend.restAdmin.food.add') }}" method="POST"
                                   enctype="multipart/form-data">
                                 @csrf
-                                    <input type="hidden" name="restaurant" value="{!! Auth::user()->restaurant->id !!}">  
+                                
                                     <div class="row">
+                                        <div class="form-group col-sm-12 col-md-6">
+                                            <label for="restaurant">{!! __('admin_add_food.restaurant') !!} <span class="text-danger">*</span></label>
+                                            <select name="restaurant" id="restaurant" class="form-control selectpicker" required data-size="7" data-live-search="true">
+                                                <option value="">Select</option>
+                                                @if(!empty($restaurants))
+                                                    @foreach($restaurants as $restaurant)
+                                                        <option value="{!! $restaurant->id !!}" {!! (old('restaurant') == $restaurant->id)?'selected':'' !!}>{!! $restaurant->name !!}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                            @error('restaurant')
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+
                                         <div class="form-group col-sm-12 col-md-6">
                                             <label for="food_category">{!! __('admin_add_food.food_category') !!} <span class="text-danger">*</span></label>
                                             <select name="food_category" id="food_category" class="form-control selectpicker" required data-size="7" data-live-search="true">
@@ -37,6 +54,7 @@
                                                 <p class="text-danger">{{ $message }}</p>
                                             @enderror
                                         </div>
+                                        
                                         <div class="form-group col-sm-12 col-md-6">
                                             <label for="name">{!! __('common.name') !!}<span class="text-danger">*</span></label>
                                             <input type="text" class="form-control" placeholder="Food Name" name="name"
@@ -46,12 +64,35 @@
                                             @enderror
                                         </div>
                                         <div class="form-group col-sm-12 col-md-6">
-                                            <label>{!! __('common.image') !!}</label>
+                                            <label>Image 1</label>
                                             <div class="custom-file">
-                                                <input type="file" class="custom-file-input" accept="image/*" placeholder="Upload Image" name="image"/>
+                                                <input type="file" class="custom-file-input upload_image" accept="image/*" placeholder="Upload Image" target="image1"  />
                                                 <label class="custom-file-label" for="customFile">Choose file</label>
+                                                <input type="hidden" name="image1" value="">
                                             </div>
-                                            @error('image')
+                                            @error('image1')
+                                            <p class="text-danger">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-sm-12 col-md-6">
+                                            <label>Image 2</label>
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input upload_image" accept="image/*" placeholder="Upload Image" target="image2"/>
+                                                <label class="custom-file-label" for="customFile">Choose file</label>
+                                                <input type="hidden" name="image2" value="">
+                                            </div>
+                                            @error('image2')
+                                            <p class="text-danger">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-sm-12 col-md-6">
+                                            <label>Image 3</label>
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input upload_image" accept="image/*" placeholder="Upload Image" target="image3"/>
+                                                <label class="custom-file-label" for="customFile">Choose file</label>
+                                                <input type="hidden" name="image3" value="">
+                                            </div>
+                                            @error('image3')
                                             <p class="text-danger">{{ $message }}</p>
                                             @enderror
                                         </div>
@@ -104,7 +145,7 @@
                                             @enderror
                                         </div>
                                         <div class="form-group col-sm-12 col-md-6">
-                                            <label for="weight">{!! __('common.weight') !!} <span class="text-danger">*</span></label>
+                                            <label for="weight">Weight (In KG)<span class="text-danger">*</span></label>
                                             <input type="number" step="0.01" class="form-control" placeholder="Enter Food Weight Per Unit" name="weight"
                                                    value="{{ old('weight') }}" min="0.0" required/>
                                             @error('weight')
@@ -131,10 +172,19 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                        <div class="form-group col-sm-12 col-md-6">
+                                            <label>Select Extra Foods</label>
+                                            <select multiple="" class="form-control selectpicker" required data-size="7" data-live-search="true" name="extra_foods[]" id="select_extra_food_input">
+                                                <option value="">Select Extra Food</option>
+                                                @foreach($extra_foods as $extra_food)
+                                                    <option value="{{$extra_food->id}}">{{$extra_food->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-success mr-2">Add Food</button>
+                                    <button type="submit" class="btn btn-success mr-2">Add</button>
                                     <button type="reset" class="btn btn-secondary">Reset</button>
                                     
                                     <a  href="{!! URL::previous() !!}" type="button" class="btn btn-success mr-2">
@@ -150,6 +200,7 @@
 @endsection
 
 @section('custom_script')
+    <script src="{!! asset('frontend/plugins/wickedpicker/dist/wickedpicker.min.js') !!}"></script>
     <script src="{{asset('backend')}}/assets/plugins/custom/datatables/datatables.bundle.js?v=7.0.3"></script>
     <script src="{{asset('backend')}}/assets/js/pages/crud/datatables/advanced/column-visibility.js?v=7.0.3"></script>
 @endsection

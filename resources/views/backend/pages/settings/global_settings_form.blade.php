@@ -88,81 +88,86 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group col-sm-12 col-md-4">
-                                    <img src="{{asset('uploads')}}/logo/{{$setting->website_logo}}" style="height: 70px; width: 70px; display: block">
+                                <div class="form-group col-sm-12 col-md-6">
                                     <label>Website Logo</label>
-                                    <div></div>
+                                    <img src="{{asset('uploads')}}/{{$setting->website_logo}}" style="height: 70px; width: 70px; display: block">
                                     <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="website_logo"/>
-                                        <label class="custom-file-label">Choose file</label>
-                                        @error('website_logo')
-                                        <span class="form-text text-warning">{{ $message }}</span>
-                                        @enderror
+                                        <input type="file" class="custom-file-input upload_image" accept="image/*" placeholder="Upload Image" target="website_logo"/>
+                                        <label class="custom-file-label" for="customFile">Choose file</label>
                                     </div>
+                                    @error('website_logo')
+                                    <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                    <input type="hidden" name="website_logo" value="">
                                 </div>
 
-                                <div class="form-group col-sm-12 col-md-4">
-                                    <img src="{{asset('uploads')}}/logo/{{$setting->admin_logo}}" style="height: 70px; width: 70px; display: block">
-                                    <label>{!! __('backend_gs_form.admin_logo') !!}</label>
-                                    <div></div>
+                                <div class="form-group col-sm-12 col-md-6">
+                                    <label>Admin Logo</label>
+                                    <img src="{{asset('uploads')}}/{{$setting->admin_logo}}" style="height: 70px; width: 70px; display: block">
                                     <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="admin_logo"/>
-                                        <label class="custom-file-label">Choose file</label>
-                                        @error('admin_logo')
-                                        <span class="form-text text-warning">{{ $message }}</span>
-                                        @enderror
+                                        <input type="file" class="custom-file-input upload_image" accept="image/*" placeholder="Upload Image" target="admin_logo"/>
+                                        <label class="custom-file-label" for="customFile">Choose file</label>
                                     </div>
+                                    @error('admin_logo')
+                                    <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                    <input type="hidden" name="admin_logo" value="">
                                 </div>
 
+
                                 <div class="form-group col-sm-12 col-md-4">
-                                    <img src="{{asset('uploads')}}/logo/{{$setting->app_logo}}" style="height: 70px; width: 70px; display: block">
+                                    <img src="{{asset('uploads')}}/{{$setting->app_logo}}" style="height: 70px; width: 70px; display: block">
                                     <label>App Logo</label>
                                     <div></div>
                                     <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="app_logo"/>
-                                        <label class="custom-file-label">Choose file</label>
-                                        @error('app_logo')
-                                        <span class="form-text text-warning">{{ $message }}</span>
-                                        @enderror
+                                        <input type="file" class="custom-file-input upload_image" accept="image/*" placeholder="Upload Image" target="app_logo"/>
+                                        <label class="custom-file-label" for="customFile">Choose file</label>
                                     </div>
+                                    @error('app_logo')
+                                    <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                    <input type="hidden" name="app_logo" value="">
                                 </div>
                                 
                                 <div class="form-group col-sm-12 col-md-4">
-                                    <img src="{{asset('uploads')}}/logo/{{$setting->mobile_logo}}" style="height: 70px; width: 70px; display: block">
+                                    <img src="{{asset('uploads')}}/{{$setting->mobile_logo}}" style="height: 70px; width: 70px; display: block">
                                     <label>Mobile View Logo</label>
                                     <div></div>
                                     <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="mobile_logo"/>
-                                        <label class="custom-file-label">Choose file</label>
-                                        @error('mobile_logo')
-                                        <span class="form-text text-warning">{{ $message }}</span>
-                                        @enderror
+                                        <input type="file" class="custom-file-input upload_image" accept="image/*" placeholder="Upload Image" target="mobile_logo"/>
+                                        <label class="custom-file-label" for="customFile">Choose file</label>
                                     </div>
+                                    @error('mobile_logo')
+                                    <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                    <input type="hidden" name="mobile_logo" value="">
                                 </div>
 
                                 <div class="form-group col-sm-12 col-md-4">
-                                    <img src="{{asset('uploads')}}/logo/{{$setting->login_page_cover_photo}}" style="height: 70px; width: 70px; display: block">
+                                    <img src="{{asset('uploads')}}/{{$setting->login_page_cover_photo}}" style="height: 70px; width: 70px; display: block">
                                     <label>Login Page Cover Photo</label>
                                     <div></div>
                                     <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="login_page_cover_photo"/>
+                                            <input type="file" class="custom-file-input upload_image" target="login_page_cover_photo"/>
                                         <label class="custom-file-label">Choose file</label>
                                         @error('login_page_cover_photo')
                                         <span class="form-text text-warning">{{ $message }}</span>
                                         @enderror
+                                        <input type="hidden" name="login_page_cover_photo">
                                     </div>
                                 </div>
 
                                 <div class="form-group col-sm-12 col-md-4">
-                                    <img src="{{asset('uploads')}}/logo/{{$setting->address_bar_icon}}" style="height: 70px; width: 70px; display: block">
+                                    <img src="{{asset('uploads')}}/{{$setting->address_bar_icon}}" style="height: 70px; width: 70px; display: block">
                                     <label>Icon of Adress bar</label>
                                     <div></div>
                                     <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="address_bar_icon"/>
+                                            <input type="file" class="custom-file-input upload_image" target="address_bar_icon"/>
                                         <label class="custom-file-label">Choose file</label>
                                         @error('address_bar_icon')
                                         <span class="form-text text-warning">{{ $message }}</span>
                                         @enderror
+                                        <input type="hidden" name="address_bar_icon" value="">
                                     </div>
                                 </div>
 

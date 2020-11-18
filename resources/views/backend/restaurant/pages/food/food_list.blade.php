@@ -71,6 +71,7 @@
                         <tr>
                             <th>#</th>
                             <th>Name</th>
+                            <th>Restaurant</th>
                             <th>Category</th>
                             <th>Price</th>
                             <th>Discount Price</th>
@@ -84,6 +85,7 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $food->food_name }}</td>
+                            <td>{{ $food->restaurant->name }}</td>
                             <td>{{ $food->foodCategory->name }}</td>
                             <td>{{ $food->price }}</td>
                             <td>{{ $food->discount_price }}</td>

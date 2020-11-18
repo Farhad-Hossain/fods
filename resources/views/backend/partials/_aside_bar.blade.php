@@ -84,7 +84,7 @@
                     <div class="menu-submenu">
                         <i class="menu-arrow"></i>
                         <ul class="menu-subnav">
-                            @if(Auth::user()->admin->role->user_management == 1)
+                            @if(strpos( Auth::user()->admin->role(), 'user_view' ) )
                             <li class="menu-item" aria-haspopup="true">
                                 <a href="{!! route('backend.users.list') !!}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -94,13 +94,23 @@
                                 </a>
                             </li>
                             @endif
+
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="{{route('backend.users.roles.lists')}}" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text">{{ __('backend_menus.role_and_permissions') }}</span>
+                                </a>
+                            </li>
+                            
                         </ul>
                     </div>
                 </li>
                 <!-- End::User management -->
 
                 <!-- Begin::Restuarant Management -->
-                @if( Auth::user()->admin->role->restaurant_management == 1 )
+                
                 <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                     <a href="javascript:;" class="menu-link menu-toggle">
                         <span class="svg-icon menu-icon">
@@ -129,6 +139,7 @@
                                     <span class="menu-text">{!! __('backend_menus.restaurant_management') !!}</span>
                                 </span>
                             </li>
+                            @if(strpos(Auth::user()->admin->role(), 'rest_add') )
                             <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="{{ route('backend.restaurant.list') }}" class="menu-link menu-toggle">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -137,8 +148,9 @@
                                     <span class="menu-text">{!! __('backend_menus.restaurant') !!}</span>
                                 </a>
                             </li>
+                            @endif
 
-                            @if(Auth::user()->admin->role->see_restaurant_sales_transaction)
+                            @if(strpos(Auth::user()->admin->role(), 'rest_sales_transaction_view') )
                             <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="{!! route('backend.restaurant.transactions') !!}" class="menu-link menu-toggle">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -149,7 +161,7 @@
                             </li>
                             @endif
 
-                            @if(Auth::user()->admin->role->make_restaurant_withdrawal)
+                            @if(strpos(Auth::user()->admin->role(), 'rest_payout_add'))
                             <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="{!! route('backend.restaurant.payment.make_a_payment') !!}" class="menu-link menu-toggle">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -164,13 +176,13 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">Payout Requests</span>
+                                    <span class="menu-text">{{ __('backend_menus.payout_requests') }}</span>
                                 </a>
                             </li>
                             @endif
 
             
-                            @if(Auth::user()->admin->role->restaurant_rating_review)
+                            @if( strpos(Auth::user()->admin->role(), 'rest_payout_request_view') )
                             <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="{!! route('backend.restaurant.rating_and_reviews') !!}" class="menu-link menu-toggle">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -180,7 +192,7 @@
                                 </a>
                             </li>
                             @endif
-                            @if(Auth::user()->admin->role->restaurant_tag)
+                            @if(strpos( Auth::user()->admin->role(), 'rest_tags_view' ) )
                             <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="{{ route('backend.restaurant.tags.list') }}" class="menu-link menu-toggle">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -190,18 +202,20 @@
                                 </a>
                             </li>
                             @endif
+                            @if(strpos( Auth::user()->admin->role(), 'rest_favourite_view' ) )
                             <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="{{ route('backend.restaurant.favorites') }}" class="menu-link menu-toggle">
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">Favaourites</span>
+                                    <span class="menu-text">{{ __('backend_menus.restaurant_favourite') }}s</span>
                                 </a>
                             </li>
+                            @endif
                         </ul>
                     </div>
                 </li>
-                @endif
+                
                 <!-- End::Restuarant Management -->
                 <!-- Begin::Food Management -->
                 <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
@@ -228,7 +242,7 @@
                     <div class="menu-submenu">
                         <i class="menu-arrow"></i>
                         <ul class="menu-subnav">
-                            @if(Auth::user()->admin->role->food_category)
+                            @if(strpos(Auth::user()->admin->role(), 'food_category_view') )
                             <li class="menu-item" aria-haspopup="true">
                                 <a href="{!! route('backend.food.category.list') !!}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -238,7 +252,7 @@
                                 </a>
                             </li>
                             @endif
-                            @if(Auth::user()->admin->role->see_food_list)
+                            @if(strpos(Auth::user()->admin->role(), 'food_view') )
                             <li class="menu-item" aria-haspopup="true">
                                 <a href="{!! route('backend.food.list') !!}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -248,7 +262,7 @@
                                 </a>
                             </li>
                             @endif
-                            @if(Auth::user()->admin->role->create_cuisine)
+                            @if(strpos(Auth::user()->admin->role(), 'cuisine_view') )
                             <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="{{ route('backend.food.cuisines.list') }}" class="menu-link menu-toggle">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -268,7 +282,7 @@
                                 </a>
                             </li>
      -->
-                            @if(Auth::user()->admin->role->extra_food)
+                            @if(strpos(Auth::user()->admin->role(), 'extra_food_view') )
                             <li class="menu-item" aria-haspopup="true">
                                 <a href="{!! route('backend.food.extra_food.list') !!}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -279,7 +293,7 @@
                             </li>
                             @endif
     
-                            @if(Auth::user()->admin->role->food_rating_review)
+                            
                             <li class="menu-item" aria-haspopup="true">
                                 <a href="{!! route('backend.food.rating_reviews') !!}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -288,13 +302,13 @@
                                     <span class="menu-text">{!! __('backend_menus.rating_and_reviews') !!}</span>
                                 </a>
                             </li>
-                            @endif
+                            
                         </ul>
                     </div>
                 </li>
                 <!-- End::Food Management -->
                 <!-- Begin::Order Management -->
-                @if( Auth::user()->admin->role->order_management )
+                
                 <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                     <a href="javascript:;" class="menu-link menu-toggle">
                         <span class="svg-icon menu-icon">
@@ -323,7 +337,7 @@
                                     <span class="menu-text">{!! __('backend_menus.order_management') !!}</span>
                                 </span>
                             </li>
-                            @if(Auth::user()->admin->role->see_order_list)
+                            @if(strpos(Auth::user()->admin->role(), 'order_view') )
                             <li class="menu-item" aria-haspopup="true">
                                 <a href="{!! route('backend.order.list') !!}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -334,7 +348,7 @@
                             </li>
                             @endif
 
-                            
+                            @if(strpos(Auth::user()->admin->role(), 'delivery_address_view') )
                             <li class="menu-item" aria-haspopup="true">
                                 <a href="{!! route('backend.order.addresses') !!}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -343,8 +357,9 @@
                                     <span class="menu-text">{!! __('backend_menus.delivery_address') !!}</span>
                                 </a>
                             </li>
+                            @endif
 
-                            @if( Auth::user()->admin->role->order_status )
+                            @if(strpos(Auth::user()->admin->role(), 'order_status_view') )
                             <li class="menu-item" aria-haspopup="true">
                                 <a href="{!! route('backend.order.status_list') !!}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -358,7 +373,6 @@
                         </ul>
                     </div>
                 </li>
-                @endif
                 <!-- End Order Management -->
                 <!-- Begin::Delivery Management -->
 
@@ -411,7 +425,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">Withdrawal</span>
+                                    <span class="menu-text">{{ __('backend_menus.withdrawal') }}</span>
                                 </a>
                             </li>
                             
@@ -707,7 +721,7 @@
                             </svg>
                             <!--end::Svg Icon-->
                         </span>
-                        <span class="menu-text">Discount Coupons</span>
+                        <span class="menu-text">{{ __('backend_menus.discount_coupon') }}</span>
                         <i class="menu-arrow"></i>
                     </a>
                     <div class="menu-submenu">
@@ -715,7 +729,7 @@
                         <ul class="menu-subnav">
                             <li class="menu-item menu-item-parent" aria-haspopup="true">
                                 <span class="menu-link">
-                                    <span class="menu-text">Discount Coupons</span>
+                                    <span class="menu-text">{{ __('backend_menus.discount_coupons') }}</span>
                                 </span>
                             </li>
                             <li class="menu-item" aria-haspopup="true">
@@ -723,7 +737,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">Coupons</span>
+                                    <span class="menu-text">{{ __('backend_menus.coupons') }}</span>
                                 </a>
                             </li>
 
@@ -826,8 +840,6 @@
                                     <span class="menu-text">{!! __('backend_menus.global_setting') !!}</span>
                                 </span>
                             </li>
-    
-                            @if(Auth::user()->admin->role->global_setting)
                             <li class="menu-item" aria-haspopup="true">
                                 <a href="{{ route('backend.settings.global_settings') }}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -836,7 +848,6 @@
                                     <span class="menu-text">{!! __('backend_menus.global_settings') !!}</span>
                                 </a>
                             </li>
-                            @endif
 
                             <li class="menu-item" aria-haspopup="true">
                                 <a href="{!! route('backend.settings.ccc') !!}" class="menu-link">
@@ -852,7 +863,16 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">Payments</span>
+                                    <span class="menu-text">{{ __('backend_menus.payments') }}</span>
+                                </a>
+                            </li>
+
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="{{ route('backend.settings.language') }}" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text">{{ __('backend_menus.language') }}</span>
                                 </a>
                             </li>
                         </ul>
@@ -892,7 +912,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">Contact Info</span>
+                                    <span class="menu-text">{{ __('backend_menus.contact_info') }}</span>
                                 </a>
                             </li>
                             <li class="menu-item" aria-haspopup="true">
@@ -900,7 +920,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">About Us Info</span>
+                                    <span class="menu-text">{{ __('backend_menus.about_us_info') }}</span>
                                 </a>
                             </li>
                         </ul>
@@ -908,9 +928,6 @@
                 </li>
                 <!-- End::Content Management -->
                 <!-- End::setting -->
-
-
-                
             </ul>
             <!--end::Menu Nav-->
         </div>

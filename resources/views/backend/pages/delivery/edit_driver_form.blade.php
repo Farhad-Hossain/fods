@@ -33,16 +33,17 @@
                           </div>
 
                           <div class="form-group col-sm-12 col-md-6">
-                            <img src="{{asset('uploads')}}/{{$driver->photo}}" style="height: 70px; width: 70px; display: block">
-                           <label>Photo</label>
-                           <div class="custom-file">
-                               <input type="file" class="custom-file-input" accept="image/*" placeholder="Upload Image" name="photo"/>
-                               <label class="custom-file-label" for="customFile">Choose file</label>
-                           </div>
-                           @error('photo')
-                           <p class="text-danger">{{ $message }}</p>
-                           @enderror
+                              <label>Photo</label>
+                              <div class="custom-file">
+                                  <input type="file" class="custom-file-input upload_image" accept="image/*" placeholder="Upload Image" target="photo"/>
+                                  <label class="custom-file-label" for="customFile">Choose file</label>
+                              </div>
+                              @error('photo')
+                              <p class="text-danger">{{ $message }}</p>
+                              @enderror
+                              <input type="hidden" name="photo" value="">
                           </div>
+                          
 
                           <div class="form-group col-sm-12 col-md-6">
                               <label>City</label>

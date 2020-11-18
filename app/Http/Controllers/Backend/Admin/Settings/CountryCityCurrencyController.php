@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Country;
 use App\Models\City;
 use App\Models\Currency;
+use Image;
+
+use App\Helpers\Helper;
 
 class CountryCityCurrencyController extends Controller
 {
@@ -17,33 +20,47 @@ class CountryCityCurrencyController extends Controller
     	$currencies = Currency::where('status', 1)->get();
 
     	return view('backend.pages.settings.country_city_currency', compact('countries', 'cities', 'currencies'));
-    }
+	}
+	public function upload(Request $request)
+    {
+        if($request->flag_image)
+        {
+            return $request->flag_image;
+        }
+        else{
+            return "False";
+        }
+        // return response()->json(['success'=>'success']);
+	}
+	
     public function add_country_submit(Request $request)
     {
-    	$request->validate([
-    		'country_name' => 'required',
+        // Validation
+        $request->validate([
+            'country_name' => 'required',
             'two_letter_iso_code' => 'required',
             'three_letter_iso_code' => 'required',
             'country_code' => 'required',
-    	]);
+        ]);
 
-        if($request->hasFile('flag_image')){
-            $flag_name = time().$request->file('flag_image')->getClientOriginalExtension();
-            $request->file('flag_image')->storeAs('country_flags', $flag_name);
-        }else{
-            $flag_name = '';
-        }
-
-    	$country = new Country();
-    	$country->name = $request->country_name;
+        // Data Store To Database
+        $country = new Country();
+        $country->name = $request->country_name;
         $country->two_letter_iso_code = $request->two_letter_iso_code;
         $country->three_letter_iso_code = $request->three_letter_iso_code;
         $country->country_code = $request->country_code;
-        $country->country_flag = $request->$flag_name;
-    	$country->status = 1;
-    	$country->save();
-    	session(['type'=>'success', 'message'=>'Country Added successfully.']);
-    	return redirect()->back();
+
+        $image_name = Helper::insertFile($request->country_flag, 1);
+
+        $country->country_flag = $image_name;
+        $country->status = 1;
+        $country->save();
+        session(['type'=>'success', 'message'=>'Country Added successfully.']);
+        return redirect()->back();
+
+    
+
+
     }
     public function delete_country($country_id)
     {

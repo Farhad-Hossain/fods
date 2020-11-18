@@ -37,6 +37,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\LanguageSet::class,
         ],
 
         'api' => [
@@ -67,5 +68,6 @@ class Kernel extends HttpKernel
         'api_auth' => \App\Http\Middleware\ApiAuth::class,
         'admin' => \App\Http\Middleware\Admin::class,
         'restaurant' => \App\Http\Middleware\Restaurant::class,
+        'language_set'=>\App\Http\Middleware\LanguageSet::class,
     ];
 }

@@ -9,6 +9,7 @@ use App\Models\Country;
 use App\Models\City;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\Array_;
+use App\Helpers\Helper;
 
 class GlobalController extends Controller
 {
@@ -65,49 +66,37 @@ class GlobalController extends Controller
             $global_setting->youtube = $request->youtube??'';
 
 
-            if($request->hasFile('app_logo'))
+            if( $request->hasFile('app_logo'))
             {
-                $extension = $request->file('app_logo')->getClientOriginalExtension();
-                $fileNameToStore = '_'.time().'.'.$extension;
-                $app_logo = $request->file('app_logo')->storeAs('logo', $fileNameToStore);
+                $fileNameToStore = Helper::insertFile($request->app_logo, 1);
             } else {
                 $fileNameToStore = $global_setting->app_logo ?? "";
             }
-            if($request->hasFile('admin_logo'))
+            if( $request->admin_logo )
             {
-                $extension = $request->file('admin_logo')->getClientOriginalExtension();
-                $admin_fileNameToStore = 'admin_'.time().'.'.$extension;
-                $admin_logo = $request->file('admin_logo')->storeAs('logo', $admin_fileNameToStore);
+                $admin_fileNameToStore = Helper::insertFile($request->admin_logo, 2);   
             } else {
                 $admin_fileNameToStore = $global_setting->admin_logo ?? "";
             }
-            if($request->hasFile('mobile_logo'))
+            if( $request->mobile_logo )
             {
-                $extension = $request->file('mobile_logo')->getClientOriginalExtension();
-                $mobile_fileNameToStore = 'mobile_'.time().'.'.$extension;
-                $mobile_logo = $request->file('mobile_logo')->storeAs('logo', $mobile_fileNameToStore);
+                $mobile_fileNameToStore = Helper::inserFile($request->mobile_logo, 3);
             } else {
                 $mobile_fileNameToStore = $global_setting->mobile_logo ?? "";
             }
-            if($request->hasFile('website_logo')){
-                $extension = $request->file('website_logo')->getClientOriginalExtension();
-                $website_logo_fileNameToStore = 'web_'.time().'.'.$extension;
-                $website_logo = $request->file('website_logo')->storeAs('logo', $website_logo_fileNameToStore);
+            if( $request->website_logo ){
+                $website_logo_fileNameToStore = Helper::insertFile($request->website_logo, 4);
             } else {
                 $website_logo_fileNameToStore = $global_setting->website_logo ?? "";
             }
-            if( $request->hasFile('login_page_cover_photo') ){
-                $extension = $request->file('login_page_cover_photo')->getClientOriginalExtension();
-                $login_page_cover_photo_fileNameToStore = 'login_cover_'.time().'.'.$extension;
-                $login_page_cover_photo = $request->file('login_page_cover_photo')->storeAs('logo', $login_page_cover_photo_fileNameToStore);
+            if( $request->login_page_cover_photo ){
+                $login_page_cover_photo_fileNameToStore = Helper::insertFile($request->login_page_cover_photo, 5);
             } else {
                 $login_page_cover_photo_fileNameToStore = $global_setting->login_page_cover_photo ?? "";   
             }
 
-            if( $request->hasFile('address_bar_icon') ){
-                $extension = $request->file('address_bar_icon')->getClientOriginalExtension();
-                $address_bar_icon_fileNameToStore = 'address_bar_icon_'.time().'.'.$extension;
-                $address_bar_icon = $request->file('address_bar_icon')->storeAs('logo', $address_bar_icon_fileNameToStore);
+            if( $request->address_bar_icon ){
+                $address_bar_icon_fileNameToStore = Helper::insertFile($request->address_bar_icon, 6);
             } else {
                 $address_bar_icon_fileNameToStore = $global_setting->address_bar_icon ?? '';
             }
@@ -131,6 +120,26 @@ class GlobalController extends Controller
             session()->flash('message', 'Something went wrong to update global settings'. $exception->getMessage());
             return redirect()->back();
         }
-
+    }
+    public function getLanguageInformation()
+    {
+        return view('backend.pages.settings.language_form');
+    }
+    public function changeLanguageSubmit(Request $request)
+    {
+        try{
+            if(in_array($request->language_code, ['en', 'bn'])){
+               session(['locale'=> $request->language_code]);
+               app()->setLocale(session('locale'));
+            } else {
+                session(['type'=>'danger', 'message'=>'Something went wrong.']);
+                return redirect()->back();        
+            }
+        } catch (Exception $e) {
+            session(['type'=>'danger', 'message'=>'Something went wrong.']);
+            return redirect()->back();    
+        }   
+        session(['type'=>'success', 'message'=>'Language Changes successfully.']);
+        return redirect()->back();
     }
 }

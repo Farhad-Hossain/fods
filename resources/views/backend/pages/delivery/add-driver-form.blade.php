@@ -32,17 +32,19 @@
                           </div>
 
                           <div class="form-group col-sm-12 col-md-6">
-                           <label>Photo</label>
-                           <div class="custom-file">
-                               <input type="file" class="custom-file-input" accept="image/*" placeholder="Upload Image" name="photo"/>
-                               <label class="custom-file-label" for="customFile">Choose file</label>
-                           </div>
-                           @error('photo')
-                           <p class="text-danger">{{ $message }}</p>
-                           @enderror
+                              <label>Photo</label>
+                              <div class="custom-file">
+                                  <input type="file" class="custom-file-input upload_image" accept="image/*" placeholder="Upload Image" target="photo"/>
+                                  <label class="custom-file-label" for="customFile">Choose file</label>
+                              </div>
+                              @error('photo')
+                              <p class="text-danger">{{ $message }}</p>
+                              @enderror
+                              <input type="hidden" name="photo" value="">
                           </div>
+
                           
-                          <div class="form-group col-sm-12 col-md-4">
+                          <div class="form-group col-sm-12 col-md-6">
                               <label>City</label>
                               <select class="form-control selectpicker" data-size="7" data-live-search="true" name="city" required>
                                 <option value="">--Select CIty--</option>
@@ -128,7 +130,7 @@
                            </div>
                          </div>
                          <div class="">
-                          <button type="submit" class="btn btn-success mr-2">Register</button>
+                          <button type="submit" class="btn btn-success mr-2" id="addDriver">Register</button>
                           <a href="{!! route('backend.delivery.driver-list') !!}" class="btn btn-success mr-2">Cancel</a>
                           <button type="reset" class="btn btn-secondary">Reset</button>
                          </div>
@@ -140,3 +142,4 @@
         </div>
     </div>
 @endsection
+

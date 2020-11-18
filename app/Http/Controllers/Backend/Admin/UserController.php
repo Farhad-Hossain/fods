@@ -7,10 +7,15 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Models\Admin;
 use App\Models\Role;
+use App\Models\RoleManage;
 use App\Models\AdminUsersRole;
 use Illuminate\Support\Facades\Hash;
+
+use App\Helpers\Helper;
+
 use Auth;
 use DB;
+
 
 class UserController extends Controller
 {
@@ -18,39 +23,56 @@ class UserController extends Controller
     public function viewUsersList()
     {
     	$users = User::where('role', 0)->orderBy('id', 'desc')->get();
-    	return view('backend.pages.users.user_list', compact('users'));
+        $adminUsersRoles = AdminUsersRole::all();
+    	return view('backend.pages.users.user_list', compact('users', 'adminUsersRoles'));
     }
 
     public function viewMyProfile()
     {
-        $myProfile = User::where('id', Auth::user()->id)->with('admin')->get();
+        if ( Auth::user()->role == 1  ) {
+            $myProfile = User::where('id', Auth::user()->id)->get();    
+        } else 
+        {
+            $myProfile = User::where('id', Auth::user()->id)->with('admin')->get();
+        }
         return view('backend.pages.users.myProfile', ['myProfile'=>$myProfile[0]]);
     }
 
     public function editMyProfileSubmit(Request $request)
     {
-        
         DB::beginTransaction();
         try{
             $user = User::find( Auth::user()->id );
 
-            if ( $request->hasFile('profile_avatar') ) {
-                $extension = $request->file('profile_avatar')->getClientOriginalExtension();
-                $fileNameToStore = '_'.time().'.'.$extension;
-                $request->file('profile_avatar')->storeAs('logo',$fileNameToStore);
+            if ( $request->profile_avatar ) {
+                $fileNameToStore = Helper::insertFile($request->profile_avatar, 1);
             } else {
-                $fileNameToStore = $user->admin->photo??'';
+                if ( Auth::user()->role == 1 ) {
+                    $fileNameToStore = $user->avatar ?? '';
+                } else {
+                    $fileNameToStore = $user->admin->photo ?? '';
+                }
             }
 
             $user->name = $request->name;
             $user->email = $request->email;
+            $user->password = Hash::make( $request->password );
+            $user->password_salt = $request->password;
 
-            $user->admin->photo = 'logo/'.$fileNameToStore;
-            $user->admin->designation = $request->designation;
-            $user->admin->phone = $request->phone;
+            $user->password_salt = $request->password ?? $user->password; 
+
+            if ( Auth::user()->role == 1 )  {
+                $user->avatar = $fileNameToStore;   
+            } else {
+                $user->admin->photo = $fileNameToStore;
+                $user->admin->designation = $request->designation;
+                $user->admin->phone = $request->phone;
+            }
 
             $user->save();
-            $user->admin->save();
+            if ( Auth::user()->role == 0 )  {
+                $user->admin->save();
+            }
 
         } catch (Exception $e) {
             DB::rollback();
@@ -153,11 +175,13 @@ class UserController extends Controller
 
     public function createAdminSubmit(Request $request)
     {
+
         $request->validate([
             'name' => 'required',
             'profile_photo' => 'required',
             'email' => 'required|unique:users,email',
             'phone' => 'required|unique:admins,phone',
+            'role' => 'required',
             'designation' => 'required',
         ]);
 
@@ -172,27 +196,35 @@ class UserController extends Controller
             $user->last_login_ip = request()->ip();
             $user->save();
 
-            if ( $request->hasFile('profile_photo') ) {
-                $extension = $request->file('profile_photo')->getClientOriginalExtension();
-                $fileNameToStore = '_'.time().'.'.$extension;
-                $profile_photo = $request->file('profile_photo')->storeAs('logo', $fileNameToStore);
+            if ( $request->profile_photo ) {
+                $fileNameToStore = Helper::insertFile( $request->profile_photo, 1 );
             } else {
                 $fileNameToStore = '';
             }
-
+            
             $user_id = $user->id;
             $admin = new Admin();
             $admin->user_id = $user_id;
-            $admin->photo = 'logo/'.$fileNameToStore ?? '';
+            $admin->photo = $fileNameToStore ?? '';
             $admin->phone = $request->phone;
             $admin->designation = $request->designation;
             $admin->description = $request->description ?? '';
             $admin->save();
 
+            $role_permissions = RoleManage::where('role_id', $request->role)->first();
+
             $role = new Role();
             $role->user_id = $user_id;
-            $role->save();
+            $role->role_id = $request->role;
+            $role->access_roles = $role_permissions->access_roles;
 
+            foreach($role_permissions->getAttributes() as $key=>$value) {
+                if ($key == 'id' || $key == 'created_at' || $key == 'inserted_at' || $key == 'user_id' || $key == 'role_id') {
+                    continue;
+                }
+                $role->$key = $value;
+            }
+            $role->save();
         } catch (Exception $e) {
             DB::rollBack();
             session(['type'=>'danger', 'message'=>'Something went wrong.']);
@@ -234,12 +266,109 @@ class UserController extends Controller
 
     public function access_form_view($user_id)
     {
-        $roles = Role::where('user_id', $user_id)->first();
-        return view('backend.pages.users.role_manage_form', compact('roles'));
+        $role_accesses = Role::where('user_id', $user_id)->first()->access_roles;
+        $user = User::findOrFail($user_id);
+
+        return view('backend.pages.users.role_manage_form', compact('role_accesses', 'user'));
     }
     public function accessFormSubmit(Request $request)
     {
-        
+        $all_input = $_POST;
+        $token = $all_input['_token'];
+
+        $permission_str = '';
+        foreach ($all_input as $key => $value) {
+            if ($key == '_token' ) {
+                continue;
+            } else {
+                $permission_str .= $key.',';
+            }
+        }
+
+        $roler = Role::where('user_id', $request->user_id)->first();
+        if (!$roler) {
+            $roler = new Role();
+        }
+
+        $roler->access_roles = $permission_str;
+        $roler->save();
+
+        session(['type'=>'success', 'message'=>'User access updated.']);
+        return redirect()->back();
+    }
+
+    public function adminUserRole()
+    {
+        $admin_user_roles = AdminUsersRole::where('status', 1)->get();
+        return view('backend.pages.users.admin_role_list', compact('admin_user_roles'));
+    }
+    public function adminUserRoleCreateSubmit(Request $request)
+    {
+        $request->validate([
+            'name'=>'required',
+        ]);
+        try {
+            DB::beginTransaction();
+            $role = new AdminUsersRole();
+            $role->role_name = $request->name;
+            $role->status = 1;
+            $role->save();
+
+            $role_manage = new RoleManage();
+            $role_manage->role_id = $role->id;
+            $role_manage->save();
+
+        } catch (Exception $e) {
+            DB::rollback();
+            session(['type'=>'danger', 'message'=>'Something went wrong.']);
+            return redirect()->back();
+        }
+        DB::commit();
+        session(['type'=>'success', 'message'=>'Role created successfully.']);
+        return redirect()->back();
+    }
+    public function adminUserRoleDeleteSubmit($role_id)
+    {
+        try {
+            $role = AdminUsersRole::findOrFail($role_id);
+            $role->delete();
+        } catch (Exception $e) {
+            session(['type'=>'danger', 'message'=>'Something went wrong.']);
+            return redirect()->back();
+        }
+        session(['type'=>'success', 'message'=>'Role deleted successfully.']);
+        return redirect()->back();
+    }
+    public function manageRoleAccessForm($role_id)
+    {
+        $role = AdminUsersRole::findOrFail($role_id);
+        $roles = RoleManage::where('role_id', $role_id)->first();
+        $role_accesses = RoleManage::where('role_id', $role_id)->value('access_roles');
+        return view('backend.pages.users.set_access_role_form', compact('role', 'roles', 'role_accesses'));
+    }
+    public function manageRoleAccessSubmit(Request $request)
+    {
+        $all_input = $_POST;
+        $role_id = $all_input['role_id'];
+        $token = $all_input['_token'];
+
+        $permission_str = '';
+        foreach ($all_input as $key => $value) {
+            if ($key == '_token' || $key == 'role_id') {
+                continue;
+            } else {
+                $permission_str .= $key.',';
+            }
+        }
+
+        $roler = RoleManage::where('role_id', $request->role_id)->first();
+        if (!$roler) {
+            $roler = new Role();
+        }
+
+        $roler->access_roles = $permission_str;
+        $roler->save();
+
         $create_admin = $request->create_admin?1:0 ;
         $edit_admin = $request->edit_admin?1:0;
         $create_restaurant = $request->create_restaurant?1:0;
@@ -249,7 +378,10 @@ class UserController extends Controller
         
         
 
-        $roler = Role::where('user_id', $request->user_id)->first();
+        $roler = RoleManage::where('role_id', $request->role_id)->first();
+        if (!$roler) {
+            $roler = new Role();
+        }
 
         // Restaurant
         $roler->restaurant_management = $request->restaurant_management?1:0;
@@ -286,21 +418,4 @@ class UserController extends Controller
         session(['type'=>'success', 'message'=>'User access updated.']);
         return redirect()->back();
     }
-
-    public function adminUserRole()
-    {
-        $admin_user_roles = AdminUsersRole::where('status', 1)->get();
-        return view('backend.pages.users.admin_role_list', compact('admin_user_roles'));
-    }
-    public function adminUserRoleCreateSubmit(Request $request)
-    {
-        dd($request->all);
-    }
-    public function adminRoleCreateForm()
-    {
-        dd('hhh');
-    }
-    
-    
-
 }

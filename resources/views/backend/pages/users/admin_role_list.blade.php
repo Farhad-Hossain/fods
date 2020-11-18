@@ -22,7 +22,7 @@
                     <!--end::Dropdown-->
                     <!--begin::Button-->
                     
-                    <a href="{!!route('backend.users.adminRoleCreateForm')!!}" class="btn btn-primary font-weight-bolder">
+                    <a href="javascript:;" data-toggle="modal" data-target="#admin_role_modal" class="btn btn-primary font-weight-bolder">
                         <i class="la la-plus"></i>Add User Type
                     </a>
                     
@@ -35,19 +35,23 @@
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>Name</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($admin_user_roles as $role)
                         <tr>
                             <td>{!! $loop->iteration !!}</td>
+                            <td>{!! $role->role_name !!}</td>
                             <td>
-                                <a href="" class="text-primary mr-2">
-                                    <i class="far fa-edit text-primary"></i>
-                                </a>
-                                <a href="" class="text-danger" onclick="return confirm('Are you sure want to delete ??')">
-                                    <i class="far fa-trash-alt text-danger"></i>
-                                </a>
+                                <a href="javascript:;" class="text-primary mr-2">
+                                    Edit
+                                </a> |
+                                <a href="{{ route('backend.users.roles.delete', ['role_id'=>$role->id]) }}" class="text-danger" onclick="return confirm('Sure to delete ?')">
+                                    Delete
+                                </a> | 
+                                <a href="{{ route('backend.users.roles.manage_form', ['role_id'=>$role->id]) }}">manage</a>
                             </td>
                         </tr>
                         @endforeach
@@ -57,6 +61,42 @@
             </div>
         </div>
         <!--end::Card-->
+    </div>
+@endsection
+
+@section('modals')
+    <!-- Modal-->
+    <div class="modal fade" id="admin_role_modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cuisine_modal_title">Admin User Role</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card card-custom">
+                     <!--begin::Form-->
+                     <form class="form" action="{{ route('backend.users.roles.createSubmit') }}" method="post">
+                        @csrf
+                      <div class="card-body">
+                        <input type="hidden" name="id">
+                       <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" class="form-control"  placeholder="Role Name" name="name" required />
+                       </div>
+                      </div>
+                      <div class="card-footer">
+                       <button type="submit" class="btn btn-success mr-2">Submit</button>
+                       <button type="reset" data-dismiss="modal" class="btn btn-secondary">Cancel</button>
+                      </div>
+                     </form>
+                     <!--end::Form-->
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 

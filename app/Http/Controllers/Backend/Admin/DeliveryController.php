@@ -15,6 +15,7 @@ use App\Models\DriverTransaction;
 use App\Http\Requests\Backend\Admin\TransactionPostRequest;
 use Carbon\Carbon;
 use App\Models\City;
+use App\Helpers\Helper;
 use DB;
 
 class DeliveryController extends Controller
@@ -49,11 +50,8 @@ class DeliveryController extends Controller
 	    	// Driver
 	    	$driver = new Driver();
 	    	$driver->user_id = $user_id;
-            if ( $request->hasFile('photo') ) {
-                $extension = $request->file('photo')->getClientOriginalExtension();
-                $fileNameToStore = '_'.time().'.'.$extension;
-                $request->file('photo')->storeAs('logo', $fileNameToStore);
-                $fileNameToStore = 'logo/'.$fileNameToStore;
+            if ( $request->photo ) {
+                $fileNameToStore = Helper::insertFile($request->photo, 1);
             } else {
                 $fileNameToStore = '';
             }
@@ -99,11 +97,8 @@ class DeliveryController extends Controller
 	    	$user->password_salt = $request->password;
 	    	$user->save();
 
-            if ( $request->hasFile('photo') ) {
-                $extension = $request->file('photo')->getClientOriginalExtension();
-                $fileNameToStore = '_'.time().'.'.$extension;
-                $request->file('photo')->storeAs('logo', $fileNameToStore);
-                $fileNameToStore = 'logo/'.$fileNameToStore;
+            if ( $request->photo) {
+                $fileNameToStore = Helper::insertFile($request->photo, 1);
             } else {
                 $fileNameToStore = $driver->photo ?? '';
             }

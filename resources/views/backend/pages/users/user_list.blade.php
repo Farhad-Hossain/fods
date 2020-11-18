@@ -1,6 +1,13 @@
 @extends('backend.master')
 @section('custom_style')
     <link href="{{asset('backend')}}/assets/plugins/custom/datatables/datatables.bundle.css?v=7.0.3" rel="stylesheet" type="text/css" />
+    <link href="{!! asset('backend/assets/css/plugin/croppie/croppie.css') !!}" rel="stylesheet" type="text/css" />
+    <style>
+        #previewimage {
+            height: 350px;
+            width : 100% !important;
+        }
+    </style>
 @endsection
 @section('main_content')
     <div class="container-fluid">
@@ -17,7 +24,7 @@
                 </div>
                 <div class="card-toolbar">
                     <!--begin::Button-->
-                    @if($role['user_create'])
+                    @if(strpos(Auth::user()->role(), 'user_add'))
                         <a href="javascript:;" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#add_admin_modal">
                         <i class="la la-plus"></i>Add User
                     </a>    
@@ -54,7 +61,9 @@
 
                             
                             <td>
+                                @if( strpos(Auth::user()->admin->role(), 'user_edit') )
                                 <a href="javascript:;" data-toggle="modal" data-target="#edit_user_modal" class="edit_user_btn">Edit</a> | 
+                                @endif
                                 <a href="{!! route('backend.users.access_form', $user->id) !!}">Role manage</a>
                             </td>
                         </tr>
@@ -147,17 +156,19 @@
                             <label>Name</label>
                             <input type="text" class="form-control" name="name" required value="{!! old('name') !!}">
                         </div>
+
                         <div class="form-group">
                             <label>Profile Photo</label>
-                            <div></div>
+                            <div class="d-none img-container" style="border-right:1px solid #ddd;">
+                                <div id="image-preview"></div>
+                            </div>
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" name="profile_photo"/>
-                                <label class="custom-file-label">Choose file</label>
-                                @error('profile_photo')
-                                <span class="form-text text-warning">{{ $message }}</span>
-                                @enderror
-                            </div> 
+                                    <input type="file"  name="upload_image" id="upload_image" class="image custom-file-input image" required>
+                                <label class="custom-file-label" for="upload_image">Choose file</label>
+                            </div>
                         </div>
+                        <input type="hidden" name="profile_photo" id="profile_photo" value="">
+
                         <div class="form-group">
                             <label>Email</label>
                             <input type="email" class="form-control" name="email" required value="{!! old('email') !!}">
@@ -171,8 +182,23 @@
                             <input type="password" class="form-control" name="password" required value="{!! old('password') !!}"> 
                         </div>
                         <div class="form-group">
+                            <label>Role</label>
+                            <select name="role" class="form-control" required data-size="7" data-live-search="true">
+                                <option value="">Select a role</option>
+                                @foreach($adminUsersRoles as $a_role)
+                                    <option value="{{ $a_role->id }}">{{ $a_role->role_name }}</option>
+                                @endforeach
+                            </select>
+                            @error('role')
+                                <p class="text-info">{!! $message !!}</p>
+                            @enderror
+                        </div>
+                        <div class="form-group">
                             <label>Designation</label>
-                            <input type="text" class="form-control" name="designation" required value="{!!old('designation')!!}">
+                            <input type="text" class="form-control" name="designation" required value="{{old('designation')}}"></input>
+                            @error('role')
+                                <p class="text-info">{!! $message !!}</p>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label>Description</label>
@@ -181,7 +207,31 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary font-weight-bold">Create User</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold" id="create_user">Create User</button>
+                </div>
+                <div class="m-4"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<!-- Demo modal -->
+    <div class="modal fade" id="img-modal" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create User Form</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <form action="{!! route('backend.users.create') !!}" method="POST" enctype="multipart/form-data">
+                <div class="modal-body">
+                        
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold" id="create_user">Create User</button>
                 </div>
                 <div class="m-4"></div>
                 </form>
@@ -200,5 +250,51 @@
      <script src="{{asset('backend')}}/assets/js/pages/crud/datatables/advanced/column-visibility.js?v=7.0.3"></script>
      <script src="{!! asset('backend/assets/js/customs/user_page.js') !!}"></script>
      <script src="{{asset('backend')}}/assets/js/datatable.js"></script>
+
+     <script src="{{asset('backend/assets/js/pages/features/miscellaneous/croppie.min.js')}}"></script>
+
+     <script>
+         $(document).ready(function(){
+
+           $image_crop = $('#image-preview').croppie({
+             enableExif:true,
+             viewport:{
+               width:200,
+               height:150,
+               type:'rectangle'
+             },
+             boundary:{
+               width:300,
+               height:250
+             }
+           });
+
+           $('#upload_image').change(function(){
+             $(".img-container").removeClass('d-none');
+             var reader = new FileReader();
+
+             reader.onload = function(event){
+               $image_crop.croppie('bind', {
+                 url:event.target.result
+               }).then(function(){
+                 console.log('jQuery bind complete');
+               });
+             }
+             reader.readAsDataURL(this.files[0]);
+           });
+
+           $('#create_user').click(function(event){
+             $image_crop.croppie('result', {
+               type:'canvas',
+               size:'viewport'
+             }).then(function(response){
+               var _token = $('input[name=_token]').val();
+                 $("#profile_photo").val(response);
+             });
+           });
+           
+         });  
+     </script>
      
  @endsection
+

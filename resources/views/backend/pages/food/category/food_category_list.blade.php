@@ -60,9 +60,11 @@
                     </div>
                     <!--end::Dropdown-->
                     <!--begin::Button-->
+                    @if ( strpos(Auth::user()->admin->role(), 'food_category_add') ) 
                     <a href="javascript:;" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#add_food_category_modal" >
                     <i class="la la-plus"></i>{!! __('backend_menus.add_food_category_btn') !!}</a>
                     <!--end::Button-->
+                    @endif
                 </div>
             </div>
             <div class="card-body">
@@ -92,6 +94,7 @@
                             
                             <!-- <td><img style="width: 100px;" src="{!! asset('uploads/category/'. $category->image) !!}" alt="{!! $category->name !!}"></td> -->
                             <td>
+                                @if ( strpos( Auth::user()->admin->role(), 'food_category_edit')  ) 
                                 <a href="javascript:;" class="text-primary mr-2" data-toggle="modal" data-target="#edit_food_category_modal" onclick="set_value_and_rise_edit_modal(
                                     '{!! route("backend.food.category.edit", $category->id) !!}',
                                     '{!! $category->id !!}',
@@ -101,9 +104,12 @@
                                  )">
                                     <i class="far fa-edit text-primary"></i>
                                 </a>
+                                @endif
+                                @if ( strpos( Auth::user()->admin->role(), 'food_category_delete')  ) 
                                 <a href="{!! route('backend.food.category.delete', $category->id) !!}" class="text-danger" onclick="return confirm('Are you sure want to delete ??')">
                                     <i class="far fa-trash-alt text-danger"></i>
                                 </a>
+                                @endif
                             </td>
                         </tr>
                         @endforeach

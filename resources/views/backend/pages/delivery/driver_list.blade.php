@@ -27,6 +27,7 @@
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th></th>
                             <th>{{ __('driver_list.name') }}</th>
                             <th>{{ __('driver_list.contact') }}</th>
                             <th>{{ __('driver_list.email') }}</th>
@@ -40,6 +41,7 @@
                         @foreach($drivers as $driver)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
+                            <td><img src="{{ asset('uploads') }}/{{ $driver->photo }}" style="width: 60px; height: 60px"></td>
                             <td>{{ $driver->user->name }}</td>
                             <td>{{ $driver->phone }}</td>
                             <td>{{ $driver->user->email }}</td>

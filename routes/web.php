@@ -5,6 +5,7 @@ Route::get('/command-execute/{command}', function($command){
     \Artisan::call($command);
     dd('Done');
 });
+
 // DEGIN::Frontend routes
 Route::group(['namespace'=>'Frontend', 'as'=>'frontend.'], function() {
     Route::get('/', [
@@ -190,8 +191,11 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
 
 	// Users and role management
 	Route::group(['prefix'=>'users', 'as'=>'users.'], function(){
+        
         Route::get('my-profile', 'UserController@viewMyProfile')->name('myProfile');
+
         Route::post('my-profile-edit-submit', 'UserController@editMyProfileSubmit')->name('myProfileEditSubmit');
+
         Route::post('change-password', 'UserController@changePasswordSubmit')->name('changePasswordSubmit');
 
         Route::post('create', 'UserController@createAdminSubmit')->name('create');
@@ -202,11 +206,29 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
         Route::post('edit/{id}', 'UserController@updateUser')->name('edit');
         Route::get('delete/{id}', 'UserController@deleteUser')->name('delete');
 		Route::get('roles', 'UserController@viewRoleList')->name('roles');
-        Route::get('admin-user-role', 'UserController@adminUserRole')->name('admin_user_role');
-        Route::get('admin-user-role-create-form', 'UserController@adminRoleCreateForm')->name('adminRoleCreateForm');
-        Route::post('admin-user-role-create-submit', 'UserController@adminUserRoleCreateSubmit')->name('adminRoleCreateSubmit');
 
-
+        Route::group(['prefix'=>'roles', 'as'=>'roles.'], function(){
+            Route::get('/', [
+                'uses'=>'UserController@adminUserRole',
+                'as'=>'lists'
+            ]);
+            Route::post('role-create-submit', [
+                'uses'=>'UserController@adminUserRoleCreateSubmit',
+                'as'=>'createSubmit',
+            ]);
+            Route::get('delete/{role_id}', [
+                'uses'=>'UserController@adminUserRoleDeleteSubmit',
+                'as'=>'delete',
+            ]);
+            Route::get('manage/{role_id}', [
+                'uses'=>'UserController@manageRoleAccessForm',
+                'as'=>'manage_form'
+            ]);
+            Route::post('manage-submit', [
+                'uses'=>'UserController@manageRoleAccessSubmit',
+                'as'=>'manage_submit'
+            ]);
+        });
         Route::get('accesses/{user_id}', 'UserController@access_form_view')->name('access_form');
         Route::post('accesses-update-submit', 'UserController@accessFormSubmit')->name('access_form_submit');
 	});
@@ -216,6 +238,15 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
 	Route::group(['prefix'=>'settings', 'as'=>'settings.', 'namespace'=>'Settings'], function(){
 		Route::get('global-settings', 'GlobalController@global_settings_form')->name('global_settings');
 		Route::post('global-settings', 'GlobalController@global_settings_submit');
+        
+        Route::get('language', [
+            'uses'=>'GlobalController@getLanguageInformation',
+            'as'=>'language',
+        ]);
+        Route::post('change-language', [
+            'uses'=>'GlobalController@changeLanguageSubmit',
+            'as'=>'changeLanguageSubmit',
+        ]);
 
         Route::get('country-area-currency', 'CountryCityCurrencyController@view_values')->name('ccc');
         Route::post('add-country', 'CountryCityCurrencyController@add_country_submit')->name('add_country');
@@ -235,6 +266,7 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
         Route::get('edit-coupon/{coupon_id}', 'CouponController@editCouponView')->name('edit_coupon_view');
         Route::post('edit-coupon-submit', 'CouponController@editCouponSubmit')->name('edit_coupon_submit');
         Route::get('delete-coupon-submit/{coupon_id}', 'CouponController@deleteCouponSubmit')->name('delete_coupon_submit');
+
 
 	});
     /*END::Setings*/
@@ -277,6 +309,7 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
     /*BEGIN::Food*/
     /*BEGIN::Food*/
     Route::group(['prefix'=>'food', 'as'=>'food.'], function(){
+        
         Route::get('category/add', [
             'as' => 'category.add',
             'uses' => 'FoodCategoryController@addFoodCategoryPage'
@@ -307,8 +340,8 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
             'uses' => 'FoodController@addFoodPage'
         ]);
         Route::post('add', [
+            'uses' => 'FoodController@storeFood',
             'as' => 'add',
-            'uses' => 'FoodController@storeFood'
         ]);
         Route::get('list', [
             'as' => 'list',
@@ -353,10 +386,12 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
         Route::get('rating-reviews', 'FoodController@get_all_reviews')->name('rating_reviews');
         Route::get('reviews', 'FoodController@get_reviews')->name('reviews');
 
+        Route::get('change-review_status/{food_id}', [
+           'uses'=>'FoodController@changReviewStatus',
+           'as'=>'change_review_status'
+        ]);
+
         // Ajax
-
-
-
     });
     /*END::Food*/
     /*END::Food*/
@@ -475,6 +510,49 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
 Route::group(['prefix'=>'restaurant-admin', 'namespace'=>'Backend\Restaurant', 'as'=>'backend.restAdmin.', 'middleware'=>['auth', 'restaurant'] ], function(){
     Route::get('/dashboard', 'DashboardController@showDashboard')->name('dashboard');
 
+    Route::group(['prefix'=>'restaurant', 'as'=>'rest.'], function(){
+        
+        Route::get('list', [
+            'uses'=>'RestaurantController@restaurantList',
+            'as'=>'list'
+        ]);
+
+        Route::get('add-form', [
+            'uses'=>'RestaurantController@addForm',
+            'as'=>'add_form'
+        ]);
+
+        Route::get('edit-form/{rest_id}', [
+            'uses'=>'RestaurantController@editForm',
+            'as'=>'edit_form',
+        ]);
+
+        Route::post('edit-submit', [
+            'uses'=>'RestaurantController@editSubmit',
+            'as'=>'edit_submit',
+        ]);
+
+        Route::post('add-submit', [
+            'uses'=>'RestaurantController@addSubmit',
+            'as'=>'add_submit'
+        ]);
+
+        Route::get('restaurant-details', [
+            'uses'=>'RestaurantController@restaurantDetails',
+            'as'=>'details'
+        ]);
+
+        Route::get('cuisines', [
+            'uses'=>'RestaurantController@showCuisines',
+            'as'=>'cuisines',
+        ]);
+
+        Route::get('reviews', [
+            'uses'=>'RestaurantController@getRestaurantReviews',
+            'as'=>'reviews',
+        ]);
+    });
+
     // BEGIN::Order 
     Route::group(['prefix'=>'order', 'as'=>'order.'], function(){
         Route::get('list', 'OrderController@showOrderList')->name('list');
@@ -490,7 +568,7 @@ Route::group(['prefix'=>'restaurant-admin', 'namespace'=>'Backend\Restaurant', '
         Route::post('food-edit-submit/{food}', 'FoodController@editFoodSubmit')->name('edit_food_submit');
         Route::get('delete/{food}', 'FoodController@deleteFoodSubmit')->name('delete');
 
-        Route::get('cuisines', 'FoodController@showCuisines')->name('cuisines');
+        
         Route::post('cuisine-add', 'FoodController@addCuisinePost')->name('add_cuisine_submit');
 
         Route::get('rating-reviews', 'FoodController@showRatingReviews')->name('rating_reviews');

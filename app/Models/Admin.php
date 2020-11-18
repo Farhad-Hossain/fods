@@ -10,6 +10,7 @@ class Admin extends Model
 
     public function role()
     {
-        return $this->hasOne('App\Models\Role', 'user_id', 'user_id');
+        return $this->hasOne('App\Models\Role', 'user_id', 'user_id')->first()->access_roles;
     }
+
 }

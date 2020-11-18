@@ -57,13 +57,16 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Models\Restaurant', 'user_id');
     }
+    public function restaurants()
+    {
+        return $this->hasMany('App\Models\Restaurant', 'user_id');
+    }
     public function admin()
     {
         return $this->hasOne('App\Models\Admin', 'user_id');
     }
     public function role()
     {
-        return $this->hasOne('App\Models\Role');
+        return $this->hasOne('App\Models\Role')->first()->access_roles;
     }
-    
 }

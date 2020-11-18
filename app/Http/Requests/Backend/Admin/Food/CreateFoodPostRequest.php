@@ -24,7 +24,6 @@ class CreateFoodPostRequest extends FormRequest
     public function rules()
     {
         return [
-            'restaurant' => 'required',
             'food_category' => 'required',
             'name' => 'required',
             

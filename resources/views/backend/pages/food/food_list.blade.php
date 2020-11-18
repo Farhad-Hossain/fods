@@ -16,9 +16,11 @@
                 </div>
                 <div class="card-toolbar">
                     <!--begin::Button-->
+                    @if ( strpos(Auth::user()->admin->role(), 'food_add') ) 
                     <a href="{!! route('backend.food.add') !!}" class="btn btn-primary font-weight-bolder">
                     <i class="la la-plus"></i>Add Food</a>
                     <!--end::Button-->
+                    @endif
                 </div>
             </div>
             <div class="card-body">
@@ -53,12 +55,16 @@
                             @endif
                             
                             <td>
+                                @if( strpos(Auth::user()->admin->role(), 'food_edit') ) 
                                 <a href="{{ route('backend.food.edit', $food->id) }}" class="text-primary mr-2">
                                     <i class="far fa-edit text-primary"></i>
                                 </a>
+                                @endif
+                                @if( strpos(Auth::user()->admin->role(), 'food_delete') ) 
                                 <a href="{!! route('backend.food.delete', $food->id) !!}" class="text-danger" onclick="return confirm('Are you sure want to delete ??')">
                                     <i class="far fa-trash-alt text-danger"></i>
                                 </a>
+                                @endif
                             </td>
                         </tr>
                         @endforeach

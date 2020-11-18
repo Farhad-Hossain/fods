@@ -15,6 +15,8 @@ use App\Models\User;
 use App\Models\FoodFavourite;
 use App\Models\FoodAppointedExtraFood;
 
+use App\Helpers\Helper;
+
 
 class FoodController extends Controller
 {
@@ -33,45 +35,35 @@ class FoodController extends Controller
 
     public function storeFood(CreateFoodPostRequest $request)
     {
-
-        // dd($request->extra_foods);
         DB::beginTransaction();
         try {
 
-            if($request->hasFile('image1'))
+            if($request->image1 )
             {
-                $extension = $request->file('image1')->getClientOriginalExtension();
-                $file1NameToStore = '_1'.time().'.'.$extension;
-                $request->file('image1')->storeAs('food', $file1NameToStore);
+                $file1NameToStore = Helper::insertFile($request->image1, 1);
             } else {
                 $file1NameToStore = "";
             }
-            if($request->hasFile('image2'))
+            if($request->image2 )
             {
-                $extension = $request->file('image2')->getClientOriginalExtension();
-                $file2NameToStore = '_2'.time().'.'.$extension;
-                $request->file('image2')->storeAs('food', $file2NameToStore);
+                $file2NameToStore = Helper::insertFile($request->image2, 2);
             } else {
                 $file2NameToStore = "";
             }
-            if($request->hasFile('image3'))
+            if($request->image3 )
             {
-                $extension = $request->file('image3')->getClientOriginalExtension();
-                $file3NameToStore = '_3'.time().'.'.$extension;
-                $request->file('image3')->storeAs('food', $file3NameToStore);
+                $file3NameToStore = Helper::insertFile($request->image3, 3);
             } else {
                 $file3NameToStore = "";
             }
-            
-
             $food = new Food();
             $food->restaurant_id = $request->restaurant;
             $food->food_category_id = $request->food_category;
             $food->food_name = $request->name;
 
-            $food->image1 = 'food/'.$file1NameToStore;
-            $food->image2 = 'food/'.$file2NameToStore;
-            $food->image3 = 'food/'.$file3NameToStore;
+            $food->image1 = $file1NameToStore;
+            $food->image2 = $file2NameToStore;
+            $food->image3 = $file3NameToStore;
 
             $food->price = $request->price;
             $food->discount_price = $request->discount_price;
@@ -100,10 +92,8 @@ class FoodController extends Controller
             return redirect()->back()->withInput();
         }
         DB::commit();
-        session()->flash('type', 'success');
-        session()->flash('message', 'Food Added Successfully');
-        
-        return redirect()->back();
+        session([ 'type'=>'success', 'message'=>'Food Added Successfully' ]);
+        return redirect()->route('backend.food.list');
     }
 
     public function showFoodList()
@@ -134,32 +124,24 @@ class FoodController extends Controller
 
         try{
             DB::beginTransaction();
-            if($request->hasFile('image1'))
+            
+            if($request->image1 )
             {
-                $extension = $request->file('image1')->getClientOriginalExtension();
-                $file1NameToStore = '_1'.time().'.'.$extension;
-                $request->file('image1')->storeAs('food', $file1NameToStore);
-                $file1NameToStore = 'food/'.$file1NameToStore;
+                $file1NameToStore = Helper::insertFile($request->image1, 1);
             } else {
-                $file1NameToStore = $food->image1 ?? "";
+                $file1NameToStore = $food->image1 ?? '';
             }
-            if($request->hasFile('image2'))
+            if($request->image2 )
             {
-                $extension = $request->file('image2')->getClientOriginalExtension();
-                $file2NameToStore = '_2'.time().'.'.$extension;
-                $request->file('image2')->storeAs('food', $file2NameToStore);
-                $file2NameToStore = 'food/'.$file2NameToStore;
+                $file2NameToStore = Helper::insertFile($request->image2, 2);
             } else {
-                $file2NameToStore = $food->image2 ?? "";
+                $file2NameToStore = $food->image2 ?? '';
             }
-            if($request->hasFile('image3'))
+            if($request->image3 )
             {
-                $extension = $request->file('image3')->getClientOriginalExtension();
-                $file3NameToStore = '_3'.time().'.'.$extension;
-                $request->file('image3')->storeAs('food', $file3NameToStore);
-                $file3NameToStore = 'food/'.$file3NameToStore;
+                $file3NameToStore = Helper::insertFile($request->image3, 3);
             } else {
-                $file3NameToStore = $food->image3 ?? "";
+                $file3NameToStore = $food->image3 ?? '';
             }
             
             $food->restaurant_id = $request->restaurant ?? $food->restaurant_id;
@@ -201,12 +183,28 @@ class FoodController extends Controller
     }
     public function get_all_reviews()
     {
-        $ratings = FoodRatingReview::where('status', 1)->orderBy('id', 'desc')->get();
-        return view('backend.pages.food.rating_and_reviews', compact('ratings'));
+        $reviews = FoodRatingReview::where('status', 1)->orderBy('id', 'desc')->get();
+        return view('backend.pages.food.rating_and_reviews', compact('reviews'));
     }
     public function add_rating_review_submit()
     {
         return view('backend.pages.food.rating_and_reviews', compact('ratings'));
+    }
+    public function changReviewStatus($review_id)
+    {
+        try{
+            $review = foodRatingReview::findOrFail($review_id);
+            if ( $review->status == 1 ) {
+                $review->status = 2;
+            } else {
+                $review->status = 1;
+            }
+        } catch (Exception $e) {
+            session(['type'=>'danger', 'message'=>'Something went wrong']);
+            return redirect()->back();
+        }
+        session(['type'=>'success', 'message'=>'Status Changes successfully']);
+        return redirect()->back();
     }
    
 }

@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('password_salt')->comment('row password');
             $table->rememberToken();
             $table->string('last_login_ip');
+            $table->string('avatar')->nullable();
             $table->tinyInteger('status')->default(1)->comment('1: active, 0: inactive');
             $table->tinyInteger('created_by')->nullable();
             $table->tinyInteger('updated_by')->nullable();
