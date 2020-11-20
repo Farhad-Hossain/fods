@@ -69,4 +69,8 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Models\Role')->first()->access_roles;
     }
+    public function adminUserRole()
+    {
+        return $this->belongsTo('App\Models\AdminUsersRole', 'admin_user_role_id', 'id');
+    }
 }

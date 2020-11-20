@@ -64,7 +64,7 @@
                 @include('backend.inc.menu_list', array(
                     'menu'=>'Cuisine',
                     'submenus'=>[
-                        ['link'=>'javascript:;', 'text'=>'Cuisines'],
+                        ['link'=>route('backend.food.cuisines.list'), 'text'=>'Cuisines'],
                     ]
                 ))
 
@@ -72,8 +72,8 @@
                 @include('backend.inc.menu_list', array(
                     'menu'=>__('backend_menus.restaurant_management'),
                     'submenus'=>[
-                        ['link'=>route('backend.restAdmin.rest.list'), 'text'=>'Restaurants'],
-                        ['link'=>route('backend.restAdmin.rest.reviews'), 'text'=>'Reviews',]
+                        ['link'=>route('backend.restaurant.list'), 'text'=>'Restaurants'],
+                        ['link'=>route('backend.restaurant.rating_and_reviews'), 'text'=>'Reviews',]
                     ]
                 ))
                 <!-- Begin::food -->
@@ -81,7 +81,9 @@
                     'menu'=>__('backend_menus.food_management'),
                     'submenus'=>[
                         ['link'=>route('backend.restAdmin.food.list'), 'text'=>'Foods'],
-                        ['link'=>route('backend.restAdmin.food.rating_reviews'), 'text'=>'Reviews'],
+                        ['link'=>'javascript:;', 'text'=>'Extra Group'],
+                        ['link'=>route('backend.food.extra_food.list'), 'text'=>'Extra Food'],
+                        ['link'=>route('backend.food.rating_reviews'), 'text'=>'Reviews'],
                     ],
                 ))
 
@@ -94,6 +96,13 @@
                     ],
                 ))
 
+                @include('backend.inc.menu_list', array(
+                    'menu'=>'Coupon',
+                    'submenus'=>[
+                        ['link'=>route('backend.settings.coupons'), 'text'=>'Coupons']
+                    ],
+                ))
+                <!-- Begin::Payment -->
                 @include('backend.inc.menu_list', array(
                     'menu'=>'Payment',
                     'submenus'=>[

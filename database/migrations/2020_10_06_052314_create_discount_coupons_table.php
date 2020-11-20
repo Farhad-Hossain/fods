@@ -15,6 +15,7 @@ class CreateDiscountCouponsTable extends Migration
     {
         Schema::create('discount_coupons', function (Blueprint $table) {
             $table->id();
+            $table->integer('restaurant_id')->unsigned()->nullable();
             $table->string('area');
             $table->string('promo_code');
             $table->tinyInteger('promo_type')->comment('1.Flat rate  2.Percentage');

@@ -15,6 +15,7 @@ use App\Models\User;
 use App\Models\FoodFavourite;
 use App\Models\FoodAppointedExtraFood;
 
+use Auth;
 use App\Helpers\Helper;
 
 
@@ -183,13 +184,37 @@ class FoodController extends Controller
     }
     public function get_all_reviews()
     {
-        $reviews = FoodRatingReview::where('status', 1)->orderBy('id', 'desc')->get();
+        if ( Helper::admin() ) {
+            $reviews = FoodRatingReview::where('status', 1)->orderBy('id', 'desc')->get();
+        }
+        if ( Helper::restaurant() ) {
+            $restaurant_ids = Restaurant::where('user_id', Auth::user()->id)->pluck('id');
+            $food_ids = Food::whereIn('restaurant_id',$restaurant_ids)->pluck('id');
+
+            $reviews = FoodRatingReview::whereIn('food_id', $food_ids)->orderBy('id', 'desc')->get();   
+        }
         return view('backend.pages.food.rating_and_reviews', compact('reviews'));
     }
+
     public function add_rating_review_submit()
     {
         return view('backend.pages.food.rating_and_reviews', compact('ratings'));
     }
+
+    public function editReviewSubmit(Request $request)
+    {
+        try{
+            $review = FoodRatingReview::findOrfail($request->review_id);
+            $review->review_content = $request->review_content;
+            $review->save();
+        } catch ( Exception $e ) {
+            Helper::alert('danger', 'Something went wrong.');
+            return redirect()->back();
+        }
+        Helper::alert('success', 'Review content updated syuccessfully.');
+        return redirect()->back();
+    }
+
     public function changReviewStatus($review_id)
     {
         try{
@@ -199,6 +224,7 @@ class FoodController extends Controller
             } else {
                 $review->status = 1;
             }
+            $review->save();
         } catch (Exception $e) {
             session(['type'=>'danger', 'message'=>'Something went wrong']);
             return redirect()->back();

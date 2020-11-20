@@ -8,18 +8,13 @@
         @include('backend.message.flash_message')
         <!--begin::Card-->
         <div class="card card-custom">
-            <div class="card-header">
-                <div class="card-title">
-                    <span class="card-icon">
-                        <i class="flaticon2-heart-rate-monitor text-primary"></i>
-                    </span>
-                    <h3 class="card-label">Restaurant</h3>
-                </div>
-                <div class="card-toolbar">
-                    
-                </div>
-            </div>
-            @include('backend.forms.restaurant', array(
+            @include('backend.inc.card_header', [
+                'right_text' => 'Restaurant Add',
+                'right_btn_link' => route('backend.restaurant.list'),
+                'right_btn_text' => 'Restaurants',
+            ])
+
+            @include('backend.inc.form.restaurant_add', array(
               'form_action' => route('backend.restaurant.add'),
               'form_method'=>'post',
             ))

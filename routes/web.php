@@ -132,6 +132,9 @@ Route::group(['namespace'=>'Frontend', 'as'=>'frontend.'], function() {
     */
     Route::group(['prefix'=>'rating-reviews', 'as'=>'rating_reviews.', 'middleware'=>'auth'], function(){
         Route::post('restaurant-review-submit', 'RatingReviewController@restaurant_review_submit')->name('restaurant_review_submit');
+
+
+
         Route::post('food-review-submit', 'RatingReviewController@food_review_submit')->name('food_review_submit');
     });
 
@@ -185,8 +188,7 @@ Route::get('driver/login', [
 ]);
 
 Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.', 'middleware'=>['auth', 'admin'] ], function(){
-
-
+    
 	Route::get('/', 'DashboardController@showDashboard')->name('dashboard');
 
 	// Users and role management
@@ -290,7 +292,11 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
             Route::post('edit-tag', 'RestaurantController@edit_tag_submit')->name('edit_submit');
             Route::get('{tag}/delete', 'RestaurantController@delete_tag')->name('delete');
         });
+        
         Route::get('rating-and-reviews', 'RestaurantController@show_rating_and_reviews')->name('rating_and_reviews');
+        Route::post('edit-review', 'RestaurantController@editReviewSubmit')->name('edit_review');
+        Route::get('change-review-status/{rating_id}', 'RestaurantController@changeReviewStatus')->name('change_review_status');
+
         Route::get('{restaurant_id}/reviews', 'RestaurantController@get_all_reviews_by_ajax')->name('reviews');
 
         Route::group(['prefix'=>'payment', 'as'=>'payment.'], function(){
@@ -362,15 +368,17 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
         // cusines
         Route::group(['prefix'=>'cuisines', 'as'=>'cuisines.'], function(){
             Route::get('list', 'CuisineController@view_cuisines_list')->name('list');
+            
             Route::post('add', 'CuisineController@add_cuisines_submit')->name('add_submit');
+
             Route::post('edit', 'CuisineController@edit_cuisines_submit')->name('edit_submit');
 
             Route::get('{cuisine}/delete', 'CuisineController@delete_cuisine')->name('delete');
         });
         // Extra Food
         Route::get('extra-food/list', [
+            'uses' => 'ExtraFoodController@showExtraFoodListPage',
             'as' => 'extra_food.list',
-            'uses' => 'ExtraFoodController@showExtraFoodListPage'
         ]);
         Route::post('extra-food/add',[
             'as' => 'extra_food.add',
@@ -380,11 +388,15 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
             'as' => 'extra_food.edit',
             'uses' => 'ExtraFoodController@editExtraFoodSubmit'
         ]);
+        Route::get('extra-food/delete/{extra_food_id}', [
+            'uses'=>'ExtraFoodController@deleteExtraFood',
+            'as'=>'extra_food.delete'
+        ]);
         // END::Extra food
 
         // BEGIN::Rating Review
+        Route::post('rating-reviews-edit', 'FoodController@editReviewSubmit')->name('review.edit');
         Route::get('rating-reviews', 'FoodController@get_all_reviews')->name('rating_reviews');
-        Route::get('reviews', 'FoodController@get_reviews')->name('reviews');
 
         Route::get('change-review_status/{food_id}', [
            'uses'=>'FoodController@changReviewStatus',

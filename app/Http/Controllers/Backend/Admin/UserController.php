@@ -175,6 +175,7 @@ class UserController extends Controller
 
     public function createAdminSubmit(Request $request)
     {
+        dd($request->all());
 
         $request->validate([
             'name' => 'required',
@@ -186,11 +187,13 @@ class UserController extends Controller
         ]);
 
         DB::beginTransaction();
+
         try{
             $user = new User();
             $user->name = $request->name;
             $user->role = 0;
             $user->email = $request->email;
+            $user->admin_user_id = $request->role;
             $user->password = Hash::make($request->password);
             $user->password_salt = $request->password;
             $user->last_login_ip = request()->ip();
@@ -242,6 +245,7 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->admin->phone = $request->phone;
+        $user->admin_user_id = $request->role;
         $user->admin->designation = $request->designation;
         $user->admin->description = $request->description;
 

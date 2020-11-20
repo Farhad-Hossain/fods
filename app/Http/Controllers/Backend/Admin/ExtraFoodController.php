@@ -9,14 +9,29 @@ use App\Models\ExtraFood;
 use App\Http\Requests\Backend\Admin\Food\AddExtraFoodPostRequest;
 use App\Http\Requests\Backend\Admin\Food\EditExtraFoodPostRequest;
 
+use App\Helpers\Helper;
+use Auth;
+
 class ExtraFoodController extends Controller
 {
 	public function showExtraFoodListPage()
 	{
-        $restaurants = Restaurant::where('status', 1)->get();
-		$extra_foods = ExtraFood::where('status', 1)->get();
+		if ( Helper::restaurant() ) {
+			$restaurants = Restaurant::where(['user_id'=>Auth::user()->id])->get();	
+		} else {
+	        $restaurants = Restaurant::where('status', 1)->get();
+		}
+
+		if ( Helper::restaurant() ) {
+			$extra_foods = ExtraFood::whereIn('restaurant_id',Auth::user()->restaurants()->pluck('id') )->get();
+
+		} else {
+			$extra_foods = ExtraFood::all();
+		}
 		return view('backend.pages.food.extra_food_list', compact('extra_foods', 'restaurants'));
 	}
+
+	
 	public function addExtraFoodSubmit(AddExtraFoodPostRequest $request)
 	{
 		try{
@@ -49,6 +64,18 @@ class ExtraFoodController extends Controller
 		session('type', 'success');
 		session('message', 'Extra Food Edited successfully.');
 		return redirect()->back();
+	}
+
+	public function deleteExtraFood($extra_food_id)
+	{
+		if ( Helper::admin() || Helper::restaurant() ) {
+			try{
+				ExtraFood::findOrFail($extra_food_id)->delete();
+			} catch (Exception $e) {
+				Helper::alert('danger', 'Something went wrong');
+			}
+			return redirect()->back();
+		} 
 	}
 	
 }

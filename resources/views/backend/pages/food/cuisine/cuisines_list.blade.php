@@ -22,7 +22,7 @@
                     </div>
                     <!--end::Dropdown-->
                     <!--begin::Button-->
-                    <a href="#" class="btn btn-primary font-weight-bolder" onclick="clear_value_and_rise_modal()" data-toggle="modal" data-target="#cuisines_modal">
+                    <a href="javascript:;" class="btn btn-primary font-weight-bolder" onclick="clear_value_and_rise_modal()" data-toggle="modal" data-target="#cuisines_modal">
                         <i class="la la-plus"></i>Add Cuisine
                     </a>
                     <!--end::Button-->
@@ -36,7 +36,6 @@
                             <th>#</th>
                             <th>{{ __('cuisines.name') }}</th>
                             <th>{{ __('cuisines.status') }}</th>
-                            <th>{{ __('cuisines.action') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -50,14 +49,6 @@
                             @else
                                 <td><b class="text-danger">Disabled</b></td>
                             @endif
-
-                            <td>
-                                <a href="" data-toggle="modal" data-target="#cuisines_modal" onclick="set_value_and_rise_modal(
-                                                                             '{{ $cuisine->id }}',
-                                                                             '{{ $cuisine->name }}'
-                                )"><i class="far fa-edit text-primary"></i></a> | 
-                                <a href="{{ route('backend.food.cuisines.delete', $cuisine->id) }}" onclick="return confirm('Are you sure want to delete ?')"><i class="far fa-trash-alt text-danger ml-2"></i></a>
-                            </td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -80,30 +71,29 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    
-
-                    <div class="card card-custom">
                      <!--begin::Form-->
-                     <form class="form" action="{{ route('backend.food.cuisines.add_submit') }}" method="post">
+                     <form action="{{ route('backend.food.cuisines.add_submit') }}" method="POST" >
                         @csrf
-                      <div class="card-body">
-                        <input type="hidden" name="id">
-                       <div class="form-group">
-                        <label>{{ __('cuisines.name') }}</label>
-                        <input type="text" class="form-control"  placeholder="Cuisines Name" name="name" required />
-                       </div>
-                      </div>
-                      <div class="card-footer">
-                       <button type="submit" class="btn btn-success mr-2">Save Changes</button>
-                       <button type="reset" data-dismiss="modal" class="btn btn-secondary">Cancel</button>
-                      </div>
+                          <div class="card-body">
+                            <input type="hidden" name="id">
+
+                           <div class="form-group">
+                            <label>{{ __('cuisines.name') }}</label>
+                            <input type="text" class="form-control"  placeholder="Cuisines Name" name="name" required />
+                           </div>
+
+                          </div>
+
+                          <div class="card-footer">
+                           <button type="submit" class="btn btn-success mr-2">Add Cuisine</button>
+                           <button type="reset" data-dismiss="modal" class="btn btn-secondary">Cancel</button>
+                          </div>
                      </form>
-                     <!--end::Form-->
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+
 @endsection
 
 @section('custom_script')

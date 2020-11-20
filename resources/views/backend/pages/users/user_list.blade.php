@@ -41,6 +41,7 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>Phone</th>
+                            <th>Role</th>
                             <th>Designation</th>
                             <th>Description</th>
                             <th>Action</th>
@@ -56,6 +57,7 @@
                             <td class="m_name">{{ $user->name }}</td>
                             <td class="m_email">{{ $user->email }}</td>
                             <td class="m_phone">{{ $user->admin->phone }}</td>
+                            <td class="m_admin_role_id" value="{{ $user->admin_user_role_id }}">{{ $user->adminUserRole->name ?? '' }}</td>
                             <td class="m_designation">{{ $user->admin->designation ?? '' }}</td>
                             <td class="m_description">{{ $user->admin->description }}</td>
 
@@ -81,7 +83,7 @@
 @section('modals')
     <!-- Edit Modal-->
     <div class="modal fade" id="edit_user_modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">{!! __('backend_user_list.modal_edit_title') !!}</h5>
@@ -90,42 +92,59 @@
                     </button>
                 </div>
                 <form action="{{ route('backend.users.editSubmit') }}" id="edit_user_form" method="POST" enctype="multipart/form-data">
-                    @csrf
                     <div class="modal-body">
                         @csrf
                         <input type="hidden" name="user_id">
-                        <div class="form-group">
-                            <label>Name</label>
-                            <input type="text" class="form-control" name="name" required value="{!! old('name') !!}">
-                        </div>
-                        <div class="form-group">
-                            <label>Profile Photo</label>
-                            <div></div>
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" name="profile_photo"/>
-                                <label class="custom-file-label">Choose file</label>
-                                @error('profile_photo')
-                                <span class="form-text text-warning">{{ $message }}</span>
+                        <div class="row">
+                            <div class="form-group col-sm-12 col-md-6">
+                                <label>Name</label>
+                                <input type="text" class="form-control" name="name" required value="{!! old('name') !!}">
+                            </div>
+                            <div class="form-group col-sm-12 col-md-6">
+                                <label>Profile Photo</label>
+                                <div></div>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" name="profile_photo"/>
+                                    <label class="custom-file-label">Choose file</label>
+                                    @error('profile_photo')
+                                    <span class="form-text text-warning">{{ $message }}</span>
+                                    @enderror
+                                </div> 
+                            </div>
+                            <div class="form-group col-sm-12 col-md-6">
+                                <label>Email</label>
+                                <input type="email" class="form-control" name="email" required value="{!! old('email') !!}">
+                            </div>
+                            
+                            <div class="form-group col-sm-12 col-md-6">
+                                <label>Phone Number</label>
+                                <input type="text" class="form-control" name="phone" required value="{!! old('phone') !!}">
+                            </div>
+
+
+                            <div class="form-group col-sm-12 col-md-6">
+                                <label>Role</label>
+                                <select name="role" class="form-control" required data-size="7" data-live-search="true">
+                                    <option value="">Select a role</option>
+                                    @foreach($adminUsersRoles as $a_role)
+                                        <option value="{{ $a_role->id }}">{{ $a_role->role_name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('role')
+                                    <p class="text-info">{!! $message !!}</p>
                                 @enderror
-                            </div> 
-                        </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" class="form-control" name="email" required value="{!! old('email') !!}">
-                        </div>
-                        <div class="form-group">
-                            <label>Phone Number</label>
-                            <input type="text" class="form-control" name="phone" required value="{!! old('phone') !!}">
+                            </div>
+                            
+                            <div class="form-group col-sm-12 col-md-6">
+                                <label>Designation</label>
+                                <input type="text" class="form-control" name="designation" required value="{!!old('designation')!!}">
+                            </div>
+                            <div class="form-group col-sm-12 col-md-6">
+                                <label>Description</label>
+                                <textarea class="form-control" name="description" value="{!! old('description') !!}"></textarea>
+                            </div>    
                         </div>
                         
-                        <div class="form-group">
-                            <label>Designation</label>
-                            <input type="text" class="form-control" name="designation" required value="{!!old('designation')!!}">
-                        </div>
-                        <div class="form-group">
-                            <label>Description</label>
-                            <textarea class="form-control" name="description" value="{!! old('description') !!}"></textarea>
-                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
@@ -141,7 +160,7 @@
         Add Admin user
     -->
     <div class="modal fade" id="add_admin_modal" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Create User Form</h5>
@@ -152,58 +171,70 @@
                 <form action="{!! route('backend.users.create') !!}" method="POST" enctype="multipart/form-data">
                 <div class="modal-body" style="height: 400px;">
                         @csrf
-                        <div class="form-group">
-                            <label>Name</label>
-                            <input type="text" class="form-control" name="name" required value="{!! old('name') !!}">
+                        <div class="row">
+                            <div class="form-group col-sm-12 col-md-6">
+                                <label>Name</label>
+                                <input type="text" class="form-control" name="name" required value="{!! old('name') !!}">
+                            </div>
+
+                            <div class="form-group col-sm-12 col-md-6">
+                                <label>Profile Photo</label>
+                                <div class="d-none img-container" style="border-right:1px solid #ddd;">
+                                    <div id="image-preview"></div>
+                                </div>
+                                <div class="custom-file">
+                                        <input type="file"  name="upload_image" id="upload_image" class="image custom-file-input image" required>
+                                    <label class="custom-file-label" for="upload_image">Choose file</label>
+                                </div>
+                            </div>
+                            <input type="hidden" name="profile_photo" id="profile_photo" value="">    
+
+                            <div class="form-group col-sm-12 col-md-6">
+                                <label>Email</label>
+                                <input type="email" class="form-control" name="email" required value="{!! old('email') !!}">
+                            </div>
+
+                            <div class="form-group col-sm-12 col-md-6">
+                                <label>Phone Number</label>
+                                <input type="text" class="form-control" name="phone" required value="{!! old('phone') !!}">
+                            </div>
+
+                            <div class="form-group col-sm-12 col-md-6">
+                                <label>Password</label>
+                                <input type="password" class="form-control" name="password" required value="{!! old('password') !!}">
+                            </div>
+
+                            <div class="form-group col-sm-12 col-md-6">
+                                <label>Role</label>
+                                <select name="role" class="form-control" required data-size="7" data-live-search="true">
+                                    <option value="">Select a role</option>
+                                    @foreach($adminUsersRoles as $a_role)
+                                        <option value="{{ $a_role->id }}">{{ $a_role->role_name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('role')
+                                    <p class="text-info">{!! $message !!}</p>
+                                @enderror
+                            </div>
+
+                            <div class="form-group col-sm-12 col-md-6">
+                                <label>Designation</label>
+                                <input type="text" class="form-control" name="designation" required value="{{old('designation')}}"></input>
+                                @error('role')
+                                    <p class="text-info">{!! $message !!}</p>
+                                @enderror
+                            </div>
+
+                            <div class="form-group col-sm-12 col-md-6">
+                                <label>Description</label>
+                                <textarea class="form-control" name="description" value="{!! old('description') !!}"></textarea>
+                            </div>
+
                         </div>
 
-                        <div class="form-group">
-                            <label>Profile Photo</label>
-                            <div class="d-none img-container" style="border-right:1px solid #ddd;">
-                                <div id="image-preview"></div>
-                            </div>
-                            <div class="custom-file">
-                                    <input type="file"  name="upload_image" id="upload_image" class="image custom-file-input image" required>
-                                <label class="custom-file-label" for="upload_image">Choose file</label>
-                            </div>
-                        </div>
-                        <input type="hidden" name="profile_photo" id="profile_photo" value="">
+                        
 
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" class="form-control" name="email" required value="{!! old('email') !!}">
-                        </div>
-                        <div class="form-group">
-                            <label>Phone Number</label>
-                            <input type="text" class="form-control" name="phone" required value="{!! old('phone') !!}">
-                        </div>
-                        <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" class="form-control" name="password" required value="{!! old('password') !!}"> 
-                        </div>
-                        <div class="form-group">
-                            <label>Role</label>
-                            <select name="role" class="form-control" required data-size="7" data-live-search="true">
-                                <option value="">Select a role</option>
-                                @foreach($adminUsersRoles as $a_role)
-                                    <option value="{{ $a_role->id }}">{{ $a_role->role_name }}</option>
-                                @endforeach
-                            </select>
-                            @error('role')
-                                <p class="text-info">{!! $message !!}</p>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label>Designation</label>
-                            <input type="text" class="form-control" name="designation" required value="{{old('designation')}}"></input>
-                            @error('role')
-                                <p class="text-info">{!! $message !!}</p>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label>Description</label>
-                            <textarea class="form-control" name="description" value="{!! old('description') !!}"></textarea>
-                        </div>
+                        
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>

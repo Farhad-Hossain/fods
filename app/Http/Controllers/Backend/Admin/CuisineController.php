@@ -5,6 +5,15 @@ namespace App\Http\Controllers\Backend\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Cuisine;
+use App\Models\Restaurant;
+use App\Models\RestaurantAppointedCuisine;
+
+
+
+use App\Helpers\Helper;
+
+use Auth;
+
 
 class CuisineController extends Controller
 {
@@ -13,24 +22,24 @@ class CuisineController extends Controller
     {
     	$title = 'Cuisines';
     	$cuisines = Cuisine::where('status', 1)->get();
-    	return view('backend.pages.food.cuisine.cuisines_list', compact('title', 'cuisines'));
+        $restaurants = Restaurant::where('user_id', Auth::user()->id)->get();
+    	return view('backend.pages.food.cuisine.cuisines_list', compact('title', 'cuisines', 'restaurants' ));
     }
     public function add_cuisines_submit(Request $request)
     {
     	$request->validate([
-    		'name' => 'required',
+    		'name' => 'required|unique:cuisines,name',
     	]);
-
     	try{
-    		Cuisine::create([
-    			'name' => $request->name,
-    		]);
-    		session('type', 'success');
-    		session('message', 'Cuisines Added successfully.');
+    		$cuisine = new Cuisine();
+            $cuisine->user_id = Auth::user()->id;
+    		$cuisine->name = $request->name;
+            $cuisine->save();
+
+    		Helper::alert('success', 'Cuisine added successfully.');
     		return redirect()->back();
     	}catch(Exception $e){
-    		session('type', 'danger');
-    		session('message', 'Something went wrong.');
+    		Helper::alert('danger', 'Something went wrong.');
     		return redirect()->back();
     	}	
 

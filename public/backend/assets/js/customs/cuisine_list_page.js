@@ -11,8 +11,5 @@ function set_value_and_rise_modal(id, name)
 }
 function clear_value_and_rise_modal()
 {
-    $("#cuisine_modal_title").text("Create Cuisine");
-    var action = "{{ route('backend.food.cuisines.add_submit') }}";
-    $("form").attr('action', action)
-    $("input[name='name']").val("");   
+    
 }

@@ -13,4 +13,9 @@ class RestaurantRating extends Model
     {
     	return $this->belongsTo('App\Models\Restaurant', 'restaurant_id');
     }
+
+    public function customer()
+    {
+        return $this->hasOne('App\User', 'id');
+    }
 }

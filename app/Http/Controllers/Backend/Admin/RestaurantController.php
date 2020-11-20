@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\PaymentMethod;
 use App\Models\RestaurantAppointedPaymentMethod;
 use App\User;
+use Auth;
 
 use App\Helpers\Helper;
 
@@ -36,10 +37,17 @@ class RestaurantController extends Controller
 	// Restaurant list
 	public function view_restaurant_list()
 	{
-		$rs = Restaurant::where('status',1)->orderBy('id', 'desc')->get();
-		
+		if ( Helper::admin() ) {
+			$rs = Restaurant::where('status',1)->orderBy('id', 'desc')->get();
+		}
+
+		if ( Helper::restaurant() ) {
+			$rs = Restaurant::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
+		}
+
 		return view('backend.pages.restaurants.list', compact('rs'));
 	}
+
 	public function view_restaurant_edit_form($r)
 	{
 		$r = Restaurant::findOrFail($r);
@@ -56,6 +64,7 @@ class RestaurantController extends Controller
 		
 		return view('backend.pages.restaurants.edit_form', compact('r', 'cities', 'tags', 'payment_methods', 'helper_array', 'cuisines') );
 	}
+	
 	public function submit_restaurant_edit_form(Request $request, Restaurant $restaurant)
 	{
 		DB::beginTransaction();
@@ -220,7 +229,15 @@ class RestaurantController extends Controller
 	// Rating and Reviews
 	public function show_rating_and_reviews()
 	{
-		$ratings = RestaurantRating::where('status', 1)->orderBy('id', 'desc')->get();
+		if ( Helper::admin() ) {
+			$ratings = RestaurantRating::where('status', 1)->orderBy('id', 'desc')->get();
+		}
+		
+		if ( Helper::restaurant() ) {
+			$restaurant_ids = Restaurant::where('user_id', Auth::user()->id)->pluck('id');
+			$ratings = RestaurantRating::whereIn('restaurant_id', $restaurant_ids)->orderBy('id', 'desc')->get();	
+		}
+
 		return view('backend.pages.restaurants.rating_and_reviews', compact('ratings'));
 	}
 	public function get_all_reviews_by_ajax($restaurant_id)
@@ -307,22 +324,30 @@ class RestaurantController extends Controller
 
 	public function restaurantAddSubmit(Request $request)
 	{
-		// dd($request->all());
-
-		$globals_info = GlobalSetting::first();
+		$request->validate([
+			'email'=>'required|unique:restaurants,email',
+			'phone'=>'required|unique:restaurants,phone',
+			'website'=>'unique:restaurants,website',
+		]);
+		DB::beginTransaction();
 
 		try{
-		    DB::beginTransaction();
+			if ( Helper::admin() ) {
+				$user = new User();
+				$user->name 	= $request->user_name;
+				$user->email 	= $request->user_email;
+				$user->role 	= 1;
+				$user->password = Hash::make( $request->user_password );
+				$user->password_salt = $request->user_password;
+				$user->last_login_ip = request()->ip();
+				$user->status 	= 1;
+				$user->save();
+			} 
+			if ( Helper::restaurant() ) {
+					
+			}
 
-			$user = new User();
-			$user->name 	= $request->user_name;
-			$user->email 	= $request->user_email;
-			$user->role 	= 1;
-			$user->password = Hash::make( $request->user_password );
-			$user->password_salt = $request->user_password;
-			$user->last_login_ip = request()->ip();
-			$user->status 	= 1;
-			$user->save();
+			$globals_info = GlobalSetting::first();
 
 			if($request->restaurant_photo ){
 				$fileNameToBeStore = Helper::insertFile($request->restaurant_photo, 1);
@@ -337,22 +362,21 @@ class RestaurantController extends Controller
 			}
 
 			$res = new Restaurant();
-			$res->user_id 	= $user->id;
+			$res->user_id 	= $user->id ?? Auth::user()->id;
 			$res->name 		= $request->name;
 			$res->city 		= $request->city;
 			$res->phone 	= $request->phone;
-			$res->email 	= $request->user_email;
+			$res->email 	= $request->email;
 			$res->address 	= $request->address;
 			$res->website 	= $request->website;
-			$res->open_status = $request->open_status;
 			$res->open_status = $request->open_status;
 			$res->characteristics = 1;
 			$res->alcohol_status = $request->alcohol_status;
 			$res->seating_status = $request->seating_status;
 			
 			$res->payment_method = 1;
-		    $res->delivery_charge  = $globals_info->default_delivery_charge;
-		    $res->selling_percentage  = $request->commission??$globals_info->default_product_selling_percentage;
+		    $res->delivery_charge  = $request->delivery_charge ?? $globals_info->default_delivery_charge;
+		    $res->selling_percentage  = $request->commission ?? $globals_info->default_product_selling_percentage;
 		    $res->cover_photo = $fileNameToBeStore;
 		    $res->logo = $logo_fileNameToBeStore;
 			$res_id = $res->save();
@@ -402,21 +426,50 @@ class RestaurantController extends Controller
 		    */
 		    
 		    DB::commit();
-		    session(['type'=>'success', 'message'=>'Restaurant created successfully']);
-		    return redirect()->back();
+
 		}catch(\Exception $e){
 		    DB::rollBack();
-
-		    session(['type'=>'danger', 'message'=>'Something went wrong.'.$e]);
+		    Helper::alert('danger', 'Something went wrong.'.$e);
 		    dd($e);
 		    return redirect()->back();
 		}
+		Helper::alert('success', 'Restaurant added successfully.');
+	    return redirect()->back();
 	}
 
 	public function showFavoriteList()
 	{
 		$favorites = RestaurantFavorite::all();
 		return view('backend.pages.restaurants.favorites', compact('favorites'));
+	}
+
+	public function editReviewSubmit(Request $request)
+	{
+		try{
+			$rating = RestaurantRating::findOrFail($request->rating_id);
+			$rating->review = $request->review_content;
+			$rating->save();
+
+			Helper::alert('success', 'Review Info updated successfully');
+			return redirect()->back();
+		} catch (Exception $e) {
+			Helper::alert('danger', 'Something went wrong.');
+			return redirect()->back();
+		}
+
+	}
+
+	public function changeReviewStatus($rating_id)
+	{
+		$rating = RestaurantRating::findOrFail($rating_id);
+		if ( $rating->status == 1 ) {
+			$rating->status = 2;
+		} else {
+			$rating->status = 1;
+		}
+		$rating->save();
+		Helper::alert('success', 'Review status Changed');
+		return redirect()->back();
 	}
 	// end
 

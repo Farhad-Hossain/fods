@@ -14,7 +14,7 @@ class RatingReviewController extends Controller
     //
     public function restaurant_review_submit(Request $request)
     {
-
+        
     }
     public function food_review_submit(FoodReviewPostRequest $request)
     {

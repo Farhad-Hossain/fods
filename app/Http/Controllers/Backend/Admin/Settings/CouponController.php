@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Backend\Admin\Settings;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\DiscountCoupon;
+use App\models\GlobalSetting;
+
 use Carbon\Carbon;
+use App\Models\City;
 
 class CouponController extends Controller
 {
@@ -16,13 +19,17 @@ class CouponController extends Controller
     }
     public function addCouponView()
     {
-        return view('backend.pages.coupons.add_coupon');
+        $country_id = GlobalSetting::first()->country;
+        $cities = City::where('country_id', $country_id)->get();
+        return view('backend.pages.coupons.add_coupon', compact('cities', $cities));
     }
     public function addCouponSubmit(Request $request)
     {   
-       
+        $coupon_available_city_ids = '';
+        foreach( $request->area_cities as $city_id ) {
+            $coupon_available_city_ids .= $city_id.',';
+        }
         $request->validate([
-            'area'=>'required',
             'promo_code'=>'required',
             'promo_type'=>'required',
             'discount_value'=>'required',
@@ -34,7 +41,7 @@ class CouponController extends Controller
         ]);
         try{
             $discount_coupon = new DiscountCoupon();
-            $discount_coupon->area = $request->area;
+            $discount_coupon->city_id = $coupon_available_city_ids;
             $discount_coupon->promo_code = $request->promo_code;
             $discount_coupon->promo_type = $request->promo_type;
             $discount_coupon->discount_price = $request->discount_value;
@@ -51,12 +58,15 @@ class CouponController extends Controller
             return redirect()->back();
         }
         session(['type'=>'success','message'=>'Discount coupon created successfully.']);
-        return redirect()->back();
+        return redirect()->route('backend.settings.coupon');
     }
     public function editCouponView($coupon_id)
     {
         $coupon = DiscountCoupon::find($coupon_id);
-        return view('backend.pages.coupons.edit_coupon', compact('coupon'));
+        $country_id = GlobalSetting::first()->country;
+        $cities = City::where('country_id', $country_id)->get();
+
+        return view('backend.pages.coupons.edit_coupon', compact('coupon', 'cities'));
     }
     public function editCouponSubmit(Request $request)
     {

@@ -3,33 +3,7 @@
     <div class="card-body">
                 <input type="hidden" name="id" value="{!! $r->id ?? '' !!}" required>
                 <div class="form-group row">
-
-                    @if ( !isset($r) ) 
-                    <div class="form-group col-sm-12 col-md-4">
-                       <label>User Name</label>
-                       <input type="text" class="form-control" name="user_name" value="{!!old('user_name')!!}" required>
-                       @error('user_name')
-                            <p class="text-danger">{!! $message !!}</p>
-                       @enderror
-                   </div>
-
-                   <div class="form-group col-sm-12 col-md-4">
-                       <label>User Email</label>
-                       <input type="email" class="form-control" name="user_email" value="{!!old('user_email')!!}" required>
-                       @error('user_email')
-                            <p class="text-danger">{!! $message !!}</p>
-                       @enderror
-                   </div>
-
-                   <div class="form-group col-sm-12 col-md-4">
-                       <label>Password</label>
-                       <input type="password" class="form-control" name="user_password" value="{!!old('user_password')!!}"  required>
-                       @error('user_password')
-                            <p class="text-danger">{!! $message !!}</p>
-                       @enderror
-                   </div>
-                    @endif
-
+                    
                     <div class="col-lg-4">
                         <label>{!! __('rest.name') !!}</label>
                         <input type="text" class="form-control" name="name" value="{!! $r->name ?? ''!!}" />
@@ -62,7 +36,6 @@
                         @enderror
                     </div>
 
-
                 </div>
 
                 <div class="form-group row">
@@ -72,13 +45,6 @@
                         <input type="text" class="form-control" name="phone" value="{!! $r->phone ??  '' !!}" />
                     </div>
 
-                    @if( isset($r) )
-                    <div class="col-lg-4">
-                        <label>Password</label>
-                        <input type="password" class="form-control" name="password" value="" />
-                    </div>
-                    @endif
-
                     <div class="col-lg-4">
                         <label>{!! __('rest.delivery_charge') !!}</label>
                         <input type="text" class="form-control" name="delivery_charge" value="{!! $r->delivery_charge ?? '' !!}" required />
@@ -87,10 +53,6 @@
                         @enderror
                     </div>
 
-                </div>
-
-                <div class="form-group row">
-                    
                     <div class="col-lg-4">
                         <label>{!! __('rest.selling_percentage') !!}</label>
                         <input type="number" class="form-control" name="selling_percentage" value="{!! $r->selling_percentage ?? '' !!}" required />
@@ -98,6 +60,10 @@
                             <p class="text-danger">{!! $message !!}</p>
                         @enderror
                     </div>
+
+                </div>
+
+                <div class="form-group row">
 
                     <div class="col-lg-4">
                         <label>{!! __('rest.payment_method') !!}</label>
@@ -111,9 +77,7 @@
                             @endforeach
                         </select>
                     </div>
-                </div>
 
-                <div class="form-group row">    
                     <div class="col-lg-4">
                         <label>{!! __('rest.website') !!}</label>
                         <input type="text" name="website" class="form-control" value="{!! $r->website ?? '' !!}" required>
@@ -129,10 +93,12 @@
                             <p class="text-danger">{!! $message !!}</p>
                         @enderror
                     </div>
+                </div>
+
+                <div class="form-group row">    
 
                     <div class="col-lg-4">
                         <label>{!! __('rest.status') !!}</label>
-                        @if ( isset($r) ) 
                         <div class="radio-inline">
                             <label class="radio radio-solid">
                             <input type="radio" name="open_status" value="1" {!! $r->open_status == 1 ? 'checked' : '' !!} />{!! __('rest.status_open') !!}
@@ -141,25 +107,10 @@
                             <input type="radio" name="open_status" value="2" {!! $r->open_status == 2 ? 'checked' : '' !!} />{!! __('rest.status_close') !!}
                             <span></span></label>
                         </div>
-                        @else
-                        <div class="radio-inline">
-                            <label class="radio radio-solid">
-                            <input type="radio" name="open_status" value="1" />{!! __('rest.status_open') !!}
-                            <span></span></label>
-                            <label class="radio radio-solid">
-                            <input type="radio" name="open_status" value="2" />{!! __('rest.status_close') !!}
-                            <span></span></label>
-                        </div>
-                        @endif
-
                     </div>
-
-                </div>
-                <div class="form-group row">
 
                     <div class="col-lg-4">
                         <label>{!! __('rest.alcohol_status') !!}</label>
-                        @if ( isset($r) ) 
                         <div class="radio-inline">
                             <label class="radio radio-solid">
                             <input type="radio" name="alcohol_status" value="1" {!! $r->alcohol_status == 1 ? 'checked' : '' !!} />{!! __('common.yes') !!}
@@ -168,23 +119,11 @@
                             <input type="radio" name="alcohol_status" value="2" {!! $r->alcohol_status == 2 ? 'checked' : '' !!}  />{!! __('common.no') !!}
                             <span></span></label>
                         </div>
-                        @else
-                        <div class="radio-inline">
-                            <label class="radio radio-solid">
-                            <input type="radio" name="alcohol_status" value="1" />{!! __('common.yes') !!}
-                            <span></span></label>
-                            <label class="radio radio-solid">
-                            <input type="radio" name="alcohol_status" value="2" />{!! __('common.no') !!}
-                            <span></span></label>
-                        </div>
-                        @endif
-
-
                     </div>
 
                     <div class="col-lg-4">
                         <label>Seating</label>
-                        @if ( isset($r) ) 
+                        
                         <div class="radio-inline">
                           <label class="radio">
                           <input type="radio" name="seating_status" {!! $r->seating_status == 1 ? 'checked' : '' !!} value="1" /> Available
@@ -193,31 +132,20 @@
                           <input type="radio" name="seating_status" {!! $r->seating_status == 2 ? 'checked' : '' !!} value="2" /> Not Available
                           <span></span></label>
                         </div>
-                        @else
-                        <div class="radio-inline">
-                          <label class="radio">
-                          <input type="radio" name="seating_status" value="1" /> Available
-                          <span></span></label>
-                          <label class="radio">
-                          <input type="radio" name="seating_status" value="2" /> Not Available
-                          <span></span></label>
-                        </div>
-                        @endif
                         @error('seating_status')
                             <p class="text-info">{!! $message !!}</p>
                         @enderror
                     </div>
 
+                </div>
+
+                <div class="form-group row">
+
                     <div class="form-group col-sm-12 col-md-4">
                         <label>Tags</label>
-
                         <select multiple="" class="form-control selectpicker" required data-size="7" data-live-search="true" name="tags[]" required>
                             @foreach($tags as $tag)
-                                @if( isset($r) )
                                     <option value="{{ $tag->id }}" {{ $tag->id == $r->tagAppointed['id'] ? 'selected' : '' }}>{{ $tag->name }}</option>
-                                    @else
-                                    <option value="{{ $tag->id }}" >{{ $tag->name }}</option>
-                                @endif
                             @endforeach
                         </select>
                     </div>
@@ -235,10 +163,8 @@
                        @enderror
                    </div>
 
-                    <div class="col-lg-4">
-                        @if ( isset($r) ) 
+                    <div class="col-lg-4"> 
                         <img src="{{asset('uploads')}}/{{$r->logo}}" style="height: 70px; width: 70px; display: block">
-                        @endif
                         <label>Logo</label>
                         <div></div>
                         <div class="custom-file">
@@ -252,9 +178,7 @@
                     </div>
 
                     <div class="col-lg-4">
-                        @if ( isset($r) ) 
                         <img src="{{asset('uploads')}}/{{$r->cover_photo}}" style="height: 70px; width: 70px; display: block">
-                        @endif
                         <label>Cover Photo</label>
                         <div></div>
                         <div class="custom-file">

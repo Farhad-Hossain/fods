@@ -1,7 +1,7 @@
 
 $("#user_table").dataTable();
 
-function set_value_and_rise_edit_modal(route_address, name, email, status)
+function set_value_and_rise_edit_modal(route_address, name, email, role, status)
 {
 	$('#edit_user_form').attr('action', route_address);
 	$('#edit_user_form input[name="name"]').val(name);
@@ -22,6 +22,7 @@ $(".edit_user_btn").click(function(){
 	name = $(this).parents('tr').find('.m_name').text();
 	email = $(this).parents('tr').find('.m_email').text();
 	phone = $(this).parents('tr').find('.m_phone').text();
+	admin_user_role_id = $(this).parents('tr').find('.m_admin_role_id').attr('value');
 	designation = $(this).parents('tr').find('.m_designation').text();
 	description = $(this).parents('tr').find('.m_description').text();
 
@@ -29,6 +30,7 @@ $(".edit_user_btn").click(function(){
 	$('#edit_user_form input[name="name"]').val(name);
 	$('#edit_user_form input[name="email"]').val(email);
 	$('#edit_user_form input[name="phone"]').val(phone);
+	$('#edit_user_form select[name="role"]').val(admin_user_role_id);
 	$('#edit_user_form input[name="designation"]').val(designation);
 	$('#edit_user_form textarea[name="description"]').val(description);
 });

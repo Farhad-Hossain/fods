@@ -18,6 +18,7 @@ class CreateRestaurantRatingsTable extends Migration
             $table->integer('restaurant_id');
             $table->integer('user_id');
             $table->integer('star_count');
+            $table->text('review');
             $table->string('ip_address');
             $table->tinyInteger('status')->default(1);
             $table->timestamps();

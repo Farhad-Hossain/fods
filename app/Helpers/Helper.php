@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use Auth;
+
 class Helper {
 
     function isThisRestaurantFavouritedByAuthUser($restaurant_id)
@@ -31,5 +33,45 @@ class Helper {
         file_put_contents($upload_path, $data);
 
         return $image_name;
+    }
+
+    public static function restaurant()
+    {
+        if ( Auth::user()->role == 1 ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function admin()
+    {
+        if ( Auth::user()->role == 0 ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function alert($type, $message, $route = null)
+    {
+        session(['type'=>$type, 'message'=>$message]);
+    }
+
+    public static function haveAccess($access_name)
+    {
+        if ( Auth::user()->role == 1 ) {
+            return true;
+        }
+
+        if ( Auth::user()->role == 0 ) {
+            if ( strpos(Auth::user()->admin->role(), $access_name) ) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 } 

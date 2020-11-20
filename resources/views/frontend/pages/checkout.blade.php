@@ -429,7 +429,7 @@
                             @csrf
                             <div class="">
                                 <p>Your Delivery Address</p>
-                                <textarea name="delivery_address" class="form-control mb-2 text-dark">{!! Auth::user()->customer->default_delivery_address ?? '' !!}</textarea>
+                                <textarea name="delivery_address" class="form-control mb-2 text-dark" required>{!! Auth::user()->customer->default_delivery_address ?? '' !!}</textarea>
                             </div>
                             <button type="submit" class="chkout-btn btn-link">Checkout Now</button>
                         </form>

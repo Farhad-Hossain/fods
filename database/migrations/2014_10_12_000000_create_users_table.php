@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->string('last_login_ip');
             $table->string('avatar')->nullable();
+            $table->string('admin_user_role_id')->nullable();
             $table->tinyInteger('status')->default(1)->comment('1: active, 0: inactive');
             $table->tinyInteger('created_by')->nullable();
             $table->tinyInteger('updated_by')->nullable();

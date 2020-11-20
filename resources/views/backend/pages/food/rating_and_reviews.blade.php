@@ -8,8 +8,9 @@
         <!--begin::Card-->
         <div class="card card-custom">
             @include('backend.inc.card_header', array(
+                'right_text'=>'Rating & Review',
                 'right_btn_link'=>route('backend.food.list'),
-                'right_btn_text'=>'Foods'
+                'right_btn_text'=>'Foods',
             ))
             <div class="card-body">
                 @include('backend.inc.table.food_review')
@@ -23,4 +24,16 @@
     <script src="{{asset('backend')}}/assets/plugins/custom/datatables/datatables.bundle.js?v=7.0.3"></script>
     <script src="{{asset('backend')}}/assets/js/pages/crud/datatables/advanced/column-visibility.js?v=7.0.3"></script>
     <script src="{{asset('backend')}}/assets/js/datatable.js"></script>
+
+    <script type="text/javascript">
+        function rise_edit_modal(route, review_id, count_stars, review_content )
+        {   
+            $("#edit_form").attr('action', route);
+            $("input[name='review_id']").val(review_id);
+            $("input[name='review_count_stars']").val(count_stars);
+
+            $("input[name='review_content']").val(review_content);
+            $("#edit_review_modal").modal();
+        } 
+    </script>
 @endsection
