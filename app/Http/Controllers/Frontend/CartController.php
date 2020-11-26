@@ -27,11 +27,17 @@ class CartController extends Controller
                 return response()->json(['message' => 'Invalid Food'], 404);
             }
 
+            $foodPromocodes = Food::promocodes($food->id);
+            // $restaurantPromoocdes = Restaurant::promocodes($food->restaurant);
+
             Cart::add([
                 'id' => $food->id,
                 'name' => $food->food_name,
                 'qty' => $request->food_quantity,
-                'price' => $food->price
+                'price' => $food->price,
+                'options'=> [
+                    'food_info'=>$food, 'restaurant_info'=>$food->restaurant, 'promocodes'=>$foodPromocodes,
+                ]
             ]);
 
             if (is_array($request->extra_food)) {
@@ -90,10 +96,14 @@ class CartController extends Controller
 
     public function showCheckoutPage()
     {
-        $cart_contents = Cart::content();
-        $extra_contents = Cart::instance('extra_food')->content();
-        $delivery_charge = Food::getTotalDeliveryChargeFromCart($cart_contents);
+        $cart_contents      = Cart::content();
+        $extra_contents     = Cart::instance('extra_food')->content();
 
+        // dd( $cart_contents );
+
+        $delivery_charge    = Food::getTotalDeliveryChargeFromCart($cart_contents);
+
+        
         return view('frontend.pages.checkout', compact('cart_contents', 'extra_contents', 'delivery_charge'));
     }
 

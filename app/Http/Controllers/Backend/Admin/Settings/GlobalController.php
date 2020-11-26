@@ -52,6 +52,7 @@ class GlobalController extends Controller
             $global_setting->navbar_color = $request->navbar_color;
             $global_setting->default_delivery_charge = $request->delivery_charge;
             $global_setting->default_product_selling_percentage = $request->selling_charge;
+            $global_setting->product_tax = $request->product_tax;
             $global_setting->contact_address = $request->contact_address;
             $global_setting->app_status = $request->app_status;
             $global_setting->short_description = $request->app_description;

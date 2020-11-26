@@ -97,4 +97,9 @@ class Food extends Model
         }
         return $delivery_charge;
     }
+    
+    public static function promocodes($food_id)
+    {
+        return DiscountCoupon::where('food_ids', 'LIKE', "%{$food_id}%")->get();
+    }
 }

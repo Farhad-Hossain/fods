@@ -71,7 +71,7 @@
                                 <thead>
                                 <tr>
                                     <td class="td-heading">Meal</td>
-                                    <td class="td-heading">Qty</td>
+                                    <td class="td-heading" colspan="2">Qty</td>
                                     <td class="td-heading">Rate</td>
                                     <td class="td-heading">Price</td>
                                     <td class="td-heading">Action</td>
@@ -85,12 +85,12 @@
                                             <td>
                                                 <div class="checkout-thumb">
                                                     <a href="#">
-                                                        <img src="images/checkout/thumb-1.jpg" class="img-responsive" alt="thumb" title="thumb">
+                                                        <img src="{{ asset('uploads') }}/{{ $content->options['food_info']->image1 ?? '' }}" class="img-responsive" alt="thumb" title="thumb">
                                                     </a>
                                                 </div>
                                                 <div class="name">
                                                     <a href="#"><h4>{!! $content->name !!}</h4></a>
-                                                    <a href="#"><p>Restaurant Name</p></a>
+                                                    <a href="#"><p>{!! $content->options['restaurant_info']->name ?? '' !!}</p></a>
                                                     <div class="star">
                                                         <i class="fas fa-star"></i>
                                                         <i class="fas fa-star"></i>
@@ -101,7 +101,9 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="td-content">{!! $content->qty !!}</td>
+                                            <td class="td-content" colspan="2">
+                                                {!! $content->qty !!}
+                                            </td>
                                             <td class="td-content">{!! $content->price !!}</td>
                                             <td class="td-content">{!! $content->price * $content->qty !!}</td>
                                             <td><button class="remove-btn" onclick="removeContent({!! $content->id !!})">Remove</button></td>
@@ -376,17 +378,7 @@
                             </div>
                         </form>
                     </div>--}}
-                    {{--<div class="promocode">
-                        <h4>Promocode</h4>
-                        <form>
-                            <input class="coupon-input" name="newsletter" type="text" placeholder="Enter promo code">
-                            <div class="subscribe-btn">
-                                <div class="s-n-btn">
-                                    <button class="promocode-btn">Apply</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>--}}
+                    
                     <div class="your-order">
                         <h4>Your Order</h4>
 
@@ -395,15 +387,26 @@
                                 <span>Item Total</span>
                             </div>
                             <div class="item-dt-right">
-                                <p>{!! number_format($subTotal, 2) !!}</p>
+                                <p id="total_item">{!! number_format($subTotal, 2) !!}</p>
                             </div>
                         </div>
+
                         <div class="order-d">
                             <div class="item-dt-left">
-                                <span>Taxes</span>
+                                <span>Promocode (<a href="javascript:;" id="promocode_text">{{ $content->options['promocodes'][0]->promo_code ?? '' }}</a>)</span>
                             </div>
                             <div class="item-dt-right">
-                                <p>0.00</p>
+                                <p>-<span id="promocode_value">{{ $content->options['promocodes'][0]->discount_price ?? '0' }}</span></p>
+                            </div>          
+                        </div>      
+
+                        <div class="order-d">
+                            <div class="item-dt-left">
+                                <span id="taxt_value_unit">Taxes ( {!! $gd['globals']->product_tax !!}% )</span>
+                            </div>
+                            <div class="item-dt-right">
+                                <?php $total_tax = ( $subTotal * $gd['globals']->product_tax ) / 100 ?>
+                                <p id="tax_value_total">{!! ( $subTotal * $gd['globals']->product_tax ) / 100 !!}</p>
                             </div>
                         </div>
                         <div class="order-d">
@@ -411,16 +414,27 @@
                                 <span>Delivery Charges</span>
                             </div>
                             <div class="item-dt-right">
-                                <p>{!! number_format($delivery_charge, 2) !!}</p>
+                                <p id="delivery_charge">{!! number_format($delivery_charge, 2) !!}</p>
                             </div>
+                        </div>
+
+                        <div class="promocode ">
+                            <h4>Promocode</h4>
+                                <input class="coupon-input" id="promocode_field" type="text" placeholder="Enter promo code">
+                                <div class="subscribe-btn">
+                                    <div class="s-n-btn">
+                                        <button class="promocode-btn" onclick="calculateAndChange(
+                                        '{{$subTotal + $delivery_charge + $total_tax}}')">Apply</button>
+                                    </div>
+                                </div>
                         </div>
 
                         <div class="total-bill">
                             <div class="total-bill-text">
                                 <h5>Total</h5>
                             </div>
-                            <div class="total-bill-payment">
-                                <p>{!! number_format(($subTotal + $delivery_charge), 2) !!}</p>
+                            <div class="total-bill-payment text-dark">
+                                <p id="total_bill">{!! number_format(($subTotal + $delivery_charge + $total_tax), 2) !!}</p>
                             </div>
                         </div>
                     </div>
@@ -454,4 +468,6 @@
     <script src="{!! asset('frontend') !!}/js/bootstrap-datepicker.js"></script>
     <script src="{!! asset('frontend') !!}/js/bootstrap-select.js"></script>
     <script src="{!! asset('frontend') !!}/js/custom/checkout.js"></script>
+
+    <script type="text/javascript"></script>
 @endsection

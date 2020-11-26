@@ -2,6 +2,7 @@
 @section('custom_style')
     <link href="{{asset('backend/assets/plugins/custom/datatables/datatables.bundle.css?v=7.0.3')}}" rel="stylesheet" type="text/css" />
 @endsection
+
 @section('main_content')
     <div class="container-fluid">
         @include('backend.message.flash_message')

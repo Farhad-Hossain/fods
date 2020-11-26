@@ -4,11 +4,35 @@
         <div class="col-sm-12 col-md-4 form-group">
           <label>Area*</label>  
           <select multiple="" class="form-control selectpicker" required data-size="7" data-live-search="true" name="area_cities[]" required>
+              <option value="all_city">-All Cities-</option>
               @foreach($cities as $city)
                       <option value="{{ $city->id }}">{{ $city->name }}</option>
               @endforeach
           </select>
         </div>
+
+        @if ( \App\Helpers\Helper::admin() ) 
+        <div class="col-sm-12 col-md-4 form-group">
+          <label>For restaurants</label>  
+          <select multiple="" class="form-control selectpicker" required data-size="7" data-live-search="true" name="restaurants[]" required>
+              <option value="all_restaurants">-All Restaurants-</option>
+              @foreach($restaurants as $restaurant)
+                      <option value="{{ $restaurant->id }}">{{ $restaurant->name }}</option>
+              @endforeach
+          </select>
+        </div>
+        @endif
+
+        <div class="col-sm-12 col-md-4 form-group">
+          <label>For Foods</label>  
+          <select multiple="" class="form-control selectpicker" required data-size="7" data-live-search="true" name="foods[]" required>
+              <option value="all_foods">-All Foods-</option>
+              @foreach($foods as $food)
+                      <option value="{{ $food->id }}">{{ $food->food_name }}</option>
+              @endforeach
+          </select>
+        </div>        
+
         <div class="col-sm-12 col-md-4 form-group">
             <label>Promo code setup*</label>
             <input type="text" name="promo_code" class="form-control" placeholder="Please enter promo code" required value="{{old('promo_code')}}">
@@ -43,13 +67,7 @@
         
     </div>
     
-    <div class="row">
-        
-        <div class="form-group col-sm-12 col-md-4 d-none" id="valid_date_input_form">
-            <label>Valid till</label>
-            <input type="date" name="valid_for_date" class="form-control" value="{{old('valid_for_date')}}">
-        </div>
-    </div>
+    
 
     <div class="row">
         
@@ -68,7 +86,7 @@
             <label>Valid for</label>
             <div class="radio-inline">
               <label class="radio">
-              <input type="radio" name="valid_for" value="1"/>Always
+              <input type="radio" name="valid_for" value="1" selected />Always
               <span></span></label>
               <label class="radio">
               <input type="radio" name="valid_for" value="2" />Custom date
@@ -79,7 +97,20 @@
             @enderror
         </div>
 
-        <div class="col-sm-12 col-md-4">
+        <div class="col-sm-12 d-none" id="valid_date_input_form">
+            <div class="row">
+                <div class="form-group col-sm-12 col-md-5">
+                    <label>Valid From</label>
+                    <input type="date" name="valid_from" class="form-control" value="{{ old('valid_from') }}">
+                </div>
+                <div class="form-group col-sm-12 col-md-5">
+                    <label>Valid Till</label>
+                    <input type="date" name="valid_to" class="form-control" value="{{ old('valid_to') }}">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-md-12">
             <label>Description*</label>
             <textarea class="form-control" name="description" required value="{{ old('description') }}"></textarea>
         </div>

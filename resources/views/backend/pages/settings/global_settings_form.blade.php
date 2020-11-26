@@ -60,6 +60,7 @@
                                     <span class="form-text text-warning">{{ $message }}</span>
                                     @enderror
                                 </div>
+
                                 <div class="form-group col-sm-12 col-md-6">
                                     <label>{!! __('backend_gs_form.selling_charge') !!}</label>
                                     <input type="number" step="0.01" class="form-control" placeholder="Selling Charge"
@@ -68,6 +69,16 @@
                                     <span class="form-text text-warning">{{ $message }}</span>
                                     @enderror
                                 </div>
+
+                                <div class="form-group col-sm-12 col-md-6">
+                                    <label>Tax Percenteage</label>
+                                    <input type="number" step="0.01" class="form-control" placeholder="Tax Charge in percentage"
+                                           name="product_tax" required value="{{ $setting->product_tax ?? '' }}"/>
+                                    @error('product_tax')
+                                    <span class="form-text text-warning">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
                                 <div class="form-group col-sm-12 col-md-6">
                                     <label for="contact_address">{!! __('backend_gs_form.contact_address') !!}</label>
                                     <textarea class="form-control" name="contact_address" id="contact_address"
@@ -88,7 +99,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group col-sm-12 col-md-6">
+                                <div class="form-group col-sm-12 col-md-4">
                                     <label>Website Logo</label>
                                     <img src="{{asset('uploads')}}/{{$setting->website_logo}}" style="height: 70px; width: 70px; display: block">
                                     <div class="custom-file">
@@ -101,7 +112,7 @@
                                     <input type="hidden" name="website_logo" value="">
                                 </div>
 
-                                <div class="form-group col-sm-12 col-md-6">
+                                <div class="form-group col-sm-12 col-md-4">
                                     <label>Admin Logo</label>
                                     <img src="{{asset('uploads')}}/{{$setting->admin_logo}}" style="height: 70px; width: 70px; display: block">
                                     <div class="custom-file">

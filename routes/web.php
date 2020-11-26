@@ -252,8 +252,11 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
 
         Route::get('country-area-currency', 'CountryCityCurrencyController@view_values')->name('ccc');
         Route::post('add-country', 'CountryCityCurrencyController@add_country_submit')->name('add_country');
+        Route::post('edit-country', 'CountryCityCurrencyController@EditCountrySubmit')->name('edit_country');
         Route::post('add-city', 'CountryCityCurrencyController@add_city_submit')->name('add_city');
+        Route::post('edit-city', 'CountryCityCurrencyController@edit_city_submit')->name('edit_city');
         Route::post('add-currency', 'CountryCityCurrencyController@add_currency_submit')->name('add_currency');
+        Route::post('edit-currency', 'CountryCityCurrencyController@edit_currency_submit')->name('edit_currency');
 
         Route::get('{country}/delete', 'CountryCityCurrencyController@delete_country')->name('delete_country');
 

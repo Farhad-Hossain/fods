@@ -5,6 +5,22 @@ obj.cus_email = $('#email').val();
 obj.cus_addr1 = $('#address').val();
 obj.amount = $('#total_amount').val();
 
+function calculateAndChange(total_bill)
+{
+    promocode_field = $("#promocode_field").val();
+    promocode_text = $("#promocode_text").text();
+    promocode_value = $("#promocode_value").text();
+
+
+    if (promocode_text == promocode_field) {
+        updated_bill = parseFloat(total_bill)-parseFloat(promocode_value);
+        $("#total_bill").text(updated_bill);
+        alert('Promo code applied.');
+    } else {
+        alert('Please enter valid promo code.');
+    }
+}
+
 $('#sslczPayBtn').prop('postdata', obj);
 
 (function (window, document) {

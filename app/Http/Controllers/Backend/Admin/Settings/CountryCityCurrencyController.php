@@ -15,9 +15,9 @@ class CountryCityCurrencyController extends Controller
 {
     public function view_values()
     {
-    	$countries = Country::where('status', 1)->get();
-    	$cities = City::where('status', 1)->get();
-    	$currencies = Currency::where('status', 1)->get();
+    	$countries = Country::all();
+    	$cities = City::all();
+    	$currencies = Currency::all();
 
     	return view('backend.pages.settings.country_city_currency', compact('countries', 'cities', 'currencies'));
 	}
@@ -53,15 +53,34 @@ class CountryCityCurrencyController extends Controller
         $image_name = Helper::insertFile($request->country_flag, 1);
 
         $country->country_flag = $image_name;
-        $country->status = 1;
+        $country->status = $request->country_status;
         $country->save();
         session(['type'=>'success', 'message'=>'Country Added successfully.']);
         return redirect()->back();
-
-    
-
-
     }
+
+    public function editCountrySubmit(Request $request)
+    {   
+        try{
+            $country = Country::findOrFail($request->country_id);
+            $country->name = $request->country_name;
+            $country->two_letter_iso_code = $request->two_letter_iso_code;
+            $country->three_letter_iso_code = $request->three_letter_iso_code;
+            $country->country_code = $request->country_code;
+            if ( isset( $request->country_flag ) ) {
+                $image_name = Helper::insertFile($request->country_flag, 1);            
+                $country->country_flag = $image_name;
+            }
+            $country->status = $request->country_status;
+            $country->save();
+        } catch (Exception $e) {
+            session(['type'=>'danger', 'message'=>'Something went wrong.']);
+            return redirect()->back();
+        }
+        session(['type'=>'success', 'message'=>'Country info updated successfully.']);
+        return redirect()->back();
+    }
+
     public function delete_country($country_id)
     {
         $country = Country::findOrFail($country_id);
@@ -86,6 +105,24 @@ class CountryCityCurrencyController extends Controller
     	session(['type'=>'success', 'message'=>'City added successfully.']);
     	return redirect()->back();
     }
+
+    public function edit_city_submit(Request $request)
+    {
+        try{
+            $city = City::findOrFail($request->city_id);
+            $city->country_id = $request->country_id;
+            $city->name = $request->city_name;
+            $city->status = $request->city_status;
+            $city->save();
+        } catch (Exception $e) {
+            Helper::alert('danger', 'Something went wrong.');
+            return redirect()->back();
+        }
+        Helper::alert('success', 'City Info updated successfully.');
+        return redirect()->back();
+
+    }
+
     public function add_currency_submit(Request $request)
     {
     	$request->validate([
@@ -101,5 +138,20 @@ class CountryCityCurrencyController extends Controller
     	session(['type'=>'success', 'message'=>'Currency added successfully.']);
     	return redirect()->back();
     	
+    }
+
+    public function edit_currency_submit(Request $request)
+    {
+        try{
+            $currency = Currency::findOrFail($request->currency_id);
+            $currency->name = $request->currency_name;
+            $currency->country_id = $request->country_id;
+            $currency->save();
+        } catch (Exception $e) {
+            Helper::alert('danger', 'Something went wrong.');
+            return redirect()->back();    
+        }
+        Helper::alert('success', 'Currency Info updated successfully.');
+        return redirect()->back();
     }
 }
