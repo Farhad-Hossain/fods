@@ -322,6 +322,7 @@
     <!--meal-deail end-->
 @endsection
 @section('custom_script')
+    
     <script src="{!! asset('frontend') !!}/assets/owlcarousel/owl.carousel.js"></script>
     <script src="{!! asset('frontend') !!}/js/custom.js"></script>
     <script src="{!! asset('frontend') !!}/js/thumbnail.slider.js"></script>

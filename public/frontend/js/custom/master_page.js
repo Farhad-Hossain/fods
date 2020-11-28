@@ -18,7 +18,9 @@ function addToCart(food_id) {
             //     $.growl.notice({ title: "Success", message: data.message });
             // } else {
             getTopCartContent();
-            alert(data.message);
+            swal({
+                text: data.message
+            });
             // $.growl.notice({ title: "Success", message: "Food Added Successfully!" });
             // }
         }

@@ -60,6 +60,9 @@ class Helper {
 
     public static function haveAccess($access_name)
     {
+        if ( $access_name == 'allowed' ) {
+            return true;
+        }
         if ( Auth::user()->role == 1 ) {
             return true;
         }

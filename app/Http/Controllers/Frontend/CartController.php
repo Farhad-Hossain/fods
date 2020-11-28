@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
+use App\Models\DiscountCoupon;
 
 use Cart;
 use Illuminate\Support\Facades\Auth;
@@ -221,5 +222,21 @@ class CartController extends Controller
         } catch (\Exception $e) {
             return "Something went wrong.";
         }
+    }
+
+    public function getAvailablePromoCode(Request $request)
+    {
+        $today = date('y-m-d');
+        $promocode = DiscountCoupon::where('promo_code',$request->promocode)
+                    ->whereColumn('selling_count', '<', 'promo_code_limit')
+                    ->where('minimum_eligible_amount', '<', $request->subTotalBill)
+                    ->where('status', '=', 1)
+                    ->get();
+        if ( $promocode->count() < 1 ) {
+            return 'not_found';
+        }
+        return response()->json([
+            'promocode'=>$promocode
+        ]);
     }
 }

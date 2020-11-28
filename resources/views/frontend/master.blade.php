@@ -33,7 +33,7 @@
 <script type="text/javascript" src="{!! asset('assets/frontend/plugins/growl-alert/javascripts/jquery.growl.js') !!}"></script>
 
 @yield('custom_script')
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
     function addToCart(food_id) {
         let extra_food = [];
@@ -55,7 +55,9 @@
                 //     $.growl.notice({ title: "Success", message: data.message });
                 // } else {
                 getTopCartContent();
-                alert(data.message);
+                swal({
+                    text: data.message
+                });
                 // $.growl.notice({ title: "Success", message: "Food Added Successfully!" });
                 // }
             }

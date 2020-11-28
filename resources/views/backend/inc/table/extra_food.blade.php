@@ -3,7 +3,9 @@
     <thead>
         <tr>
             <th>#</th>
+            <th></th>
             <th>{{ __('common.name') }}</th>
+            <th>{{ __('common.category') }}</th>
             <th>{{ __('common.restaurant') }}</th>
             <th>{{ __('common.status') }}</th>
             <th>{{ __('common.price') }}</th>
@@ -14,7 +16,15 @@
         @foreach($extra_foods as $extra_food)
         <tr>
             <th>{{ $loop->iteration }}</th>
+            <td><img src="{{ asset('uploads') }}/{{ $extra_food->photo }}" style="width: 60px; height: 50px;"></td>
             <td>{{ $extra_food->name }}</td>
+            <td>
+                @if ( $extra_food->category == 1 ) 
+                    {{ 'Vegiterian' }}
+                @elseif ( $extra_food->category == 2 ) 
+                    {{ 'Non Vegiterian' }}
+                @endif
+            </td>
             <td>{{ $extra_food->restaurant->name }}</td>
             @if( $extra_food->status == 1 )
                 <td><b class="text-success">Active</b></td>
@@ -29,6 +39,7 @@
                     '{!! $extra_food->name !!}',
                     '{!! $extra_food->category !!}',
                     '{!! $extra_food->price !!}',
+                    '{!! $extra_food->status !!}',
                 )" data-toggle="modal" data-target="#extra_food_edit_modal">
                     <i class="far fa-edit text-primary"></i>
                 </a>

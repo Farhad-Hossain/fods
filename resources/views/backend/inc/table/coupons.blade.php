@@ -37,16 +37,21 @@
                 <td>{{$coupon->promo_code_limit}}</td>
                 <td>{{$coupon->selling_count}}</td>
                 <td>{{$coupon->promo_code_limit-$coupon->selling_count}}</td>
-                <td>{{ $coupon->valid_date_from == '2020-01-01' ? 'N/A' : $coupon->valid_date_from}}</td>
+                <td>
+                    @if ( $coupon->valid_date_from == '2020-01-01' ) 
+                        <b class="bg-success text-light px-2 rounded">Always</b> 
+                    @else
+                        <b class="bg-success text-light px-2 rounded">{!! $coupon->valid_date_from !!}</b> 
+                    @endif
                 <td>
                     @if($coupon->valid_date_to < now())
                         @if ( $coupon->valid_date_to == '2020-01-01' ) 
-                            <b class="bg-danger text-light">N/A</b>    
+                            <b class="bg-success text-light px-2 rounded">Always</b>  
                         @else
-                            <b class="bg-danger text-light">{{$coupon->valid_date_to}}</b>
+                            <b class="bg-danger text-light px-2 rounded">{{$coupon->valid_date_to}}</b>
                         @endif
                     @else
-                        <b class="text-success">{{$coupon->valid_date_to}}</b>
+                        <b class="bg-success text-light px-2 rounded">{{$coupon->valid_date_to}}</b>
                     @endif
                 </td>
                 <td>

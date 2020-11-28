@@ -1,4 +1,4 @@
-<!-- Begin::Reporting -->
+<!-- Begin::menu -->
 <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
     <a href="javascript:;" class="menu-link menu-toggle">
         <span class="svg-icon menu-icon">
@@ -24,18 +24,19 @@
         <i class="menu-arrow"></i>
         <ul class="menu-subnav">
             @foreach( $submenus as $submenu )
-            <li class="menu-item" aria-haspopup="true">
-                <a href="{{ $submenu['link'] }}" class="menu-link">
-                    <i class="menu-bullet menu-bullet-dot">
-                        <span></span>
-                    </i>
-                    <span class="menu-text">{{ $submenu['text'] }}</span>
-                </a>
-            </li>            
+
+                @if ( \App\Helpers\Helper::haveAccess( $submenu['access'] ?? 1 ) ) 
+                <li class="menu-item" aria-haspopup="true">
+                    <a href="{{ $submenu['link'] }}" class="menu-link">
+                        <i class="menu-bullet menu-bullet-dot">
+                            <span></span>
+                        </i>
+                        <span class="menu-text">{{ $submenu['text'] }}</span>
+                    </a>
+                </li>      
+                @endif      
             @endforeach
         </ul>
     </div>
 </li>
-<!-- End::Reporting -->
-
-
+<!-- End::menu -->

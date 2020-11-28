@@ -114,7 +114,7 @@
 <!--end::Sticky Toolbar-->
 @yield('modals')
 
-<div class="modal fade" id="img_cutting_modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+<div class="modal" id="img_cutting_modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -147,15 +147,15 @@
       $image_crop = $('#image-preview').croppie({
         enableExif:true,
         enforceBoundary:true,    
-        showZoomer: false,
+        showZoomer: true,
         viewport:{
-          width:600,
-          height:400,
+          width:550,
+          height:350,
           type:'square'
         },
         boundary:{
-          width:700,
-          height:500,
+          width:600,
+          height:400,
         }
       });
 

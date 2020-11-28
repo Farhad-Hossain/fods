@@ -34,13 +34,20 @@ class ExtraFoodController extends Controller
 	
 	public function addExtraFoodSubmit(AddExtraFoodPostRequest $request)
 	{
+		if( $request->photo )
+		{
+		    $fileNameToStore = Helper::insertFile($request->photo, 1);
+		} else {
+			$fileNameToStore = '';
+		}
 		try{
 			$extra_food = new ExtraFood();
 			$extra_food->restaurant_id = $request->restaurant;
 			$extra_food->name = $request->name;
 			$extra_food->category = $request->category;
 			$extra_food->price = $request->price;
-			$extra_food->status = 1;
+			$extra_food->photo = $fileNameToStore ?? '';
+			$extra_food->status = $request->status;
 			$extra_food->save();
 
 			session('type', 'success');
@@ -55,10 +62,20 @@ class ExtraFoodController extends Controller
 	public function editExtraFoodSubmit(EditExtraFoodPostRequest $request)
 	{
 		$extra_food = ExtraFood::findOrFail($request->id);
+
+		if( $request->photo )
+		{
+		    $fileNameToStore = Helper::insertFile($request->photo, 1);
+		} else {
+			$fileNameToStore = $extra_food->photo ?? '';
+		}
+
         $extra_food->restaurant_id = $request->restaurant;
 		$extra_food->name = $request->name;
 		$extra_food->category = $request->category;
 		$extra_food->price = $request->price;
+		$extra_food->photo = $fileNameToStore;
+		$extra_food->status = $request->status;
 		$extra_food->save();
 
 		session('type', 'success');

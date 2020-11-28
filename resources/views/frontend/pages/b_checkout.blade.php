@@ -89,8 +89,8 @@
                                                     </a>
                                                 </div>
                                                 <div class="name">
-                                                    <a href="{!! route('frontend.food.details', $content->id) !!}" target="_BLANK"><h4>{!! $content->name !!}</h4></a>
-                                                    <a href="{!! route('frontend.restaurant.details', $content->options['restaurant_info']->id) !!}" target="_BLANK"><p>{!! $content->options['restaurant_info']->name ?? '' !!}</p></a>
+                                                    <a href="#"><h4>{!! $content->name !!}</h4></a>
+                                                    <a href="#"><p>{!! $content->options['restaurant_info']->name ?? '' !!}</p></a>
                                                     <div class="star">
                                                         <i class="fas fa-star"></i>
                                                         <i class="fas fa-star"></i>
@@ -118,7 +118,7 @@
                                             <td>
                                                 <div class="checkout-thumb">
                                                     <a href="#">
-                                                        <img src="{{ asset('uploads') }}/{{$content->photo ?? ''}}" class="img-responsive" alt="thumb" title="thumb">
+                                                        <img src="images/checkout/thumb-1.jpg" class="img-responsive" alt="thumb" title="thumb">
                                                     </a>
                                                 </div>
                                                 <div class="name">
@@ -166,7 +166,50 @@
                             </div>
                         </div>
                     </div>--}}
-                    
+                    {{--<div class="yf-location">
+                        <ul>
+                            <li><span><i class="fas fa-map-marker-alt"></i></span><ins>Your location</ins></li>
+                            <li class="circles">
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                            </li>
+                            <li><span><i class="fas fa-map-marker-alt"></i></span><ins>Food location</ins></li>
+                        </ul>
+                    </div>--}}
                     <div class="food-delivery-time">
                         <p>We will Deliver in 35 min <p>
                     </div>
@@ -194,6 +237,47 @@
                 </div>
 
                 <div class="col-lg-4 col-md-4">
+                    {{--<div class="right-address">
+                        <h4>Address</h4>
+                        <form>
+                            <div class="form-group">
+                                <input type="email" class="video-form" id="addressInput" placeholder="Enter Your Address">
+                            </div>
+                            <div class="form-group">
+                                <select class="selectpicker" tabindex="-98">
+                                    <option value="0">State</option>
+                                    <option value="1">Punjab</option>
+                                    <option value="2">Delhi</option>
+                                    <option value="3">Rajasthan</option>
+                                    <option value="4">Bihar</option>
+                                    <option value="5">Mumbai</option>
+                                    <option value="6">Goa</option>
+                                    <option value="7">Banglore</option>
+                                    <option value="8">Utarpardesh</option>
+                                    <option value="9">Jammu & Kashmir</option>
+                                    <option value="10">Himachal</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="selectpicker" tabindex="-98">
+                                    <option value="0">City</option>
+                                    <option value="1">Ludhiana</option>
+                                    <option value="2">Mohali</option>
+                                    <option value="3">Firozpur</option>
+                                    <option value="4">Bathinda</option>
+                                    <option value="5">Patiala</option>
+                                    <option value="6">Moga</option>
+                                    <option value="7">jalandhar</option>
+                                    <option value="8">Amritsar</option>
+                                    <option value="9">Hosharpur</option>
+                                    <option value="10">Khana</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="video-form" id="inputZip" placeholder="Zip Code">
+                            </div>
+                        </form>
+                    </div>--}}
                     {{--<div class="right-payment-method">
                         <h4>Payment Method</h4>
                         <div class="single-payment-method">
@@ -299,6 +383,12 @@
                     <div class="your-order">
                         <h4>Your Order</h4>
 
+                        <?php 
+                            $p_code = $content->options['promocodes'][0]->promo_code ?? '';
+                            $p_type = $content->options['promocodes'][0]->promo_type ?? 0;
+                            $p_discount = $content->options['promocodes'][0]->discount_price;
+                        ?>
+
                         <div class="order-d">
                             <div class="item-dt-left">
                                 <span>Item Total</span>
@@ -308,12 +398,22 @@
                             </div>
                         </div>
 
-                        <div class="order-d d-none" id="promocode_row">
+                        <div class="order-d">
                             <div class="item-dt-left">
-                                <span>Discount (<a href="javascript:;" id="promocode_text"></a><span id="promocode_text_percentage"></span>)</span>
+                                @if ( $p_type == 1 ) 
+                                <span>Promocode (<a href="javascript:;" id="promocode_text">{{ $p_code ?? '' }}</a>)</span>
+                                @endif
+
+                                @if ( $p_type == 2 ) 
+                                <span>Promocode (<a href="javascript:;" id="promocode_text">{{ $p_code }}</a>) 
+                                    - {{ $p_discount }}%
+                                </span>
+                                @endif
                             </div>
                             <div class="item-dt-right">
-                                <p>-<span id="promocode_value"></span></p>
+                                @if ( $p_type == 2 )
+                                <p>-<span id="promocode_value">{{ ($subTotal * $p_discount) / 100 }}</span></p>
+                                @endif
                             </div>          
                         </div>      
 
@@ -340,12 +440,8 @@
                                 <input class="coupon-input" id="promocode_field" type="text" placeholder="Enter promo code">
                                 <div class="subscribe-btn">
                                     <div class="s-n-btn">
-                                        <?php $ajaxRoute = route('frontend.promocodes') ?>
                                         <button class="promocode-btn" onclick="calculateAndChange(
-                                        '{{ $subTotal }}',
-                                        '{{ ($subTotal + $delivery_charge + $total_tax) }}',
-                                        '{{ $ajaxRoute }}'
-                                        )">Apply</button>
+                                        '{{$subTotal + $delivery_charge + $total_tax}}')">Apply</button>
                                     </div>
                                 </div>
                         </div>
@@ -354,7 +450,7 @@
                             <div class="total-bill-text">
                                 <h5>Total</h5>
                             </div>
-                            <div class="total-bill-payment">
+                            <div class="total-bill-payment text-dark">
                                 <p id="total_bill">{!! number_format(($subTotal + $delivery_charge + $total_tax), 2) !!}</p>
                             </div>
                         </div>
@@ -388,6 +484,5 @@
     <script src="{!! asset('frontend') !!}/js/thumbnail.slider.js"></script>
     <script src="{!! asset('frontend') !!}/js/bootstrap-datepicker.js"></script>
     <script src="{!! asset('frontend') !!}/js/bootstrap-select.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="{!! asset('frontend') !!}/js/custom/checkout.js"></script>
 @endsection

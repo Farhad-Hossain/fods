@@ -100,6 +100,7 @@ class CouponController extends Controller
             'applicable_for'=>'required',
             'promo_code_limit'=>'required',
             'promo_percentage_max_discount'=>'required',
+            'minimum_eligible_amount'=>'required',
         ]);
         try{
             $discount_coupon = new DiscountCoupon();
@@ -114,6 +115,7 @@ class CouponController extends Controller
             $discount_coupon->valid_date_to = $request->valid_to ?? '2020-01-01';
             $discount_coupon->applicable_for = $request->applicable_for;
             $discount_coupon->promo_code_limit = $request->promo_code_limit;
+            $discount_coupon->minimum_eligible_amount = $request->minimum_eligible_amount;
             $discount_coupon->promo_code_limit_per_customer = $request->promo_code_limit_per_customer;
             $discount_coupon->promo_percentage_maximum_discount = $request->promo_percentage_max_discount;
 
@@ -128,22 +130,29 @@ class CouponController extends Controller
 
     public function editCouponView($coupon_id)
     {
-        $coupon = DiscountCoupon::find($coupon_id);
+
         $country_id = GlobalSetting::first()->country;
         $cities = City::where('country_id', $country_id)->get();
+        $restaurants = Restaurant::all();
+        if ( Helper::admin() ) {
+            $foods = Food::all();
+        } 
+        if ( Helper::restaurant() ) {
+            $restIds = Restaurant::where('user_id', Auth::user()->id)->pluck('id');
+            $foods = Food::whereIn('restaurant_id', $restIds)->get();
+        }
+        $coupon = DiscountCoupon::findOrFail($coupon_id);
 
-        return view('backend.pages.coupons.edit_coupon', compact('coupon', 'cities'));
+        return view('backend.pages.coupons.edit_coupon', compact('coupon', 'cities', 'foods' ));
     }
 
     public function editCouponSubmit(Request $request)
     {
         $request->validate([
-            'area'=>'required',
             'promo_code'=>'required',
             'promo_type'=>'required',
             'discount_value'=>'required',
             'description'=>'required',
-            'valid_for'=>'required',
             'applicable_for'=>'required',
             'promo_code_limit'=>'required',
             'promo_percentage_max_discount'=>'required',

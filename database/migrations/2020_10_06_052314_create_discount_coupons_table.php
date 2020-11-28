@@ -20,9 +20,10 @@ class CreateDiscountCouponsTable extends Migration
             $table->string('promo_code');
             $table->tinyInteger('promo_type')->comment('1.Flat rate  2.Percentage');
             $table->unsignedTinyInteger('discount_price');
-            $table->date('valid_date')->nullable();
+            $table->unsignedTinyInteger('valid_time')->nullable()->comment('1:always, 2:Custom Date');
             $table->unsignedTinyInteger('applicable_for')->comment('1.All users 2.New Users');
             $table->unsignedTinyInteger('promo_code_limit');
+            $table->unsignedInteger('minimum_eligible_amount');
             $table->unsignedTinyInteger('promo_code_limit_per_customer');
             $table->unsignedTinyInteger('promo_percentage_maximum_discount');
             $table->smallText('description')->nullable();

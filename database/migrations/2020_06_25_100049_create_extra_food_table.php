@@ -18,6 +18,7 @@ class CreateExtraFoodTable extends Migration
             $table->string('category')->comment('1.Vegeterian 2.Non-vegeterian');
             $table->string('name');
             $table->integer('price');
+            $table->string('photo')->nullable();
             $table->tinyInteger('status')->comment('1. Active 0.Inactive');
             $table->timestamps();
         });

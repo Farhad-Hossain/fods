@@ -143,6 +143,11 @@ Route::group(['namespace'=>'Frontend', 'as'=>'frontend.'], function() {
         Route::get('remove/{restaurant_id}', 'FoodController@removeRestaurantFromFavourite')->name('removeRestaurant');
     });
 
+    Route::get('get-available-promocode/', [
+        'uses'=>'CartController@getAvailablePromoCode',
+        'as'=>'promocodes',
+    ]);
+
     /*
      * End:: Cart Route
      * */

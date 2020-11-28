@@ -1,4 +1,4 @@
-<form action="{{route('backend.settings.add_coupon_submit')}}" method="POST">
+<form action="{{route('backend.settings.edit_coupon_submit')}}" method="POST">
     @csrf
     <div class="row">
         <div class="col-sm-12 col-md-4 form-group">
@@ -6,7 +6,7 @@
           <select multiple="" class="form-control selectpicker" required data-size="7" data-live-search="true" name="area_cities[]" required>
               <option value="all_city">-All Cities-</option>
               @foreach($cities as $city)
-                      <option value="{{ $city->id }}">{{ $city->name }}</option>
+                      <option value="{{ $city->id }}" {{ strpos($coupon->city_id, ''.$city->id) ? 'selected' : '' }}>{{ $city->name }}</option>
               @endforeach
           </select>
         </div>
@@ -35,60 +35,60 @@
 
         <div class="col-sm-12 col-md-4 form-group">
             <label>Promo code setup*</label>
-            <input type="text" name="promo_code" class="form-control" placeholder="Please enter promo code" required value="{{old('promo_code')}}">
+            <input type="text" name="promo_code" class="form-control" placeholder="Please enter promo code" required value="{{ $coupon->promo_code }}">
         </div>
         <div class="col-sm-12 col-md-4 form-group">
             <label>Promo type*</label>
             <select class="form-control" name="promo_type" required>
-                <option value="1">Flat Rate</option>
-                <option value="2">Percentage</option>
+                <option value="1" {!! $coupon->promo_type == 1 ? 'selected' : '' !!}>Flat Rate</option>
+                <option value="2" {!! $coupon->promo_type == 2 ? 'selected' : '' !!}>Percentage</option>
             </select>
         </div>
         
         <div class="col-sm-12 col-md-4 form-group">
             <label>Discount*</label>
-            <input type="number" class="form-control" name="discount_value" placeholder="Please enter discount value" required step=".5" min="0" max="1000" value="{{old('discount_value')}}">
+            <input type="number" class="form-control" name="discount_value" placeholder="Please enter discount value" required step=".5" min="0" max="1000" value="{!! $coupon->discount_price !!}">
         </div>
 
 
         <div class="form-group col-sm-12 col-md-4">
             <label>Appliable For*</label>
             <select class="form-control" name="applicable_for" required>
-                <option value="1">All Users</option>
-                <option value="2">New Users</option>
+                <option value="1" {!! $coupon->applicable_for == 1 ? 'selected' : '' !!}>All Users</option>
+                <option value="2" {!! $coupon->applicable_for == 2 ? 'selected' : '' !!}>New Users</option>
             </select>
         </div>
 
         <div class="form-group col-sm-12 col-md-4">
             <label>Promo code limit*</label>
-            <input type="number" name="promo_code_limit" class="form-control" min="0" max="1000" value="{{old('promo_code_limit')}}" required>
+            <input type="number" name="promo_code_limit" class="form-control" min="0" max="1000" value="{!! $coupon->promo_code_limit !!}" required>
         </div>
 
         <div class="form-group col-sm-12 col-md-8">
             <label>Minimum Eligible Amount*</label>
-            <input type="number" name="minimum_eligible_amount" class="form-control" min="1" value="{{old('minimum_eligible_amount')}}" required>
+            <input type="number" name="minimum_eligible_amount" class="form-control" min="1" value="{!! $coupon->minimum_eligible_amount ?? '' !!}" required>
         </div>
     </div>
     
     <div class="row">
         <div class="form-group col-sm-12 col-md-4">
             <label>Promo code limit per customer</label>
-            <input type="number" name="promo_code_limit_per_customer" class="form-control" min="0" max="1000" value="{{old('promo_code_limit_per_customer')}}">
+            <input type="number" name="promo_code_limit_per_customer" class="form-control" min="0" max="1000" value="{!! $coupon->promo_code_limit_per_customer !!}">
         </div>
         
         <div class="form-group col-sm-12 col-md-4">
             <label>Promo percentage maximum discount*</label>
-            <input type="number" name="promo_percentage_max_discount" class="form-control" value="{{old('promo_percentage_max_discount')}}">
+            <input type="number" name="promo_percentage_max_discount" class="form-control" value="{!! $coupon->promo_percentage_maximum_discount !!}">
         </div>
 
         <div class="form-group col-sm-12 col-md-4">
             <label>Valid for</label>
             <div class="radio-inline">
               <label class="radio">
-              <input type="radio" name="valid_for" value="1" selected />Always
+              <input type="radio" name="valid_time" value="1" {{ $coupon->valid_time == 1 ? 'checked' : '' }} />Always
               <span></span></label>
               <label class="radio">
-              <input type="radio" name="valid_for" value="2" />Custom date
+              <input type="radio" name="valid_time" value="2" {{ $coupon->valid_time == 2 ? 'checked' : '' }}/>Custom date
               <span></span></label>
             </div>
             @error('valid_for')
@@ -100,18 +100,18 @@
             <div class="row">
                 <div class="form-group col-sm-12 col-md-5">
                     <label>Valid From</label>
-                    <input type="date" name="valid_from" class="form-control" value="{{ old('valid_from') }}">
+                    <input type="date" name="valid_from" class="form-control" value="{{ $coupon->valid_date_from }}">
                 </div>
                 <div class="form-group col-sm-12 col-md-5">
                     <label>Valid Till</label>
-                    <input type="date" name="valid_to" class="form-control" value="{{ old('valid_to') }}">
+                    <input type="date" name="valid_to" class="form-control" value="{!! $coupon->valid_date_to !!}">
                 </div>
             </div>
         </div>
 
         <div class="col-sm-12 col-md-12">
             <label>Description*</label>
-            <textarea class="form-control" name="description" required value="{{ old('description') }}"></textarea>
+            <textarea class="form-control" name="description" required>{!! $coupon->description !!}</textarea>
         </div>
 
     </div>

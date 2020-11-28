@@ -21,7 +21,9 @@ $(document).ready(function () {
             }
         });
         if ( ajaxUrl == '0' ){
-            alert('Need to Login first.Thank you.');
+            swal({
+                text: "Please, Login and try again !"
+            });
         } else {
             $.ajax({
                type:'GET',

@@ -156,7 +156,7 @@
                         <div class="top">
                             <a href="{!! route('frontend.food.details', $food->id) !!}"><div class="bg-gradient"></div></a>
                             <div class="top-img">
-                                <img src="{!! asset('uploads') !!}/{!! $food->image1 !!}" alt="" style="width: 100%; min-height: 185px;">
+                                <img src="{!! asset('uploads') !!}/{!! $food->image1 !!}" alt="" style="width: 100%; min-height: 185px; max-height: 185px;">
                             </div>
                             <div class="logo-img">
                                 <img src="{!! asset('uploads') !!}/{!! $food->restaurant->logo !!}" alt="" style="width: 70px; height: 70px;">
@@ -164,7 +164,8 @@
                             <div class="top-text">
                                 <div class="heading"><h4><a href="{!! route('frontend.food.details', $food->id) !!}">{!! $food->food_name !!}</a></h4></div>
                                 <div class="sub-heading">
-                                    <h5><a href="{!! route('frontend.food.details', $food->id) !!}">{!! $food->restaurant->name !!}</a></h5>
+                                    <h5><a href="{!! route('frontend.food.details', $food->id) !!}">{!! 
+                                        substr($food->restaurant->name, 0, 8) !!}</a></h5>
                                     <p>${!! $food->price !!}</p>
                                 </div>
                             </div>

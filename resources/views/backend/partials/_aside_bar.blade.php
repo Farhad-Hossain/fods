@@ -59,323 +59,115 @@
                     </a>
                 </li>
                 <!-- End Dashboard -->
-                <!-- Begin::User Management -->
-                <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                    <a href="javascript:;" class="menu-link menu-toggle">
-                        <span class="svg-icon menu-icon">
-                            <!--begin::Svg Icon | path:assets/media/svg/icons/Layout/Layout-4-blocks.svg-->
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
-                                 viewBox="0 0 24 24" version="1.1">
-                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <rect x="0" y="0" width="24" height="24"/>
-                                    <rect fill="#000000" x="4" y="4" width="7" height="7" rx="1.5"/>
-                                    <path d="M5.5,13 L9.5,13 C10.3284271,13 11,13.6715729 11,14.5 L11,18.5 C11,19.3284271 10.3284271,20 9.5,20 L5.5,20 C4.67157288,20 4,19.3284271 4,18.5 L4,14.5 C4,13.6715729 4.67157288,13 5.5,13 Z M14.5,4 L18.5,4 C19.3284271,4 20,4.67157288 20,5.5 L20,9.5 C20,10.3284271 19.3284271,11 18.5,11 L14.5,11 C13.6715729,11 13,10.3284271 13,9.5 L13,5.5 C13,4.67157288 13.6715729,4 14.5,4 Z M14.5,13 L18.5,13 C19.3284271,13 20,13.6715729 20,14.5 L20,18.5 C20,19.3284271 19.3284271,20 18.5,20 L14.5,20 C13.6715729,20 13,19.3284271 13,18.5 L13,14.5 C13,13.6715729 13.6715729,13 14.5,13 Z"
-                                          fill="#000000" opacity="0.3"/>
-                                </g>
-                            </svg>
-                            <!--end::Svg Icon-->
-                        </span>
-                        <span class="menu-text">
-                            {!! __('backend_menus.user_management') !!}
-                        </span>
-                        <i class="menu-arrow"></i>
-                    </a>
-                    <div class="menu-submenu">
-                        <i class="menu-arrow"></i>
-                        <ul class="menu-subnav">
-                            @if(strpos( Auth::user()->admin->role(), 'user_view' ) )
-                            <li class="menu-item" aria-haspopup="true">
-                                <a href="{!! route('backend.users.list') !!}" class="menu-link">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">{!! __('backend_menus.users') !!}</span>
-                                </a>
-                            </li>
-                            @endif
-
-                            <li class="menu-item" aria-haspopup="true">
-                                <a href="{{route('backend.users.roles.lists')}}" class="menu-link">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">{{ __('backend_menus.role_and_permissions') }}</span>
-                                </a>
-                            </li>
-                            
-                        </ul>
-                    </div>
-                </li>
-                <!-- End::User management -->
-
+                
+                <!-- Begin::user management -->
+                @include('backend.inc.menu_list', array(
+                    'menu'=>__('backend_menus.user_management'),
+                    'submenus'=>[
+                        [
+                            'link'=>route('backend.users.list'), 
+                            'text'=>__('backend_menus.users'),
+                            'access'=>'user_view',
+                        ],
+                        [
+                            'link'=>route('backend.users.roles.lists'),
+                            'text'=>__('backend_menus.role_and_permissions'),
+                            'access'=>'role',
+                        ]
+                ]))
                 <!-- Begin::Restuarant Management -->
-                
-                <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                    <a href="javascript:;" class="menu-link menu-toggle">
-                        <span class="svg-icon menu-icon">
-                            <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Barcode-read.svg-->
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
-                                 viewBox="0 0 24 24" version="1.1">
-                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <rect x="0" y="0" width="24" height="24"/>
-                                    <rect fill="#000000" opacity="0.3" x="4" y="4" width="8"
-                                          height="16"/>
-                                    <path d="M6,18 L9,18 C9.66666667,18.1143819 10,18.4477153 10,19 C10,19.5522847 9.66666667,19.8856181 9,20 L4,20 L4,15 C4,14.3333333 4.33333333,14 5,14 C5.66666667,14 6,14.3333333 6,15 L6,18 Z M18,18 L18,15 C18.1143819,14.3333333 18.4477153,14 19,14 C19.5522847,14 19.8856181,14.3333333 20,15 L20,20 L15,20 C14.3333333,20 14,19.6666667 14,19 C14,18.3333333 14.3333333,18 15,18 L18,18 Z M18,6 L15,6 C14.3333333,5.88561808 14,5.55228475 14,5 C14,4.44771525 14.3333333,4.11438192 15,4 L20,4 L20,9 C20,9.66666667 19.6666667,10 19,10 C18.3333333,10 18,9.66666667 18,9 L18,6 Z M6,6 L6,9 C5.88561808,9.66666667 5.55228475,10 5,10 C4.44771525,10 4.11438192,9.66666667 4,9 L4,4 L9,4 C9.66666667,4 10,4.33333333 10,5 C10,5.66666667 9.66666667,6 9,6 L6,6 Z"
-                                          fill="#000000" fill-rule="nonzero"/>
-                                </g>
-                            </svg>
-                            <!--end::Svg Icon-->
-                        </span>
-                        <span class="menu-text">{!! __('backend_menus.restaurant_management') !!}</span>
-                        <i class="menu-arrow"></i>
-                    </a>
-                    <div class="menu-submenu">
-                        <i class="menu-arrow"></i>
-                        <ul class="menu-subnav">
-                            <li class="menu-item menu-item-parent" aria-haspopup="true">
-                                <span class="menu-link">
-                                    <span class="menu-text">{!! __('backend_menus.restaurant_management') !!}</span>
-                                </span>
-                            </li>
-                            @if(strpos(Auth::user()->admin->role(), 'rest_add') )
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                <a href="{{ route('backend.restaurant.list') }}" class="menu-link menu-toggle">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">{!! __('backend_menus.restaurant') !!}</span>
-                                </a>
-                            </li>
-                            @endif
-
-                            @if(strpos(Auth::user()->admin->role(), 'rest_sales_transaction_view') )
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                <a href="{!! route('backend.restaurant.transactions') !!}" class="menu-link menu-toggle">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">{!! __('backend_menus.payment_transaction') !!}</span>
-                                </a>
-                            </li>
-                            @endif
-
-                            @if(strpos(Auth::user()->admin->role(), 'rest_payout_add'))
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                <a href="{!! route('backend.restaurant.payment.make_a_payment') !!}" class="menu-link menu-toggle">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">{!! __('backend_menus.payout') !!} </span>
-                                </a>
-                            </li>
-                            
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                <a href="{!! route('backend.restaurant.payout_requests') !!}" class="menu-link menu-toggle">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">{{ __('backend_menus.payout_requests') }}</span>
-                                </a>
-                            </li>
-                            @endif
-
-            
-                            @if( strpos(Auth::user()->admin->role(), 'rest_payout_request_view') )
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                <a href="{!! route('backend.restaurant.rating_and_reviews') !!}" class="menu-link menu-toggle">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">{!! __('backend_menus.rating_and_reviews') !!}</span>
-                                </a>
-                            </li>
-                            @endif
-                            @if(strpos( Auth::user()->admin->role(), 'rest_tags_view' ) )
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                <a href="{{ route('backend.restaurant.tags.list') }}" class="menu-link menu-toggle">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">{!! __('backend_menus.tags') !!}</span>
-                                </a>
-                            </li>
-                            @endif
-                            @if(strpos( Auth::user()->admin->role(), 'rest_favourite_view' ) )
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                <a href="{{ route('backend.restaurant.favorites') }}" class="menu-link menu-toggle">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">{{ __('backend_menus.restaurant_favourite') }}s</span>
-                                </a>
-                            </li>
-                            @endif
-                        </ul>
-                    </div>
-                </li>
-                
-                <!-- End::Restuarant Management -->
+                @include('backend.inc.menu_list', array(
+                    'menu'=>__('backend_menus.restaurant_management'),
+                    'submenus'=>[
+                        [
+                            'link'=>route('backend.restaurant.list'), 
+                            'text'=>__('backend_menus.restaurant'),
+                            'access'=>'rest_add',
+                        ], 
+                        [
+                            'link'=>route('backend.restaurant.transactions'),
+                            'text'=>__('backend_menus.payment_transaction'),
+                            'access'=>'rest_sales_transaction_view',
+                        ],
+                        [
+                            'link'=>route('backend.restaurant.payment.make_a_payment'),
+                            'text'=>__('backend_menus.payout'),
+                            'access'=>'rest_payout_add',
+                        ],
+                        [
+                            'link'=>route('backend.restaurant.payout_requests'),
+                            'text'=>__('backend_menus.payout_requests'),
+                            'access'=>'rest_payout_add',
+                        ],
+                        [
+                            'link'=>route('backend.restaurant.rating_and_reviews'),
+                            'text'=>__('backend_menus.rating_and_reviews'),
+                            'access'=>'rest_payout_request_view',
+                        ],
+                        [
+                            'link'=>route('backend.restaurant.tags.list'),
+                            'text'=>__('backend_menus.tags'),
+                            'access'=>'rest_tags_view',
+                        ],
+                        [
+                            'link'=>route('backend.restaurant.favorites'),
+                            'text'=>__('backend_menus.restaurant_favourite'),
+                            'access'=>'rest_favourite_view',
+                        ]
+                ]))
                 <!-- Begin::Food Management -->
-                <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                    <a href="javascript:;" class="menu-link menu-toggle">
-                        <span class="svg-icon menu-icon">
-                            <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Bucket.svg-->
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
-                                 viewBox="0 0 24 24" version="1.1">
-                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <rect x="0" y="0" width="24" height="24"/>
-                                    <path d="M5,5 L5,15 C5,15.5948613 5.25970314,16.1290656 5.6719139,16.4954176 C5.71978107,16.5379595 5.76682388,16.5788906 5.81365532,16.6178662 C5.82524933,16.6294602 15,7.45470952 15,7.45470952 C15,6.9962515 15,6.17801499 15,5 L5,5 Z M5,3 L15,3 C16.1045695,3 17,3.8954305 17,5 L17,15 C17,17.209139 15.209139,19 13,19 L7,19 C4.790861,19 3,17.209139 3,15 L3,5 C3,3.8954305 3.8954305,3 5,3 Z"
-                                          fill="#000000" fill-rule="nonzero"
-                                          transform="translate(10.000000, 11.000000) rotate(-315.000000) translate(-10.000000, -11.000000)"/>
-                                    <path d="M20,22 C21.6568542,22 23,20.6568542 23,19 C23,17.8954305 22,16.2287638 20,14 C18,16.2287638 17,17.8954305 17,19 C17,20.6568542 18.3431458,22 20,22 Z"
-                                          fill="#000000" opacity="0.3"/>
-                                </g>
-                            </svg>
-                            <!--end::Svg Icon-->
-                        </span>
-                        <span class="menu-text">{!! __('backend_menus.food_management') !!}</span>
-                        <i class="menu-arrow"></i>
-                    </a>
-                    <div class="menu-submenu">
-                        <i class="menu-arrow"></i>
-                        <ul class="menu-subnav">
-                            @if(strpos(Auth::user()->admin->role(), 'food_category_view') )
-                            <li class="menu-item" aria-haspopup="true">
-                                <a href="{!! route('backend.food.category.list') !!}" class="menu-link">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">{!! __('backend_menus.food_category') !!}</span>
-                                </a>
-                            </li>
-                            @endif
-                            @if(strpos(Auth::user()->admin->role(), 'food_view') )
-                            <li class="menu-item" aria-haspopup="true">
-                                <a href="{!! route('backend.food.list') !!}" class="menu-link">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">{!! __('backend_menus.food') !!}</span>
-                                </a>
-                            </li>
-                            @endif
-                            @if(strpos(Auth::user()->admin->role(), 'cuisine_view') )
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                <a href="{{ route('backend.food.cuisines.list') }}" class="menu-link menu-toggle">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">{!! __('backend_menus.cuisines') !!}</span>
-                                </a>
-                            </li>
-                            @endif
-    <!-- 
-                            <li class="menu-item" aria-haspopup="true">
-                                <a href="{!! route('backend.food.extra_food.list') !!}" class="menu-link">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">{!! __('backend_menus.groups_extra_foods') !!}</span>
-                                </a>
-                            </li>
-     -->
-                            @if(strpos(Auth::user()->admin->role(), 'extra_food_view') )
-                            <li class="menu-item" aria-haspopup="true">
-                                <a href="{!! route('backend.food.extra_food.list') !!}" class="menu-link">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">{!! __('backend_menus.extra_foods') !!}</span>
-                                </a>
-                            </li>
-                            @endif
-    
-                            
-                            <li class="menu-item" aria-haspopup="true">
-                                <a href="{!! route('backend.food.rating_reviews') !!}" class="menu-link">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">{!! __('backend_menus.rating_and_reviews') !!}</span>
-                                </a>
-                            </li>
-                            
-                        </ul>
-                    </div>
-                </li>
-                <!-- End::Food Management -->
+                @include('backend.inc.menu_list', array(
+                    'menu'=>__('backend_menus.food_management'),
+                    'submenus'=>[
+                        [
+                            'link'=>route('backend.food.category.list'),
+                            'text'=>__('backend_menus.food_category'),
+                            'access'=>'food_category_view',
+                        ],
+                        [
+                            'link'=>route('backend.food.list'),
+                            'text'=>__('backend_menus.food'),
+                            'access'=>'food_view',
+                        ],
+                        [
+                            'link'=>route('backend.food.cuisines.list'),
+                            'text'=>__('backend_menus.cuisines'),
+                            'access'=>'cuisine_view',
+                        ],
+                        [
+                            'link'=>route('backend.food.extra_food.list'),
+                            'text'=>__('backend_menus.extra_foods'),
+                            'access'=>'extra_food_view',
+                        ],
+                        [
+                            'link'=>route('backend.food.rating_reviews'),
+                            'text'=>__('backend_menus.rating_and_reviews'),
+                            'access'=>'allowed',
+                        ],
+                    ]
+                ))
                 <!-- Begin::Order Management -->
-                
-                <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                    <a href="javascript:;" class="menu-link menu-toggle">
-                        <span class="svg-icon menu-icon">
-                            <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
-                                 viewBox="0 0 24 24" version="1.1">
-                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <rect x="0" y="0" width="24" height="24"/>
-                                    <path d="M7,3 L17,3 C19.209139,3 21,4.790861 21,7 C21,9.209139 19.209139,11 17,11 L7,11 C4.790861,11 3,9.209139 3,7 C3,4.790861 4.790861,3 7,3 Z M7,9 C8.1045695,9 9,8.1045695 9,7 C9,5.8954305 8.1045695,5 7,5 C5.8954305,5 5,5.8954305 5,7 C5,8.1045695 5.8954305,9 7,9 Z"
-                                          fill="#000000"/>
-                                    <path d="M7,13 L17,13 C19.209139,13 21,14.790861 21,17 C21,19.209139 19.209139,21 17,21 L7,21 C4.790861,21 3,19.209139 3,17 C3,14.790861 4.790861,13 7,13 Z M17,19 C18.1045695,19 19,18.1045695 19,17 C19,15.8954305 18.1045695,15 17,15 C15.8954305,15 15,15.8954305 15,17 C15,18.1045695 15.8954305,19 17,19 Z"
-                                          fill="#000000" opacity="0.3"/>
-                                </g>
-                            </svg>
-                            <!--end::Svg Icon-->
-                        </span>
-                        <span class="menu-text">{!! __('backend_menus.order_management') !!}</span>
-                        <i class="menu-arrow"></i>
-                    </a>
-                    <div class="menu-submenu">
-                        <i class="menu-arrow"></i>
-                        <ul class="menu-subnav">
-                            <li class="menu-item menu-item-parent" aria-haspopup="true">
-                                <span class="menu-link">
-                                    <span class="menu-text">{!! __('backend_menus.order_management') !!}</span>
-                                </span>
-                            </li>
-                            @if(strpos(Auth::user()->admin->role(), 'order_view') )
-                            <li class="menu-item" aria-haspopup="true">
-                                <a href="{!! route('backend.order.list') !!}" class="menu-link">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">{!! __('backend_menus.order') !!} </span>
-                                </a>
-                            </li>
-                            @endif
-
-                            @if(strpos(Auth::user()->admin->role(), 'delivery_address_view') )
-                            <li class="menu-item" aria-haspopup="true">
-                                <a href="{!! route('backend.order.addresses') !!}" class="menu-link">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">{!! __('backend_menus.delivery_address') !!}</span>
-                                </a>
-                            </li>
-                            @endif
-
-                            @if(strpos(Auth::user()->admin->role(), 'order_status_view') )
-                            <li class="menu-item" aria-haspopup="true">
-                                <a href="{!! route('backend.order.status_list') !!}" class="menu-link">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">{!! __('backend_menus.order_status') !!}</span>
-                                </a>
-                            </li>
-                            @endif
-                            
-                        </ul>
-                    </div>
-                </li>
-                <!-- End Order Management -->
+                @include('backend.inc.menu_list', array(
+                    'menu'=>__('backend_menus.order_management'),
+                    'submenus'=>[
+                        [
+                            'link'=>route('backend.order.list'),
+                            'text'=>__('backend_menus.order'),
+                            'access'=>'order_view'
+                        ],
+                        [
+                            'link'=>route('backend.order.addresses'),
+                            'text'=>__('backend_menus.delivery_address'),
+                            'access'=>'delivery_address_view',
+                        ],
+                        [
+                            'link'=>route('backend.order.status_list'),
+                            'text'=>__('backend_menus.order_status'),
+                            'access'=>'order_status_view',
+                        ],
+                    ],
+                ))
                 <!-- Begin::Delivery Management -->
-
                 <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                     <a href="javascript:;" class="menu-link menu-toggle">
                         <span class="svg-icon menu-icon">
