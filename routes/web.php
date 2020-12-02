@@ -86,6 +86,14 @@ Route::group(['namespace'=>'Frontend', 'as'=>'frontend.'], function() {
             'uses'=>'FoodController@searchByCategory',
             'as'=>'searchByCategory',
         ]);
+        Route::post('add-comment', [
+            'uses'=>'FoodController@addCommentSubmit',
+            'as'=>'add_comment',
+        ]);
+        Route::post('add-comment-reply', [
+            'uses'=>'FoodController@addCommentReplySubmit',
+            'as'=>'add_comment_reply'
+        ]);
     });
     // Restaurant Details
     Route::group(['prefix'=>'restaurant','as'=>'restaurant.'], function(){
@@ -111,6 +119,10 @@ Route::group(['namespace'=>'Frontend', 'as'=>'frontend.'], function() {
         Route::post('removeContent', [
             'as' => 'removeContent',
             'uses' => 'CartController@removeCartContent'
+        ]);
+        Route::post('set-content-to-modal', [
+            'as'=>'setCartContentToModal',
+            'uses'=>'CartController@setCartContentToModal',
         ]);
         Route::group(['middleware' => 'auth'], function () {
             Route::get('checkout', [

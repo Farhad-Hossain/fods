@@ -121,3 +121,30 @@
         </div>
     </div>
 </footer>
+
+<div class="modal" id="cartContentModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+                <p class="text-center">Your Busket</p>
+            </div>
+
+            <div class="modal-body" id="c_contents">
+                
+            </div>
+            
+            <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Continue Shoping</button>
+                <a href="{!! route('frontend.cart.checkout') !!}">
+                    <button class="btn btn-primary m-0">View Checkout</button>
+                </a>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+

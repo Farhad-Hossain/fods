@@ -101,13 +101,11 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="td-content" colspan="2">
-                                                {!! $content->qty !!}
-                                            </td>
+                                            <td class="td-content" colspan="2">{!! $content->qty !!}</td>
                                             <td class="td-content">{!! $content->price !!}</td>
                                             <td class="td-content">{!! $content->price * $content->qty !!}</td>
                                             <td><button class="remove-btn" onclick="removeContent(
-                                            '{!! $content->id !!}')">Remove</button></td>
+                                            {!! $content->id !!}, false)">Remove</button></td>
                                         </tr>
                                         @php($subTotal += ($content->price * $content->qty))
                                     @endforeach
@@ -118,12 +116,11 @@
                                             <td>
                                                 <div class="checkout-thumb">
                                                     <a href="#">
-                                                        <img src="{{ asset('uploads') }}/{{$content->photo ?? ''}}" class="img-responsive" alt="thumb" title="thumb">
+                                                        <img src="{{ asset('uploads') }}/{{$content->options['extra_food_info']->photo ?? ''}}" class="img-responsive" alt="thumb" title="thumb">
                                                     </a>
                                                 </div>
                                                 <div class="name">
                                                     <a href="#"><h4>{!! $content->name !!}</h4></a>
-                                                    <a href="#"><p>Restaurant Name</p></a>
                                                     <div class="star">
                                                         <i class="fas fa-star"></i>
                                                         <i class="fas fa-star"></i>
@@ -134,7 +131,7 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="td-content">{!! $content->qty !!}</td>
+                                            <td class="td-content" colspan="2">{!! $content->qty !!}</td>
                                             <td class="td-content">{!! $content->price !!}</td>
                                             <td class="td-content">{!! $content->price * $content->qty !!}</td>
                                             <td><button class="remove-btn" onclick="removeContent({!! $content->id !!}, true)">Remove</button></td>

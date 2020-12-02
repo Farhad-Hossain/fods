@@ -1,12 +1,13 @@
 <form action="{{route('backend.settings.edit_coupon_submit')}}" method="POST">
     @csrf
     <div class="row">
+        <input type="hidden" name="coupon_id" value="{!! $coupon->id !!}">
         <div class="col-sm-12 col-md-4 form-group">
           <label>Area*</label>  
           <select multiple="" class="form-control selectpicker" required data-size="7" data-live-search="true" name="area_cities[]" required>
               <option value="all_city">-All Cities-</option>
               @foreach($cities as $city)
-                      <option value="{{ $city->id }}" {{ strpos($coupon->city_id, ''.$city->id) ? 'selected' : '' }}>{{ $city->name }}</option>
+                      <option value="{{ $city->id }}" {!! in_array($city->id, $c_ctitis_arr) ? 'selected' : '' !!}>{{ $city->name }}</option>
               @endforeach
           </select>
         </div>
@@ -28,7 +29,7 @@
           <select multiple="" class="form-control selectpicker" required data-size="7" data-live-search="true" name="foods[]" required>
               <option value="all_foods">-All Foods-</option>
               @foreach($foods as $food)
-                      <option value="{{ $food->id }}">{{ $food->food_name }}</option>
+                      <option value="{{ $food->id }}" {!! in_array($food->id, $c_foods_arr) ? 'selected' : ''  !!} >{{ $food->food_name }}</option>
               @endforeach
           </select>
         </div>        
@@ -61,19 +62,24 @@
 
         <div class="form-group col-sm-12 col-md-4">
             <label>Promo code limit*</label>
-            <input type="number" name="promo_code_limit" class="form-control" min="0" max="1000" value="{!! $coupon->promo_code_limit !!}" required>
+            <input type="number" name="promo_code_limit" class="form-control" min="1" value="{!! $coupon->promo_code_limit !!}" required>
         </div>
 
-        <div class="form-group col-sm-12 col-md-8">
+        <div class="form-group col-sm-12 col-md-4">
             <label>Minimum Eligible Amount*</label>
             <input type="number" name="minimum_eligible_amount" class="form-control" min="1" value="{!! $coupon->minimum_eligible_amount ?? '' !!}" required>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-4">
+            <label>Maximum discount per order*</label>
+            <input type="number" name="max_discount_per_order" class="form-control" min="1" value="{!! $coupon->max_discount_per_order !!}" placeholder="Maximum allowed discount for order" required>
         </div>
     </div>
     
     <div class="row">
         <div class="form-group col-sm-12 col-md-4">
             <label>Promo code limit per customer</label>
-            <input type="number" name="promo_code_limit_per_customer" class="form-control" min="0" max="1000" value="{!! $coupon->promo_code_limit_per_customer !!}">
+            <input type="number" name="promo_code_limit_per_customer" class="form-control" min="1" max="{!! $coupon->promo_code_limit !!}" value="{!! $coupon->promo_code_limit_per_customer !!}">
         </div>
         
         <div class="form-group col-sm-12 col-md-4">
@@ -100,11 +106,11 @@
             <div class="row">
                 <div class="form-group col-sm-12 col-md-5">
                     <label>Valid From</label>
-                    <input type="date" name="valid_from" class="form-control" value="{{ $coupon->valid_date_from }}">
+                    <input type="date" name="valid_from" class="form-control" value="{!! $coupon->valid_time == 1 ? $coupon->valid_date_from : '' !!}">
                 </div>
                 <div class="form-group col-sm-12 col-md-5">
                     <label>Valid Till</label>
-                    <input type="date" name="valid_to" class="form-control" value="{!! $coupon->valid_date_to !!}">
+                    <input type="date" name="valid_to" class="form-control" value="{!! $coupon->valid_time == 1 ? $coupon->valid_date_to : '' !!}">
                 </div>
             </div>
         </div>
@@ -113,12 +119,13 @@
             <label>Description*</label>
             <textarea class="form-control" name="description" required>{!! $coupon->description !!}</textarea>
         </div>
+        <br />
 
     </div>
 
     <div class="row">
       <div class="form-group col-sm-12 col-md-4 mt-2">
-          <button type="submit" class="btn btn-primary">Create Coupon</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
       </div>
     </div>
 </form>

@@ -11,6 +11,7 @@
             <th>Available</th>
             <th>Valid From</th>
             <th>Valid Till</th>
+            <th>Created at</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -24,7 +25,7 @@
                     @if($coupon->promo_type==1)
                         <b class="text-primary">(Flate rate)</b>
                     @else
-                        <b class="text-primary">(In percentage)</b>
+                        <b class="text-primary">(Percentage)</b>
                     @endif
                 </td>
                 <td>
@@ -54,6 +55,7 @@
                         <b class="bg-success text-light px-2 rounded">{{$coupon->valid_date_to}}</b>
                     @endif
                 </td>
+                <td>{!! $coupon->created_at !!}</td>
                 <td>
                     <a href="{{route('backend.settings.edit_coupon_view', $coupon->id)}}" class="text-primary mr-2">
                         <i class="far fa-edit text-primary"></i>

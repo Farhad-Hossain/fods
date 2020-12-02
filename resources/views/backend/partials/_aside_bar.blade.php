@@ -276,7 +276,7 @@
                 </li>
                 <!-- End::customer -->
                 <!-- Begin::Payment Gateway -->
-                {{--
+                
                 <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                     <a href="javascript:;" class="menu-link menu-toggle">
                         <span class="svg-icon menu-icon">
@@ -494,7 +494,7 @@
                     </a>
                 </li>
                 <!-- End::Favourite -->
-                --}}
+                
                 <!-- Begin::Coupon -->
                 <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                     <a href="javascript:;" class="menu-link menu-toggle">

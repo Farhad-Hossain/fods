@@ -28,5 +28,8 @@
     <link href="{!! asset('frontend/vendor/fontawesome-free/css/all.min.css') !!}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="{!! asset('frontend/css/custom/style.css') !!}">
 
+    <!-- Croppie style -->
+    <link href="{!! asset('backend/assets/css/plugin/croppie/croppie.css') !!}" rel="stylesheet" type="text/css" />
+
     @yield('custom_style')
 </head>

@@ -30,6 +30,7 @@ class CreateFoodTable extends Migration
             $table->decimal('weight', 10,2)->default(0)->comment('Weight of this food default unit is gramme (g)');
             $table->tinyInteger('featured')->default(0)->comment('1=featured, 0=not');
             $table->tinyInteger('deliverable_food')->default(0)->comment('1=deliverable, 0=not');
+            $table->unsignedInteger('view')->default(0)->comment('How many view');
             $table->tinyInteger('status')->default(1)->comment('1=active,0=inactive');
             $table->timestamps();
         });

@@ -129,6 +129,14 @@
                 @enderror
             </div>
             <div class="form-group col-sm-12 col-md-6">
+                <label for="weight">Delivery Time (In minutes)<span class="text-danger">*</span></label>
+                <input type="number" class="form-control" placeholder="" name="delivery_time"
+                       value="{{ old('weight') }}" min="0.0" required/>
+                @error('weight')
+                <p class="text-danger">{{ $message }}</p>
+                @enderror
+            </div>
+            <div class="form-group col-sm-12 col-md-6">
                 <label></label>
                 <div class="checkbook-inline">
                     <label class="checkbox">

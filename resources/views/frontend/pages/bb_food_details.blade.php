@@ -86,17 +86,17 @@
                     <div class="resto-meal-dt">
                         <div class="resto-detail">
                             <div class="resto-picy">
-                                <a href="{!! route('frontend.restaurant.details', $food->restaurant->id) !!}">
+                                <a href="restaurant_detail.html">
                                     <img src="{!! asset('uploads') !!}/{!! $food->restaurant->logo !!}" alt="" style="width: 70px; height: 70px;">
                                 </a>
                             </div>
                             <div class="name-location">
-                                <a href="{!! route('frontend.restaurant.details', $food->restaurant->id) !!}">
+                                <a href="{{route('frontend.restaurant.details', $food->restaurant->id)}}">
                                     <h1>
                                         {!! $food->restaurant->name !!}
                                     </h1>
                                 </a>
-                                <p><span><i class="fas fa-map-marker-alt"></i></span>{!! $food->restaurant->restCity->name !!}</p>
+                                <p><span><i class="fas fa-map-marker-alt"></i></span>{!! $food->restaurant->city !!}</p>
                             </div>
                         </div>
                         <div class="right-side-btns">
@@ -110,11 +110,10 @@
                                 </div>                                          
                             </div>
                             <div class="resto-review-stars">
-                                <?php $average_rating = intval( \App\Helpers\Helper::getRestaurantAverageRating($food->restaurant->id) ) ?>
-                                @for ($i = 0; $i < $average_rating; $i++) 
-                                    <i class="fas fa-star"></i>
-                                @endfor
-                                <span> {{ number_format ( \App\Helpers\Helper::getRestaurantAverageRating($food->restaurant->id), 1 ) }} / 5</span>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>3/5</span>
                             </div>
                         </div>
                     </div>
@@ -125,29 +124,29 @@
                         <div class="like-comments">
                             <ul>
                                 <li>
-										<span class="views" data-toggle="tooltip" data-placement="top" title="Likes">
-											<i class="fas fa-heart"></i>
-											<ins>{!! $food->favourites->count() !!}</ins>
-										</span>
+                                        <span class="views" data-toggle="tooltip" data-placement="top" title="Likes">
+                                            <i class="fas fa-heart"></i>
+                                            <ins>362</ins>
+                                        </span>
                                 </li>
                                 <li>
-										<span class="views" data-toggle="tooltip" data-placement="top" title="Comments">
-											<i class="fas fa-comment-alt"></i>
-											<ins>{!! $food->reviews->count() !!}</ins>
-										</span>
+                                        <span class="views" data-toggle="tooltip" data-placement="top" title="Comments">
+                                            <i class="fas fa-comment-alt"></i>
+                                            <ins>{!! $food->reviews->count() !!}</ins>
+                                        </span>
                                 </li>
                                 <li>
-										<span class="views" data-toggle="tooltip" data-placement="top" title="Views">
-											<i class="fas fa-eye"></i>
-											<ins>{!! $food->view !!}</ins>
-										</span>
+                                        <span class="views" data-toggle="tooltip" data-placement="top" title="Views">
+                                            <i class="fas fa-eye"></i>
+                                            <ins>5k</ins>
+                                        </span>
                                 </li>
                                 <li>
                                     <div class="btn-group social-share">
-											<span class="dropdown-toggle-no-caret views" data-toggle="dropdown"
+                                            <span class="dropdown-toggle-no-caret views" data-toggle="dropdown"
                                                   aria-haspopup="true" aria-expanded="false" role="main" title="share">
-												<i class="fas fa-share-alt"></i>
-												<ins>Share</ins></span>
+                                                <i class="fas fa-share-alt"></i>
+                                                <ins>Share</ins></span>
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <a href="#"><i class="fab fa-facebook-f"></i>Facebook</a>
                                             <a href="#"><i class="fab fa-twitter"></i>Twitter</a>
@@ -163,9 +162,6 @@
                     </div>
                     <div class="all-tabs">
                         <ul class="nav nav-tabs" role="tablist">
-                            <li class ="nav-item" role="presentation">
-                                <a href="#comments" class="nav-link active" aria-controls="comments" role="tab" data-toggle="tab">{!! $food->comments->count() !!} Comments</a>
-                            </li>
                             <li class="nav-item" role="presentation">
                                 <a href="#reviews" class="nav-link" aria-controls="reviews" role="tab"
                                    data-toggle="tab">{!! $food->reviews->count() !!} Reviews</a>
@@ -173,66 +169,7 @@
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" role="tabpanel" id="comments">
-                                <div class="comment-post">
-                                    <div class="post-items">                                        
-                                        <div class="img-dp">
-                                            <i class="fas fa-user"></i>
-                                        </div>
-                                        <form action="{!! route('frontend.food.add_comment') !!}" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="food_id" value="{!! $food->id !!}">
-                                            <input type="text" class="post-input" name="comment" placeholder="Write a comment">
-                                            <div class="m-2 p-2"></div>
-                                            <input class="submit-btn btn-link ml-4" type="submit" value="Post Comment">
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="main-comments">
-                                    @foreach ( $food->comments as $comment )
-                                    <div class="comment-1">
-                                        <div class="user-detail-heading">
-                                            <a href="user_profile_view.html"><img src="{!! asset('uploads') !!}/{!! $comment->customer->avatar !!}" alt=""></a>
-                                            <h4> {!! $comment->customer->name !!} </h4>
-                                        </div>
-                                        <div class="reply-time">
-                                            <a href="#reply-comment">Reply</a>
-                                            <p><i class="far fa-clock"></i>{!! $comment->created_at->diffForHumans(); !!} </p>
-                                        </div>
-                                        <div class="comment-description">
-                                            <p>{!! $comment->comment !!}</p>
-                                        </div>
-                                    </div>
-
-                                    @foreach ( $comment->replies as $reply ) 
-                                    <div class="reply-1 ">
-                                        <div class="user-detail-heading ml-4">
-                                            <a href="user_profile_view.html"><img src="{!! asset('uploads') !!}/{!! $reply->user->avatar !!}" alt=""></a>
-                                            <h4> {!! $reply->user->name !!} </h4>
-                                        </div>
-                                        <div class="reply-time">                                
-                                            <p><i class="far fa-clock"></i>{!! $reply->created_at->diffForHumans(); !!}</p>
-                                        </div>
-                                        <div class="comment-description ml-4">
-                                            <p><a href="user_profile_view.html"></a>{!! $reply->reply_content !!}</p>
-                                        </div>
-                                    </div>
-                                    @endforeach
-
-                                    <div class="reply-comment">
-                                        <div class="post-items">                                            
-                                            <div class="reply-dp">
-                                                <a href="my_dashboard.html"><img src="images/recipe-details/reply-1.png" alt=""></a>
-                                            </div>
-                                            <form action="{!! route('frontend.food.add_comment_reply') !!}" method="POST">
-                                                @csrf
-                                                <input type="hidden" name="comment_id" value="{!! $comment->id !!}">
-                                                <input type="text" class="reply-input" name="reply_content" placeholder="Write a reply">
-                                                <input class="reply-btn btn-link" type="submit" value="Reply">
-                                            </form>
-                                        </div>
-                                    </div>
-                                    @endforeach
-                                </div>
+                                
                             </div>
                             <div class="tab-pane" role="tabpanel" id="reviews">
                                 <div class="comment-post">
@@ -247,11 +184,11 @@
                                         <div class="select-rating">
                                             <h4>Your Rating :</h4>
                                             <ul class="rating-stars">
-                                                <li><i class="fas fa-star" id="abc_1" onclick="setRating(1)"></i></li>
-                                                <li><i class="fas fa-star" id="abc_2" onclick="setRating(2)"></i></li>
-                                                <li><i class="fas fa-star" id="abc_3" onclick="setRating(3)"></i></li>
-                                                <li><i class="fas fa-star" id="abc_4" onclick="setRating(4)"></i></li>
-                                                <li><i class="fas fa-star" id="abc_5" onclick="setRating(5)"></i></li>
+                                                <li><i class="fas fa-star" onclick="setRating(1)"></i></li>
+                                                <li><i class="fas fa-star" onclick="setRating(2)"></i></li>
+                                                <li><i class="fas fa-star" onclick="setRating(3)"></i></li>
+                                                <li><i class="fas fa-star" onclick="setRating(4)"></i></li>
+                                                <li><i class="fas fa-star" onclick="setRating(5)"></i></li>
                                             </ul>
                                         </div>
                                             <input type="hidden" name="star_count" value="0" required>
@@ -267,13 +204,16 @@
                                     <div class="rating-1">
                                         @foreach($food->reviews as $review)
                                         <div class="user-detail-heading">
-                                            <a href="user_profile_view.html"><img src="https://placehold.it/200x200" alt=""></a>
+                                            <a href="user_profile_view.html"><img
+                                                        src="images/recipe-details/comment-5.png" alt=""></a>
                                             <h4>{!! $review->user->name !!}</h4><br>
                                             <div class="rate-star">
-                                                @for( $i = 0; $i < $review->count_stars; $i++ ) 
-                                                    <i class="fas fa-star"></i>
-                                                @endfor
-                                                <span>{!! $review->count_stars !!} / 5</span>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="far fa-star"></i>
+                                                <span>{!! $review->count_stars !!}</span>
                                             </div>
                                         </div>
                                         <div class="reply-time">
@@ -296,7 +236,7 @@
                         </div>
                         <div class="about-meal">
                             <h4> Description</h4>
-                            <p>{!! substr( $food->description, 0, 200) !!}</p>
+                            <p>{!! $food->description !!}</p>
                             <a href="javascript:;" onclick="myFunction()" id="readBtn">See All</a>
                         </div>
                         <div class="price">
@@ -305,7 +245,7 @@
                         <div class="dt-detail">
                             <ul>
                                 <li>
-                                    <div class="delivery"><i class="fas fa-shopping-cart"></i>Delivery Fee :
+                                    <div class="delivery"><i class="fas fa-shopping-cart"></i>Delivery Free :
                                         <span class="food_delivery_charge">{!! $food->restaurant->delivery_charge !!}</span></div>
                                 </li>
                                 <li>
@@ -322,26 +262,11 @@
                                 <ul class="food-bootom">
                                     @foreach( $extra_foods_non_vegetarian as $extra_food )
                                         <li>
-
                                             <p class="food-left">
                                                 <input type="checkbox" onchange="calculateTotalAmountInFoodDetail()" value="{!! $extra_food->id !!}"
                                                        id="c1_{!! $extra_food->id !!}" name="extra_food">
-                                                <label for="c1_{!! $extra_food->id !!}" class="pr-2">{!! $extra_food->name !!}</label>
-
-
-                                                <span class="ef_add-btn btn-sm" onclick="addOne({!! $extra_food->id !!} , {!! $extra_food->price !!})"><i class="fas fa-plus-square"></i>
-                                                </span>
-                                                
-                                                <span>
-                                                    <input type="text" class="ef_qty_{!! $extra_food->id !!}" value="1" min="1" style="width: 30px; height: 30px; border-radius: 2px; text-align: center; border: 1px solid grey;">
-                                                </span>
-                                                
-                                                <span class="ef_minus-btn btn-sm" onclick="minusOne({!! $extra_food->id !!}, {!! $extra_food->price !!})"><i class="fas fa-minus-square"></i>
-                                                </span>
-                                                        
-
+                                                <label for="c1_{!! $extra_food->id !!}">{!! $extra_food->name !!}</label>
                                             </p>
-
                                             <span class="ep_{!! $extra_food->id !!}">{!! $extra_food->price !!}</span>
                                         </li>
                                     @endforeach
@@ -352,26 +277,11 @@
                                 <ul class="food-bootom">
                                     @foreach($extra_foods_vegetarian as $extra_food)
                                         <li>
-
                                             <p class="food-left">
                                                 <input type="checkbox" onchange="calculateTotalAmountInFoodDetail()" value="{!! $extra_food->id !!}"
-                                                       id="c1_{!! $extra_food->id !!}" name="extra_food">
-                                                <label for="c1_{!! $extra_food->id !!}" class="pr-2">{!! $extra_food->name !!}</label>
-
-
-                                                <span class="ef_add-btn btn-sm" onclick="addOne({!! $extra_food->id !!} , {!! $extra_food->price !!})"><i class="fas fa-plus-square"></i>
-                                                </span>
-                                                
-                                                <span>
-                                                    <input type="text" class="ef_qty_{!! $extra_food->id !!}" value="1" min="1" style="width: 30px; height: 30px; border-radius: 2px; text-align: center; border: 1px solid grey;">
-                                                </span>
-                                                
-                                                <span class="ef_minus-btn btn-sm" onclick="minusOne({!! $extra_food->id !!}, {!! $extra_food->price !!})"><i class="fas fa-minus-square"></i>
-                                                </span>
-                                                        
-
+                                                       id="c2_{!! $extra_food->id !!}" name="extra_food">
+                                                <label for="c2_{!! $extra_food->id !!}">{!! $extra_food->name !!}</label>
                                             </p>
-
                                             <span class="ep_{!! $extra_food->id !!}">{!! $extra_food->price !!}</span>
                                         </li>
                                     @endforeach

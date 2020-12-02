@@ -12,6 +12,8 @@ use App\Models\FoodFavourite;
 use App\Models\FoodCategory;
 use App\Models\Cuisine;
 use App\Models\City;
+use App\Models\FoodComment;
+use App\Models\FoodCommentReply;
 use Auth;
 
 class FoodController extends Controller
@@ -19,8 +21,12 @@ class FoodController extends Controller
     public function getFoodDetails($food_id)
     {
     	$food = Food::findOrFail($food_id);
+        $food->increment('view');
+
     	$extra_foods_vegetarian = ExtraFood::where('category',1)->where('restaurant_id', $food->restaurant_id)->get();
     	$extra_foods_non_vegetarian = ExtraFood::where('category',2)->where('restaurant_id', $food->restaurant_id)->get();
+
+        // dd( $extra_foods_non_vegetarian );
     	
         // CHeck is the food favourite to logged in customer
         if (Auth::id()) {
@@ -114,5 +120,38 @@ class FoodController extends Controller
         $food_categories = FoodCategory::all();
         $cuisines = Cuisine::all();
         return view('frontend.pages.conditional_food_list',compact('foods','food_categories','cuisines'));   
+    }
+
+    public function addCommentSubmit(Request $request)
+    {
+        if ( !Auth::check() ) {
+            return redirect()->route('login');
+        } else {
+            try{
+                $comment = new FoodComment();
+                $comment->user_id = Auth::user()->id;
+                $comment->food_id = $request->food_id;
+                $comment->comment = $request->comment;
+                $comment->save();
+            } catch ( Exception $e ) {
+                return redirect()->back();
+            }
+            return redirect()->back();
+        }
+    }
+
+    public function addCommentReplySubmit(Request $request)
+    {
+        try{
+            $reply = new FoodCommentReply();
+            $reply->food_comment_id = $request->comment_id;
+            $reply->user_id = Auth::user()->id;
+            $reply->reply_content = $request->reply_content;
+            $reply->status = 1;
+        } catch ( Exception $e ) {
+            return redirect()->back();
+        }
+        $reply->save();
+        return redirect()->back();
     }
 }

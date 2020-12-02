@@ -3,13 +3,6 @@
 <!--begin::Head-->
 <head>
     @include('backend.partials._head')
-    <link href="{!! asset('backend/assets/css/plugin/croppie/croppie.css') !!}" rel="stylesheet" type="text/css" />
-    <style>
-        #previewimage {
-            height: 350px;
-            width : 100% !important;
-        }
-    </style>
 </head>
 <!--end::Head-->
 <!--begin::Body-->

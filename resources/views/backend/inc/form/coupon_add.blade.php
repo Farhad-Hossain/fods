@@ -64,9 +64,14 @@
             <input type="number" name="promo_code_limit" class="form-control" min="0" max="1000" value="{{old('promo_code_limit')}}" required>
         </div>
 
-        <div class="form-group col-sm-12 col-md-8">
+        <div class="form-group col-sm-12 col-md-4">
             <label>Minimum Eligible Amount*</label>
-            <input type="number" name="minimum_eligible_amount" class="form-control" min="1" value="{{old('minimum_eligible_amount')}}" required>
+            <input type="number" name="minimum_eligible_amount" class="form-control" min="1" value="{{old('minimum_eligible_amount')}}" placeholder="Minimum Buying amount to accure coupon" required>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-4">
+            <label>Maximum discount per order*</label>
+            <input type="number" name="max_discount_per_order" class="form-control" min="1" value="{!! old('max_discount_per_order') !!}" placeholder="Maximum allowed discount for order" required>
         </div>
     </div>
     
@@ -77,7 +82,7 @@
         </div>
         
         <div class="form-group col-sm-12 col-md-4">
-            <label>Promo percentage maximum discount*</label>
+            <label>Maximum discount for this coupon*</label>
             <input type="number" name="promo_percentage_max_discount" class="form-control" value="{{old('promo_percentage_max_discount')}}">
         </div>
 
@@ -85,10 +90,10 @@
             <label>Valid for</label>
             <div class="radio-inline">
               <label class="radio">
-              <input type="radio" name="valid_for" value="1" selected />Always
+              <input type="radio" name="valid_time" value="1" selected />Always
               <span></span></label>
               <label class="radio">
-              <input type="radio" name="valid_for" value="2" />Custom date
+              <input type="radio" name="valid_time" value="2" />Custom date
               <span></span></label>
             </div>
             @error('valid_for')

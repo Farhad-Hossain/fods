@@ -1,4 +1,5 @@
 function addToCart(food_id) {
+    
     let extra_food = [];
     $("input[name=extra_food]").each( function () {
         if ($(this).is(':checked')) {
@@ -47,7 +48,6 @@ function removeContent(id, extra = false) {
         data: {_token: csrf_token, id: id, extra: extra},
         success: function( data ) {
             getTopCartContent();
-            alert("Food Removed !");
         }
     });
 }

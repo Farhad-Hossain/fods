@@ -24,7 +24,7 @@
   <script src="{!! asset('frontend/plugins/wickedpicker/dist/wickedpicker.min.js') !!}"></script>
   <script src="{!! asset('frontend') !!}/js/custom/weekedpicker.js"></script>
   <script type="text/javascript">
-      $('input[type=radio][name=valid_for]').change(function() {
+      $('input[type=radio][name=valid_time]').change(function() {
           if (this.value == '1') {
               $("#valid_date_input_form").removeClass('d-block');
           }

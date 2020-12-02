@@ -24,8 +24,9 @@ class CreateDiscountCouponsTable extends Migration
             $table->unsignedTinyInteger('applicable_for')->comment('1.All users 2.New Users');
             $table->unsignedTinyInteger('promo_code_limit');
             $table->unsignedInteger('minimum_eligible_amount');
-            $table->unsignedTinyInteger('promo_code_limit_per_customer');
-            $table->unsignedTinyInteger('promo_percentage_maximum_discount');
+            $table->unsignedInteger('max_discount_per_order');
+            $table->unsignedInteger('promo_code_limit_per_customer');
+            $table->unsignedInteger('promo_percentage_maximum_discount');
             $table->smallText('description')->nullable();
             $table->unsignedTinyInteger('selling_count')->default(0);
             $table->unsignedTinyInteger('status')->default(1);

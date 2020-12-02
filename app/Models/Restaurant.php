@@ -74,7 +74,7 @@ class Restaurant extends Model
     }
     public function total_reviews()
     {
-        return $this->hasMany('App\Models\RestaurantReview', 'restaurant_id');
+        return $this->hasMany('App\Models\RestaurantRating', 'restaurant_id');
     }
     public function isFavouriteToAuthUser()
     {

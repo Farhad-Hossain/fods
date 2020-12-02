@@ -77,4 +77,14 @@ class Helper {
             return false;
         }
     }
+
+
+
+    public static function getRestaurantAverageRating($restaurant_id) 
+    {
+        return \App\Models\RestaurantRating::where('restaurant_id', $restaurant_id)->avg('star_count');
+    }
+    public static function getFoodAverageRating($food_id) {
+        return \App\Models\FoodRatingReview::where('food_id', $food_id)->avg('count_stars');
+    }
 } 

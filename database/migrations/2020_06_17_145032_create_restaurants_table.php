@@ -28,6 +28,7 @@ class CreateRestaurantsTable extends Migration
             $table->tinyInteger('seating_status')->comment('1.Available 2.Unavailable');            
             $table->tinyInteger('payment_method')->comment('1.Cash Only, 2.Card Only, 3.Both');
             $table->integer('delivery_charge');
+            $table->integer('delivery_time')->default(35);
             $table->integer('selling_percentage');
             $table->string('logo');
             $table->string('cover_photo');

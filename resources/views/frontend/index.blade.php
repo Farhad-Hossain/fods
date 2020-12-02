@@ -172,16 +172,15 @@
                         </div>
                         <div class="bottom">
                             <div class="bottom-text">
-                                <div class="delivery"><i class="fas fa-shopping-cart"></i>Delivery Free : ${!! $food->restaurant->delivery_charge !!}</div>
-                                <div class="time"><i class="far fa-clock"></i>Delivery Time : 30 Min</div>
+                                <div class="delivery"><i class="fas fa-shopping-cart"></i>Delivery Fee : ${!! $food->restaurant->delivery_charge !!}</div>
+                                <div class="time"><i class="far fa-clock"></i>Delivery Time : {!! $food->restaurant->delivery_time !!} Min</div>
                                 <div class="star">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <span>4.5</span>
-                                    <div class="comments"><a href="#"><i class="fas fa-comment-alt"></i>05</a></div>
+                                    <?php $aux = intval( \App\Helpers\Helper::getFoodAverageRating($food->id) ) ?>
+                                    @for ( $i = 0; $i < $aux; $i++ ) 
+                                        <i class="fas fa-star"></i>
+                                    @endfor
+                                    <span>{!! number_format( \App\Helpers\Helper::getFoodAverageRating($food->id), 1 ) !!}</span>
+                                    <div class="comments"><a href="{!! route('frontend.food.details', $food->id) !!}"><i class="fas fa-comment-alt"></i>{!! $food->reviews->count() !!}</a></div>
                                 </div>
                             </div>
                         </div>

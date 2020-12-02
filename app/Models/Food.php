@@ -45,7 +45,7 @@ class Food extends Model
 
     public function reviews()
     {
-        return $this->hasMany('App\Models\FoodRatingReview', 'food_id');
+        return $this->hasMany('App\Models\FoodRatingReview', 'food_id')->orderBy('id', 'desc');
     }
     public function user()
     {
@@ -101,5 +101,14 @@ class Food extends Model
     public static function promocodes($food_id)
     {
         return DiscountCoupon::where('food_ids', 'LIKE', "%{$food_id}%")->get();
+    }
+
+    public function favourites()
+    {
+        return $this->hasMany('App\Models\FoodFavourite', 'food_id');
+    }
+
+    public function comments() {
+        return $this->hasMany('App\Models\FoodComment', 'food_id')->orderBy('id', 'desc');
     }
 }

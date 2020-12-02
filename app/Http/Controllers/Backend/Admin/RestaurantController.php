@@ -376,6 +376,7 @@ class RestaurantController extends Controller
 			
 			$res->payment_method = 1;
 		    $res->delivery_charge  = $request->delivery_charge ?? $globals_info->default_delivery_charge;
+		    $res->delivery_time = $request->delivery_time_in_minute;
 		    $res->selling_percentage  = $request->commission ?? $globals_info->default_product_selling_percentage;
 		    $res->cover_photo = $fileNameToBeStore;
 		    $res->logo = $logo_fileNameToBeStore;

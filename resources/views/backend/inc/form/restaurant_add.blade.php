@@ -221,6 +221,12 @@
                         </div> 
                     </div>
 
+                    <div class="col-lg-4">
+                        <label>Delovery duration from order time (In minute) </label>
+                        <div></div>
+                        <input type="number" class="form-control" name="delivery_time_in_minute" required>
+                    </div>
+
                     <div class="form-group col-sm-12 col-md-4">
                        <label>Timing</label>
                        <table class="table table-sm table-collapsed" id="time_table">

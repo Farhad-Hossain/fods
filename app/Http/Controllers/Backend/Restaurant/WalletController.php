@@ -18,6 +18,7 @@ class WalletController extends Controller
     	$availableBalance = $credit-$debit;
     	return view('backend.restaurant.pages.wallet.withdrawalForm', compact('availableBalance'));
     }
+    
     public function withdrawRequestSubmit(Request $request)
     {
         $credit = RestaurantTransaction::where('user_id', Auth::user()->id)->where('credit_debit', 1)->sum('transaction_amount');

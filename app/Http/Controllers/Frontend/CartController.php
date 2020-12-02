@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use App\Models\Transaction;
 use App\Models\DiscountCoupon;
 
+use Illuminate\Support\Facades\Log;
+
 use Cart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -20,6 +22,12 @@ class CartController extends Controller
     public function addToCart(Request $request)
     {
         try {
+            $contents = Cart::content();
+            
+            $restaurant_ids = [];
+            foreach ( $contents as $content ) {
+                $restaurant_ids[] = $content->options['food_info']->restaurant_id;    
+            }
 
             $food = Food::where('id', $request->food_id)
                 ->where('status', 1)
@@ -28,31 +36,47 @@ class CartController extends Controller
                 return response()->json(['message' => 'Invalid Food'], 404);
             }
 
-            $foodPromocodes = Food::promocodes($food->id);
-            // $restaurantPromoocdes = Restaurant::promocodes($food->restaurant);
+            // Check and remove if the food is from different restaurant
+            if ( count( $restaurant_ids ) > 0 ) {
+                if ( !in_array( $food->restaurant_id, $restaurant_ids ) ) {
+                    foreach ( $contents  as $cont ) {
+                        Cart::remove($cont->rowId);
+                    }
 
+                    $e_contents = Cart::instance('extra_food')->content();
+                    foreach ($e_contents as $e_content) {
+                        Cart::instance('extra_food')->remove($e_content->rowId);
+                    }
+                }
+            }
+            
             Cart::add([
                 'id' => $food->id,
                 'name' => $food->food_name,
                 'qty' => $request->food_quantity,
                 'price' => $food->price,
                 'options'=> [
-                    'food_info'=>$food, 'restaurant_info'=>$food->restaurant, 'promocodes'=>$foodPromocodes,
+                    'food_info'=>$food, 'restaurant_info'=>$food->restaurant,
                 ]
             ]);
-
+            
             if (is_array($request->extra_food)) {
                 if (count($request->extra_food) > 0) {
                     foreach ($request->extra_food as $extra_food) {
-                        $extra_food = ExtraFood::where('id', $extra_food)
+                        $n = $extra_food['count'];
+                        Log::error( $n );
+                        $extra_food = ExtraFood::where('id', $extra_food['id'])
                             ->where('status', 1)
                             ->first();
                         if (!empty($extra_food)) {
                             Cart::instance('extra_food')->add([
                                 'id' => $extra_food->id,
                                 'name' => $extra_food->name,
-                                'qty' => 1,
-                                'price' => $extra_food->price
+                                'qty' => $n,
+                                'price' => $extra_food->price,
+                                'options'=> [
+                                    'extra_food_info'=>$extra_food,
+                                ]
                             ]);
                         }
                     }
@@ -66,17 +90,33 @@ class CartController extends Controller
         return response()->json(['message' => 'Successfully added this food'], 200);
     }
 
+    public function showCheckoutPage()
+    {
+        $cart_contents      = Cart::content();
+        $extra_contents     = Cart::instance('extra_food')->content();
+        $delivery_charge    = Food::getTotalDeliveryChargeFromCart($cart_contents);   
+        return view('frontend.pages.checkout', compact('cart_contents', 'extra_contents', 'delivery_charge'));
+    }
+
     public function getCartContent()
     {
         $contents = Cart::content();
         $extra_contents = Cart::instance('extra_food')->content();
-        
+
         return view('frontend.partials._top_mini_cart_content', compact('contents', 'extra_contents'));
+    }
+
+    public function setCartContentToModal()
+    {
+        $contents = Cart::content();
+        $extra_contents = Cart::instance('extra_food')->content();
+
+        return view('frontend.partials._cartModal', compact('contents', 'extra_contents'));
     }
 
     public function removeCartContent(Request $request)
     {
-        if ($request->extra == true) {
+        if ( $request->extra == 'true' ) {
             $cart_data = Cart::instance('extra_food')->content()->where('id', $request->id)->first();
             Cart::instance('extra_food')->remove($cart_data->rowId);
             return response()->json([
@@ -95,18 +135,7 @@ class CartController extends Controller
     }
 
 
-    public function showCheckoutPage()
-    {
-        $cart_contents      = Cart::content();
-        $extra_contents     = Cart::instance('extra_food')->content();
-
-        // dd( $cart_contents );
-
-        $delivery_charge    = Food::getTotalDeliveryChargeFromCart($cart_contents);
-
-        
-        return view('frontend.pages.checkout', compact('cart_contents', 'extra_contents', 'delivery_charge'));
-    }
+    
 
     public function submitOrder(Request $request)
     {
@@ -226,15 +255,44 @@ class CartController extends Controller
 
     public function getAvailablePromoCode(Request $request)
     {
-        $today = date('y-m-d');
-        $promocode = DiscountCoupon::where('promo_code',$request->promocode)
-                    ->whereColumn('selling_count', '<', 'promo_code_limit')
-                    ->where('minimum_eligible_amount', '<', $request->subTotalBill)
-                    ->where('status', '=', 1)
-                    ->get();
-        if ( $promocode->count() < 1 ) {
+        $today = date('Y-m-d');
+        $contents = Cart::content();
+
+        $food_ids = [];
+        $rest_ids = [];
+        foreach ( $contents as $content ) {
+            $food_ids [] = $content->id;
+        }
+        Log::alert( $food_ids );
+        
+        $promocode = DiscountCoupon::where('promo_code',$request->promocode)->where('status', '=', 1)->first();
+        
+        if ( $promocode ) {
+             if ( $promocode->status ) {
+                if ( $promocode->selling_count < $promocode->promo_code_limit ) {
+                    if ( $request->subTotalBill > $promocode->minimum_eligible_amount ) {
+                         if ( 
+                            ($promocode->valid_date_to == '2020-01-01' &&  $promocode->valid_date_from == '2020-01-01')
+                            || 
+                            ($promocode->valid_date_to > $today &&  $promocode->valid_date_from <  $today) 
+                         ) {
+                               
+                         } else {
+                            return 'expired_date';
+                         }
+                    } else {
+                        return 'less_amount';
+                    }
+                } else {
+                    return 'limit_exced';
+                }
+             } else {
+                return 'inactive';
+             }
+        } else {
             return 'not_found';
         }
+
         return response()->json([
             'promocode'=>$promocode
         ]);

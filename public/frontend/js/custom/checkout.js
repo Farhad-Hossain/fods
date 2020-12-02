@@ -16,8 +16,6 @@ function calculateAndChange(subTotal, total_bill,  route_url)
         }
     });
 
-    // route_url = ''+route_url+'/'+promocode;
-
     $.ajax({
        type:'GET',
        url: route_url,
@@ -25,11 +23,18 @@ function calculateAndChange(subTotal, total_bill,  route_url)
 
        success:function(data){
          console.log(data);
+         
          if ( data == 'not_found' ) {
             swal("Invalid Promo", "Please enter a valid promo code", "error");
+         } else if ( data == 'inactive' ) {
+            swal('Sorry !', "This promocode is inactived now.!");
+         }else if( data == 'less_amount' ){
+            swal('Sorry !', "Unsuffient buying Amount to get this coupon.!");
+         } else if ( data == 'expired_date' ) {
+            swal('Sorry !', 'Date expired.');
          }
 
-         promo_code = data['promocode'][0];
+         promo_code = data['promocode'];
          promo_code_text = promo_code.promo_code;
          total_discount_price = 0;
 
@@ -67,10 +72,6 @@ function OldcalculateAndChange(total_bill)
     }
 }
 
-function removeContent(content_id)
-{
-    alert('I am here');
-}
 
 $('#sslczPayBtn').prop('postdata', obj);
 
