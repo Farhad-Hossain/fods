@@ -719,6 +719,23 @@
                     </div>
                 </li>
                 <!-- End::Content Management -->
+
+                <!-- Begin::Transaction -->
+                @include('backend.inc.menu_list', array(
+                    'menu'=>'Transaction',
+                    'submenus'=>[
+                        ['link'=>route('backend.wallet.transactions'), 'text'=>'Transactions History', 'access'=>'allowed'],
+                    ]
+                ))
+                <!-- Begin::Transaction -->
+                @include('backend.inc.menu_list', array(
+                    'menu'=>'Wallet',
+                    'submenus'=>[
+                        ['link'=>route('backend.wallet.wallet'), 'text'=>'Wallet', 'access'=>'allowed'],
+                        ['link'=>route('backend.wallet.withdraw_request_form'), 'text'=>'Withdrawal Requests', 'access'=>'allowed'],
+                    ]
+                ))
+
                 <!-- End::setting -->
             </ul>
             <!--end::Menu Nav-->

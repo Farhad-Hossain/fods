@@ -17,6 +17,7 @@ class AddCountryToGlobalSettingsTable extends Migration
             $table->integer('country')->nallable();
             $table->integer('city')->nallable();
             $table->integer('currency')->nullable()->comment('Currency ID');
+            $table->unsignedInteger('wallet_blocked_amount')->default(20)->comment('Blocked Amount for wallet. Used for withdrawing request');
         });
     }
 

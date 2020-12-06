@@ -19,6 +19,7 @@ use App\Models\Cuisine;
 use App\Models\RestaurantTag;
 use App\Models\Driver;
 use App\Models\DriverTiming;
+use App\Helpers\Helper;
 
 
 use Illuminate\Support\Facades\DB;
@@ -163,6 +164,14 @@ class UserRegisterController extends Controller
     public function storeNewCustomer(CustomerCreatePostRequest $request)
     {
         try{
+
+            if( $request->customer_photo )
+            {
+                $fileNameToStore = Helper::insertFile($request->customer_photo, 1);
+            } else {
+                $fileNameToStore = '';
+            }
+
             DB::beginTransaction();
 
             $user = new User();
@@ -171,8 +180,12 @@ class UserRegisterController extends Controller
             $user->role 	= 3; //3=customer
             $user->password = Hash::make( $request->password );
             $user->password_salt = $request->password;
+            $user->avatar = $fileNameToStore;
             $user->last_login_ip = request()->ip();
             $user->status 	= 1;
+
+
+
             $user->save();
 
             $customer = new Customer();

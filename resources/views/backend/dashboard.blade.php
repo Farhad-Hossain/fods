@@ -1,4 +1,4 @@
-@extends('backend.master')
+@extends('backend.master', ['title'=>'Dashboard'])
 
 @section('custom_style')
 

@@ -90,7 +90,7 @@
                                                 <div class="custom-file">
                                                         <input type="file"  name="customer_image" id="customer_image" class="image custom-file-input image">
                                                     <label class="custom-file-label" for="customer_image">Your Image</label>
-                                                    <input type="hidden" name="customer_photo">
+                                                    <input type="hidden" id="customer_photo" name="customer_photo" value="" required>
                                                 </div>
                                             @error('customer_image')
                                                 <p class="text-danger">{!! $message !!}</p>

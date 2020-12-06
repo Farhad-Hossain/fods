@@ -10,6 +10,12 @@ use Auth;
 
 class WalletController extends Controller
 {
+
+    public function showWallet()
+    {
+           $transactions = RestaurantTransaction::where('user_id', Auth::user()->id)->get();
+    }
+
     public function showWithdrawalRequestForm()
     {
     	$credit = RestaurantTransaction::where('user_id', Auth::user()->id)->where('credit_debit', 1)->sum('transaction_amount');
@@ -18,7 +24,7 @@ class WalletController extends Controller
     	$availableBalance = $credit-$debit;
     	return view('backend.restaurant.pages.wallet.withdrawalForm', compact('availableBalance'));
     }
-    
+
     public function withdrawRequestSubmit(Request $request)
     {
         $credit = RestaurantTransaction::where('user_id', Auth::user()->id)->where('credit_debit', 1)->sum('transaction_amount');

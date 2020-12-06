@@ -50,6 +50,8 @@ function calculateAndChange(subTotal, total_bill,  route_url)
          $("#promocode_value").text(total_discount_price);
          $("#promocode_row").removeClass('d-none');
          $("#total_bill").text(updated_bill);
+         $("input[name='promocode_value']").val(aux);
+         $("input[name='total_price']").val(updated_bill);
 
          swal("Promo code applied successfully.");
        }

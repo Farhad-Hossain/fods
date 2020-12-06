@@ -41,6 +41,11 @@ class Order extends Model
     {
         return $this->hasOne('App\Models\Food', 'id', '');
     }
+
+    public function restaurant()
+    {
+        
+    }
    
     
 }

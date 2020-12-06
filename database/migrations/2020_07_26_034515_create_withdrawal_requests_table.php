@@ -16,7 +16,12 @@ class CreateWithdrawalRequestsTable extends Migration
         Schema::create('withdrawal_requests', function (Blueprint $table) {
             $table->id();
             $table->tinyInteger('user_id')->unsigned();
+            $table->string('payment_method')->comment('User Preferable payment method')->nullable();
             $table->integer('requested_amount')->unsigned();
+            $table->text('user_remarks')->comment('Remarks from user')->nullable();
+            $table->text('action_remarks')->comment('remarks from admin')->nullable();
+            $table->unsignedTinyInteger('action_status')->comment('1: Pending 2: approved, 3: rejected')->default(1);
+            $table->unsignedTinyInteger('action_taken_by')->comment('Admin user id')->nullable();
             $table->tinyInteger('status')->unsigned()->default(1);
             $table->timestamps();
         });
@@ -32,3 +37,7 @@ class CreateWithdrawalRequestsTable extends Migration
         Schema::dropIfExists('withdrawal_requests');
     }
 }
+
+
+
+// action status ( 1: Pending 2: success, 3: rejected ) 

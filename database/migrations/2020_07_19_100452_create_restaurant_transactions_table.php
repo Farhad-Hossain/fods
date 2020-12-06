@@ -15,15 +15,16 @@ class CreateRestaurantTransactionsTable extends Migration
     {
         Schema::create('restaurant_transactions', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('transaction_by');
             $table->string('order_id')->nallable(); 
-            $table->string('user_id'); 
+            $table->string('transaction_to')->comment('Restaurant owner id'); 
             $table->string('transaction_id');
             $table->integer('transaction_amount')->unsigned();
             $table->tinyInteger('credit_debit')->unsigned()->default(1)->comment('1:Credit, 2:Debit');
             $table->string('method')->nullable();
             $table->tinyInteger('status')->unsigned()->default(1);
             $table->ipAddress('ip_address');
-            $table->ipAddress('description');
+            $table->string('description');
             $table->timestamps();
         });
     }

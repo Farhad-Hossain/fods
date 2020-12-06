@@ -248,9 +248,19 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
                 'as'=>'manage_submit'
             ]);
         });
+
+
+
         Route::get('accesses/{user_id}', 'UserController@access_form_view')->name('access_form');
         Route::post('accesses-update-submit', 'UserController@accessFormSubmit')->name('access_form_submit');
 	});
+
+    Route::group(['prefix'=>'area-coverage', 'as'=>'area_coverage.'], function(){
+        Route::get('my-area', [
+            'uses'=>'AreaCoverageController@myArea',
+            'as'=>'my_area'
+        ]);
+    });
 
     /*BEGIN::Setings*/
     /*BEGIN::Setings*/
@@ -276,6 +286,16 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
         Route::post('edit-currency', 'CountryCityCurrencyController@edit_currency_submit')->name('edit_currency');
 
         Route::get('{country}/delete', 'CountryCityCurrencyController@delete_country')->name('delete_country');
+
+        Route::post('add-city-area', [
+            'uses'=>'CountryCityCurrencyController@addCityArea',
+            'as'=>'addCityArea'
+        ]);
+
+        Route::post('edit-city-area', [
+            'uses'=>'CountryCityCurrencyController@editCityArea',
+            'as'=>'editCityArea'
+        ]);
 
         Route::get('/payments', 'PaymentController@showPaymentSettingPage')->name('payments');
         Route::post('/add-payment-method', 'PaymentController@addPaymentMethodSubmit')->name('addPaymentMethod');
@@ -442,6 +462,8 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
         
         Route::post('change-payment-status', 'OrderController@change_payment_status_submit')->name('change_payment_status');
         Route::post('change-status', 'OrderController@change_status_submit')->name('change_status');
+
+        Route::post('assign-driver', 'OrderController@assignDriver')->name('assign_driver');
     });
     /*END::Order*/
     /*END::Order*/
@@ -528,6 +550,46 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
         Route::get('driver-transactions','DeliveryController@get_transactions')->name('transaction_list');
         Route::post('transaction','DeliveryController@make_transaction_submit')->name('make_payment');
     });
+
+    // BEGIN::Wallet with payments
+    // BEGIN::Wallet with payments
+    Route::group(['prefix'=>'wallet', 'as'=>'wallet.'], function(){
+        Route::get('transactions', [
+            'uses'=>'WalletController@showTransactions',
+            'as'=>'transactions',
+        ]);
+
+        Route::get('wallet', [
+            'uses'=>'WalletController@showWallet',
+            'as'=>'wallet'
+        ]);
+
+        Route::get('withdraw-request-form', [
+            'uses'=>'WalletController@showWithdrawForm',
+            'as'=>'withdraw_request_form'
+        ]);
+
+        Route::post('withdraw-request-submit', [
+            'uses'=>'WalletController@WithdrawRequestSubmit',
+            'as'=>'withdraw_request_submit'
+        ]);
+
+        Route::get('delete-withdrawal-request/{id}', [
+            'uses'=>'WalletController@deleteWithdrawalRequestSubmit',
+            'as'=>'deleteWithdrawalRequestSubmit',
+        ]);
+
+        Route::post('edit-withdraw-request-submit', [
+            'uses'=>'WalletController@editWithdrawalRequestSubmit',
+            'as'=>'editWithdrawalRequestSubmit'
+        ]);
+
+        Route::post('withdraw-request-change-status', [
+            'uses'=>'WalletController@changeStatusWithdrawRequestSubmit',
+            'as'=>'changeStatusWithdrawRequestSubmit',
+        ]);
+    });
+    // END::Wallet
 
     // Ajax 
     Route::group(['prefix'=>'ajax','as'=>'ajax.'], function(){

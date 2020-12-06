@@ -37,7 +37,7 @@
             <ul class="menu-nav">
                 <!-- Begin::Dashboard -->
                 <li class="menu-item menu-item-active" aria-haspopup="true">
-                    <a href="{!! route('backend.restAdmin.dashboard') !!}" class="menu-link">
+                    <a href="{!! route('backend.dashboard') !!}" class="menu-link">
                         <span class="svg-icon menu-icon">
                             <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Layers.svg-->
                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -91,7 +91,7 @@
                 @include('backend.inc.menu_list', array(
                     'menu'=>__('backend_menus.order_management'),
                     'submenus'=>[
-                        ['link'=>route('backend.restAdmin.order.list'), 'text'=>'Orders'],
+                        ['link'=>route('backend.order.list'), 'text'=>'Orders'],
                         ['link'=>'javascript:;', 'text'=>'Order Status'],
                     ],
                 ))
@@ -109,6 +109,21 @@
                         ['link'=>'link1', 'text'=>'Payments'],
                         ['link'=>'link2', 'text'=>'Earnings'],
                         ['link'=>'link3', 'text'=>'Payout'],
+                    ]
+                ))
+                <!-- Begin::Transaction -->
+                @include('backend.inc.menu_list', array(
+                    'menu'=>'Transaction',
+                    'submenus'=>[
+                        ['link'=>route('backend.wallet.transactions'), 'text'=>'Transactions History'],
+                    ]
+                ))
+                <!-- Begin::Transaction -->
+                @include('backend.inc.menu_list', array(
+                    'menu'=>'Wallet',
+                    'submenus'=>[
+                        ['link'=>route('backend.wallet.wallet'), 'text'=>'Wallet'],
+                        ['link'=>route('backend.wallet.withdraw_request_form'), 'text'=>'Withdraw Request'],
                     ]
                 ))
             </ul>

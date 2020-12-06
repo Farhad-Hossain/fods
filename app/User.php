@@ -73,4 +73,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Models\AdminUsersRole', 'admin_user_role_id', 'id');
     }
+    public function driver()
+    {
+        return $this->hasOne('App\Models\Driver', 'user_id');
+    }
+
 }

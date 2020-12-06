@@ -7,9 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Restaurant extends Model
 {
     protected $guarded = [];
-    protected $hidden = [
-        'id', 'updated_at', 'created_at', 'user_id',
-    ];
+    
     public function owner()
     {
     	return $this->belongsTo('App\User', 'user_id');

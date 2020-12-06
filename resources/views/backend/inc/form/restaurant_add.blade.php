@@ -222,7 +222,7 @@
                     </div>
 
                     <div class="col-lg-4">
-                        <label>Delovery duration from order time (In minute) </label>
+                        <label>Delivery duration from order time (In minute) </label>
                         <div></div>
                         <input type="number" class="form-control" name="delivery_time_in_minute" required>
                     </div>

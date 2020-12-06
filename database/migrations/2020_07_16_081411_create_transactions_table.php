@@ -18,7 +18,7 @@ class CreateTransactionsTable extends Migration
             $table->unsignedInteger('transaction_by')->unsigned()->comment('The Who make this transaction');
             $table->unsignedInteger('transaction_to')->unsigned()->comment('To Whom this transaction');
             $table->string('transaction_id', 30);
-            $table->tinyInteger('transaction_type')->unsigned()->comment('1:Customer Order 2.Driver Order 3.Restaurant Payout, 4.Driver Payout');
+            $table->tinyInteger('credit_debit')->unsigned()->comment('1:Credit 2:Debit');
             $table->string('transaction_medium')->comment('Cash, bank, Online');
             $table->float('transaction_amount');
             $table->string('transaction_referance')->nullable();

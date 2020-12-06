@@ -142,6 +142,7 @@ class CartController extends Controller
         DB::beginTransaction();
         try {
             $cart_contents = Cart::content();
+
             $subtotal = Cart::subtotal();
             $subtotal = str_replace(',', '', $subtotal);
 
@@ -149,18 +150,23 @@ class CartController extends Controller
             $extra_subtotal = Cart::instance('extra_food')->subtotal();
             $extra_subtotal = str_replace(',', '', $extra_subtotal);
 
+            $product_tax = $request->product_tax;
+            $promocode_value = $request->promocode_value ?? 0;
 
             if ($cart_contents->count() > 0) {
                 $delivery_charge = Food::getTotalDeliveryChargeFromCart($cart_contents);
 
                 $total_discount = 0;
-
-                $subtotal += $delivery_charge + $extra_subtotal;
-                $payable_amount = $subtotal - $total_discount;
+                $subtotal += $extra_subtotal;
+                $payable_amount = ( $subtotal + $product_tax + $delivery_charge) - $promocode_value;
 
                 $order = new Order();
                 $order->user_id = Auth::id();
+                $order->restaurant_id = $request->restaurant_id ?? '';
                 $order->sub_total = $subtotal;
+                $order->product_tax = $product_tax;
+                $order->delivery_charge = $delivery_charge;
+                $order->promocode_amount = $promocode_amount ?? 0;
                 $order->total_discount = $total_discount;
                 $order->payable_amount = $payable_amount;
                 $order->delivery_address = $request->delivery_address;
@@ -168,7 +174,6 @@ class CartController extends Controller
                 $order->order_status = 1;//1=pending
                 $order->payment_status = 0;//0=pending
                 $order->save();
-
 
                 $order_unique_id = Order::getNewOrderId($order->id);
                 $order->order_id = $order_unique_id;

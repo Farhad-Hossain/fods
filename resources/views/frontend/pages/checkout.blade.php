@@ -78,9 +78,10 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @php($subTotal = 0)
+                                <?php $subTotal = 0; $rest_id = 0; ?> 
                                 @if(!empty($cart_contents))
                                     @foreach($cart_contents as $content)
+                                        <?php $rest_id = $content->options['restaurant_info']->id; ?>
                                         <tr>
                                             <td>
                                                 <div class="checkout-thumb">
@@ -359,6 +360,12 @@
                     <div class="checkout-btn">
                         <form action="{!! route('frontend.cart.submit-order') !!}" method="post">
                             @csrf
+                            <input type="hidden" name="total_price" value="{!! ($subTotal + $delivery_charge + $total_tax) !!}">
+                            <input type="hidden" name="restaurant_id" value="{!! $rest_id !!}">
+                            <input type="hidden" name="item_total_price" value="{!! $subTotal !!}">
+                            <input type="hidden" name="product_tax" value="{!! $total_tax !!}">
+                            <input type="hidden" name="delivery_charge" value="{!! $delivery_charge !!}">
+                            <input type="hidden" name="promocode_value" value="0">
                             <div class="">
                                 <p>Your Delivery Address</p>
                                 <textarea name="delivery_address" class="form-control mb-2 text-dark" required>{!! Auth::user()->customer->default_delivery_address ?? '' !!}</textarea>

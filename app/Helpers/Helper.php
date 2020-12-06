@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\User;
 use Auth;
 
 class Helper {
@@ -52,6 +53,34 @@ class Helper {
             return false;
         }
     }
+
+    public static function driver()
+    {
+        if ( Auth::user()->role == 2 ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function userType( $id )
+    {
+        $user = User::findOrFail($id);
+        $role = $user->role;
+
+        if ( $role == 1 ) {
+            return 'restaurant';
+        } elseif( $role == 2 ) {
+            return 'driver';
+        } elseif( $role == 3 ) {
+            return 'customer';
+        }
+    }
+
+    public static function makeTransactionId()
+    {
+        return "T-".date('d').rand(1,20).rand(1,100);
+    } 
 
     public static function alert($type, $message, $route = null)
     {

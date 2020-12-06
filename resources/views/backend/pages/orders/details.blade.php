@@ -1,4 +1,4 @@
-@extends('backend.master')
+@extends('backend.master', ['title'=>'Order Details'])
 @section('custom_style')
     <link href="{{asset('backend')}}/assets/plugins/custom/datatables/datatables.bundle.css?v=7.0.3" rel="stylesheet" type="text/css" />
 @endsection
@@ -24,24 +24,7 @@
                             
                         </thead>
                         <tbody>
-                            <tr>
-                                <th colspan="2" class="text-center bg-light">Food Information</th>
-                            <tr>
-                                <th>{!! __('order.food_name') !!}</th>
-                                <td>{!! $order->details->food->food_name !!}</td>
-                            </tr>
-                            <tr>
-                                <th>{!! __('common.price') !!}</th>
-                                <td>{!! $order->details->food->price !!}</td>
-                            </tr>
-                            <tr>
-                                <th>{!! __('order.discount_price') !!}</th>
-                                <td>{!! $order->details->food->discount_price !!}</td>
-                            </tr>
-                            <tr>
-                                <th>{!! __('order.restaurant') !!}</th>
-                                <td>{!! $order->details->restaurant->name !!}</td>
-                            </tr>
+                            
                             
                         </tbody>
                         <tfoot>

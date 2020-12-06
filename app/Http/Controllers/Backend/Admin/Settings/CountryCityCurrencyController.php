@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Country;
 use App\Models\City;
 use App\Models\Currency;
+use App\Models\CityArea;
 use Image;
 
 use App\Helpers\Helper;
@@ -18,8 +19,9 @@ class CountryCityCurrencyController extends Controller
     	$countries = Country::all();
     	$cities = City::all();
     	$currencies = Currency::all();
+        $cityAreas = CityArea::all();
 
-    	return view('backend.pages.settings.country_city_currency', compact('countries', 'cities', 'currencies'));
+    	return view('backend.pages.settings.country_city_currency', compact('countries', 'cities', 'currencies', 'cityAreas'));
 	}
 	public function upload(Request $request)
     {
@@ -152,6 +154,38 @@ class CountryCityCurrencyController extends Controller
             return redirect()->back();    
         }
         Helper::alert('success', 'Currency Info updated successfully.');
+        return redirect()->back();
+    }
+
+
+    public function addCityArea (Request $request) {
+        try{
+            $cityArea = new CityArea();
+            $cityArea->city_id = $request->city_id;
+            $cityArea->area_name = $request->city_area_name; 
+            $cityArea->status = 1;
+            $cityArea->save();
+        } catch (Exception $e) {
+            Helper::alert('danger', 'Something went wrong');
+            return redirect()->back();
+        }
+        Helper::alert('success', 'Area added successfully.');
+        return redirect()->back();
+    }
+
+    public function editCityArea(Request $request)
+    {
+        try{
+            $area = CityArea::findOrFail($request->city_area_id);
+            $area->city_id = $request->city_id;
+            $area->area_name = $request->city_area_name;
+            $area->status = $request->area_status;
+            $area->save();
+        } catch (Exception $e) {
+            Helper::alert('danger', 'Something went wrong.');
+            return redirect()->back();
+        }
+        Helper::alert('success', 'Area info updated successfully');
         return redirect()->back();
     }
 }

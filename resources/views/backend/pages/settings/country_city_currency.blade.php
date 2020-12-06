@@ -207,6 +207,66 @@
                     </div>
                     <!--end::Card-->
                 </div>
+
+                <!-- City Area -->
+                <div class="col-sm-12 col-md-6">
+                    <div class="card card-custom gutter-b example example-compact">
+                        <div class="card-header">
+                            <h3 class="card-title">City Areas</h3>
+                            <div class="card-toolbar">
+                                <div class="example-tools justify-content-center">
+                                    <button class="pull-right btn btn-success" data-toggle="modal" data-target="#add_city_area_modal">New Record</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="tabe-responsive">
+                                        <table class="table table-stripped">
+                                            <thead>
+                                                <tr>
+                                                    <th>City</th>
+                                                    <th>Area</th>
+                                                    <th>{!! __('common.status') !!}</th>
+                                                    <th>{!! __('common.action') !!}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($cityAreas as $area)
+                                                    <tr>
+                                                        <td>{!! $area->city->name !!}</td>
+                                                        <td>{!! $area->area_name !!}</td>
+                                                        @if($area->status == 1)
+                                                            <td class="text-success"><b>Active</b></td>
+                                                        @else
+                                                            <td class="text-danger"><b>Inactive</b></td>
+                                                        @endif
+                                                        <td>
+                                                            <a class="text-primary mr-2" onclick="riseCityAreaEditModal(
+                                                                '{!! $area->id !!}',
+                                                                '{!! $area->city->id !!}',
+                                                                '{!! $area->area_name !!}',
+                                                                '{!! $area->status !!}',
+                                                                )">
+                                                                <i class="far fa-edit text-primary"></i>
+                                                            </a>
+                                                            <a href="javascript:;" class="text-danger" onclick="return confirm('Are you sure want to delete ??')">
+                                                                <i class="far fa-trash-alt text-danger"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Card-->
+                </div>
             </div>
     </div>
 @endsection
@@ -217,6 +277,8 @@
     @include('backend.inc.modals.city_edit')
     @include('backend.inc.modals.currency_add')
     @include('backend.inc.modals.currency_edit')
+    @include('backend.inc.modals.add_city_area_modal')
+    @include('backend.inc.modals.edit_city_area_modal')
 @endsection
 
 @section('custom_script')
@@ -251,6 +313,17 @@
         $("#edit_currency_modal input[name='currency_name']").val(name);
 
         $("#edit_currency_modal").modal();
+    }
+
+    function riseCityAreaEditModal(area_id, city_id, area_name, status)
+    {
+        $("#edit_city_area_modal input[name='city_area_id']").val(area_id);
+        $("#edit_city_area_modal select[name='city_id']").val(city_id);
+        $("#edit_city_area_modal input[name='city_area_name']").val(area_name);
+        $("#edit_city_area_modal select[name='area_status']").val(status);
+
+        $("#edit_city_area_modal").modal();
+
     }
 </script>
 @endsection
