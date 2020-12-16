@@ -163,6 +163,12 @@
                        @enderror
                    </div>
 
+                   <div class="col-lg-4">
+                       <label>Delivery duration from order time (In minute) </label>
+                       <div></div>
+                       <input type="number" class="form-control" name="delivery_time_in_minute" value="{!! $r->delivery_time !!}" required>
+                   </div>
+
                     <div class="col-lg-4"> 
                         <img src="{{asset('uploads')}}/{{$r->logo}}" style="height: 70px; width: 70px; display: block">
                         <label>Logo</label>
@@ -191,13 +197,7 @@
                         </div> 
                     </div>
 
-                    <div class="col-lg-4">
-                        <label>Delivery duration from order time (In minute) </label>
-                        <div></div>
-                        <input type="number" class="form-control" name="delivery_time_in_minute" value="{!! $r->delivery_time !!}" required>
-                    </div>
-
-                    <div class="form-group col-sm-12 col-md-4">
+                    <div class="form-group col-sm-12 col-md-12 mt-4">
                        <label>Timing</label>
                        <table class="table table-sm table-collapsed" id="time_table">
                            <!-- Monday -->

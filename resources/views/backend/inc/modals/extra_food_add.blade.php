@@ -13,6 +13,7 @@
                 <div class="modal-body">
                     <input type="hidden" name="id">
                     <div class="row">
+                        {{--
                         <div class="form-group col-sm-12 col-md-6">
                             <label>{!! __('common.restaurant') !!}</label>
                             <select name="restaurant" id="restaurant" class="form-control selectpicker" required data-size="7" data-live-search="true">
@@ -24,6 +25,7 @@
                                 @endif
                             </select>
                         </div>
+                        --}}
                         
                         <div class="form-group col-sm-12 col-md-6">
                             <label>{!! __('common.name') !!}</label>

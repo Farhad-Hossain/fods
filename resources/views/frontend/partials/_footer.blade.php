@@ -147,4 +147,7 @@
     </div>
 </div>
 
+@yield('modals')
+
+
 

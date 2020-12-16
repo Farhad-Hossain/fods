@@ -6,7 +6,6 @@
             <th></th>
             <th>{{ __('common.name') }}</th>
             <th>{{ __('common.category') }}</th>
-            <th>{{ __('common.restaurant') }}</th>
             <th>{{ __('common.status') }}</th>
             <th>{{ __('common.price') }}</th>
             <th>{{ __('common.action') }}</th>
@@ -25,7 +24,6 @@
                     {{ 'Non Vegiterian' }}
                 @endif
             </td>
-            <td>{{ $extra_food->restaurant->name }}</td>
             @if( $extra_food->status == 1 )
                 <td><b class="text-success">Active</b></td>
             @else

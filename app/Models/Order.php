@@ -46,6 +46,11 @@ class Order extends Model
     {
         
     }
+
+    public function cityArea()
+    {
+        return $this->hasOne('App\Models\CityArea', 'id', 'delivery_city_area_id');
+    }
    
     
 }

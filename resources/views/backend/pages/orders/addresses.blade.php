@@ -1,4 +1,4 @@
-@extends('backend.master')
+@extends('backend.master', ['title'=>'Order Address Details'])
 @section('custom_style')
     <link href="{{asset('backend')}}/assets/plugins/custom/datatables/datatables.bundle.css?v=7.0.3" rel="stylesheet" type="text/css" />
 @endsection
@@ -12,10 +12,14 @@
                     <span class="card-icon">
                         <i class="flaticon2-heart-rate-monitor text-primary"></i>
                     </span>
-                    <h3 class="card-label">{!! __('order.order_status_list') !!}</h3>
+                    <h3 class="card-label">Order & Customer Addresses</h3>
                 </div>
                 <div class="card-toolbar">
-                    
+                    <!--begin::Button-->
+                    <a href="{{ route('backend.order.list') }}" class="btn btn-primary font-weight-bolder"> 
+                        Orders
+                    </a>
+                    <!--end::Button-->
                 </div>
             </div>
             <div class="card-body">

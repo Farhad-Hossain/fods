@@ -39,7 +39,7 @@
                             <td>{!! $order->order_id !!}</td>
                             <td>{!! $order->user->name !!}</td>
                             <td>{!! $order->payable_amount !!}</td>
-                            <td>{!! $order->delivery_address !!}</td>
+                            <td>{!! $order->cityArea->area_name ?? '' !!}  {!! $order->delivery_address !!}</td>
                             <td>
                                 <b class="text-primary">
                                     @if ( $order->order_status == 1 ) 

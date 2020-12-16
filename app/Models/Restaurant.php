@@ -62,22 +62,29 @@ class Restaurant extends Model
             'payment_method_id',
         );
     }
+    
     public function appointedTags()
     {
         return $this->hasMany('App\Models\RestaurantAppointedTag');
     }
+    
     public function foods()
     {
         return $this->hasMany('App\Models\Food', 'restaurant_id')->orderBy('id', 'desc');
     }
+    
     public function total_reviews()
     {
         return $this->hasMany('App\Models\RestaurantRating', 'restaurant_id');
     }
+    
+    
+
     public function isFavouriteToAuthUser()
     {
         return $this->hasOne('App\Models\RestaurantFavourite', 'inserted_by');
     }
+    
     public function restCity()
     {
         return $this->belongsTo('App\Models\City', 'city');

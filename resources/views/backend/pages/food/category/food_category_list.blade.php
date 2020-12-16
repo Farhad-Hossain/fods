@@ -1,4 +1,4 @@
-@extends('backend.master')
+@extends('backend.master', ['title'=>'Food Category List'])
 @section('custom_style')
     <link href="{{asset('backend')}}/assets/plugins/custom/datatables/datatables.bundle.css?v=7.0.3" rel="stylesheet" type="text/css" />
 @endsection
@@ -148,13 +148,15 @@
 
                         <div class="form-group">
                             <label>{!! __('common.image') !!}</label>
+                            <div></div>
                             <div class="custom-file">
-                             <input type="file" class="custom-file-input" id="customFile" name="image" />
-                             <label class="custom-file-label" for="customFile">Choose file</label>
-                            </div>
-                            @error('image')
-                            <p class="text-danger">{{ $message }}</p>
-                            @enderror
+                                <input type="file" class="custom-file-input upload_image" target="image"/>
+                                <label class="custom-file-label">Choose file</label>
+                                @error('image')
+                                <span class="form-text text-warning">{{ $message }}</span>
+                                @enderror
+                                <input type="hidden" name="image" value="">
+                            </div> 
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -191,13 +193,15 @@
 
                         <div class="form-group">
                             <label>{!! __('common.image') !!}</label>
+                            <div></div>
                             <div class="custom-file">
-                             <input type="file" class="custom-file-input" id="customFile" name="image" />
-                             <label class="custom-file-label" for="customFile">Choose file</label>
-                            </div>
-                            @error('image')
-                            <p class="text-danger">{{ $message }}</p>
-                            @enderror
+                                <input type="file" class="custom-file-input upload_image" target="image"/>
+                                <label class="custom-file-label">Choose file</label>
+                                @error('image')
+                                <span class="form-text text-warning">{{ $message }}</span>
+                                @enderror
+                                <input type="hidden" name="image" value="">
+                            </div> 
                         </div>
 
                         <div class="form-group">

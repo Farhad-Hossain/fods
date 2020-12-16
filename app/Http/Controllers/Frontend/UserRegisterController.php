@@ -19,6 +19,7 @@ use App\Models\Cuisine;
 use App\Models\RestaurantTag;
 use App\Models\Driver;
 use App\Models\DriverTiming;
+use App\Models\City;
 use App\Helpers\Helper;
 
 
@@ -157,7 +158,8 @@ class UserRegisterController extends Controller
     //Customer Register Page Show
     public function showCustomerRegisterPage()
     {
-        return view('frontend.pages.customer-register');
+        $cities = City::all();
+        return view('frontend.pages.customer-register', compact('cities'));
     }
 
     //Store New Customer
@@ -191,8 +193,9 @@ class UserRegisterController extends Controller
             $customer = new Customer();
             $customer->user_id 	= $user->id;
             $customer->phone_number = $request->phone_number;
+            $customer->city_id = $request->city_id;
             $customer->status = 1;
-            $customer->default_delivery_address = $request->default_delivery_address??'';
+            $customer->default_delivery_address = $request->default_delivery_address ?? '';
             $customer->save();
 
         }catch(\Exception $e){

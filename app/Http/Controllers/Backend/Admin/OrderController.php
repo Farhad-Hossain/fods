@@ -22,10 +22,12 @@ class OrderController extends Controller
     public function show_order_list()
     {
         $drivers = Driver::where('active_status', 1)->get();
+
         if ( Helper::admin() ) {
         	$orders = Order::orderBy('id', 'desc')->get();
             $order_statuses = OrderStatus::where('status', 1)->get();
-        	return view('backend.pages.orders.list', compact('orders', 'order_statuses'));
+
+        	return view('backend.pages.orders.list', compact('orders', 'order_statuses', 'drivers'));
         }
 
         if ( Helper::restaurant() ) {

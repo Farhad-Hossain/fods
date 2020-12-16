@@ -1,5 +1,10 @@
 @extends('frontend.master', ['title'=>'Home'])
 
+@section('custom_style')
+    <link rel="stylesheet" href="{!! asset('frontend/plugins/wickedpicker/dist/wickedpicker.min.css') !!}">
+    <link rel="stylesheet" type="text/css" href="{!! asset('frontend') !!}/css/custom/add_restaurant.css">
+@endsection
+
 @section('main_content')
     <!--banner start-->
     @include('frontend.partials._banner')
@@ -170,20 +175,38 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="bottom">
                             <div class="bottom-text">
-                                <div class="delivery"><i class="fas fa-shopping-cart"></i>Delivery Fee : ${!! $food->restaurant->delivery_charge !!}</div>
-                                <div class="time"><i class="far fa-clock"></i>Delivery Time : {!! $food->restaurant->delivery_time !!} Min</div>
+                                
+                                <div class="delivery">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    Delivery Fee : ${!! $food->restaurant->delivery_charge !!}
+                                </div>
+
+                                <div class="time">
+                                    <i class="far fa-clock"></i>
+                                    Delivery Time : {!! $food->restaurant->delivery_time !!} Min
+                                </div>
+
                                 <div class="star">
                                     <?php $aux = intval( \App\Helpers\Helper::getFoodAverageRating($food->id) ) ?>
                                     @for ( $i = 0; $i < $aux; $i++ ) 
                                         <i class="fas fa-star"></i>
                                     @endfor
+                                    
                                     <span>{!! number_format( \App\Helpers\Helper::getFoodAverageRating($food->id), 1 ) !!}</span>
-                                    <div class="comments"><a href="{!! route('frontend.food.details', $food->id) !!}"><i class="fas fa-comment-alt"></i>{!! $food->reviews->count() !!}</a></div>
+                                    
+                                    <div class="comments">
+                                        <a href="{!! route('frontend.food.details', $food->id) !!}">
+                                            <i class="fas fa-comment-alt"></i>{!! $food->reviews->count() !!}
+                                        </a>
+                                    </div>
                                 </div>
+                                
                             </div>
                         </div>
+
                     </div>
                 </div>
                 @endforeach
@@ -303,4 +326,46 @@
             </div>
         </div>
     </section>
+@endsection
+
+@section('modals')
+    <!-- Area search Modal-->
+    <div class="modal fade" id="area_modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="{!! route('frontend.home') !!}" method="GET">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <p class="text-center">Where you want our Food ?</p>
+                            </div>
+
+                            <div class="search col-12">
+                                <select class="search-location" name="search_city_area" >
+                                    @foreach ( $areas as $area )
+                                        <option value="{!! $area->id !!}">{!! $area->area_name !!}</option>
+                                    @endforeach        
+                                </select>
+                                <div class="icon-btn">
+                                    <div class="cross-icon">
+                                        <i class="fas fa-crosshairs"></i>
+                                    </div>
+                                    <div class="s-m-btn">
+                                        <button class="search-meal-btn btn-link">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+@endsection
+
+
+@section('custom_script')
+<script type="text/javascript">
+    $("#area_modal").modal();
+</script>
 @endsection

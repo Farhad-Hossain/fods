@@ -47,17 +47,11 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-6 col-md-6 col-12">
-                        <h1>Register Now</h1>
                         <div class="login-container">
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-12">
                                     <div class="login-form">
-                                        <div class="login-logo">
-                                            <a href="index.html">
-                                                <img src="images/login-register/logo.svg" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="create-text"><h4>Create Your Account</h4></div>
+                                        <div class="create-text mt-4"><h4>Create Account and Get your Food</h4></div>
                                         <div class="form-group">
                                             <input type="text" class="video-form" name="full_name" value="{!! old('full_name') !!}" id="full_name" placeholder="Enter Full Name" required>
                                             @error('full_name')
@@ -76,6 +70,16 @@
                                                 <p class="text-danger">{!! $message !!}</p>
                                             @enderror
                                         </div>
+                                        
+                                        <div class="form-group">
+                                            <select class="video-form" name="city_id" required>
+                                                <option>Select your city</option>
+                                                @foreach ( $cities as $city ) 
+                                                    <option value="{!! $city->id !!}">{!! $city->name !!}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
                                         <div class="form-group">
                                             <input type="password" class="video-form" name="password" id="password" placeholder="Enter Password" required>
                                             @error('password')
@@ -110,7 +114,7 @@
                                         </div>
                                         <button type="submit" class="login-btn btn-link" id="register_btn">Register Now</button>
                                         <div class="forgot-password">
-                                            <p>If you have an account?<a href="#"><span style="color:#ffa803;"> - Login Now</span></a></p>
+                                            <p>If you have an account?<a href="{!! route('login') !!}"><span style="color:#ffa803;"> - Login Now</span></a></p>
                                         </div>
                                     </div>
                                 </div>

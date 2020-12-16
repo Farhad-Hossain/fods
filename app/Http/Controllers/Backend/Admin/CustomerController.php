@@ -11,23 +11,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Transaction;
+use App\Models\City;
+use App\Helpers\Helper;
 
 class CustomerController extends Controller
 {
 
     public function showCustomerList()
     {
-
+        $cities = City::where('status', 1)->get();
         $customers = Customer::orderBy('id', 'desc')->get();
         return view('backend.pages.customer.customer_list', compact(
-            'customers'
+            'customers', 'cities'
         ));
     }
 
 
     public function storeCustomer(CreateCustomerPostRequest $request)
     {
-
         try{
             DB::beginTransaction();
 
@@ -41,9 +42,17 @@ class CustomerController extends Controller
             $user->status 	= 1;
             $user->save();
 
+            if ( isset( $request->image ) ) {
+                $image_name = Helper::insertFile($request->image, 3);
+            } else {
+                $image_name = "";
+            }
+
             $customer = new Customer();
             $customer->user_id 	= $user->id;
             $customer->phone_number = $request->phone_number;
+            $customer->city_id = $request->city_id;
+            $customer->photo = $image_name;
             $customer->default_delivery_address = $request->default_delivery_address;
             $customer->status = 1;
             $customer->save();
@@ -72,10 +81,19 @@ class CustomerController extends Controller
                 return redirect()->back();
             }
 
+            if ( isset( $request->image ) ) {
+                $image_name = Helper::insertFile($request->image, 3);
+            } else {
+                $image_name = $customer->city_id ?? "";
+            }
+
             $customer->phone_number = $request->phone_number;
+            $customer->city_id = $request->city_id;
             $customer->default_delivery_address = $request->default_delivery_address;
             $customer->status = $request->status ?? $customer->status;
             $customer->save();
+
+
 
             $user = $customer->user;
             $user->name = $request->name;

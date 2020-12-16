@@ -118,6 +118,7 @@ class CouponController extends Controller
             $discount_coupon->promo_type = $request->promo_type;
             $discount_coupon->discount_price = $request->discount_value;
             $discount_coupon->description = $request->description;
+            $discount_coupon->valid_time = $request->valid_time;
             $discount_coupon->valid_date_from = $request->valid_from ?? '2020-01-01';
             $discount_coupon->valid_date_to = $request->valid_to ?? '2020-01-01';
             $discount_coupon->applicable_for = $request->applicable_for;
@@ -140,21 +141,24 @@ class CouponController extends Controller
     {
         $country_id = GlobalSetting::first()->country;
         $cities = City::where('country_id', $country_id)->get();
+        $coupon = DiscountCoupon::findOrFail($coupon_id);
         $restaurants = Restaurant::all();
+
         if ( Helper::admin() ) {
             $foods = Food::all();
+            $assigned_rest_ids = explode(',',$coupon->restaurant_ids );
         } 
         if ( Helper::restaurant() ) {
             $restIds = Restaurant::where('user_id', Auth::user()->id)->pluck('id');
             $foods = Food::whereIn('restaurant_id', $restIds)->get();
+            $assigned_rest_ids = explode(',',$coupon->restaurant_ids );
         }
-        $coupon = DiscountCoupon::findOrFail($coupon_id);
 
         $c_ctitis_arr = explode(',', $coupon->city_id);
         $c_foods_arr = explode(',', $coupon->food_ids);
 
 
-        return view('backend.pages.coupons.edit_coupon', compact('coupon', 'cities', 'foods', 'c_ctitis_arr', 'c_foods_arr' ));
+        return view('backend.pages.coupons.edit_coupon', compact('coupon', 'cities', 'foods', 'c_ctitis_arr', 'c_foods_arr', 'restaurants', 'assigned_rest_ids' ));
     }
 
     public function editCouponSubmit(Request $request)

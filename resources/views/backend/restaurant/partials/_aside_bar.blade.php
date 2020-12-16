@@ -126,6 +126,13 @@
                         ['link'=>route('backend.wallet.withdraw_request_form'), 'text'=>'Withdraw Request'],
                     ]
                 ))
+                <!-- Begin::Service Area -->
+                @include('backend.inc.menu_list', array(
+                    'menu'=>'Service Area',
+                    'submenus'=>[
+                        ['link'=>route('backend.area_coverage.my_area'), 'text'=>'My Area'],
+                    ]
+                ))
             </ul>
             <!--end::Menu Nav-->
         </div>

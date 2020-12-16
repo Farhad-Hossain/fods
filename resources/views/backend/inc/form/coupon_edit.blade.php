@@ -18,7 +18,7 @@
           <select multiple="" class="form-control selectpicker" required data-size="7" data-live-search="true" name="restaurants[]" required>
               <option value="all_restaurants">-All Restaurants-</option>
               @foreach($restaurants as $restaurant)
-                      <option value="{{ $restaurant->id }}">{{ $restaurant->name }}</option>
+                      <option value="{{ $restaurant->id }}" {!! in_array( $restaurant->id, $assigned_rest_ids ) ? 'selected' : '' !!}>{{ $restaurant->name }}</option>
               @endforeach
           </select>
         </div>
@@ -102,15 +102,15 @@
             @enderror
         </div>
 
-        <div class="col-sm-12 d-none" id="valid_date_input_form">
+        <div class="col-sm-12 {{ $coupon->valid_time == 2 ? '' : 'd-none' }}" id="valid_date_input_form">
             <div class="row">
                 <div class="form-group col-sm-12 col-md-5">
                     <label>Valid From</label>
-                    <input type="date" name="valid_from" class="form-control" value="{!! $coupon->valid_time == 1 ? $coupon->valid_date_from : '' !!}">
+                    <input type="date" name="valid_from" class="form-control" value="{!! $coupon->valid_date_from !!}">
                 </div>
                 <div class="form-group col-sm-12 col-md-5">
                     <label>Valid Till</label>
-                    <input type="date" name="valid_to" class="form-control" value="{!! $coupon->valid_time == 1 ? $coupon->valid_date_to : '' !!}">
+                    <input type="date" name="valid_to" class="form-control" value="{!! $coupon->valid_date_to !!}">
                 </div>
             </div>
         </div>

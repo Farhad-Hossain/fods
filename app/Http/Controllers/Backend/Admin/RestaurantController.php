@@ -50,8 +50,9 @@ class RestaurantController extends Controller
 
 	public function view_restaurant_edit_form($r)
 	{
+		$globals_info = GlobalSetting::first();
 		$r = Restaurant::findOrFail($r);
-		$cities = City::where('status', 1)->get();
+		$cities = City::where('country_id',  $globals_info->country )->get();
 		$tags = RestaurantTag::where('status', 1)->get();
 		$payment_methods = PaymentMethod::all();
 		$cuisines = Cuisine::all();
@@ -61,7 +62,6 @@ class RestaurantController extends Controller
 		foreach($appointed_payment_methods as $appointed_payment_method){
 			$helper_array[] = $appointed_payment_method->id;
 		}
-		
 		return view('backend.pages.restaurants.edit_form', compact('r', 'cities', 'tags', 'payment_methods', 'helper_array', 'cuisines') );
 	}
 	
@@ -196,12 +196,10 @@ class RestaurantController extends Controller
 			$tag->name = $request->name;
 			$tag->save();
 
-			session('type', 'success');
-			session('message', 'Tag updated successfully.');
+			Helper::alert('success', 'Tag info edited successfully.');
 			return redirect()->back();
 		}catch(Exception $e){
-			session('type', 'danger');
-			session('message', 'Something went wrong.');
+			Helper::alert('danger', 'Something went wrong.');
 			return redirect()->back();
 		}
 	}

@@ -1,4 +1,4 @@
-@extends('frontend.master', ['title'=>'Foods'])
+@extends('frontend.master', ['title'=>'Restaurants and More'])
 
 @section('main_content')
     <!--title-bar start-->
@@ -58,10 +58,6 @@
                                         <div class="country">{{$restaurant->restCity->name}},{{$restaurant->restCity->country->name}}</div>
                                         <p><span><i class="fas fa-map-marker-alt"></i></span>{{$restaurant->address}}</p>
                                         <div class="bagde-dt">
-                                            <div class="partner-badge">
-                                                Partner
-                                            </div>
-                                            <p>Casual Dining</p>
                                         </div>
                                     </div>
                                     <div class="online-offline">
@@ -91,14 +87,17 @@
                                                 @endif
                                             @endforeach
                                         </li>
-                                        <li>Discount : 20% of on all orders</li>
+                                        <li>Discount : N/A</li>
                                         <li>Reviews : <div class="review-stars">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>                             
-                                            <span>4.5</span>                                    
+                                            <?php 
+                                                $average_rating = \App\Helpers\Helper::getRestaurantAverageRating( $restaurant->id ) 
+                                            ?>
+
+                                            @for ( $i = 0; $i < $average_rating; $i++ ) 
+                                                <i class="fas fa-star"></i>
+                                            @endfor                         
+
+                                            <span> {!! number_format( $average_rating, 2 ) !!} </span>                                    
                                             </div>
                                         </li>
                                     </ul>
@@ -109,9 +108,9 @@
                             </div>
                             <div class="partner-bottombar">
                                 <ul class="bottom-partner-links">
-                                    <li><a href="#" data-toggle="tooltip" data-placement="top" title="Call Now"><i class="fas fa-phone"></i>Call Now</a></li>
+                                    <li><a href="Tel:{!! $restaurant->phone !!}" data-toggle="tooltip" data-placement="top" title="Call Now"><i class="fas fa-phone"></i>Call Now</a></li>
                                     <li class="line-lr"><a href="#" data-toggle="tooltip" data-placement="top" title="Order Now"><i class="fas fa-shopping-cart"></i>Order Now</a></li>
-                                    <li><a href="#" data-toggle="tooltip" data-placement="top" title="View Menu"><i class="fas fa-book"></i>View Menu</a></li>
+                                    
                                 </ul>
                             </div>
                         </div>

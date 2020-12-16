@@ -10,6 +10,7 @@ use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
 use App\Models\DiscountCoupon;
+use App\Models\CityArea;
 
 use Illuminate\Support\Facades\Log;
 
@@ -95,7 +96,11 @@ class CartController extends Controller
         $cart_contents      = Cart::content();
         $extra_contents     = Cart::instance('extra_food')->content();
         $delivery_charge    = Food::getTotalDeliveryChargeFromCart($cart_contents);   
-        return view('frontend.pages.checkout', compact('cart_contents', 'extra_contents', 'delivery_charge'));
+
+        $city_id = Auth::user()->customer->city_id;
+        $areas = CityArea::where('city_id', $city_id)->get();
+
+        return view('frontend.pages.checkout', compact('cart_contents', 'extra_contents', 'delivery_charge', 'areas'));
     }
 
     public function getCartContent()
@@ -173,6 +178,7 @@ class CartController extends Controller
                 $order->paid_amount = 0;
                 $order->order_status = 1;//1=pending
                 $order->payment_status = 0;//0=pending
+                $order->delivery_city_area_id = $request->delivery_city_area_id;
                 $order->save();
 
                 $order_unique_id = Order::getNewOrderId($order->id);

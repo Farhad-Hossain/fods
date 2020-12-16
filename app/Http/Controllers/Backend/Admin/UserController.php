@@ -175,8 +175,6 @@ class UserController extends Controller
 
     public function createAdminSubmit(Request $request)
     {
-        dd($request->all());
-
         $request->validate([
             'name' => 'required',
             'profile_photo' => 'required',
@@ -193,7 +191,7 @@ class UserController extends Controller
             $user->name = $request->name;
             $user->role = 0;
             $user->email = $request->email;
-            $user->admin_user_id = $request->role;
+            $user->admin_user_role_id = $request->role;
             $user->password = Hash::make($request->password);
             $user->password_salt = $request->password;
             $user->last_login_ip = request()->ip();

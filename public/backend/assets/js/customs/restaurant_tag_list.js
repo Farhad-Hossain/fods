@@ -1,7 +1,7 @@
-function set_for_edit(id, name)
+function set_for_edit(id, name, route)
 {
-    $("#tag_modal_title").text("{{ __('tags.modal_edit_title') }}");
-    var action = "{{ route('backend.restaurant.tags.edit_submit') }}";
+    $("#tag_modal_title").text('Tag Edit');
+    var action = route;
     $("form").attr('action', action)
     $("input[name='id']").val(id);
     $("input[name='name']").val(name);

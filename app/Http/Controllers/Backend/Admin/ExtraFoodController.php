@@ -24,10 +24,10 @@ class ExtraFoodController extends Controller
 
 		if ( Helper::restaurant() ) {
 			$extra_foods = ExtraFood::whereIn('restaurant_id',Auth::user()->restaurants()->pluck('id') )->get();
-
 		} else {
 			$extra_foods = ExtraFood::all();
 		}
+
 		return view('backend.pages.food.extra_food_list', compact('extra_foods', 'restaurants'));
 	}
 
@@ -42,12 +42,12 @@ class ExtraFoodController extends Controller
 		}
 		try{
 			$extra_food = new ExtraFood();
-			$extra_food->restaurant_id = $request->restaurant;
+			$extra_food->restaurant_id = $request->restaurant ?? '0';
 			$extra_food->name = $request->name;
 			$extra_food->category = $request->category;
 			$extra_food->price = $request->price;
 			$extra_food->photo = $fileNameToStore ?? '';
-			$extra_food->status = $request->status;
+			$extra_food->status = $request->status ?? '1';
 			$extra_food->save();
 
 			session('type', 'success');
@@ -70,7 +70,7 @@ class ExtraFoodController extends Controller
 			$fileNameToStore = $extra_food->photo ?? '';
 		}
 
-        $extra_food->restaurant_id = $request->restaurant;
+        $extra_food->restaurant_id = $request->restaurant ?? 0;
 		$extra_food->name = $request->name;
 		$extra_food->category = $request->category;
 		$extra_food->price = $request->price;

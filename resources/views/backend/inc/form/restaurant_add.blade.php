@@ -60,7 +60,7 @@
                     </div>
 
                     <div class="col-lg-4">
-                        <label>{!! __('rest.email') !!}</label>
+                        <label>Restaurant {!! __('rest.email') !!}</label>
                         <input type="email" class="form-control" name="email" value="{!! old('email') !!}" />
                         @error('email')
                             <p class="text-danger">{!! $message !!}</p>
@@ -222,7 +222,7 @@
                     </div>
 
                     <div class="col-lg-4">
-                        <label>Delivery duration from order time (In minute) </label>
+                        <label>Max Delivery time from order time (In minute) </label>
                         <div></div>
                         <input type="number" class="form-control" name="delivery_time_in_minute" required>
                     </div>

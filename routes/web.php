@@ -260,6 +260,17 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Backend\Admin', 'as'=>'backend.',
             'uses'=>'AreaCoverageController@myArea',
             'as'=>'my_area'
         ]);
+
+        Route::post('area-coverage-submit', [
+            'uses'=>'AreaCoverageController@areaCoverageSubmit',
+            'as'=>'area_coverage_submit'
+        ]);
+
+        Route::get('area-of-restaurant', [
+            'uses'=>'AreaCoverageController@getRestaurantServiceArea',
+            'as'=>'getRestaurantServiceArea'
+        ]);
+
     });
 
     /*BEGIN::Setings*/

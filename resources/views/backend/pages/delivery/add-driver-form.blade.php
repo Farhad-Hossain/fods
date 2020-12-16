@@ -5,17 +5,12 @@
         <div class="row">
             <div class="col-sm-12 col-md-12">
                 <div class="card card-custom gutter-b example example-compact">
-                    <div class="card-header">
-                        <h3 class="card-title">{!! __('delivery.driver_registration') !!}</h3>
-                        <div class="card-toolbar">
-                            <div class="example-tools justify-content-center">
-                              @if($errors->any())
-                                @foreach($errors->all() as $error)
-                                  <p class="alert alert-danger">{{$error}}</p>
-                                @endforeach
-                              @endif
-                            </div>
-                        </div>
+                    <div class="card card-custom">
+                        @include('backend.inc.card_header', array(
+                          'right_text'=>'Register Driver',
+                          'right_btn_text'=>'Drivers',
+                          'right_btn_link'=>route('backend.delivery.driver-list'),
+                        ))
                     </div>
 
                     <div class="card-body">

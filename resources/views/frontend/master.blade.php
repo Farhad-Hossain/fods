@@ -23,6 +23,9 @@
 
 
 
+
+
+
 @include('frontend.partials._footer')
 <!--footer end-->
 <input type="hidden" name="_token" id="_token" value="{!! csrf_token() !!}">
@@ -44,10 +47,13 @@
 
 @yield('custom_script')
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+<script src="{!! asset('frontend/plugins/wickedpicker/dist/wickedpicker.min.js') !!}"></script>
+<script src="{!! asset('frontend') !!}/js/custom/weekedpicker.js"></script>
 
 
 <script type="text/javascript">
+    
+
     function addToCart(food_id) {
 
         let extra_food = [];

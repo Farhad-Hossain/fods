@@ -9,6 +9,8 @@ use App\Models\FoodCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use App\Helpers\Helper;
+
 class FoodCategoryController extends Controller
 {
     public function addFoodCategoryPage()
@@ -22,14 +24,11 @@ class FoodCategoryController extends Controller
         DB::beginTransaction();
         try {
 
-            if ($request->hasFile('image')) {
-                $extension = $request->file('image')->getClientOriginalExtension();
-                $fileNameToStore = '_' . time() . '.' . $extension;
-                $category_image = $request->file('image')->storeAs('category', $fileNameToStore);
+            if ( $request->image ) {
+                $category_image = Helper::insertFile( $request->image, 1 );
             } else {
-                $category_image = "";
+                $category_image = '';
             }
-
             $category = new FoodCategory();
             $category->name = $request->name;
             $category->description = $request->description;
@@ -51,7 +50,7 @@ class FoodCategoryController extends Controller
 
     public function showFoodCategoryList()
     {
-        $food_categories = FoodCategory::all();
+        $food_categories = FoodCategory::orderBy('id', 'desc')->get();
         return view('backend.pages.food.category.food_category_list', compact('food_categories'));
     }
 
@@ -69,12 +68,10 @@ class FoodCategoryController extends Controller
         try {
             $category = FoodCategory::findOrFail($request->id);
 
-            if ($request->hasFile('image')) {
-                $extension = $request->file('image')->getClientOriginalExtension();
-                $fileNameToStore = '_' . time() . '.' . $extension;
-                $category_image = $request->file('image')->storeAs('category', $fileNameToStore);
+            if ( $request->image ) {
+                $category_image = Helper::insertFile( $request->image, 1 );
             } else {
-                $category_image = $category->image ?? '';
+                $category_image = '';
             }
 
             $category->name = $request->name;

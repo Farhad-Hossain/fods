@@ -81,7 +81,10 @@
                                 <?php $subTotal = 0; $rest_id = 0; ?> 
                                 @if(!empty($cart_contents))
                                     @foreach($cart_contents as $content)
-                                        <?php $rest_id = $content->options['restaurant_info']->id; ?>
+                                        <?php 
+                                            $rest_id = $content->options['restaurant_info']->id; 
+                                            $restCityAreas = $content->options['restaurant_info']->restCity->areas;
+                                        ?>
                                         <tr>
                                             <td>
                                                 <div class="checkout-thumb">
@@ -357,9 +360,20 @@
                             </div>
                         </div>
                     </div>
-                    <div class="checkout-btn">
+
+                    <div class="checkout-btn ">
+                        
                         <form action="{!! route('frontend.cart.submit-order') !!}" method="post">
                             @csrf
+                            <div class="mb-4">
+                                <p>Select your Delivery Area</p>
+                                <select class="form-control" name="delivery_city_area_id" required>
+                                    @foreach ( $restCityAreas as $area ) 
+                                        <option value="{!! $area->id !!}">{!! $area->area_name !!}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
                             <input type="hidden" name="total_price" value="{!! ($subTotal + $delivery_charge + $total_tax) !!}">
                             <input type="hidden" name="restaurant_id" value="{!! $rest_id !!}">
                             <input type="hidden" name="item_total_price" value="{!! $subTotal !!}">

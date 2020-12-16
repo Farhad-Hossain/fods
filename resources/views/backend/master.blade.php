@@ -135,59 +135,56 @@
 <script src="{{asset('backend/assets/js/pages/features/miscellaneous/croppie.min.js')}}"></script>
 
     <script>
-    $(document).ready(function(){
-      
-      $image_crop = $('#image-preview').croppie({
-        enableExif:true,
-        enforceBoundary:true,    
-        showZoomer: true,
-        viewport:{
-          width:550,
-          height:350,
-          type:'square'
-        },
-        boundary:{
-          width:600,
-          height:400,
-        }
-      });
-
-      $('.upload_image').change(function( ){
-
-        field_name = $(this).attr('target');
-        $("#crop_btn").attr('target', field_name);
-
-        $(".img-container").removeClass('d-none');
-        var reader = new FileReader();
-
-        reader.onload = function(event){
-          $image_crop.croppie('bind', {
-            url:event.target.result
-          }).then(function(){
-            console.log('jQuery bind complete');
+        $(document).ready(function(){
+          $image_crop = $('#image-preview').croppie({
+            showZoomer: true,
+            viewport:{
+              width:550,
+              height:350,
+              type:'square'
+            },
+            boundary:{
+              width:600,
+              height:400,
+            }
           });
-        }
-        reader.readAsDataURL(this.files[0]);
-        
-        $("#img_cutting_modal").modal();
 
-      });
+          $('.upload_image').change(function( ){
 
-      $('#crop_btn').click(function(event){
+            field_name = $(this).attr('target');
+            $("#crop_btn").attr('target', field_name);
 
-        var tr = $(this).attr('target');
+            $(".img-container").removeClass('d-none');
+            var reader = new FileReader();
 
-        $image_crop.croppie('result', {
-          type:'canvas',
-          size:'viewport'
-        }).then(function(response){
-          var _token = $('input[name=_token]').val();
+            reader.onload = function(event){
+              $image_crop.croppie('bind', {
+                url:event.target.result
+              }).then(function(){
+                console.log('jQuery bind complete');
+              });
+            }
+            reader.readAsDataURL(this.files[0]);
+            
+            $("#img_cutting_modal").modal();
+
+          });
+
+          $('#crop_btn').click(function(event){
+
+            var tr = $(this).attr('target');
+
+            $image_crop.croppie('result', {
+              type:'canvas',
+              size:'viewport'
+            }).then(function(response){
+              var _token = $('input[name=_token]').val();
+              
+              $("input[name="+tr+"]").val(response);
+            });
+          });
           
-          $("input[name="+tr+"]").val(response);
-        });
-      });
-      
-    });  
+        });  
     </script>
 
 </body>

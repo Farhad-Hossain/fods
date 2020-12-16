@@ -42,7 +42,8 @@
                             <td>
                                 <a href="#" data-toggle="modal" data-target="#tagsModal" onclick="set_for_edit(
                                                 '{{ $tag->id }}',
-                                                '{{ $tag->name }}'
+                                                '{{ $tag->name }}',
+                                                '{{ route('backend.restaurant.tags.edit_submit') }}',
                                 )"><i class="far fa-edit text-primary"></i></a>  
                                 <a href="{{ route('backend.restaurant.tags.delete', $tag->id) }}" onclick="return confirm('Are you sure want to delete ?')"><i class="far fa-trash-alt ml-2 text-danger"></i></a>
                             </td>

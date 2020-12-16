@@ -1,4 +1,4 @@
-@extends('backend.master')
+@extends('backend.master' , ['title'=>'Food Rating and Review'])
 @section('custom_style')
     <link href="{{asset('backend')}}/assets/plugins/custom/datatables/datatables.bundle.css?v=7.0.3" rel="stylesheet" type="text/css" />
 @endsection
@@ -32,7 +32,7 @@
             $("input[name='review_id']").val(review_id);
             $("input[name='review_count_stars']").val(count_stars);
 
-            $("input[name='review_content']").val(review_content);
+            $("textarea[name='review_content']").val(review_content);
             $("#edit_review_modal").modal();
         } 
     </script>

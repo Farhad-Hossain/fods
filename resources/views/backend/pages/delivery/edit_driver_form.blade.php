@@ -1,4 +1,4 @@
-@extends('backend.master')
+@extends('backend.master', ['title'=>'Edit Driver Info'])
 @section('custom_style')
 
 @endsection

@@ -28,7 +28,6 @@ class AddExtraFoodPostRequest extends FormRequest
             'name' => 'required',
             'category' => 'required|numeric',
             'price' => 'required|numeric',
-            'restaurant' => 'required'
         ];
     }
 }

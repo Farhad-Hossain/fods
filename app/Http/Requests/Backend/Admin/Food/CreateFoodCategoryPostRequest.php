@@ -26,7 +26,6 @@ class CreateFoodCategoryPostRequest extends FormRequest
         return [
             'name' => 'required|unique:food_categories,name',
             'description' => 'nullable',
-            'image' => 'nullable|image'
         ];
     }
 }

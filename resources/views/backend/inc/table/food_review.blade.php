@@ -25,7 +25,7 @@
             <td>{{ $review->review_content }}</td>
             <td>
                 @if ( $review->status == 1 ) 
-                    <span class="text-warning text-bold">Pending</span>
+                    <span class="text-warning text-bold">Not published yet</span>
                 @endif
                 @if ( $review->status == 2 ) 
                     <span class="text-success">Published</span>

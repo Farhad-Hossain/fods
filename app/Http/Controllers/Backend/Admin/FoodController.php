@@ -185,7 +185,7 @@ class FoodController extends Controller
     public function get_all_reviews()
     {
         if ( Helper::admin() ) {
-            $reviews = FoodRatingReview::where('status', 1)->orderBy('id', 'desc')->get();
+            $reviews = FoodRatingReview::orderBy('id', 'desc')->get();
         }
         if ( Helper::restaurant() ) {
             $restaurant_ids = Restaurant::where('user_id', Auth::user()->id)->pluck('id');

@@ -31,7 +31,7 @@
             <td>{!! $r->restCity->name !!}</td>
             <td>{!! $r->phone !!}</td>
             <td>{!! $r->address !!}</td>
-            <td>{!! ($r->open_staus==1) ? 'Opened' : 'Closed' !!}</td>
+            <td>{!! ($r->open_status == 1) ? 'Opened' : 'Closed' !!}</td>
             <td>{!! $r->delivery_charge !!}</td>
             <td>{!! $r->selling_percentage !!}</td>
             <td>{!! ($r->payment_method==1) ? 'Cash Only' : 'Card Only'  !!}</td>

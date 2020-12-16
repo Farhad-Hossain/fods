@@ -22,7 +22,7 @@
                     </div>
                     <!--end::Dropdown-->
                     <!--begin::Button-->
-                    <a href="javascript:;" class="btn btn-primary font-weight-bolder" onclick="clear_value_and_rise_modal()" data-toggle="modal" data-target="#cuisines_modal">
+                    <a href="javascript:;" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#cuisines_modal">
                         <i class="la la-plus"></i>Add Cuisine
                     </a>
                     <!--end::Button-->
@@ -36,6 +36,7 @@
                             <th>#</th>
                             <th>{{ __('cuisines.name') }}</th>
                             <th>{{ __('cuisines.status') }}</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -49,6 +50,16 @@
                             @else
                                 <td><b class="text-danger">Disabled</b></td>
                             @endif
+
+                            <td>
+                                <a href="javascript:;" class="text-primary mr-2" onclick="set_value_and_rise_edit_modal(
+                                '{{ $cuisine->id }}', '{{ $cuisine->name }}', '{{ $cuisine->status }}', {!! route('backend.food.cuisines.edit_submit') !!})">
+                                    <i class="far fa-edit text-primary"></i>
+                                </a>
+                                <a href="{{ route('backend.food.cuisines.delete', $cuisine->id) }}" class="text-danger" onclick="return confirm('Are you sure want to delete ??')">
+                                    <i class="far fa-trash-alt text-danger"></i>
+                                </a>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -93,7 +104,6 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @section('custom_script')

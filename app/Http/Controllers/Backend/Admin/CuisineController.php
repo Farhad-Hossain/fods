@@ -69,10 +69,8 @@ class CuisineController extends Controller
     }
     public function delete_cuisine($cuisine)
     {
-
     	$cuisine = Cuisine::where('id', $cuisine)->first();
-    	$cuisine->status = 2;
-    	$cuisine->save();
+        $cuisine->delete();
 
     	session('type', 'success');
     	session('message', 'Cuisines Deleted.');

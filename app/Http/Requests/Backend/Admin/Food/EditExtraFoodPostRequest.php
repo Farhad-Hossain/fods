@@ -28,7 +28,6 @@ class EditExtraFoodPostRequest extends FormRequest
             'name' => 'required',
             'category' => 'required',
             'price' => 'required',
-            'restaurant' => 'required'
         ];
     }
 }
