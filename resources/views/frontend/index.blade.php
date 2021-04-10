@@ -365,7 +365,15 @@
 
 
 @section('custom_script')
+
 <script type="text/javascript">
-    $("#area_modal").modal();
+    var isshow = localStorage.getItem('isshow');
+    if (isshow === null) {
+        localStorage.setItem('isshow', 1);
+        $("#area_modal").modal();
+    } else {
+        console.log('Area selection modal has been showed.');   
+    }
 </script>
+
 @endsection

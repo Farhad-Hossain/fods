@@ -24,7 +24,6 @@
         <i class="menu-arrow"></i>
         <ul class="menu-subnav">
             @foreach( $submenus as $submenu )
-
                 @if ( \App\Helpers\Helper::haveAccess( $submenu['access'] ?? 1 ) ) 
                 <li class="menu-item" aria-haspopup="true">
                     <a href="{{ $submenu['link'] }}" class="menu-link">
