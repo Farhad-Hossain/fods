@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        
+        hello
             <div class="col-lg-6 col-xxl-4">
                 <!--begin::Mixed Widget 1-->
                 <div class="card card-custom bg-gray-100 card-stretch gutter-b">
