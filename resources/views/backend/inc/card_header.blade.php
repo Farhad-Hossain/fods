@@ -12,7 +12,7 @@
         </div>
         <!--end::Dropdown-->
         <!--begin::Button-->
-        <a href="{{ $right_btn_link ?? '' }}" class="btn btn-primary font-weight-bolder" 
+        <a href="{{ $right_btn_link ?? '' }}" class="btn btn-sm btn-primary font-weight-bolder" 
 
         @if( isset( $btn_modal ) )
             data-toggle="modal" data-target="#{{ $modal_id ?? '' }}"

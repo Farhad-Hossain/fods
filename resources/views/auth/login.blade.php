@@ -1,17 +1,4 @@
-
 <!DOCTYPE html>
-<!--
-Template Name: Metronic - Bootstrap 4 HTML, React, Angular 9 & VueJS Admin Dashboard Theme
-Author: KeenThemes
-Website: http://www.keenthemes.com/
-Contact: support@keenthemes.com
-Follow: www.twitter.com/keenthemes
-Dribbble: www.dribbble.com/keenthemes
-Like: www.facebook.com/keenthemes
-Purchase: https://1.envato.market/EA4JP
-Renew Support: https://1.envato.market/EA4JP
-License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
--->
 <html lang="en">
     <!--begin::Head-->
     <head><base href="../../../">
@@ -66,15 +53,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     <div class="aside-img d-flex flex-row-fluid bgi-no-repeat bgi-position-y-bottom bgi-position-x-center" style="background-image: url(assets/media/svg/illustrations/login-visual-1.svg)"></div>
                     <!--end::Aside Bottom-->
                 </div>
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+                
                 <!--begin::Aside-->
                 <!--begin::Content-->
                 <div class="login-content flex-row-fluid d-flex flex-column justify-content-center position-relative overflow-hidden p-7 mx-auto">
@@ -100,11 +79,6 @@ License: You must have a valid license purchased only from themeforest(the above
                                 <div class="form-group">
                                     <label class="font-size-h6 font-weight-bolder text-dark">{{ __('E-Mail Address') }}</label>
                                     <input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg @error('email') is-invalid @enderror" type="email" name="email" autofocus autocomplete="off" required />
-                                    @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
                                 </div>
                                 <!--end::Form group-->
                                 <!--begin::Form group-->
@@ -113,12 +87,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                         <label class="font-size-h6 font-weight-bolder text-dark pt-5">{{ __('Password') }}</label>
                                     </div>
                                     <input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg @error('password') is-invalid @enderror" type="password" name="password" autocomplete="off" required />
-                                    @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-
+                                    
                                 </div>
                                 <!--end::Form group-->
                                 <!--begin::Action-->

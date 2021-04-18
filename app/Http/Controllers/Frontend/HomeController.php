@@ -28,7 +28,7 @@ class HomeController extends Controller
         
         $areas = CityArea::all();
 
-
-        return view('frontend.index', compact('foods', 'restaurants','food_categories', 'areas'));
+        $search_city_area = $request->search_city_area;
+        return view('frontend.index', compact('foods', 'restaurants','food_categories', 'areas','search_city_area'));
     }
 }

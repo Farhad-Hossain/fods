@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\User;
 use Auth;
+use Carbon\Carbon;
 
 class Helper {
 
@@ -113,7 +114,20 @@ class Helper {
     {
         return \App\Models\RestaurantRating::where('restaurant_id', $restaurant_id)->avg('star_count');
     }
+
     public static function getFoodAverageRating($food_id) {
         return \App\Models\FoodRatingReview::where('food_id', $food_id)->avg('count_stars');
+    }
+
+
+    public static function create_log ($data) 
+    {
+        $data['activity_owner_id'] = Auth::user()->id ?? '';
+        $data['happening_time'] = Carbon::now();
+        $data['client_info'] = [
+            'ip_address' => request()->ip(),
+        ];
+
+        \App\Models\ActivityLog::create($data);
     }
 } 

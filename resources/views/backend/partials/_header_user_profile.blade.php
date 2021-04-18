@@ -18,16 +18,16 @@
         <div class="d-flex flex-column">
             <a href="#" class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">
                 @if(Auth::user()->role == 0)
-                    {!!Auth::user()->name!!}
+                    {!!Auth::user()->name ?? '' !!}
                 @elseif(Auth::user()->role == 1)
-                    {!!Auth::user()->name!!}
+                    {!!Auth::user()->name ?? '' !!}
                 @endif
             </a>
             <div class="text-muted mt-1">
                 @if(Auth::user()->role == 0)
-                    {!!Auth::user()->admin->designation!!}
+                    {!!Auth::user()->admin->designation ?? '' !!}
                 @elseif(Auth::user()->role == 1)
-                    {!!Auth::user()->restaurant->name!!}
+                    {!!Auth::user()->restaurant->name ?? '' !!}
                 @endif
             </div>
             <div class="navi mt-2">

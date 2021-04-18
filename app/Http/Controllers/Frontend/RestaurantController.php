@@ -12,6 +12,7 @@ use App\Models\Cuisine;
 use App\Models\RestaurantService;
 use App\Models\FoodCategory;
 use App\Models\City;
+use App\Models\CityArea;
 
 class RestaurantController extends Controller
 {
@@ -46,5 +47,19 @@ class RestaurantController extends Controller
         $food_categories = FoodCategory::all();
         $cities = City::all();
         return view('frontend.pages.partners', compact('restaurants','cuisines','food_categories','cities'));
+    }
+
+    public function getAllRestaurant(Request $request)
+    {
+        if(isset($request->search_city_area)){
+            $city_id = CityArea::find($request->search_city_area)->city_id;
+        }else{
+            $city_id = 1;
+        }
+        $restaurants = Restaurant::Where('city',$city_id)->with('total_reviews')->get();
+        $food_categories = FoodCategory::all();
+        
+        $cuisines = Cuisine::all();
+        return view('frontend.pages.all-restaurants',compact('restaurants','food_categories','cuisines'));
     }
 }  

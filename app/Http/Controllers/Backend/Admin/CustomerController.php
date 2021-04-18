@@ -21,6 +21,12 @@ class CustomerController extends Controller
     {
         $cities = City::where('status', 1)->get();
         $customers = Customer::orderBy('id', 'desc')->get();
+
+        Helper::create_log([
+            'type' => \App\Enums\LogTypes::SHOW,
+            'detail_message' => 'Customer list showed',
+        ]);
+
         return view('backend.pages.customer.customer_list', compact(
             'customers', 'cities'
         ));

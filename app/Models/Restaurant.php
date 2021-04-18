@@ -89,4 +89,8 @@ class Restaurant extends Model
     {
         return $this->belongsTo('App\Models\City', 'city');
     }
+    public function timing()
+    {
+        return $this->hasMany('App\Models\RestaurantTiming','restaurant_id');
+    }
 }

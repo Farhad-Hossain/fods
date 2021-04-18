@@ -1015,7 +1015,7 @@ padding-left: 152px;
     width: 100%;
 }
 .heading {
-    margin-left: 95px;
+    margin-left: 100px;
 }
 .heading h4 {
     text-align: left;
@@ -1035,9 +1035,9 @@ padding-left: 152px;
 }
 .sub-heading h5 {
     float: left;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 500;
-    margin-left: 95px;
+    margin-left: 100px;
     margin-top: 4px;
 	color:#000;
 	text-overflow: ellipsis;
@@ -1049,7 +1049,7 @@ padding-left: 152px;
 }
 .sub-heading p {
     float: right;
-    margin-right: 10px;
+    margin-right: 20px;
     font-size: 14px;
     font-weight: 500;
 	color:#ffa803;
@@ -7937,3 +7937,5 @@ right: 99%; }
     margin-top: 25px;
     margin-bottom: 5px;
 }
+
+

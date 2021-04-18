@@ -6,6 +6,7 @@
 @endsection
 
 @section('main_content')
+
     <!--banner start-->
     @include('frontend.partials._banner')
     <!--banner end-->
@@ -123,6 +124,9 @@
                     </div>
                 </div>
             </div>
+            <div class="meal-btn">
+                <a href="{{route('frontend.restaurant.all_restaurant',['search_city_area' => $search_city_area])}}" class="m-btn btn-link">Show All</a>
+            </div>
         </div>
     </section>
     <!--discover-new-restaurants-&-book-now end-->
@@ -211,9 +215,6 @@
                 </div>
                 @endforeach
 
-            </div>
-            <div class="meal-btn">
-                <a href="{{route('frontend.food.allFoods')}}" class="m-btn btn-link">Show All</a>
             </div>
         </div>
     </section>

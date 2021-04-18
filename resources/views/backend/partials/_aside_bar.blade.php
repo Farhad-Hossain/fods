@@ -248,6 +248,14 @@
                         ['link'=>route('backend.wallet.withdraw_request_form'), 'text'=>'Withdrawal Requests', 'access'=>'allowed'],
                     ]
                 ))
+                <!-- Begin::Transaction -->
+                @include('backend.inc.menu_list', array(
+                    'menu'=>'Activity Log',
+                    'submenus'=>[
+                        ['link'=>route('backend.log.all-log'), 'text'=>'All Log', 'access'=>'allowed'],
+                    ]
+                ))
+
 
                 <!-- End::setting -->
             </ul>
