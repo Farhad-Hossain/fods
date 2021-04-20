@@ -82,6 +82,7 @@ class GlobalController extends Controller
             if( $request->mobile_logo )
             {
                 $mobile_fileNameToStore = Helper::insertFile($request->mobile_logo, 3);
+                // A logo for mobile view
             } else {
                 $mobile_fileNameToStore = $global_setting->mobile_logo ?? "";
             }
