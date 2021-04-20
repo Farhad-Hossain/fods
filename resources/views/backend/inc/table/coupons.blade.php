@@ -6,6 +6,7 @@
             <th>Promo Code</th>
             <th>Discount Price</th>
             <th>Applicable For</th>
+            <th>Restaurants</th>
             <th>Limit</th>
             <th>Selling Count</th>
             <th>Available</th>
@@ -34,6 +35,11 @@
                     @else
                         New Users
                     @endif
+                </td>
+                <td>
+                    @foreach ( app(App\Helpers\Helper::class)->getRestaurantFromIds($coupon->restaurant_ids) as $restaurant )
+                        <p>{{ $restaurant->name }}</p>
+                    @endforeach
                 </td>
                 <td>{{$coupon->promo_code_limit}}</td>
                 <td>{{$coupon->selling_count}}</td>

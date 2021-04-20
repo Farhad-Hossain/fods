@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use App\User;
+use App\Models\Restaurant;
 use Auth;
 use Carbon\Carbon;
 
@@ -129,5 +130,10 @@ class Helper {
         ];
 
         \App\Models\ActivityLog::create($data);
+    }
+
+    public function getRestaurantFromIds (array $ids)
+    {
+        return Restaurant::find($ids);
     }
 } 
