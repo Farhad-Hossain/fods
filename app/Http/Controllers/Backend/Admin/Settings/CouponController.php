@@ -68,36 +68,39 @@ class CouponController extends Controller
             }
         }
         
-        $coupon_available_city_ids = '';
-        foreach( $request->area_cities as $city_id ) {
-            if ( $city_id == 'all_city' ) {
-                $country_id = GlobalSetting::first()->country;
-                $cities = City::where('country_id', $country_id)->get();
-                foreach ( $cities as $city ) {
-                    $coupon_available_city_ids .= $city->id.',';
-                }
-                break;
-            }
-            $coupon_available_city_ids .= $city_id.',';
-        }
+        // $coupon_available_city_ids = '';
+        // foreach( $request->area_cities as $city_id ) {
+        //     if ( $city_id == 'all_city' ) {
+        //         $country_id = GlobalSetting::first()->country;
+        //         $cities = City::where('country_id', $country_id)->get();
+        //         foreach ( $cities as $city ) {
+        //             $coupon_available_city_ids .= $city->id.',';
+        //         }
+        //         break;
+        //     }
+        //     $coupon_available_city_ids .= $city_id.',';
+        // }
 
-        $restaurant_ids = "";
-        if ( isset( $request->restaurants ) ) {
-            foreach( $request->restaurants as $restaurant_id ) {
-                if ( $restaurant_id == 'all_restaurants' ) {
-                    foreach(Restaurant::all() as $restaurant) {
-                        $restaurant_ids .= $restaurant->id.',';
-                    }
-                    break;
-                }
-                $restaurant_ids .= $restaurant_id.',';
-            }
-        } elseif( Helper::restaurant() ) {
-            $restaurants = Restaurant::where('user_id', Auth::user()->id)->get();
-            foreach( $restaurants as $r ){
-                $restaurant_ids .= $r->id.',';
-            }
-        }
+        $coupon_available_city_ids = $request->area_cities;
+
+        // $restaurant_ids = "";
+        // if ( isset( $request->restaurants ) ) {
+        //     foreach( $request->restaurants as $restaurant_id ) {
+        //         if ( $restaurant_id == 'all_restaurants' ) {
+        //             foreach(Restaurant::all() as $restaurant) {
+        //                 $restaurant_ids .= $restaurant->id.',';
+        //             }
+        //             break;
+        //         }
+        //         $restaurant_ids .= $restaurant_id.',';
+        //     }
+        // } elseif( Helper::restaurant() ) {
+        //     $restaurants = Restaurant::where('user_id', Auth::user()->id)->get();
+        //     foreach( $restaurants as $r ){
+        //         $restaurant_ids .= $r->id.',';
+        //     }
+        // }
+        $restaurant_ids = $request->restaurants;
 
         $request->validate([
             'promo_code'=>'required',
