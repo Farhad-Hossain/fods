@@ -1,5 +1,41 @@
-@extends('frontend.master', ['title'=>'Restaurant Details'])
-@section('main_content')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+    <!-- Favicon -->
+    <link href="images/fav.png" rel="shortcut icon" type="image/x-icon"/>
+
+    <title>Natto | Restaurant Detail View </title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="{{asset('frontend')}}/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{asset('frontend')}}/css/style.css" rel="stylesheet">
+    <link href="{{asset('frontend')}}/css/responsive.css" rel="stylesheet">
+    <link href="{{asset('frontend')}}/css/mega.menu.css" rel="stylesheet">
+    <link href="{{asset('frontend')}}/css/thumbnail.slider.css" rel="stylesheet">
+    <link href="{{asset('frontend')}}/css/datepicker.css" rel="stylesheet">
+    <link href="{{asset('frontend')}}/css/bootstrap-select.css" rel="stylesheet">
+
+    <!-- Owl Carousel for this template-->
+    <link rel="stylesheet" href="{{asset('frontend')}}/assets/owlcarousel/assets/owl.carousel.min.css"> 
+    
+    <!-- Fontawesome styles for this template-->
+    <link href="{{asset('frontend')}}/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    
+</head>
+
+<body>
+    <header id="header" class="default">
+        @include('frontend.partials._top_header')
+        @include('frontend.partials._menu')
+    </header>
+    <!--header end-->
+
     <!--title-bar start-->
     <section class="title-bar">
         <div class="container">
@@ -21,15 +57,15 @@
             </div>
         </div>
     </section>
-    <!--title-bar end-->    
-    <!--partner-restaurant start-->
+    <!--title-bar end-->   
+
     <section class="all-partners">          
         <div class="container">     
             <div class="row">                   
                 <div class="col-lg-9 col-md-12">
                     <div id="sync1" class="owl-carousel owl-theme">
                         <div class="item">
-                            <img src="{{asset('uploads')}}/{{$restaurant->logo}}" alt="">
+                            <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmyvirtual360.com%2Fwp-content%2Fuploads%2F2017%2F07%2Flive-demo.png&f=1&nofb=1" alt="">
                         </div>
                     </div>
                     <div id="sync2" class="owl-carousel owl-theme">
@@ -37,22 +73,22 @@
                             <img src="{{asset('uploads')}}/{{$restaurant->logo}}" alt="">
                         </div>
                         <div class="item">
-                            <img src="images/restaurant-detail/thumbs/img-2.jpg" alt="">
+                            <img src="{{asset('frontend')}}/images/restaurant-detail/thumbs/img-2.jpg" alt="">
                         </div>
                         <div class="item">
-                            <img src="images/restaurant-detail/thumbs/img-3.jpg" alt="">
+                            <img src="{{asset('frontend')}}/images/restaurant-detail/thumbs/img-3.jpg" alt="">
                         </div>
                         <div class="item">
-                            <img src="images/restaurant-detail/thumbs/img-4.jpg" alt="">
+                            <img src="{{asset('frontend')}}/images/restaurant-detail/thumbs/img-4.jpg" alt="">
                         </div>
                         <div class="item">
-                            <img src="images/restaurant-detail/thumbs/img-5.jpg" alt="">
+                            <img src="{{asset('frontend')}}/images/restaurant-detail/thumbs/img-5.jpg" alt="">
                         </div>
                         <div class="item">
-                            <img src="images/restaurant-detail/thumbs/img-6.jpg" alt="">
+                            <img src="{{asset('frontend')}}/images/restaurant-detail/thumbs/img-6.jpg" alt="">
                         </div>
                         <div class="item">
-                            <img src="images/restaurant-detail/thumbs/img-7.jpg" alt="">
+                            <img src="{{asset('frontend')}}/images/restaurant-detail/thumbs/img-7.jpg" alt="">
                         </div>
                         <div class="item">
                             <img src="images/restaurant-detail/thumbs/img-8.jpg" alt="">
@@ -703,5 +739,25 @@
             </div>          
         </div>
     </section>
-@endsection
 
+    @include('frontend.partials._footer')
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="{{asset('frontend')}}/vendor/jquery/jquery.min.js"></script>
+    <script src="{{asset('frontend')}}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="{{asset('frontend')}}/vendor/jquery-easing/jquery.easing.min.js"></script>
+     <!-- Assect scripts for this page-->
+    <script src="{{asset('frontend')}}/assets/owlcarousel/owl.carousel.js"></script>
+    <script src="{{asset('frontend')}}/js/custom.js"></script>
+    <script src="{{asset('frontend')}}/js/thumbnail.slider.js"></script>
+    <script src="{{asset('frontend')}}/js/bootstrap-datepicker.js"></script>
+    <script src="{{asset('frontend')}}/js/bootstrap-select.js"></script>
+    <script>
+    $(function(){
+        $('.datepicker').datepicker();
+    });
+    </script>
+  </body>
+
+</html>

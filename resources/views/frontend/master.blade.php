@@ -38,17 +38,12 @@
 <script src="{!! asset('frontend/vendor/bootstrap/js/bootstrap.bundle.min.js') !!}"></script>
 <!--Core plugin JavaScript-->
 <script src="{!! asset('frontend/vendor/jquery-easing/jquery.easing.min.js') !!}"></script>
-<!--Assect scripts for this page-->
-<script src="{!! asset('frontend/vendor/OwlCarousel/owl.carousel.js') !!}"></script>
-<script src="{{asset('frontend')}}/assets/owlcarousel/owl.carousel.js"></script>
-<script src="{!! asset('frontend/js/owlslider.js') !!}"></script>
-<script type="text/javascript" src="{!! asset('assets/frontend/plugins/growl-alert/javascripts/jquery.growl.js') !!}"></script>
 
-
-@yield('custom_script')
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="{!! asset('frontend/plugins/wickedpicker/dist/wickedpicker.min.js') !!}"></script>
 <script src="{!! asset('frontend') !!}/js/custom/weekedpicker.js"></script>
+
+@yield('custom_script')
 
 
 <script type="text/javascript">
@@ -158,6 +153,14 @@
     });
 
 </script>
+
+<script>
+    $(function(){
+        $('.datepicker').datepicker();
+    });
+    </script>
+
+
 </body>
 
 </html>

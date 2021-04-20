@@ -17,9 +17,11 @@
     <link href="{!! asset('frontend/css/mega.menu.css') !!}" rel="stylesheet">
     <link href="{!! asset('frontend/css/thumbnail.slider.css') !!}" rel="stylesheet">
     <link href="{!! asset('frontend/css/bootstrap-select.css') !!}" rel="stylesheet">
+    <link href="{{  asset('frontend')}}/css/datepicker.css" rel="stylesheet">
     <link href="{!! asset('frontend/css/owlslider.css') !!}" rel="stylesheet">
     
     <!-- Owl Carousel for this template-->
+    
     <link href="{!! asset('frontend/vendor/OwlCarousel/assets/owl.carousel.css') !!}" rel="stylesheet">
     <link href="{!! asset('frontend/vendor/OwlCarousel/assets/owl.theme.default.min.css') !!}" rel="stylesheet">
 
