@@ -9,7 +9,7 @@
         <!--begin::Dashboard-->
         <!--begin::Row-->
         <div class="row">
-            <div class="col-lg-12 col-xxl-4">
+            <div class="col-lg-12">
                 <!--begin::Mixed Widget 1-->
                 <div class="card card-custom bg-gray-100 card-stretch gutter-b">
                     

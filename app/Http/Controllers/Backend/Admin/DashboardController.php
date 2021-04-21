@@ -31,7 +31,7 @@ class DashboardController extends Controller
             $rest_ids = Restaurant::where('user_id', Auth::user()->id)->pluck('id');
             $total_food = Food::whereIn('restaurant_id', $rest_ids)->count();
             $order_ids = OrderDetail::whereIn('restaurant_id', $rest_ids)->pluck('order_id');
-            $orders = Order::whereIn('id', $order_ids);
+            $orders = Order::where('restaurant_id',$rest_ids)->orderByDesc('id')->get();
 
         }
 

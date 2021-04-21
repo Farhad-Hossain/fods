@@ -365,14 +365,7 @@
                         
                         <form action="{!! route('frontend.cart.submit-order') !!}" method="post">
                             @csrf
-                            <div class="mb-4">
-                                <p>Select your Delivery Area</p>
-                                <select class="form-control" name="delivery_city_area_id" required>
-                                    @foreach ( $restCityAreas as $area ) 
-                                        <option value="{!! $area->id !!}">{!! $area->area_name !!}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+
 
                             <input type="hidden" name="total_price" value="{!! ($subTotal + $delivery_charge + $total_tax) !!}">
                             <input type="hidden" name="restaurant_id" value="{!! $rest_id !!}">

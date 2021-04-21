@@ -97,8 +97,8 @@ class CartController extends Controller
         $extra_contents     = Cart::instance('extra_food')->content();
         $delivery_charge    = Food::getTotalDeliveryChargeFromCart($cart_contents);   
 
-        $city_id = Auth::user()->customer->city_id;
-        $areas = CityArea::where('city_id', $city_id)->get();
+        // $city_id = Auth::user()->customer->city_id;
+        $areas = CityArea::where('city_id', '1')->get();
 
         return view('frontend.pages.checkout', compact('cart_contents', 'extra_contents', 'delivery_charge', 'areas'));
     }
