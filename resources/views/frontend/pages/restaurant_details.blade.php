@@ -120,6 +120,7 @@
                             <div class="resto-picy">
                                 <a href="restaurant_detail.html"><img src="images/restaurant-detail/logo-10.jpg" alt=""></a>
                             </div>
+                            
                             <div class="name-location">
                                 <a href="{{route('frontend.restaurant.details',$restaurant->id)}}"><h1>{{$restaurant->name}}</h1></a>
                                 <p><span><i class="fas fa-map-marker-alt"></i></span>{{$restaurant->restCity->name}}, {{$restaurant->restCity->country->name}}</p>
