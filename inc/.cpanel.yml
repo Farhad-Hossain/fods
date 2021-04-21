@@ -1,0 +1,4 @@
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/gonoxyz/public_html/repo/fods
+    - /bin/cp -R * $DEPLOYPATH

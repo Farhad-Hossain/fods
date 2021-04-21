@@ -1,0 +1,1 @@
+<?php /**PATH /opt/lampp/htdocs/fods/resources/views/backend/partials/_header_nav.blade.php ENDPATH**/ ?>
