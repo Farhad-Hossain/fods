@@ -175,8 +175,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        Srmklive\PayPal\Providers\PayPalServiceProvider::class
-
 
     ],
 

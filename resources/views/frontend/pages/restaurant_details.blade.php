@@ -121,7 +121,7 @@
                                 <a href="restaurant_detail.html"><img src="images/restaurant-detail/logo-10.jpg" alt=""></a>
                             </div>
                             <div class="name-location">
-                                <a href="restaurant_detail.html"><h1>{{$restaurant->name}}</h1></a>
+                                <a href="{{route('frontend.restaurant.details',$restaurant->id)}}"><h1>{{$restaurant->name}}</h1></a>
                                 <p><span><i class="fas fa-map-marker-alt"></i></span>{{$restaurant->restCity->name}}, {{$restaurant->restCity->country->name}}</p>
                             </div>
                         </div>
@@ -714,9 +714,9 @@
                             <ul class="list-unstyled">
                                 @foreach($popular_restaurants as $rest)
                                     <li>
-                                        <a href="restaurant_detail.html"><img src="{{asset('uploads')}}/{{$rest->logo}}" class="img-responsive" alt="image" title="image"></a>
+                                        <a href="{{route('frontend.restaurant.details',$rest->id)}}"><img src="{{asset('uploads')}}/{{$rest->logo}}" class="img-responsive" alt="image" title="image"></a>
                                         <div class="caption">
-                                            <a href="restaurant_detail.html"><h4>{{$rest->name}}</h4></a>
+                                            <a href="{{route('frontend.restaurant.details',$rest->id)}}"><h4>{{$rest->name}}</h4></a>
                                             <p>{{$rest->restCity->name}},{{$rest->restCity->country->name}}</p>
                                             <div class="star">
                                                 <i class="fas fa-star"></i>
